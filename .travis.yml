@@ -1,0 +1,95 @@
+﻿sudo: false
+
+jdk: oraclejdk8
+node_js: node
+
+git:
+  depth: 2
+
+cache:
+  directories:
+   - $HOME/.m2
+   - $HOME/.npm
+   - ./front-end/node_modules
+   - ./node_modules
+
+ 
+jobs:
+  include:      
+   ###### TEST MYSQL ######
+   - stage: Test
+     if: type IN (pull_request)
+     env:
+      - AUTO=create-drop
+      - DATABASE=jdbc:mysql://127.0.0.1:3306/test_db?user=root
+      - DATABASE_USER=root
+      - DATABASE_PASS=
+      - DIALECT=org.hibernate.dialect.MySQL5Dialect
+     services:
+      - mysql
+     before_script:
+      - mysql -e 'CREATE DATABASE IF NOT EXISTS test_db;'
+     script:
+      - cd back-end
+      - mvn clean test -B -B
+      
+   ###### TEST POSTGRESQL ######
+   - stage: Test
+     if: type IN (pull_request)
+     env:
+      - AUTO=create-drop
+      - DATABASE=jdbc:postgresql://127.0.0.1:5432/test_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=
+      - DIALECT=org.hibernate.dialect.PostgreSQLDialect
+     services:
+      - postgresql
+     before_script:
+      - psql -c 'create database test_db;' -U postgres
+     script:
+      - cd back-end
+      - mvn clean test -B
+      
+   ###### DEPLOY ######
+   - stage: Package and Deploy
+     if: branch = master AND type IN (push)
+     before_script:
+      - npm install -g @angular/cli
+      - npm install -g auto-changelog
+      - git config --local user.name "$GIT_REPO"
+      - git config --local user.email "$GIT_EMAIL"
+     script:
+      - bash auto-changelog.sh
+      - cd front-end
+      - npm install
+      - npm run build
+      - cd ../back-end
+      - rm src/main/resources/.gitignore
+      - git add .
+      - git commit -m "Package"
+      - mvn package -DskipTests=true -Dmaven.javadoc.skip=true -B
+      
+      # Clear for heroku
+      - cd ..
+      - cp back-end/target/$APP_NAME-$APP_VERSION.jar app.jar
+      - shopt -s extglob
+      - rm -rf !(app.jar|Procfile)
+      - git add .
+      - git commit -m "Clear"
+      - mv app.jar $APP_NAME-$APP_VERSION.jar
+      - if [[ $(git tag -l "$APP_VERSION") != $APP_VERSION ]]; then git tag -a $APP_VERSION -m "$APP_VERSION"; fi
+     deploy:
+       - provider: heroku
+         api-key: 
+           secure: $HEROKU_API_KEY
+         app: $HEROKU_APP_NAME
+         strategy: git
+       - provider: releases
+         api_key:
+           secure: $GIT_KEY
+         file: "$APP_NAME-$APP_VERSION.jar"
+         skip_cleanup: true
+         name: $APP_VERSION
+         body: "[CHANGELOG](https://$GIT_USER.github.io/$GIT_REPO/changelogs/CHANGELOG-$APP_VERSION)"
+         on:
+           condition: -z $DO_RELEASE

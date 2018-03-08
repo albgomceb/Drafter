@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox" do |v|
+    v.name = "Debian PostGreSQL"
+  end
+
+  config.vm.box = "debian/stretch64"
+  config.vm.host_name = "postgresql"
+  
+  config.vm.network :forwarded_port, guest: 5432, host: 5432
+  config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777", "fmode=666"]
+  config.vm.network "private_network", ip: "10.0.2.15"
+  
+  config.vm.provision :shell, path: "install.sh"
+  config.vm.provision :shell, inline: "sudo docker start postgres", run: "always"
+end
