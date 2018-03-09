@@ -18,7 +18,7 @@ Para ejecutar la aplicación deben definirse:
 * **DATABASE_PASS:** 1234
 * **DIALECT:** org.hibernate.dialect.PostgreSQLDialect
 
-> **Nota:** La variable AUTO, puede valer también validate si se a ejecutado ya la aplicación. Si se pone el valor create-drop, cada vez que se inicie la aplicación se creará la base de datos desde cero.
+> **Nota:** La variable **AUTO**, puede valer también **validate** si se a ejecutado ya la aplicación. Si se pone el valor **create-drop**, cada vez que se inicie la aplicación se creará la base de datos desde cero.
 
 ## Maven
 Para el script de maven ha sido necesario definirlo de manera parametrizado para el script de Travis CI, por tanto, es necesario definir las siguientes variables de entorno, aunque su valor es indiferente. Aqui solo se muestran valores de ejemplo, usar otros valores solo cambiará el nombre del `.jar` que se genere con maven:
