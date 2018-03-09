@@ -6,7 +6,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/albgomceb/Drafter.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/albgomceb/Drafter.svg)
 
-![alt text](https://albgomceb.github.io/Drafter/imgs/logo.png Drafter)
+![alt text](https://albgomceb.github.io/Drafter/imgs/logo.png)
 
 Para ver la documentación de como empezar a desarrollar para este proyecto vaya [aquí](https://albgomceb.github.io/Drafter).
 
