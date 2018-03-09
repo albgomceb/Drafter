@@ -24,6 +24,8 @@ $(document).ready(function(){
   var collectHeaders = function(){
     headings.push({"top":$(this).offset().top - 15,"text":$(this).text()});
   }
+  
+  $(".lines").remove()
 
   if($(".markdown-body h1").length > 1) $(".markdown-body h1").each(collectHeaders)
   else if($(".markdown-body h2").length > 1) $(".markdown-body h2").each(collectHeaders)
