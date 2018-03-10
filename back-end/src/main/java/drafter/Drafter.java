@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Drafter {
 
 	public static void main(String[] args) throws Throwable {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(Drafter.class, args);
 	}
 }

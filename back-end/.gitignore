@@ -24,5 +24,5 @@ nbdist/
 .nb-gradle/
 
 ### Eclipse ###
-target/
-/target/
+bin/
+*.class
