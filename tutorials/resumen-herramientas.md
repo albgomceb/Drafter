@@ -11,7 +11,6 @@ Para preparar el entorno de desarrollo se necesitrán tener instaladas las sigui
 ## 3) IDES
 Este apartado dependerá de las preferencias de cada usuario, las herramientas que se muestran aquí son solo recomendaciones, cualquier otras son válidas:
 * **[Eclipse](https://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/oxygen2):** Se recomienda usar siempre la última versión. Se recomienda o usar la versión normal para [Java](https://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/oxygen2) (no la EE, es muy pesada y lenta) ó la versión para [Spring](https://spring.io/tools/sts).
-* **[Eclipse Spring](https://spring.io/tools/sts):** Como alternativa a Eclipse, tenemos una versión modificada de este preparada para trabajar con proyectos con el framework Spring.
 * **[VS Code](https://code.visualstudio.com/):** Este es el IDE de Microsoft, por tanto, es el que mejor se integra con TypeScript. Se recomienda instalar los plugins Auto Import y Path Autocomplete, sino vinieran ya.
 
 ## 4) Librerías
