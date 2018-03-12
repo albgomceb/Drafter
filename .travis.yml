@@ -17,7 +17,7 @@ notifications:
   - slack: 
       rooms:
         - $SLACK_USER:$SLACK_KEY#$SLACK_ROOM
-      on_success: change
+      on_success: always
       on_success: always
   - email: false
 
