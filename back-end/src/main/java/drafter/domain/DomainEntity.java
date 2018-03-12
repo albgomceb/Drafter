@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Version;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -19,8 +20,9 @@ import javax.persistence.InheritanceType;
 public abstract class DomainEntity {
 
 	private int id;
+	private int version;
 
-	
+
 	public DomainEntity() {
 		super();
 	}
@@ -35,7 +37,16 @@ public abstract class DomainEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	@Version
+	public int getVersion() {
+		return version;
+	}
 
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 
 	@Override
 	public int hashCode() {

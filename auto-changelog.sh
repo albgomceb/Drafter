@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [[ $(git tag -l "$APP_VERSION") != $APP_VERSION ]]; then
-	auto-changelog -o CHANGELOG-$APP_VERSION.md -l false
+	auto-changelog -o CHANGELOG-$APP_VERSION.md -l false -t changelog-template.hbs
 	cd ..
 	git clone --depth=2 --branch=gh-pages https://github.com/$GIT_USER/$GIT_REPO.git repo
 	cd repo
