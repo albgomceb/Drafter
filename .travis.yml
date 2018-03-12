@@ -98,7 +98,7 @@ jobs:
          file: "$APP_NAME-$APP_VERSION.jar"
          skip_cleanup: true
          name: $APP_VERSION
-         body: [CHANGELOG](https://$GIT_USER.github.io/$GIT_REPO/changelogs/CHANGELOG-$APP_VERSION)
+         body: "[CHANGELOG](https://$GIT_USER.github.io/$GIT_REPO/changelogs/CHANGELOG-$APP_VERSION)"
          on:
            condition: -z $DO_RELEASE
    
