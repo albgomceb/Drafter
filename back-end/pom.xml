@@ -9,7 +9,6 @@
 	<packaging>jar</packaging>
 
 
-
 	<name>drafter</name>
 	<description>Drafter project</description>
 
@@ -109,9 +108,27 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<fileName>${env.APP_NAME}-${env.APP_VERSION}</fileName>
+					<mainClass>drafter.Drafter</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
+		
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>PopulateDatabase.xml</exclude>
+				</excludes>
+			</resource>
+			
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>drafter/development/**.*</exclude>
+				</excludes>
+			</resource>
+		</resources>
 	</build>
 	
 	
@@ -154,6 +171,5 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
 
 </project>
