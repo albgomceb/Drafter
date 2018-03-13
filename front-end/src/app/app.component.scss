@@ -1,3 +1,26 @@
-body{
-    background-color: burlywood;
+html,body{
+    background-color: rgb(39, 39, 39);
+    height:100vh!important;
+    margin:0;
+    padding:0;
+}
+
+footer{
+    text-align: center;
+    position: absolute;
+    bottom: 5%;
+    height: 10px;
+    width: 100%;
+}
+
+footer span{
+    color:#ffffff;
+}
+
+footer a{
+    color:darkturquoise;
+}
+
+footer a:hover{
+    text-decoration:none;
 }
