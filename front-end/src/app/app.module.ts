@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { ParticipantsPageComponent } from './componentes/participants-page/participants-page.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { NotFoundPageComponent } from './componentes/not-found-page/not-found-page.component';
+import { LoginPageComponent } from './componentes/login-page/login-page.component';
+import { RegisterPageComponent } from './componentes/register-page/register-page.component';
+import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
     AppComponent,
     ParticipantsPageComponent,
     NavbarComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    LoginPageComponent,
+    RegisterPageComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
