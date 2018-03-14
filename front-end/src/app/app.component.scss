@@ -1,5 +1,5 @@
 html,body{
-    background-color: rgb(39, 39, 39);
+    background-image: url("../assets/img/linen.png");
     height:100vh!important;
     margin:0;
     padding:0;
@@ -14,11 +14,11 @@ footer{
 }
 
 footer span{
-    color:#ffffff;
+    color:black;
 }
 
 footer a{
-    color:darkturquoise;
+    color:rgb(3, 179, 182);
 }
 
 footer a:hover{
