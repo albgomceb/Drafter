@@ -39,7 +39,6 @@ public class PopulateDatabase {
 		System.out.println("Initialising Spring Boot context...\n\n");
 		
 		// No console output
-		disableOutput();
 		
 		// Run Spring Boot
 		ConfigurableApplicationContext context = SpringApplication.run(PopulateDatabase.class, args);
@@ -79,7 +78,7 @@ public class PopulateDatabase {
 			System.out.println("\n");
 			
 			System.out.println("Reading 'PopulateDatabase.xml'...");
-			applicationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
+			applicationContext = new ClassPathXmlApplicationContext("file:src/main/resources/PopulateDatabase.xml");
 			
 			System.out.println("Persisting " + applicationContext.getBeanDefinitionCount() + " entities...\n\n");
 		
