@@ -1,0 +1,75 @@
+.card{
+    background-image: url("../../../assets/img/pw_maze_black.png");
+    width:100%;
+    height: 100%;
+    z-index:1;
+}
+
+button{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+button:hover{
+    background:#00A98F;
+    color: white;
+}
+
+.participants{
+    color: white;
+}
+
+.participants .letter{
+    color:#00A98F;
+}
+
+.sub-participants{
+    color: white;
+    font-family: sans-serif;
+}
+
+.list-group{
+    height:40vh;
+    width:100%;
+    overflow:scroll;
+    overflow-x: hidden;
+    z-index:10;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+.list-group .employed{
+    font-size: 18px;
+}
+
+.list-group .department{
+    color:rgb(107, 107, 107);
+    font-size: 15px;
+    margin-left: 1%;
+}
+
+.list-group a:hover .department{
+    color:black;
+}
+
+.list-group a:hover{
+    background:#00A98F;
+    color: white;
+}
+
+.form-participants{
+    margin: 0 auto;
+    width: 90%;
+}
+
+.logo_fondo{
+    position: absolute;
+    width: 90%;
+    height: 40vh;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #ffffff;
+    text-align: center;
+    z-index: -1;
+}
