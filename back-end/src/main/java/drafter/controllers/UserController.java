@@ -24,7 +24,7 @@ public class UserController {
 	@SuppressWarnings("rawtypes")
 	@GetMapping
     public List findAll(){
-		
+
 		@SuppressWarnings("unchecked")
 		List<User> users = new ArrayList<User>(this.userService.findAll());
 		
