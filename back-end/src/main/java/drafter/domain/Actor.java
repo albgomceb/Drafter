@@ -19,6 +19,13 @@ public class Actor extends DomainEntity {
 	public Actor() {
 		super();
 	}
+	
+	public Actor(String name, String surname, String email) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+	}
 
 
 	//Attributes

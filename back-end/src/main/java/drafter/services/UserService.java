@@ -1,13 +1,12 @@
 
 package drafter.services;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import drafter.repositories.UserRepository;
 import drafter.domain.User;
@@ -30,41 +29,30 @@ public class UserService {
 
 	//CRUD Methods------------------------------------------------------------------------------
 
-	public User create() {
+    public User create(User user) {
+        return userRepository.save(user);
+    }
 
-		//final UserAccount userAccount = new UserAccount();
-		//final Authority aut = new Authority();
-		//aut.setAuthority(Authority.USER);
-		//final Collection<Authority> authorities = userAccount.getAuthorities();
-		//authorities.add(aut);
-		//userAccount.setAuthorities(authorities);
+    public User delete(int id) {
+        User user = findById(id);
+        if(user != null){
+        	userRepository.delete(user);
+        }
+        return user;
+    }
 
-		final User user = new User();
-		//user.setUserAccount(userAccount);
+    @SuppressWarnings("rawtypes")
+	public List findAll() {
+        return userRepository.findAll();
+    }
 
-		return user;
+    public User findById(int id) {
+        return userRepository.getOne(id);
+    }
 
-	}
-
-	public User findOne(final Integer userId) {
-		return this.userRepository.getOne(userId);
-	}
-
-	public Collection<User> findAll() {
-		return this.userRepository.findAll();
-	}
-
-	@SuppressWarnings("deprecation")
-	public User save(final User user) {
-		Assert.notNull(user);;
-		User saved;
-		saved = this.userRepository.save(user);
-		return saved;
-	}
-
-	public void delete(final User user) {
-		this.userRepository.delete(user);
-	}
+    public User update(User user) {
+        return null;
+    }
 
 	//Other business Methods-----------------------------------------------------------------------------
 

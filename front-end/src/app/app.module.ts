@@ -10,6 +10,10 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
+import { UserComponent } from './componentes/user/user.component';
+
+import {UserService} from './componentes/user/user.service';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -20,13 +24,15 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
