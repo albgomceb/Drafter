@@ -12,8 +12,8 @@ import { RegisterPageComponent } from './componentes/register-page/register-page
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { UserComponent } from './componentes/user/user.component';
 
-import {UserService} from './componentes/user/user.service';
 import {HttpClientModule} from "@angular/common/http";
+import { UserService } from './componentes/user/user.service';
 
 
 @NgModule({
