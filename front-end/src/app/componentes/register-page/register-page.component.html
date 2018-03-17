@@ -2,14 +2,23 @@
   <div class="col-md-6 mx-auto mt-3">
     <div class="card text-white bg-dark mb-3">
       <div class="card-body">
-        <h1 class="text-center pt-1">Registro</h1>
+        <h1 class="text-center pt-1">Register</h1>
         <form>
           <div class="form-group">
+            <label for="nombre" >Name</label>
+            <input type="nombre" name="nombre" id="nombre" class="form-control">
+
+            <label for="apellidos" >Surname</label>
+            <input type="apellidos" name="apellidos" id="apellidos" class="form-control">
+
+            <label for="nombreUsuario" >User name</label>
+            <input type="nombreUsuario" name="nombreUsuario" id="nombreUsuario" class="form-control">
+
             <label for="email" >Email</label>
             <input placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
           </div>
           <div class="form-group">
-            <label for="password" >Contraseña</label>
+            <label for="password" >Password</label>
             <input type="password" name="password" id="password" class="form-control">
           </div>
           <button type="submit" class="button btn btn-lg">Enviar</button>
