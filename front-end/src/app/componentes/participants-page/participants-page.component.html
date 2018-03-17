@@ -5,23 +5,28 @@
         <h2 class="participants"><span class="letter">P</span>articipants</h2>
       </div>
       <h6 item-width="100%" class="sub-participants mx-auto">Please, select the meeting participants.</h6>
-      <form class="form-participants mt-3">
-        <div class="list-group">
-          <a *ngFor="let user of users" class="list-group-item list-group-item-action"><span class="employed">{{user.name}}<span class="department"> {{user.job}}</span></span> 
-          </a>
-          
-        </div>
+      <form class="form mt-3">
 
-        <div align="left" class="form-meeting">
-            <label for="title" class="title" >Title</label><br/> 
-            <input type="text" name="title"><br/> <br/>
-            <label for="description" class="description" >Description</label><br/> 
-            <textarea rows="7" cols="50" type="textarea" name="description">
-              </textarea>
+        <div class="container">
+          <div class="form-participants">
+            <div class="list-group">
+              <a *ngFor="let user of users" class="list-group-item list-group-item-action"><span class="employed">{{user.name}}<span class="department"> {{user.job}}</span></span> 
+              </a>
+            </div>
+          </div>
+
+          <div class="form-meeting">
+              <label for="title" class="title" >Title:</label><br/> 
+              <input type="text" name="title"><br/> <br/>
+              <label for="description" class="description" >Description:</label><br/> 
+              <textarea rows="8" cols="50" type="textarea" name="description">
+                </textarea>
+          </div>
         </div>
 
         <br/>
-        <div class="mt-2 buttons" align="center">
+
+        <div class="buttons">
             <button type="submit" class="btn bt-lg mr-1">Next</button>
             <button type="submit" class="btn bt-lg">Cancel</button>
         </div>

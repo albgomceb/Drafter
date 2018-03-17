@@ -19,17 +19,6 @@ button:hover{
     color: white;
 }
 
-.form-meeting .title{
-    color: white;
-    font-size: 16px;
-}
-
-.form-meeting .description{
-    color: white;
-    font-size: 16px;
-}
-
-
 .participants .letter{
     color:#00A98F;
 }
@@ -40,8 +29,8 @@ button:hover{
 }
 
 .list-group{
-    height:40vh;
-    width:50%;
+    width:100%;
+    height: 45vh;
     overflow:scroll;
     overflow-x: hidden;
     z-index:10;
@@ -69,7 +58,36 @@ button:hover{
 }
 
 .form-participants{
+    width:50%;
+    z-index:10;
+    float: right;
+}
+
+.form-meeting{
+    width:50%;
+    z-index:10;
+    float: left;
+}
+
+.form-meeting .title{
+    color: white;
+    font-size: 16px;
+}
+
+.form-meeting .description{
+    color: white;
+    font-size: 16px;
+}
+
+.form{
     margin: 0 auto;
     width: 90%;
     height: 50%;
+}
+
+.buttons{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 40%;
 }
