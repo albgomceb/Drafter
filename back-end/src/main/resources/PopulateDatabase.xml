@@ -11,6 +11,30 @@
 		<property name="email" value="ethompson@user.com" />
 	</bean>
 	
+	<bean id="user2" class="drafter.domain.User">
+		<property name="name" value="Emma" />
+		<property name="surname" value="Potter" />
+		<property name="email" value="epotter@user.com" />
+	</bean>
+	
+	<bean id="user3" class="drafter.domain.User">
+		<property name="name" value="Olivia" />
+		<property name="surname" value="Smith" />
+		<property name="email" value="osmith@user.com" />
+	</bean>
+	
+	<bean id="user4" class="drafter.domain.User">
+		<property name="name" value="Abigail" />
+		<property name="surname" value="Williams" />
+		<property name="email" value="awilliams@user.com" />
+	</bean>
+	
+	<bean id="user5" class="drafter.domain.User">
+		<property name="name" value="Ryan" />
+		<property name="surname" value="Miller" />
+		<property name="email" value="rmiller@user.com" />
+	</bean>
+	
 	
 	
 </beans>
