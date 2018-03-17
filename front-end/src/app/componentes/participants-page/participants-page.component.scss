@@ -36,6 +36,7 @@ button:hover{
     z-index:10;
     background-color: #ffffff;
     float: right;
+    border-radius: 1% 1%;
 }
 
 .list-group .employed{
@@ -74,6 +75,14 @@ button:hover{
     font-size: 16px;
 }
 
+.form-control{
+    width: 80%;
+}
+
+.form-control:focus{
+    border: white!important;
+}
+
 .form-meeting .description{
     color: white;
     font-size: 16px;
@@ -90,4 +99,8 @@ button:hover{
     width: 100%;
     text-align: center;
     margin-top: 40%;
+}
+
+.custom-control-input{
+    background: red;
 }
