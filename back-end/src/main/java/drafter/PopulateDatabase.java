@@ -1,4 +1,4 @@
-package drafter.development;
+package drafter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -79,7 +79,7 @@ public class PopulateDatabase {
 			System.out.println("\n");
 			
 			System.out.println("Reading 'PopulateDatabase.xml'...");
-			applicationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
+			applicationContext = new ClassPathXmlApplicationContext("file:src/main/resources/PopulateDatabase.xml");
 			
 			System.out.println("Persisting " + applicationContext.getBeanDefinitionCount() + " entities...\n\n");
 		
@@ -97,9 +97,9 @@ public class PopulateDatabase {
 				jump = !oldBeanName.equals(entity.getClass().getName()) && !oldBeanName.equals("");
 				oldBeanName = entity.getClass().getName();
 				
-				System.out.println("" + (100*count/entries.size()+100/entries.size()+1) + " > " +  beanName + ": " + entity.getClass().getName());
+				System.out.print("" + (100*count/entries.size()+100/entries.size()) + "% > " +  beanName + ": " + entity.getClass().getSimpleName());
 				entityManager.persist(entity);
-				System.out.println(" -> id = " + entity.getId() + ", version = " + entity.getVersion());
+				System.out.println(" -> id = " + entity.getId() + ", version = " + entity.getVersion() + "\n");
 				
 				attributes += generateAttribute(beanName, entity.getId(), jump);
 				
