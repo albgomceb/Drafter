@@ -19,6 +19,17 @@ button:hover{
     color: white;
 }
 
+.form-meeting .title{
+    color: white;
+    font-size: 20px;
+}
+
+.form-meeting .description{
+    color: white;
+    font-size: 20px;
+}
+
+
 .participants .letter{
     color:#00A98F;
 }
@@ -30,12 +41,12 @@ button:hover{
 
 .list-group{
     height:40vh;
-    width:100%;
+    width:50%;
     overflow:scroll;
     overflow-x: hidden;
     z-index:10;
-    opacity: 0.8;
-    filter: alpha(opacity=80);
+    background-color: #ffffff;
+    float: right;
 }
 
 .list-group .employed{
@@ -60,16 +71,5 @@ button:hover{
 .form-participants{
     margin: 0 auto;
     width: 90%;
-}
-
-.logo_fondo{
-    position: absolute;
-    width: 90%;
-    height: 40vh;
-    top: 52%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: #ffffff;
-    text-align: center;
-    z-index: -1;
+    height: 50%;
 }
