@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'participants-page',
@@ -8,39 +9,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ParticipantsPageComponent implements OnInit {
 
-  public users:Array<any>;
-  constructor(private httpClient:HttpClient) { }
+  users: Array<any>;
 
-  private userUrl = 'http://localhost:8080';
+  constructor(private userService: UserService) {
+
+  }
 
   ngOnInit() {
-    //this.users = this.fakeUsers();
-    //this.getUsers();
-  }
-
-  public fakeUsers():Array<any>
-  {
-    let res = [];
-    res.push({
-      name : 'Josephina Carter',
-      job:'Accounting'
+    this.userService.getUsers().subscribe(data => {
+      this.users = data;
     });
-
-    res.push({
-      name : 'Randall Philipa',
-      job:'Registry'
-    });
-    return res;
-  }
-
-  /*public getUsers():Array<any>
-  {
-    this.httpClient.get('/getUsers')
-    .subscribe(result => {
-      this.users = result;
-      console.log(this.users);
-    });
-
-  }*/
+  };
 
 }
