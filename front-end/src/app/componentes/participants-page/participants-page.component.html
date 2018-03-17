@@ -7,28 +7,9 @@
       <h6 item-width="100%" class="sub-participants mx-auto">Please, select the meeting participants.</h6>
       <form class="form-participants mt-3">
         <div class="list-group">
-          <a class="list-group-item list-group-item-action"><span class="employed">Josephina Carter<span class="department">   Accounting</span></span> 
+          <a *ngFor="let user of users" class="list-group-item list-group-item-action"><span class="employed">{{user.name}}<span class="department"> {{user.job}}</span></span> 
           </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Randall Philipa<span class="department">   Registry</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Hatty Carreen<span class="department">   Marketing</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Nick Richie<span class="department">   Testing</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Barney Carol<span class="department">   Testing</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Rachael Floretta<span class="department">   Development</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Joakim Eindride<span class="department">   Marketing</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Alv Rudolf<span class="department">   Development</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Rebekka Nanna<span class="department">   Development</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Petra Laci<span class="department">   Development</span></span>
-          </a>
-          <a class="list-group-item list-group-item-action"><span class="employed">Magdalena Alpha<span class="department">   Leadership</span></span>
-          </a>
+          
         </div>
 
         <div class="logo_fondo">

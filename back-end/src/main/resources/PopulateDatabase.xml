@@ -3,6 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<!-- User accounts -->
+
+	<bean id="user1" class="drafter.domain.User">
+		<property name="name" value="Emily" />
+		<property name="surname" value="Thompson" />
+		<property name="email" value="ethompson@user.com" />
+	</bean>
+	
 	
 	
 </beans>
