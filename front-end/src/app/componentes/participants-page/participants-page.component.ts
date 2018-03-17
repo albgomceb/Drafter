@@ -11,8 +11,10 @@ export class ParticipantsPageComponent implements OnInit {
   public users:Array<any>;
   constructor(private httpClient:HttpClient) { }
 
+  private userUrl = 'http://localhost:8080';
+
   ngOnInit() {
-    this.users = this.fakeUsers();
+    //this.users = this.fakeUsers();
     //this.getUsers();
   }
 
@@ -33,7 +35,7 @@ export class ParticipantsPageComponent implements OnInit {
 
   /*public getUsers():Array<any>
   {
-    this.httpClient.get('/users')
+    this.httpClient.get('/getUsers')
     .subscribe(result => {
       this.users = result;
       console.log(this.users);
