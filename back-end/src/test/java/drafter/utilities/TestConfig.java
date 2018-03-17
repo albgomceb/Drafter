@@ -7,5 +7,8 @@ public class TestConfig {
 	public static final int user3 = 3;
 	public static final int user4 = 4;
 	public static final int user5 = 5;
+
+	public static final int department1 = 6;
+	public static final int department2 = 7;
 	
 }

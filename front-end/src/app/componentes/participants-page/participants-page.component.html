@@ -7,12 +7,12 @@
       <h6 item-width="100%" class="sub-participants mx-auto">Please, select the meeting participants.</h6>
       <form class="form-participants mt-3">
         <div class="list-group">
-          <a *ngFor="let user of users" class="list-group-item list-group-item-action"><span class="employed">{{user.name}}<span class="department"> {{user.job}}</span></span> 
+          <a *ngFor="let user of users" class="list-group-item list-group-item-action"><span class="employed">{{user.name}} {{user.surname}}<span class="department"> {{user.job}}</span></span> 
           </a>
           
         </div>
 
-        <div align="left" class="form-meeting">
+        <div align="left" class="meeting">
             <label for="title" class="title" >Title</label><br/> 
             <input type="text" name="title"><br/> <br/>
             <label for="description" class="description" >Description</label><br/> 

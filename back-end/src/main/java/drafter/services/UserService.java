@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.repositories.UserRepository;
+import drafter.domain.Department;
 import drafter.domain.User;
 
 @Service
@@ -41,8 +42,7 @@ public class UserService {
         return user;
     }
 
-    @SuppressWarnings("rawtypes")
-	public List findAll() {
+	public List<User> findAll() {
         return userRepository.findAll();
     }
 
@@ -55,6 +55,10 @@ public class UserService {
     }
 
 	//Other business Methods-----------------------------------------------------------------------------
+    
+    public Department findDepartmentByUser(int userId) {
+    	return userRepository.findDepartmentByUser(userId);
+    }
 
 
 	/*public User findByPrincipal() {

@@ -36,5 +36,29 @@
 	</bean>
 	
 	
+	<!-- Department -->
+	
+	
+	<bean id="department1" class="drafter.domain.Department">
+		<property name="name" value="Development" />
+		<property name="users">
+			<list>
+				<ref bean="user1" />
+				<ref bean="user2" />
+				<ref bean="user3" />
+		  	</list>
+		</property>
+	</bean>
+	
+	<bean id="department2" class="drafter.domain.Department">
+		<property name="name" value="Marketing" />
+		<property name="users">
+			<list>
+				<ref bean="user4" />
+				<ref bean="user5" />
+		  	</list>
+		</property>
+	</bean>
+	
 	
 </beans>
