@@ -16,8 +16,6 @@ export class UserService {
 
 
   getUsers(): Observable<any> {
-
     return this.http.get('//localhost:8080/user/list');
-
   }
 }
