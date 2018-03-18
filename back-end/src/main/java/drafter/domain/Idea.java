@@ -70,8 +70,8 @@ public class Idea extends DomainEntity{
 	}
 
 
-	public void setReatingSum(Integer reatingSum) {
-		this.ratingSum = reatingSum;
+	public void setRatingSum(Integer ratingSum) {
+		this.ratingSum = ratingSum;
 	}
 	
 	public Double ratingValue() {
@@ -101,7 +101,7 @@ public class Idea extends DomainEntity{
 
 	@Valid 
 	@NotNull
-	@OneToMany(mappedBy = "IdeaP")
+	@OneToMany(mappedBy = "idea")
 	public Collection<Pros> getPros() {
 		return pros;
 	}
@@ -114,7 +114,7 @@ public class Idea extends DomainEntity{
 	
 	@Valid 
 	@NotNull
-	@OneToMany(mappedBy = "IdeaC")
+	@OneToMany(mappedBy = "idea")
 	public Collection<Cons> getCons() {
 		return cons;
 	}

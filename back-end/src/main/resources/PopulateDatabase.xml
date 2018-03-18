@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	
-	<!— User accounts —>
+	<!-- User accounts-->
 
   <bean id="userAccount1" class="security.UserAccount">
-    <property name="surname" value="admin" />
+    <property name="username" value="admin" />
     <property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
     <property name="authorities">
       <list>
@@ -19,7 +19,7 @@
   </bean>
 
   <bean id="userAccount2" class="security.UserAccount">
-    <property name="surname" value="user1" />
+    <property name="username" value="user1" />
     <property name="password" value="32f0b34812a18cb1bf497a3e672cc80d" />
     <property name="authorities">
       <list>
@@ -31,7 +31,7 @@
   </bean>
 
   <bean id="userAccount3" class="security.UserAccount">
-    <property name="surname" value="user2" />
+    <property name="username" value="user2" />
     <property name="password" value="3daa859a294cdefb20a84840240a76f5" />
     <property name="authorities">
       <list>
@@ -43,7 +43,7 @@
   </bean>
 
   <bean id="userAccount4" class="security.UserAccount">
-    <property name="surname" value="user3" />
+    <property name="username" value="user3" />
     <property name="password" value="0c8746de81268518ff83490301db8652" />
     <property name="authorities">
       <list>
@@ -55,7 +55,7 @@
   </bean>
 
   <bean id="userAccount5" class="security.UserAccount">
-    <property name="surname" value="user4" />
+    <property name="username" value="user4" />
     <property name="password" value="a2da05a88eead7e64593826cafc6a7a7" />
     <property name="authorities">
       <list>
@@ -67,7 +67,7 @@
   </bean>
 
   <bean id="userAccount6" class="security.UserAccount">
-    <property name="surname" value="user5" />
+    <property name="username" value="user5" />
     <property name="password" value="a09dd233386632e297a7f4f461989563" />
     <property name="authorities">
       <list>
@@ -77,6 +77,20 @@
       </list>
     </property>
   </bean>
+  
+  <bean id="admin1" class="domain.Administrador">
+	
+		<property name="name" value="admin1"/>
+		<property name="surname" value="admin1"/>
+		<property name="email" value="admin1@gmail.com"/>
+		<property name="phone" value="900900900"/>
+		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name= "organizations">
+			<list>
+				<ref bean="organization1"/>
+			</list>
+		</property>
+	</bean>	
 	
 	
 	<bean id="user1" class="domain.User">
@@ -86,8 +100,7 @@
 		<property name="email" value="user1@gmail.com"/>
 		<property name="phone" value="900900900"/>
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
-		<property name="name" value="user1"/>
-		<property name= "organizations>
+		<property name= "organizations">
 			<list>
 				<ref bean="organization1"/>
 			</list>
@@ -101,8 +114,7 @@
 		<property name="email" value="user2@gmail.com"/>
 		<property name="phone" value="900900900"/>
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
-		<property name="name" value="user2"/>
-		<property name= "organizations>
+		<property name= "organizations">
 			<list>
 				<ref bean="organization1"/>
 			</list>
@@ -116,8 +128,7 @@
 		<property name="email" value="user3@gmail.com"/>
 		<property name="phone" value="900900900"/>
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
-		<property name="name" value="user3"/>
-		<property name= "organizations>
+		<property name= "organizations">
 			<list>
 			
 			</list>
@@ -131,8 +142,7 @@
 		<property name="email" value="user4@gmail.com"/>
 		<property name="phone" value="900900900"/>
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
-		<property name="name" value="user4"/>
-		<property name= "organizations>
+		<property name= "organizations">
 			<list>
 		
 			</list>
@@ -146,8 +156,7 @@
 		<property name="email" value="user5@gmail.com"/>
 		<property name="phone" value="900900900"/>
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
-		<property name="name" value="user5"/>
-		<property name= "organizations>
+		<property name= "organizations">
 			<list>
 			
 			</list>
@@ -164,10 +173,10 @@
 		<property name="phone" value="900900900"/>
 		<property name="logo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
 		<property name="email" value="organization@gmail.com"/>
-		<property name=creator ref="user1" />
+		<property name="creator" ref="user1" />
 		<property name="departments">
 			<list>
-				<ref = "deparment1"/>
+				<ref bean="deparment1"/>
 			</list>
 		
 		</property>
@@ -181,22 +190,22 @@
 		<property name="phone" value="900900900"/>
 		<property name="logo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
 		<property name="email" value="department1@gmail.com"/>
-		<property name=creator ref ="user1" />
+		<property name="creator" ref ="user1" />
 		<property name="organization" ref="organization1"/>
 		<property name="users"> 
 			<list>
-				<ref = "user1"/>
-				<ref = "user2"/>		
+				<ref bean= "user1"/>
+				<ref bean= "user2"/>		
 			</list>
-		<property/>
+		</property>
 		<property name="participants"> 
 			<list>
-				<ref = "participant1"/>
-				<ref = "participant"/>
-				<ref = "participant3"/>
+				<ref bean= "participant1"/>
+				<ref bean= "participant"/>
+				<ref bean= "participant3"/>
 						
 			</list>
-		<property/>
+		</property>
 		
 	</bean>	
 	
@@ -206,7 +215,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1"/>
 		<property name="department" ref="user1"/>
-		<property name="meeting" ref="standard1">
+		<property name="meeting" ref="standard1"/>
 	
 	</bean>
 	
@@ -216,7 +225,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1"/>
 		<property name="department" ref="user2"/>
-		<property name="meeting" ref="standard1">
+		<property name="meeting" ref="standard1"/>
 	
 	</bean>
 	
@@ -226,7 +235,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1"/>
 		<property name="department" ref="user3"/>
-		<property name="meeting" ref="standard1">
+		<property name="meeting" ref="standard1"/>
 	
 	</bean>
 	
@@ -237,7 +246,7 @@
 		<property name="hasAttended" value="false" />
 	<!--	<property name="department" ref="department1"/> -->
 		<property name="department" ref="user4"/>
-		<property name="meeting" ref="standard2">
+		<property name="meeting" ref="standard2"/>
 	
 	</bean>
 	
@@ -249,7 +258,7 @@
 		<property name="hasAttended" value="true" />
 	<!--	<property name="department" ref="department1"/>-->
 		<property name="department" ref="user5"/>
-		<property name="meeting" ref="standard2">
+		<property name="meeting" ref="standard2"/>
 	
 	</bean>
 	
@@ -261,7 +270,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1"/>
 		<property name="department" ref="user1"/>
-		<property name="meeting" ref="standard2">
+		<property name="meeting" ref="standard2"/>
 	
 	</bean>
 	
@@ -281,9 +290,9 @@
 		</property>
 		<property name="participants">
 			<list>
-				<ref="user1">
-				<ref="user2">
-				<ref="user3">
+				<ref bean="user1"/>
+				<ref bean="user2"/>
+				<ref bean="user3"/>
 			</list>
 		</property>
 		<property name="steps">
@@ -312,9 +321,9 @@
 		</property>
 		<property name="participants">
 			<list>
-				<ref="user1">
-				<ref="user4">
-				<ref="user5">
+				<ref bean="user1"/>
+				<ref bean="user4"/>
+				<ref bean="user5"/>
 			</list>
 		</property>
 		<property name="steps">

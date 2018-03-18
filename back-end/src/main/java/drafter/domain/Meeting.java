@@ -136,7 +136,7 @@ public abstract class Meeting extends DomainEntity{
 	 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "meet")
+	@OneToMany(mappedBy = "meeting")
 	public Collection<Agenda> getAgendas() {
 		return agendas;
 	}
@@ -160,7 +160,7 @@ public abstract class Meeting extends DomainEntity{
 
 	@NotNull
 	@Valid
-	@ManyToOne(optional = false )
+	@OneToMany(mappedBy = "meeting")
 	public Collection<Participant> getParticipants() {
 		return participants;
 	}
@@ -172,7 +172,7 @@ public abstract class Meeting extends DomainEntity{
 	
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "meetstep")
+	@OneToMany(mappedBy = "meeting")
 	public Collection<Step> getSteps() {
 		return steps;
 	}

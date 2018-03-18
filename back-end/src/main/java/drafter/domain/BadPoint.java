@@ -55,7 +55,7 @@ public class BadPoint extends DomainEntity{
 	
 	@Valid
 	@NotNull
-	@OneToMany(mappedBy="bpoint")
+	@OneToMany(mappedBy="badpoint")
 	public Collection<BadPoint> getCorrections() {
 		return corrections;
 	}

@@ -23,7 +23,7 @@ public class SixHats extends DomainEntity{
 	
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "sixHat")
+	@OneToMany(mappedBy = "sixHats")
 	public Collection<Hat> getHats() {
 		return hats;
 	}

@@ -55,20 +55,20 @@ public class Agenda extends DomainEntity{
 	
 	
 
-	private Meeting meet; 
+	private Meeting meeting; 
 	private Collection<Conclusion> conclusion; 
 	
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
-	public Meeting getMeet() {
-		return meet;
+	public Meeting getMeeting() {
+		return meeting;
 	}
 	
 	
 	
-	public void setMeet(Meeting meet) {
-		this.meet = meet;
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
 	}
 	
 	

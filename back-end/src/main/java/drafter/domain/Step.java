@@ -81,18 +81,18 @@ public class Step extends DomainEntity{
 	
 
 
-	private Meeting meetstep; 
+	private Meeting meeting; 
 	
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Meeting getMeet() {
-		return meetstep;
+	public Meeting getMeeting() {
+		return meeting;
 	}
 
 
-	public void setMeet(Meeting meetstep) {
-		this.meetstep = meetstep;
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
 	}
 	
 	

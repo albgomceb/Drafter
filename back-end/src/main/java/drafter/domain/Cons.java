@@ -63,19 +63,19 @@ public class Cons extends DomainEntity{
 	// Relationships-------------------------------------
 	
 	
-	private Idea ideaC; 
+	private Idea idea; 
 	
 	@Valid
 	@NotNull
 	@ManyToOne(optional = true)
 	public Idea getIdea() {
-		return ideaC;
+		return idea;
 	}
 
 
 
-	public void setIdea(Idea ideaC) {
-		this.ideaC = ideaC;
+	public void setIdea(Idea idea) {
+		this.idea = idea;
 	}
 
 

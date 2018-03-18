@@ -48,18 +48,18 @@ public class Hat extends DomainEntity{
 	}
 
 
-	private SixHats sixH; 
+	private SixHats sixHats; 
 	
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
-	public SixHats getSixH() {
-		return sixH;
+	public SixHats getSixHats() {
+		return sixHats;
 	}
 
 
-	public void setSixH(SixHats sixH) {
-		this.sixH = sixH;
+	public void setSixHats(SixHats sixHats) {
+		this.sixHats = sixHats;
 	}
 	
 	
