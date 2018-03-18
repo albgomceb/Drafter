@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
@@ -48,7 +49,6 @@ public class Department extends DomainEntity{
 	
 
 	private Organization organization; 
-	private Collection<Participant> participants; 
 	private Collection<User> users; 
 	
 	@NotNull
@@ -65,21 +65,8 @@ public class Department extends DomainEntity{
 	}
 
 
-	@NotNull
-	@Valid
-	@OneToMany(mappedBy = "department")
-	public Collection<Participant> getParticipants() {
-		return participants;
-	}
 
-
-
-	public void setParticipants(Collection<Participant> participants) {
-		this.participants = participants;
-	}
-
-
-	@NotNull
+	@NotEmpty
 	@Valid
 	@ManyToMany
 	public Collection<User> getUsers() {

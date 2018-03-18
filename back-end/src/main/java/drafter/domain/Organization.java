@@ -113,30 +113,30 @@ public class Organization extends DomainEntity{
 	// Relationships-------------------------------------
 	
 
-	private User creator;
-	private Collection<Department> departaments; 
+	private User user;
+	private Collection<Department> departments; 
 	
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
-	public User getCreator() {
-		return creator;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCreator(User creator) {
-		this.creator = creator;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
 	@NotNull
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
-	public Collection<Department> getDepartaments() {
-		return departaments;
+	public Collection<Department> getDepartments() {
+		return departments;
 	}
 
-	public void setDepartaments(Collection<Department> departaments) {
-		this.departaments = departaments;
+	public void setDepartments(Collection<Department> departments) {
+		this.departments = departments;
 	}
 	
 	

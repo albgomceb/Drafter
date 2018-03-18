@@ -146,7 +146,6 @@ public abstract class Meeting extends DomainEntity{
 	}
 
 
-	@NotNull
 	@Valid
 	@ManyToOne(optional = true)
 	public Project getProject() {

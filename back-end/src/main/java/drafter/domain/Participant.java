@@ -58,13 +58,10 @@ public class Participant extends DomainEntity{
 	
 	// Relationships-------------------------------------
 
-
-
 	private Department department; 
 	private User user; 
 	private Meeting meeting; 
 	
-	@NotNull
 	@Valid
 	@ManyToOne(optional = true)
 	public Department getDepartment() {
