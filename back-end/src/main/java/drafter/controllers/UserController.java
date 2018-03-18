@@ -23,7 +23,7 @@ public class UserController {
 	private UserService	userService;
  
 	
-	@RequestMapping(value = "/", produces = {"application/json"}, method = RequestMethod.GET)
+	@RequestMapping(value = "", produces = {"application/json"}, method = RequestMethod.GET)
 //	@ResponseBody
     public List<UserBean> findAll(){
 		List<User> res = this.userService.findAll(); 
