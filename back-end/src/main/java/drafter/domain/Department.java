@@ -6,60 +6,93 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.validator.constraints.SafeHtml;
 
-@SuppressWarnings("deprecation")
 @Entity
 @Access(AccessType.PROPERTY)
-@Transactional
-public class Department extends DomainEntity {
+public class Department extends DomainEntity{
 
+
+	//Atributes------------------------------------------
+	private String name; 
+	
+	
+	
+	//Constructor----------------------------------------
 	public Department() {
-		super();
-	}
-	
-	public Department(String name) {
-		super();
-		this.name = name;
+		
 	}
 
 
-	//Attributes
 
-	private String	name;
+	//Methods--------------------------------------------
 	
-	
-
-
 	@NotBlank
+	@SafeHtml
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
-	public void setName(final String name) {
+
+	public void setName(String name) {
 		this.name = name;
 	}
+	
+	// Relationships-------------------------------------
+	
 
+	private Organization organization; 
+	private Collection<Participant> participants; 
+	private Collection<User> users; 
 	
-	//Relationships
-	
-	private Collection<User> users;
-	
-	@ManyToMany
-	@NotEmpty
+	@NotNull
 	@Valid
-	public Collection<User> getUsers(){
+	@ManyToOne(optional=false)
+	public Organization getOrganization() {
+		return organization;
+	}
+
+
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "department")
+	public Collection<Participant> getParticipants() {
+		return participants;
+	}
+
+
+
+	public void setParticipants(Collection<Participant> participants) {
+		this.participants = participants;
+	}
+
+
+	@NotNull
+	@Valid
+	@ManyToMany
+	public Collection<User> getUsers() {
 		return users;
 	}
-	
-	public void setUsers(Collection<User> users){
+
+
+
+	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
+
 	
-
+	
+	
 }
-

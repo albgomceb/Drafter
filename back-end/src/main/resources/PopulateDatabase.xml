@@ -3,62 +3,368 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- User accounts -->
+	
+	<!— User accounts —>
 
-	<bean id="user1" class="drafter.domain.User">
-		<property name="name" value="Emily" />
-		<property name="surname" value="Thompson" />
-		<property name="email" value="ethompson@user.com" />
-	</bean>
+  <bean id="userAccount1" class="security.UserAccount">
+    <property name="surname" value="admin" />
+    <property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+    <property name="authorities">
+      <list>
+        <bean class="security.Authority">
+          <property name="authority" value="ADMIN" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="userAccount2" class="security.UserAccount">
+    <property name="surname" value="user1" />
+    <property name="password" value="32f0b34812a18cb1bf497a3e672cc80d" />
+    <property name="authorities">
+      <list>
+        <bean class="security.Authority">
+          <property name="authority" value="USER" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="userAccount3" class="security.UserAccount">
+    <property name="surname" value="user2" />
+    <property name="password" value="3daa859a294cdefb20a84840240a76f5" />
+    <property name="authorities">
+      <list>
+        <bean class="security.Authority">
+          <property name="authority" value="USER" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="userAccount4" class="security.UserAccount">
+    <property name="surname" value="user3" />
+    <property name="password" value="0c8746de81268518ff83490301db8652" />
+    <property name="authorities">
+      <list>
+        <bean class="security.Authority">
+          <property name="authority" value="USER" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="userAccount5" class="security.UserAccount">
+    <property name="surname" value="user4" />
+    <property name="password" value="a2da05a88eead7e64593826cafc6a7a7" />
+    <property name="authorities">
+      <list>
+        <bean class="security.Authority">
+          <property name="authority" value="USER" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="userAccount6" class="security.UserAccount">
+    <property name="surname" value="user5" />
+    <property name="password" value="a09dd233386632e297a7f4f461989563" />
+    <property name="authorities">
+      <list>
+        <bean class="security.Authority">
+          <property name="authority" value="USER" />
+        </bean>
+      </list>
+    </property>
+  </bean>
 	
-	<bean id="user2" class="drafter.domain.User">
-		<property name="name" value="Emma" />
-		<property name="surname" value="Potter" />
-		<property name="email" value="epotter@user.com" />
-	</bean>
 	
-	<bean id="user3" class="drafter.domain.User">
-		<property name="name" value="Olivia" />
-		<property name="surname" value="Smith" />
-		<property name="email" value="osmith@user.com" />
-	</bean>
+	<bean id="user1" class="domain.User">
 	
-	<bean id="user4" class="drafter.domain.User">
-		<property name="name" value="Abigail" />
-		<property name="surname" value="Williams" />
-		<property name="email" value="awilliams@user.com" />
-	</bean>
-	
-	<bean id="user5" class="drafter.domain.User">
-		<property name="name" value="Ryan" />
-		<property name="surname" value="Miller" />
-		<property name="email" value="rmiller@user.com" />
-	</bean>
-	
-	
-	<!-- Department -->
-	
-	
-	<bean id="department1" class="drafter.domain.Department">
-		<property name="name" value="Development" />
-		<property name="users">
+		<property name="name" value="user1"/>
+		<property name="surname" value="user1"/>
+		<property name="email" value="user1@gmail.com"/>
+		<property name="phone" value="900900900"/>
+		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="name" value="user1"/>
+		<property name= "organizations>
 			<list>
-				<ref bean="user1" />
-				<ref bean="user2" />
-				<ref bean="user3" />
-		  	</list>
+				<ref bean="organization1"/>
+			</list>
 		</property>
+	</bean>	
+		
+	<bean id="user2" class="domain.User">
+	
+		<property name="name" value="user2"/>
+		<property name="surname" value="user2"/>
+		<property name="email" value="user2@gmail.com"/>
+		<property name="phone" value="900900900"/>
+		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="name" value="user2"/>
+		<property name= "organizations>
+			<list>
+				<ref bean="organization1"/>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="user3" class="domain.User">
+	
+		<property name="name" value="user3"/>
+		<property name="surname" value="user3"/>
+		<property name="email" value="user3@gmail.com"/>
+		<property name="phone" value="900900900"/>
+		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="name" value="user3"/>
+		<property name= "organizations>
+			<list>
+			
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="user4" class="domain.User">
+	
+		<property name="name" value="user4"/>
+		<property name="surname" value="user4"/>
+		<property name="email" value="user4@gmail.com"/>
+		<property name="phone" value="900900900"/>
+		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="name" value="user4"/>
+		<property name= "organizations>
+			<list>
+		
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="user5" class="domain.User">
+	
+		<property name="name" value="user5"/>
+		<property name="surname" value="user5"/>
+		<property name="email" value="user5@gmail.com"/>
+		<property name="phone" value="900900900"/>
+		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="name" value="user5"/>
+		<property name= "organizations>
+			<list>
+			
+			</list>
+		</property>
+	</bean>	
+	
+	
+	
+	<bean id="organization1" class="domain.Organization">
+	
+		<property name="enterprise" value="organization1"/>
+		<property name="description" value="organization1"/>
+		<property name="address" value="organization"/>
+		<property name="phone" value="900900900"/>
+		<property name="logo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="email" value="organization@gmail.com"/>
+		<property name=creator ref="user1" />
+		<property name="departments">
+			<list>
+				<ref = "deparment1"/>
+			</list>
+		
+		</property>
+	</bean>	
+	
+	<bean id="department1" class="domain.Department">
+	
+		<property name="enterprise" value="department1"/>
+		<property name="description" value="department1"/>
+		<property name="address" value="department1"/>
+		<property name="phone" value="900900900"/>
+		<property name="logo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="email" value="department1@gmail.com"/>
+		<property name=creator ref ="user1" />
+		<property name="organization" ref="organization1"/>
+		<property name="users"> 
+			<list>
+				<ref = "user1"/>
+				<ref = "user2"/>		
+			</list>
+		<property/>
+		<property name="participants"> 
+			<list>
+				<ref = "participant1"/>
+				<ref = "participant"/>
+				<ref = "participant3"/>
+						
+			</list>
+		<property/>
+		
+	</bean>	
+	
+	<bean id="participant1" class="domain.Participant">
+	
+		<property name="role" value="participant1"/>
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1"/>
+		<property name="department" ref="user1"/>
+		<property name="meeting" ref="standard1">
+	
 	</bean>
 	
-	<bean id="department2" class="drafter.domain.Department">
-		<property name="name" value="Marketing" />
-		<property name="users">
-			<list>
-				<ref bean="user4" />
-				<ref bean="user5" />
-		  	</list>
-		</property>
+	<bean id="participant2" class="domain.Participant">
+	
+		<property name="role" value="participant2"/>
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1"/>
+		<property name="department" ref="user2"/>
+		<property name="meeting" ref="standard1">
+	
 	</bean>
+	
+	<bean id="participant3" class="domain.Participant">
+	
+		<property name="role" value="participant3"/>
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1"/>
+		<property name="department" ref="user3"/>
+		<property name="meeting" ref="standard1">
+	
+	</bean>
+	
+	
+	<bean id="participant4" class="domain.Participant">
+	
+		<property name="role" value="participant4"/>
+		<property name="hasAttended" value="false" />
+	<!--	<property name="department" ref="department1"/> -->
+		<property name="department" ref="user4"/>
+		<property name="meeting" ref="standard2">
+	
+	</bean>
+	
+	
+	
+	<bean id="participant5" class="domain.Participant">
+	
+		<property name="role" value="participant5"/>
+		<property name="hasAttended" value="true" />
+	<!--	<property name="department" ref="department1"/>-->
+		<property name="department" ref="user5"/>
+		<property name="meeting" ref="standard2">
+	
+	</bean>
+	
+	
+	
+	<bean id="participant6" class="domain.Participant">
+	
+		<property name="role" value="participant6"/>
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1"/>
+		<property name="department" ref="user1"/>
+		<property name="meeting" ref="standard2">
+	
+	</bean>
+	
+	<bean id="standard1" class="domain.Standard">
+		<property name="title" value="standard1"/>
+		<property name="description" value="standard1"/>
+		<property name="date" value="standard1"/>
+		<property name="numberOfMetting" value="standard1"/>
+		<property name="image" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="timer" value="2018/01/01 00:22"/>
+		<property name="hasfinished" value="false"/>
+	<!--	<property name="project" ref="project1"/>-->
+		<property name="agendas">
+			<list>
+				
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref="user1">
+				<ref="user2">
+				<ref="user3">
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+				
+			</list>
+		</property>
+		
+	
+	</bean>
+	
+	
+		<bean id="standard2" class="domain.Standard">
+		<property name="title" value="standard2"/>
+		<property name="description" value="standard2"/>
+		<property name="date" value="standard2"/>
+		<property name="numberOfMetting" value="standard2"/>
+		<property name="image" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
+		<property name="timer" value="2018/01/01 00:22"/>
+		<property name="hasfinished" value="false"/>
+	<!--	<property name="project" ref="project1"/>-->
+		<property name="agendas">
+			<list>
+				
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref="user1">
+				<ref="user4">
+				<ref="user5">
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+				
+			</list>
+		</property>
+		
+	
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </beans>

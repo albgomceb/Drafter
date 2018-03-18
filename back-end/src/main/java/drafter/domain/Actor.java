@@ -2,91 +2,107 @@ package drafter.domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
-import org.springframework.transaction.annotation.Transactional;
 
-@SuppressWarnings("deprecation")
+import drafter.security.UserAccount;
+
+
 @Entity
 @Access(AccessType.PROPERTY)
-@Transactional
-public class Actor extends DomainEntity {
+public abstract class Actor extends DomainEntity{
 
+	//Atributes------------------------------------------
+	
+	private String name; 
+	private String surname; 
+	private String email; 
+	private String phone; 
+	private String photo; 
+	
+	//Constructor----------------------------------------
 	public Actor() {
-		super();
-	}
-	
-	public Actor(String name, String surname, String email) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
+		
 	}
 
-
-	//Attributes
-
-	private String	name;
-	private String	surname;
-	private String	email;
-	private String	phone;
-	private String	picture;
+	//Methods--------------------------------------------
 	
-	
-
-
+	@SafeHtml
 	@NotBlank
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
-	public void setName(final String name) {
+	
+	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	@SafeHtml
 	@NotBlank
 	public String getSurname() {
-		return this.surname;
+		return surname;
 	}
 
-	public void setSurname(final String surname) {
+
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	@NotBlank
+
 	@Email
+	@NotBlank
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
-	public void setEmail(final String email) {
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	@Pattern(regexp = "^\\+?\\d{1,3}?[- .]?\\(?(?:\\d{2,3})\\)?[- .]?\\d\\d\\d[- .]?\\d\\d\\d\\d$")
+	//@Pattern(regexp = "(^((\\+)[1-9]\\d{0,2}[ ])?([(](\\d\\d[1-9]|[1-9]\\d\\d|\\d[1-9]\\d)[)][ ])?\\w([ -]?\\w){3}([ -]?\\w)*$)?")
 	public String getPhone() {
-		return this.phone;
+		return phone;
 	}
 
-	public void setPhone(final String phone) {
+
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
+	@Lob
+	@SafeHtml
 	@URL
-	public String getPicture() {
-		return picture;
+	public String getPhoto() {
+		return photo;
 	}
 
-	public void setPicture(String picture) {
-		this.picture = picture;
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
 	
-
 	
-
+	// Relationships-------------------------------------
+	
+	private UserAccount userAccount; 
+	
+	@NotNull
+	@Valid
+	@OneToOne(cascade = CascadeType.ALL)
+	public UserAccount getUserAccount() {
+		return userAccount; 
+	}
+	
 }
