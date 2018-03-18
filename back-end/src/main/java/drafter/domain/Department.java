@@ -1,13 +1,13 @@
 package drafter.domain;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,7 +49,7 @@ public class Department extends DomainEntity{
 	
 
 	private Organization organization; 
-	private Collection<User> users; 
+	private List<User> users; 
 	
 	@NotNull
 	@Valid
@@ -69,13 +69,13 @@ public class Department extends DomainEntity{
 	@NotEmpty
 	@Valid
 	@ManyToMany
-	public Collection<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
 
 
-	public void setUsers(Collection<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 

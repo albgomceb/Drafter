@@ -71,33 +71,33 @@ public abstract class DomainEntity {
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(this.getClass().getSimpleName() + " -> {\n");
-		for(Field f : getFields(this.getClass(), this, null)) {
-			try {
-				f.setAccessible(true);
-				String str;
-				if(DomainEntity.class.isAssignableFrom(f.getType())) {
-					DomainEntity other = (DomainEntity) f.get(this);
-					str = "["+ (other!=null?other.getId():"null") + "]";
-				} else {
-					str = ""+f.get(this);
-					if(str.length() > 180)
-						str = str.substring(0, 180) + "...";
-				}
-				
-				sb.append("\t"+f.getName());
-				sb.append(": ");
-				sb.append(str+";\n");
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-		}
-		sb.append("}\n");
-		return sb.toString();
-	}
+//	@Override
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(this.getClass().getSimpleName() + " -> {\n");
+//		for(Field f : getFields(this.getClass(), this, null)) {
+//			try {
+//				f.setAccessible(true);
+//				String str;
+//				if(DomainEntity.class.isAssignableFrom(f.getType())) {
+//					DomainEntity other = (DomainEntity) f.get(this);
+//					str = "["+ (other!=null?other.getId():"null") + "]";
+//				} else {
+//					str = ""+f.get(this);
+//					if(str.length() > 180)
+//						str = str.substring(0, 180) + "...";
+//				}
+//				
+//				sb.append("\t"+f.getName());
+//				sb.append(": ");
+//				sb.append(str+";\n");
+//			} catch (Throwable e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		sb.append("}\n");
+//		return sb.toString();
+//	}
 	
 	private static List<Field> getFields(Class<?> clazz, Object obj, List<Field> res) {
 		if(res == null)

@@ -1,6 +1,7 @@
 package drafter.domain;
 
-import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -20,29 +21,29 @@ public class User extends Actor	{
 
 	// Relationships-------------------------------------
 
-	private Collection<Department> departments;
-	private Collection<Organization> organizations;
+	private List<Department> departments;
+	private List<Organization> organizations;
 	
 	@NotNull
 	@Valid
 	@ManyToMany
-	public Collection<Department> getDepartments() {
+	public List<Department> getDepartments() {
 		return departments;
 	}
 
 
-	public void setDepartments(Collection<Department> departments) {
+	public void setDepartments(List<Department> departments) {
 		this.departments = departments;
 	}
 
 	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "user")
-	public Collection<Organization> getOrganizations() {
+	public List<Organization> getOrganizations() {
 		return organizations;
 	}
 
-	public void setOrganizations(Collection<Organization> organizations) {
+	public void setOrganizations(List<Organization> organizations) {
 		this.organizations = organizations;
 	}
 

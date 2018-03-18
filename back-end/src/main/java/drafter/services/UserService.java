@@ -8,9 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import drafter.repositories.UserRepository;
-import drafter.domain.Department;
 import drafter.domain.User;
+import drafter.repositories.UserRepository;
 
 @Service
 @Transactional

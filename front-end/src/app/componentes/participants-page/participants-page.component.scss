@@ -101,6 +101,15 @@ button:hover{
     margin-top: 40%;
 }
 
-.custom-control-input{
-    background: red;
+button.add{
+    background: rgb(214, 214, 214);
+    color:black;
+    border-color: rgb(80, 80, 80) ;
+    border-width: 2px;
+    border-style: double;
+}
+
+button.add:hover{
+    background:white;
+    color:black;
 }
