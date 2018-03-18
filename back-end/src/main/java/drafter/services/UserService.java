@@ -55,10 +55,6 @@ public class UserService {
     }
 
 	//Other business Methods-----------------------------------------------------------------------------
-    
-    public Department findDepartmentByUser(int userId) {
-    	return userRepository.findDepartmentByUser(userId);
-    }
 
 
 	/*public User findByPrincipal() {

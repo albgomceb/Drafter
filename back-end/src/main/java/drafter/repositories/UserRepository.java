@@ -9,9 +9,6 @@ import drafter.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	
-	@Query("select d from Department d join d.users u where u.id = ?1")
-	Department findDepartmentByUser(int userId);
 
 
 }
