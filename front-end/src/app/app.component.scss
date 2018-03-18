@@ -1,0 +1,32 @@
+html,body{
+    background-image: url("../assets/img/linen.png");
+    height:100vh!important;
+    margin:0;
+    padding:0;
+    z-index: 0;
+    width: 100%;
+}
+
+footer{
+    text-align: center;
+    position: absolute;
+    bottom: 5%;
+    height: 10px;
+    width: 100%;
+}
+
+footer span{
+    color:black;
+}
+
+footer a{
+    color:rgb(3, 179, 182);
+}
+
+footer a:hover{
+    text-decoration:none;
+}
+
+.container{
+    max-width: 65%;
+}

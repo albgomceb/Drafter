@@ -34,6 +34,11 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -93,6 +98,17 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 		
+		<!-- WebScokets -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+		</dependency>
+		
 		<!-- For @SafeHtml -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -119,13 +135,6 @@
 				<directory>src/main/resources</directory>
 				<excludes>
 					<exclude>PopulateDatabase.xml</exclude>
-				</excludes>
-			</resource>
-			
-			<resource>
-				<directory>src/main/java</directory>
-				<excludes>
-					<exclude>drafter/development/**.*</exclude>
 				</excludes>
 			</resource>
 		</resources>
