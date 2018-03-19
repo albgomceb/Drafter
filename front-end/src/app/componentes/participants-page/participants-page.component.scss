@@ -1,5 +1,5 @@
 .card{
-    background:rgb(240, 240, 240);
+    background: rgb(219, 219, 219);
     width:100%;
     height: 100%;
     z-index:1;
@@ -30,7 +30,7 @@ button:hover{
 }
 
 .list-group{
-    width:100%;
+    width:90%;
     height: 45vh;
     overflow:scroll;
     overflow-x: hidden;
@@ -38,7 +38,6 @@ button:hover{
     background-color: #ffffff;
     float: right;
     border-radius: 1% 1%;
-    border:1px groove gray;
 }
 
 .list-group .employed{
@@ -73,11 +72,11 @@ button:hover{
 }
 
 .form-control{
-    width: 60%;
+    width: 90%;
 }
 
 .desc-input{
-    width: 80%;
+    width: 90%;
 }
 
 .form-meeting .title{
