@@ -26,7 +26,6 @@ public class UserController {
 	@GetMapping("")
 	public List<UserBean> findAll() {
 		List<User> res = this.userService.findAll();
-		System.out.println(res.getClass().getSimpleName());
 		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
 
 		return result;
