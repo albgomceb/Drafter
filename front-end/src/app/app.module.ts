@@ -13,6 +13,7 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
+import { RealTimeService } from './services/real-time.service';
 
 
 @NgModule({
@@ -30,7 +31,10 @@ import { UserService } from './componentes/services/user.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    RealTimeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
