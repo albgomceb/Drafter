@@ -7,8 +7,10 @@
 }
 
 button{
-    background-color: #ffffff;
-    color: #000000;
+    //background-color: #ffffff;
+    background: #333;
+    //color: #000000;
+    color: #fff;
 }
 
 button:hover{
@@ -47,10 +49,17 @@ button:hover{
 .list-group .department{
     color:rgb(107, 107, 107);
     font-size: 15px;
-    margin-left: 1%;
 }
 
 .list-group a:hover .department{
+    color:black;
+}
+
+.list-group .organization{
+    color:rgb(107, 107, 107);
+}
+
+.list-group a:hover .organization{
     color:black;
 }
 
@@ -105,9 +114,6 @@ button:hover{
 button.add{
     background: rgb(214, 214, 214);
     color:black;
-    border-color: rgb(80, 80, 80) ;
-    border-width: 2px;
-    border-style: double;
 }
 
 button.add:hover{
