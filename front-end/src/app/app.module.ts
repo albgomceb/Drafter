@@ -10,6 +10,18 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
+import {HttpClientModule} from "@angular/common/http";
+
+
+import { fakeBackendProvider } from './componentes/helpers/fake-backend';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';
+import { AuthGuard } from './componentes/guards/auth.guard';
+import { AuthenticationService } from './componentes/services/authentication.service';
+import { UserService } from './componentes/services/user.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 
 
 @NgModule({
@@ -20,13 +32,24 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthGuard,
+  AuthenticationService,
+  AuthService,
+  UserService,
+  // providers used to create fake backend
+  fakeBackendProvider,
+  MockBackend,
+  BaseRequestOptions],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
