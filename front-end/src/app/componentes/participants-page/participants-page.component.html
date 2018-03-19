@@ -13,7 +13,7 @@
               <div *ngFor="let user of users">
                 <a class="list-group-item list-group-item-action">
                     <button type="button" class="btn bt-lg mr-1 add">Add</button>
-                    <span class="employed">{{user.name}}<span class="department" *ngFor="let d of user.departments"> {{d.name}}</span></span>
+                    <span class="employed">{{user.name}} <span class="organization" *ngFor="let o of user.organizations">{{o.name}}</span><span class="department" *ngFor="let d of user.departments"> ({{d.name}})</span></span>
                 </a>
               </div>
             </div>

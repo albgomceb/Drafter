@@ -130,6 +130,7 @@
 		</property>
 		<property name="organizations">
 			<list>
+				<ref bean="organization1"/>
 			</list>
 		
 		</property>
@@ -145,11 +146,13 @@
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
 		<property name="departments">
 			<list>
+				<ref bean="department1"/>
 			</list>
 		
 		</property>
 		<property name="organizations">
 			<list>
+				<ref bean="organization1"/>
 			</list>
 		
 		</property>
@@ -165,11 +168,13 @@
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
 		<property name="departments">
 			<list>
+				<ref bean="department1"/>
 			</list>
 		
 		</property>
 		<property name="organizations">
 			<list>
+				<ref bean="organization1"/>
 			</list>
 		
 		</property>
@@ -185,11 +190,13 @@
 		<property name="photo" value="https://image.flaticon.com/icons/svg/30/30712.svg"/>
 		<property name="departments">
 			<list>
+				<ref bean="department1"/>
 			</list>
 		
 		</property>
 		<property name="organizations">
 			<list>
+				<ref bean="organization1"/>
 			</list>
 		
 		</property>
