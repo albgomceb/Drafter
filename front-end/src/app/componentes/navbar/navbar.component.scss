@@ -1,0 +1,33 @@
+.navbar{
+    background-image: url("../../../assets/img/pw_maze_black.png");
+}
+
+.navbar a{
+    color: rgb(168, 168, 168);
+    font-family: sans-serif;
+}
+
+.navbar a:hover{
+    color:rgb(255, 255, 255);
+}
+
+.navbar-brand{
+    font-size: 40px;
+    font-family: serif;
+    margin-left: 3%;
+    padding-top: 0;
+    margin-top:0;
+}
+
+.navbar-brand span{
+    vertical-align: middle;
+}
+
+.collapse a{
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+
+
+
