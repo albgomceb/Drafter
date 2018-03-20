@@ -12,7 +12,6 @@ public class UserBean {
 	public  String phone; 
 	public String photo;
 	public List<Option> departments;
-	public  List<Option> organizations;
 	
 	
 	public String getName() {
@@ -50,12 +49,6 @@ public class UserBean {
 	}
 	public void setDepartments(List<Option> departments) {
 		this.departments = departments;
-	}
-	public List<Option> getOrganizations() {
-		return organizations;
-	}
-	public void setOrganizations(List<Option> organizations) {
-		this.organizations = organizations;
 	}
 	
 	
