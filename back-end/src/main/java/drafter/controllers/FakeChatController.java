@@ -16,7 +16,7 @@ public class FakeChatController {
 		this.template = template;
 	}
 	
-	@MessageMapping("/send/msg/{meetingId}")
+	@MessageMapping("/send-fake/msg/{meetingId}")
 	public void sendMsg(@DestinationVariable int meetingId, String msg) {
 		template.convertAndSend("/meeting/" + meetingId, msg);
 	}
