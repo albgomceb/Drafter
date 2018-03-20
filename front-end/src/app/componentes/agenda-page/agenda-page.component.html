@@ -2,15 +2,15 @@
   agenda-page works!
 </p>
 {{entradas| json}}
-<div *ngFor="let entrada of entradas">
-  <div class="index">{{entradas.indexOf(entrada)+1}}. 
-    <input type = "text" [(ngModel)]="entrada.name"  *ngIf="entrada.isInput; else agenda" (focusout)="convert(entrada)" 
-      (keyup.enter)="convert(entrada); addAgenda()" placeholder="Punto del día"/>
-    <ng-template #agenda>
-      <div (click)="convert(entrada)">{{entrada.name}}</div>
-    </ng-template>
-    <button type="button" (click)="removeAgenda(agenda)">Remove</button>
-  </div>
-</div>
+<table class="table table-hover">
+  <div *ngFor="let entrada of entradas; let i=index">
+    
+    <tr><td>{{entradas.indexOf(entrada)+1}}.&nbsp;</td>
+      <td><input type = "text" [(ngModel)]="entrada.name"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
+        (keyup.enter)="convert(entrada); addAgenda()" placeholder="Punto del día"/></td>
+      <td><div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.name}}</div></td>
+      <td><button *ngIf="i!=0" type="button" (click)="removeAgenda(entrada, i)">Remove</button></td></tr>
+    </div>
+</table>
 <br/>
 <button type="button" (click)="addAgenda()">Add</button>

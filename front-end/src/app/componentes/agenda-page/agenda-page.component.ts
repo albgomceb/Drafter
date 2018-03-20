@@ -32,17 +32,11 @@ export class AgendaPageComponent implements OnInit {
     this.entradas[length].name = "";
   } 
 
-  removeAgenda(entrada : Agenda){    
-    if(this.entradas.length > 1)
-      this.entradas.splice(entrada.id, 1);
+  removeAgenda(entrada : Agenda, entradasIndex : number){    
+    this.entradas.splice(entradasIndex, 1);
   } 
 
   convert(entrada : Agenda){
-    // //Si tenemos más de un punto del día y el seleccionado tiene longitud 0, se borra de entradas
-    // if(entrada.isInput && this.entradas.length > 1 && entrada.name.length == 0){
-    //   entrada.isInput = false;
-    //   this.removeAgenda(entrada);
-    // }
 
     //Si tenemos más de una entrada o la actual no tiene longitud 0 y además la entrada es un input, se convierte en texto
     if(entrada.name.length > 0 && entrada.isInput)
@@ -53,5 +47,3 @@ export class AgendaPageComponent implements OnInit {
       entrada.isInput = true;
   }
 }
-//TODO si le das a remove se borra incluso el primer elemento
-
