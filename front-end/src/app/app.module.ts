@@ -14,6 +14,8 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
 import { RealTimeService } from './services/real-time.service';
+import { ChatComponent } from './componentes/chat/chat.component';
+import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { RealTimeService } from './services/real-time.service';
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    ChatComponent,
+    StandardMeetingComponent
   ],
   imports: [
     BrowserModule,
