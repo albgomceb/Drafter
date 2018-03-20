@@ -94,12 +94,12 @@
 
 	<bean id="user1" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount2" />
-		<property name="name" value="user1" />
-		<property name="surname" value="user1" />
+		<property name="name" value="MARCOS" />
+		<property name="surname" value="MARIN CABRERA" />
 		<property name="email" value="user1@gmail.com" />
 		<property name="phone" value="900900900" />
-		<property name="photo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="photo" 
+			value="https://avatars3.githubusercontent.com/u/17437427?s=60&amp;v=4" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -114,72 +114,70 @@
 
 	<bean id="user2" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount3" />
-		<property name="name" value="user2" />
-		<property name="surname" value="user2" />
+		<property name="name" value="ALBERTO" />
+		<property name="surname" value="GOMEZ CEBALLOS" />
 		<property name="email" value="user2@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://avatars3.githubusercontent.com/u/26671664?s=60&amp;v=4" />
 		<property name="departments">
 			<list>
-				<ref bean="department1" />
+				<ref bean="department2" />
 			</list>
 		</property>
 		<property name="organizations">
 			<list>
-				<ref bean="organization1" />
+				<ref bean="organization2" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="user3" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount4" />
-		<property name="name" value="user3" />
-		<property name="surname" value="user3" />
+		<property name="name" value="CRISTIAN" />
+		<property name="surname" value="GALAN BLANCO" />
 		<property name="email" value="user3@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://avatars0.githubusercontent.com/u/32903920?s=460&amp;v=4" />
 		<property name="departments">
 			<list>
-				<ref bean="department1" />
+				<ref bean="department2" />
 			</list>
 		</property>
 		<property name="organizations">
 			<list>
-				<ref bean="organization1" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="user4" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount5" />
-		<property name="name" value="user4" />
-		<property name="surname" value="user4" />
+		<property name="name" value="FERNANDO" />
+		<property name="surname" value="DE TUERO BARROSO" />
 		<property name="email" value="user4@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://avatars0.githubusercontent.com/u/19387789?s=60&amp;v=4" />
 		<property name="departments">
 			<list>
-				<ref bean="department1" />
+				<ref bean="department2" />
 			</list>
 		</property>
 		<property name="organizations">
 			<list>
-				<ref bean="organization1" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="user5" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount6" />
-		<property name="name" value="user5" />
-		<property name="surname" value="user5" />
+		<property name="name" value="DANIEL J." />
+		<property name="surname" value="MARTINEZ SUAREZ" />
 		<property name="email" value="user5@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -187,7 +185,6 @@
 		</property>
 		<property name="organizations">
 			<list>
-				<ref bean="organization1" />
 			</list>
 		</property>
 	</bean>
@@ -195,7 +192,7 @@
 	<!-- Organization -->
 
 	<bean id="organization1" class="drafter.domain.Organization">
-		<property name="enterprise" value="organization1" />
+		<property name="enterprise" value="Facebook" />
 		<property name="description" value="organization1" />
 		<property name="address" value="organization" />
 		<property name="phone" value="900900900" />
@@ -209,11 +206,27 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="organization2" class="drafter.domain.Organization">
+		<property name="enterprise" value="Pivotal Software, Inc" />
+		<property name="description" value="organization1" />
+		<property name="address" value="organization" />
+		<property name="phone" value="900900900" />
+		<property name="logo"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="email" value="organization@gmail.com" />
+		<property name="user" ref="user1" />
+		<property name="departments">
+			<list>
+				<ref bean="department2" />
+			</list>
+		</property>
+	</bean>
 
 	<!-- Department -->
 
 	<bean id="department1" class="drafter.domain.Department">
-		<property name="name" value="department1" />
+		<property name="name" value="Development" />
 		<property name="organization" ref="organization1" />
 		<property name="users">
 			<list>
@@ -222,7 +235,19 @@
 			</list>
 		</property>
 	</bean>
-
+	
+	<bean id="department2" class="drafter.domain.Department">
+		<property name="name" value="QA" />
+		<property name="organization" ref="organization2" />
+		<property name="users">
+			<list>
+				<ref bean="user1" />
+				<ref bean="user2" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Meetings -->
 
 	<bean id="standard1" class="drafter.domain.Standard">
 		<property name="title" value="standard1" />
@@ -250,8 +275,6 @@
 			</list>
 		</property>
 	</bean>
-
-	<!-- Meetings -->
 
 	<bean id="standard2" class="drafter.domain.Standard">
 		<property name="title" value="standard2" />
@@ -292,7 +315,6 @@
 	</bean>
 
 	<bean id="participant2" class="drafter.domain.Participant">
-
 		<property name="role" value="participant2" />
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1" />
@@ -301,7 +323,6 @@
 	</bean>
 
 	<bean id="participant3" class="drafter.domain.Participant">
-
 		<property name="role" value="participant3" />
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1" />
@@ -311,7 +332,6 @@
 
 
 	<bean id="participant4" class="drafter.domain.Participant">
-
 		<property name="role" value="participant4" />
 		<property name="hasAttended" value="false" />
 		<!-- <property name="department" ref="department1"/> -->
