@@ -6,6 +6,7 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
+import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -13,7 +14,9 @@ const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
+  {path: 'meeting/:id', component: StandardMeetingComponent},
   {path: '**', component: NotFoundPageComponent}
+
 ];
 
 @NgModule({

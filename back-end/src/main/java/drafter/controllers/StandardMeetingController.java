@@ -22,7 +22,7 @@ public class StandardMeetingController {
 	@GetMapping("/{id}")
 	public String save(@PathVariable(name = "id") Integer meetingId) {
 		Standard meeting = standardMeetingService.findById(meetingId);
-
+		
 		return "";
 	}
 

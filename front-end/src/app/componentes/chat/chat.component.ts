@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.messages = new Array<ChatMessage>();
     this.realTimeService.connect(20, frame => {
-      this.realTimeService.subscribe(this.messages, obj => {
+      this.realTimeService.subscribe('/meeting/',this.messages, obj => {
         obj.model.user = obj.data.user;
       });
     })
@@ -38,7 +38,6 @@ export class ChatComponent implements OnInit {
   }
 
   lineBreak(event) {
-    console.log(event)
     if(event.keyCode == 13) {
       this.onSubmit();
       return false;

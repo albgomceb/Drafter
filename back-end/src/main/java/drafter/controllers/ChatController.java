@@ -20,4 +20,9 @@ public class ChatController {
 	public void sendMsg(@DestinationVariable int meetingId, String msg) {
 		template.convertAndSend("/meeting/" + meetingId, msg);
 	}
+	@MessageMapping("/conclussion/send/{meetingId}")
+	public void sendConclussion(@DestinationVariable int meetingId, String msg) {
+		System.out.println(msg);
+		template.convertAndSend("/conclussion/" + meetingId, msg);
+	}
 }

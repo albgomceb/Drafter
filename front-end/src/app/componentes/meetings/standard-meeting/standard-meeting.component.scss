@@ -1,0 +1,63 @@
+
+.chat-parent {
+    width: 100%;
+    height: 800px;
+}
+
+
+$chat-div: 88%;
+$chat-separation: 1em;
+$input-div: 90%;
+
+.chat-msg-list {
+    width: 100%;
+    height: $chat-div;
+    padding: $chat-separation;
+    padding-bottom: $chat-separation/2;
+}
+
+.chat-input {
+    width: 100%;
+    height: 100% - $chat-div;
+    padding: $chat-separation;
+    padding-top: $chat-separation/2;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+
+    border: 1px lighten(black, 60) solid;
+    background: white;
+} 
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.edit {
+    width: $input-div;
+    height: 100%;
+    
+    overflow-y: auto;
+    padding: 0.25em 0.5em;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.send {
+    width: 100%-$input-div;
+    height: 100%;
+    float: right;
+}
+.glyphicon .glyphicon-triangle-right{
+    color:white;
+}

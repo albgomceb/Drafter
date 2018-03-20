@@ -1,1 +1,26 @@
-<chat></chat>
+<div class = "row">
+    <div class = "col-md-6">
+        <div class="chat-parent">
+            <div class="chat-msg-list">
+                <ul class="content">
+                <li *ngFor="let c of conclusions">
+                    <span>{{c.name}}</span>
+                </li>
+                </ul>
+            </div>
+            
+            <div class="chat-input">
+                    <form class="content form-control" (ngSubmit)="onSubmit()">
+                      <button type="submit" class="send btn btn-primary">Send</button>
+                      <div #editable contenteditable="true" class="edit" (keydown)="lineBreak($event)"></div>
+                    </form>
+                  </div>
+        </div>
+    </div>
+    
+    <div class = "col-md">
+        <chat></chat>
+    </div>
+
+    
+ </div>

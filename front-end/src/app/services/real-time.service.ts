@@ -17,12 +17,14 @@ export class RealTimeService {
   public getUser(): string {
     return this.user;
   }
+  public setUser(user:string){
+    this.user = user;
+  }
 
 
   public connect(meeting: number, callback: Function = null) {
     this.meeting = meeting;
-    this.user = 'Unnamed';
-
+    this.user= this.user?this.user:'Unnamed'; 
     var ws = new SockJS(environment.baseWS);
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({}, frame => {
@@ -32,9 +34,9 @@ export class RealTimeService {
     });
   }
 
-  public subscribe(model: Array<any>, callback: Function = null) {
+  public subscribe(url:string,model: Array<any>, callback: Function = null) {
     var that = this;
-    that.stompClient.subscribe('/meeting/' + this.meeting, (msg) => {
+    that.stompClient.subscribe(url + this.meeting, (msg) => {
       if(msg.body) {
         var obj: Model = JSON.parse(msg.body);
 
