@@ -7,10 +7,8 @@
 }
 
 button{
-    //background-color: #ffffff;
     background: #333;
-    //color: #000000;
-    color: #fff;
+    color: white;
 }
 
 button:hover{
@@ -112,11 +110,17 @@ button:hover{
 }
 
 button.add{
-    background: rgb(214, 214, 214);
-    color:black;
+    background: #333;
+    color:white;
 }
 
 button.add:hover{
     background:white;
     color:black;
+}
+
+.errorList{
+    margin: 0 auto;
+    text-align:center;
+    margin-top:30%;
 }

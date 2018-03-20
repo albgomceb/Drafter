@@ -10,9 +10,15 @@
         <div class="container">
           <div class="form-participants">
             <div class="list-group">
+              <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+              <div *ngIf="errorListUsers" class="errorList">
+                <img src="../../../assets/img/warning.png" width="20%" />
+                <h4>505 Internal Server Error</h4>
+                <h6>Try again later</h6>
+              </div>
               <div *ngFor="let user of users">
                 <a class="list-group-item list-group-item-action">
-                    <button type="button" class="btn bt-lg mr-1 add">Add</button>
+                    <button class="btn bt-lg mr-1 add">Add</button>
                     <span class="employed">{{user.name}} <span class="organization" *ngFor="let o of user.organizations">{{o.name}}</span><span class="department" *ngFor="let d of user.departments"> ({{d.name}})</span></span>
                 </a>
               </div>
