@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { User } from '../models/user.model';
+import { Participant } from '../models/participant.model';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 
@@ -11,18 +11,15 @@ const httpOptions = {
 };
 
 @Injectable()
-export class UserService {
+export class ParticipantService {
 
   constructor(private http:HttpClient) {}
 
   staticUrl:String = environment.baseApi;
 
 
-  getUsers(): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.staticUrl+'/users');
+  getParticipants(): Observable<Array<Participant>> {
+    return this.http.get<Array<Participant>>(this.staticUrl+'/participants');
   }
 
-  saveUser(user:User): Observable<User> {
-    return this.http.post<User>(this.staticUrl+'/users',user,{});
-  }
 }

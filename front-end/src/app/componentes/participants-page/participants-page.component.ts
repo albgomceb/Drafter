@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { ParticipantService } from '../services/participant.service';
+import { Participant } from '../models/participant.model';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { ReactiveFormsModule,
+  FormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'participants-page',
@@ -10,25 +17,51 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ParticipantsPageComponent implements OnInit {
 
-  users: Array<User>;
-  errorListUsers:boolean = false;
+  hideme=[]
 
-  constructor(private userService: UserService) {
+  participants: Array<Participant>;
+  attendants: Array<string>;
+
+  errorListParticipants:boolean = false;
+
+  meetingForm: FormGroup;
+
+  constructor(private participantService: ParticipantService) {
 
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
+
+    this.meetingForm = new FormGroup({title: new FormControl(),description: new FormControl()});
+    this.attendants = new Array<string>();
+
+    this.participantService.getParticipants().subscribe(
       data => 
       {
-        console.log(data);
-        this.users = data;
+        this.participants = data;
       },
       error => {
-        this.errorListUsers = true;
+        this.errorListParticipants = true;
       }
     );
 
   } 
 
+  addAttendant(id:string){
+    this.attendants.push(id);
+  }
+
+  onSubmit(meetingForm){
+      let meeting = new Meeting(meetingForm.value.title,meetingForm.value.description,this.attendants);
+      //AQUI SE TIENE QUE LLAMAR AL METODO POST
+      this.meetingForm.reset();
+  }
+
+
+  
+
+}
+
+class Meeting {
+  constructor(public title: string,public description: string,public attendants: Array<string>){}
 }

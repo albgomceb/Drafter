@@ -3,6 +3,7 @@ package drafter.beans;
 public class Option {
 	public String id;
 	public String name;
+	public String photo;
 	public String organization;
 	
 	public String getId() {
@@ -36,6 +37,23 @@ public class Option {
 		this.name = name;
 		this.organization = organization;
 	}
+	
+	public Option(String id, String name, String organization, String photo) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.organization = organization;
+		this.photo = photo;
+	}
+	
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
+	
 	
 	
 }

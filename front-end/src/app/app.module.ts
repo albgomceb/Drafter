@@ -12,7 +12,8 @@ import { RegisterPageComponent } from './componentes/register-page/register-page
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
-import { UserService } from './componentes/services/user.service';
+import { ParticipantService } from './componentes/services/participant.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -28,9 +29,11 @@ import { UserService } from './componentes/services/user.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [UserService],
+  providers: [ParticipantService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
