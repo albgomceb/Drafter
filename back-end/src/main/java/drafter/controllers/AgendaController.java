@@ -10,30 +10,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drafter.beans.user.UserBean;
-import drafter.beans.user.UserSerializer;
-import drafter.domain.User;
-import drafter.services.UserService;
+import drafter.beans.agenda.AgendaBean;
+import drafter.beans.agenda.AgendaSerializer;
+import drafter.domain.Agenda;
+import drafter.services.AgendaService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/data/users")
-public class UserController {
+@RequestMapping("/data/agendas")
+public class AgendaController {
 
 	@Autowired
-	private UserService userService;
+	private AgendaService agendaService;
 
 	@GetMapping("")
-	public List<UserBean> findAll() {
-		List<User> res = this.userService.findAll();
-		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
+	public List<AgendaBean> findAll() {
+		List<Agenda> res = this.agendaService.findAll();
+		List<AgendaBean> result = res.stream().map(agenda -> AgendaSerializer.fromAgenda(agenda)).collect(Collectors.toList());
 
 		return result;
 	}
 
 	@PostMapping("/")
-	public String save(UserBean user) {
-		User result = UserSerializer.fromBean(user);
+	public String save(AgendaBean agenda) {
+		Agenda result = AgendaSerializer.fromBean(agenda);
 		System.out.println(result);
 
 		return "";

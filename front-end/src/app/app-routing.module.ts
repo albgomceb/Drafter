@@ -9,6 +9,7 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 
 const routes: Routes = [
+  {path: '', component: HomePageComponent},
   {path: 'participants', component: ParticipantsPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
