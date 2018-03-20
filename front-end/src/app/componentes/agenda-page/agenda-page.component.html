@@ -3,7 +3,7 @@
 </p>
 {{entradas| json}}
 <div *ngFor="let entrada of entradas">
-  <div class="index">{{entrada.id+1}}.
+  <div class="index">{{entradas.indexOf(entrada)+1}}. 
     <input type = "text" [(ngModel)]="entrada.name"  *ngIf="entrada.isInput; else agenda" (focusout)="convert(entrada)" 
       (keyup.enter)="convert(entrada); addAgenda()" placeholder="Punto del día"/>
     <ng-template #agenda>

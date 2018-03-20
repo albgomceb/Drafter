@@ -10,6 +10,7 @@ import { Agenda } from '../models/agenda.model';
 export class AgendaPageComponent implements OnInit {
 
   public entradas: Array<Agenda>;
+  public counter: number;
 
   constructor() { }
 
@@ -19,24 +20,21 @@ export class AgendaPageComponent implements OnInit {
     this.entradas[0].id = 0;
     this.entradas[0].isInput = true;
     this.entradas[0].name = "";
+    this.counter = 1;
   }
 
   addAgenda(){
     var length = this.entradas.length;
     this.entradas.push(new Agenda());
-    this.entradas[length].id = length;
+    this.entradas[length].id = this.counter;
+    this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].name = "";
   } 
 
-  removeAgenda(entrada : Agenda){
-    var entradaId = entrada.id;
-    
-    for(let entry of this.entradas){
-      if(entry.id > entradaId)
-        entrada.id = entrada.id -1;
-    }
-    this.entradas.splice(entrada.id, 1);
+  removeAgenda(entrada : Agenda){    
+    if(this.entradas.length > 1)
+      this.entradas.splice(entrada.id, 1);
   } 
 
   convert(entrada : Agenda){
@@ -56,5 +54,4 @@ export class AgendaPageComponent implements OnInit {
   }
 }
 //TODO si le das a remove se borra incluso el primer elemento
-//TODO los numeros salen salteados y/o repetidos
 
