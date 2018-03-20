@@ -9,4 +9,5 @@ export class User {
     phone: string;
     picture: string;
     departments: Array<Option>;
+    organizations: Array<Option>;
   }

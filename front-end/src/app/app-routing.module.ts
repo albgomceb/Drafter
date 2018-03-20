@@ -8,6 +8,7 @@ import { RegisterPageComponent } from './componentes/register-page/register-page
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 const routes: Routes = [
+  {path: '', component: HomePageComponent},
   {path: 'participants', component: ParticipantsPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
