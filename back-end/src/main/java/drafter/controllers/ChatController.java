@@ -7,16 +7,16 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class FakeChatController {
+public class ChatController {
 	
 	private final SimpMessagingTemplate template;
 	
 	@Autowired
-	public FakeChatController(SimpMessagingTemplate template) {
+	public ChatController(SimpMessagingTemplate template) {
 		this.template = template;
 	}
 	
-	@MessageMapping("/send/msg/{meetingId}")
+	@MessageMapping("/chat/send/{meetingId}")
 	public void sendMsg(@DestinationVariable int meetingId, String msg) {
 		template.convertAndSend("/meeting/" + meetingId, msg);
 	}
