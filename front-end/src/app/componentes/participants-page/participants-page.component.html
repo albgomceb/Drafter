@@ -36,7 +36,7 @@
         <br/>
 
         <div class="buttons">
-            <button [disabled]="!attendants.length > 0" type="submit" class="btn bt-lg mr-1">Next</button>
+            <button [disabled]="!attendants.length > 0 || meetingForm.value.title == null || meetingForm.value.title == ''" type="submit" class="btn bt-lg mr-1">Next</button>
             <button routerLink=".." class="btn bt-lg">Cancel</button>
         </div>
 

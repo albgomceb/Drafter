@@ -53,6 +53,7 @@ export class ParticipantsPageComponent implements OnInit {
 
   onSubmit(meetingForm){
       let meeting = new Meeting(meetingForm.value.title,meetingForm.value.description,this.attendants);
+      console.log(meeting);
       //AQUI SE TIENE QUE LLAMAR AL METODO POST
       this.meetingForm.reset();
   }
