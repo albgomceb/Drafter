@@ -14,6 +14,7 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
