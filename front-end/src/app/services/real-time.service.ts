@@ -14,8 +14,12 @@ export class RealTimeService {
 
   constructor() { }
 
+  public getUser(): string {
+    return this.user;
+  }
 
-  public connect(meeting: number, callback: Function) {
+
+  public connect(meeting: number, callback: Function = null) {
     this.meeting = meeting;
     this.user = 'Unnamed';
 
@@ -28,7 +32,7 @@ export class RealTimeService {
     });
   }
 
-  public subscribe(model: Array<Model>, callback: Function = null) {
+  public subscribe(model: Array<any>, callback: Function = null) {
     var that = this;
     that.stompClient.subscribe('/meeting/' + this.meeting, (msg) => {
       if(msg.body) {
