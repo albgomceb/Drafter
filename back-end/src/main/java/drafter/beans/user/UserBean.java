@@ -1,6 +1,8 @@
-package drafter.beans;
+package drafter.beans.user;
 
 import java.util.List;
+
+import drafter.beans.Option;
 
 public class UserBean {
 
