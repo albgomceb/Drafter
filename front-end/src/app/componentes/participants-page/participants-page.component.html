@@ -1,8 +1,8 @@
-<div class="row">
-  <div class="col-md-12 mx-auto mt-3">
+
+  <div class="col-md-15 mx-auto mt-3">
     <div class="card mx-auto pt-3 pb-3">
-      <div item-width="100%" class="mx-auto">
-        <h2 class="participants"><span class="letter">P</span>articipants</h2>
+      <div class="mx-auto">
+        <h2 class="participants"><span class="letter">S</span>tart meeting</h2>
       </div>
       <h6 item-width="100%" class="sub-participants mx-auto">Please, select the meeting participants.</h6>
       <form class="form mt-3">
@@ -10,13 +10,18 @@
         <div class="container">
           <div class="form-participants">
             <div class="list-group">
-              <a *ngFor="let user of users" class="list-group-item list-group-item-action">
-                  <div class="custom-control custom-checkbox">
-                      <input class="custom-control-input" id="customCheck1" checked="" type="checkbox">
-                      <label class="custom-control-label" for="customCheck1"><span class="employed">{{user.name}}<span class="department"> {{user.job}}</span></span></label> 
-                    </div>
-                    
-              </a>
+              <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+              <div *ngIf="errorListUsers" class="errorList">
+                <img src="../../../assets/img/warning_turq.png" width="20%" />
+                <h4>505 Internal Server Error</h4>
+                <h6>Try again later</h6>
+              </div>
+              <div *ngFor="let user of users">
+                <a class="list-group-item list-group-item-action">
+                    <button class="btn bt-lg mr-1 add">Add</button>
+                    <img src="{{user.photo}}" width="5%" /><span class="employed"> {{user.name}} <span class="organization" *ngFor="let o of user.organizations">{{o.name}}</span><span class="department" *ngFor="let d of user.departments"> ({{d.name}})</span></span>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -24,7 +29,7 @@
               <label for="title" class="title" >Title:</label><br/> 
               <input class="form-control" placeholder="Enter meeting topic" type="text" id="title" name="title"><br/> <br/>
               <label for="description" class="description" >Description:</label><br/> 
-              <textarea class="form-control" rows="8" id="description" name="description"></textarea>
+              <textarea class="form-control desc-input" rows="8" id="description" name="description"></textarea>
           </div>
         </div>
 
@@ -38,5 +43,4 @@
       </form>
     </div>
   </div>
-</div>
 

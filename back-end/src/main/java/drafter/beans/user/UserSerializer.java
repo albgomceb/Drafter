@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import drafter.beans.Option;
-import drafter.beans.UserBean;
 import drafter.domain.User;
 
 public class UserSerializer {

@@ -1,5 +1,5 @@
 .navbar{
-    background-image: url("../../../assets/img/pw_maze_black.png");
+    background:#333;
 }
 
 .navbar a{
@@ -23,9 +23,20 @@
     vertical-align: middle;
 }
 
+.collapse{
+    position: relative;
+}
+
 .collapse a{
     font-size: 20px;
     font-family: sans-serif;
+}
+
+@media (min-width: 992px){
+    .login-register{
+        position: absolute;
+        right: 0;
+    }
 }
 
 
