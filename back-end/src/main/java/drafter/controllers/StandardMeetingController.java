@@ -19,8 +19,8 @@ public class StandardMeetingController {
 	private StandardMeetingService standardMeetingService;
 
 
-	@GetMapping("/{id}")
-	public String save(@PathVariable(name = "id") Integer meetingId) {
+	@GetMapping("/{meetingId}")
+	public String save(@PathVariable Integer meetingId) {
 		Standard meeting = standardMeetingService.findById(meetingId);
 		
 		return "";

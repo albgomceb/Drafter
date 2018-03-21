@@ -19,7 +19,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		config.setApplicationDestinationPrefixes("/app");
 		config.enableSimpleBroker("/meeting");
-		config.enableSimpleBroker("/conclussion");
 	}
 
 }
