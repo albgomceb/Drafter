@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
-  {path: 'agenda/:id', component: AgendaPageComponent},
+  {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: '**', component: NotFoundPageComponent}
 ];
 

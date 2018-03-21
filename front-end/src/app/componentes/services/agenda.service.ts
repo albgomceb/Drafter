@@ -23,6 +23,6 @@ export class AgendaService {
   }
 
   saveAgenda(agenda:Agenda, id:number): Observable<Agenda> {
-    return this.http.post<Agenda>(this.staticUrl+'/agendas/'+id+'/',agenda,{});
+    return this.http.post<Agenda>(this.staticUrl+'/agendas/'+id,agenda,{});
   }
 }

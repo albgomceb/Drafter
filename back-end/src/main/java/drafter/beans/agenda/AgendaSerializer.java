@@ -41,7 +41,7 @@ public class AgendaSerializer {
 			a.setDescription(ab.getDescription());
 			a.setMeeting(meeting);
 			a.setConclusion(new ArrayList<Conclusion>());
-			agendaService.save(a);
+			meeting.addAgenda(a);
 			agendas.add(a);
 		}
 		

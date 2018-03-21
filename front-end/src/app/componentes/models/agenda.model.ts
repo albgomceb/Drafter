@@ -1,5 +1,5 @@
 export class Agenda {
   id: number;
-  name: String;
+  description: String;
   isInput: Boolean;
   }

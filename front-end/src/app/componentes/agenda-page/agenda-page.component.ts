@@ -27,7 +27,7 @@ export class AgendaPageComponent implements OnInit {
     this.entradas.push(new Agenda());
     this.entradas[0].id = 0;
     this.entradas[0].isInput = true;
-    this.entradas[0].name = "";
+    this.entradas[0].description = "";
     this.counter = 1;
   }
 
@@ -42,7 +42,7 @@ export class AgendaPageComponent implements OnInit {
     this.entradas[length].id = this.counter;
     this.counter++;
     this.entradas[length].isInput = true;
-    this.entradas[length].name = "";
+    this.entradas[length].description = "";
   } 
 
   removeAgenda(entrada : Agenda, entradasIndex : number){    
@@ -51,7 +51,7 @@ export class AgendaPageComponent implements OnInit {
 
   convert(entrada : Agenda){
     //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
-    if(entrada.name.length > 0 && entrada.isInput)
+    if(entrada.description.length > 0 && entrada.isInput)
       entrada.isInput = false;
 
     //Si la entrada es un texto, se convierte en input

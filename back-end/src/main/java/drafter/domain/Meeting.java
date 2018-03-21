@@ -180,7 +180,10 @@ public abstract class Meeting extends DomainEntity{
 		this.steps = steps;
 	}
 
-
+	public void addAgenda(Agenda agenda) {
+		this.agendas.add(agenda);
+		agenda.setMeeting(this);
+	}
 
 	
 	
