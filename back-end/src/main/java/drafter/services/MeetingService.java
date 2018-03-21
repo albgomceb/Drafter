@@ -1,5 +1,7 @@
 package drafter.services;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.domain.Meeting;
+import drafter.domain.Participant;
 import drafter.domain.User;
 import drafter.repositories.MeetingRepository;
 
@@ -30,6 +33,12 @@ public class MeetingService {
 	//CRUD Methods------------------------------------------------------------------------------
 
     public Meeting create(Meeting meeting) {
+    	Date date = new Date(System.currentTimeMillis()-1);
+    	
+    	List<Participant> participants = new ArrayList<Participant>();
+    	meeting.setParticipants(participants);
+    	meeting.setDate(date);
+    	
         return meetingRepository.save(meeting);
     }
 

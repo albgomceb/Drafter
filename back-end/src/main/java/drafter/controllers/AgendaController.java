@@ -21,6 +21,7 @@ import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.services.AgendaService;
 import drafter.services.MeetingService;
+import drafter.services.StandardService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -33,6 +34,9 @@ public class AgendaController {
 	@Autowired
 	private MeetingService	meetingService;
 	
+	@Autowired
+	private StandardService	standardService;
+	
 	
 	@GetMapping("")
 	public List<AgendaBean> findAll() {
@@ -43,7 +47,7 @@ public class AgendaController {
 	}
 
 	@GetMapping("/{agendaId}")
-	public AgendaBean findMeeting(@PathParam("id")Integer agendaId) {
+	public AgendaBean findMeeting(@PathVariable("agendaId")Integer agendaId) {
 		Agenda res = this.agendaService.findById(agendaId);
 		AgendaBean result = new AgendaSerializer().fromAgenda(res);
 
@@ -53,7 +57,7 @@ public class AgendaController {
 	
 	@PostMapping("/{meetingId}")
 	public List<Agenda> save(@PathVariable("meetingId") int meetingId, @RequestBody ArrayList<AgendaBean> agendas) {
-		Meeting meeting = meetingService.findById(new Integer(meetingId));
+		Meeting meeting = standardService.findById(new Integer(meetingId));
 		List<Agenda> result = new AgendaSerializer().fromBean(agendas, meeting);
 		result.stream().forEach(a -> {
 			
