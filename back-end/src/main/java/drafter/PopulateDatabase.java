@@ -39,7 +39,6 @@ public class PopulateDatabase {
 		System.out.println("Initialising Spring Boot context...\n\n");
 		
 		// No console output
-		disableOutput();
 		
 		// Run Spring Boot
 		ConfigurableApplicationContext context = SpringApplication.run(PopulateDatabase.class, args);
