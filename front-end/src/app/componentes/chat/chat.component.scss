@@ -1,7 +1,7 @@
 
 .chat-parent {
     width: 100%;
-    height: 800px;
+    height: 600px;
 }
 
 
@@ -42,7 +42,7 @@ li {
 }
 
 .edit {
-    width: calc(#{$input-div} - 0.25em);
+    width: auto;
     height: 100%;
     float: left;
     
@@ -55,7 +55,6 @@ li {
 }
 
 .send {
-    width: 100%-$input-div;
     height: 100%;
     float: right;
 }

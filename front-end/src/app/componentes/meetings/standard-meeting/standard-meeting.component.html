@@ -1,7 +1,23 @@
-<div class = "row">
-    <div class = "col-md-4">
+<div class="row">
+    <div class="col-md-4">
         <chat></chat>
     </div>
 
-    
+    <div class="col-md-8 agenda">
+        <div *ngFor="let a of agendas">
+            <div class="points">{{a.number}}. {{a.description}}</div>
+            <ul>
+                <li
+                *ngFor="let c of a.conclusions; let i = index" 
+                attr.contenteditable="{{hasEdit}}"
+                attr.data-iagenda="{{a.number}}" 
+                attr.data-iconclusion="{{i}}" 
+                (focusout)="edit($event)"
+                (keydown.enter)="enter($event)">
+                    {{c.conclusion}}
+                </li>
+            </ul>
+        </div>
+    </div>       
+
  </div>

@@ -24,12 +24,12 @@ export class ChatComponent implements OnInit {
         obj.model.user = obj.data.user;
       });
       this.realTimeService.subscribe();
-    })
+    });
   }
 
   onSubmit() {
-    var val = this.editable.nativeElement.innerHTML;
-    this.editable.nativeElement.innerHTML = '';
+    var val = this.editable.nativeElement.textContent.trim();
+    this.editable.nativeElement.textContent = '';
 
     // Not send blank
     if(!val || val.length==0 || /^\s*$/.test(val))
