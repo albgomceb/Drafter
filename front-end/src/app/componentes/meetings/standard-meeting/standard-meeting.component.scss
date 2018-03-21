@@ -1,6 +1,6 @@
 
 .agenda {
-    padding: 1em;
+    position: relative;
 }
 
 .points {
@@ -10,6 +10,18 @@
     margin: 1em 0;
     padding: 0.2em;
     font-weight: bold;
+
+    span {
+        float: left;
+    }
+}
+
+.add {
+    float: right;
+}
+
+.clear {
+    clear: both;
 }
 
 .glyphicon .glyphicon-triangle-right{

@@ -46,4 +46,8 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  foco() {
+    this.editable.nativeElement.focus();
+  }
+
 }

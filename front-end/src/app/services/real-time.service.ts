@@ -10,6 +10,7 @@ export class RealTimeService {
   private meeting: number;
   private user: string;
   private models: Array<any>;
+  private callbacks: Array<Function>;
 
 
   constructor() { }
@@ -20,10 +21,12 @@ export class RealTimeService {
 
 
   public connect(meeting: number, callback: Function) {
-    if(this.stompClient) {
-      callback();
+    if(!this.callbacks)
+      this.callbacks = new Array<Function>();
+    this.callbacks.push(callback);
+
+    if(this.stompClient) 
       return;
-    }
 
     this.meeting = meeting;
     this.user= this.user ? this.user : 'Unnamed';
@@ -32,7 +35,8 @@ export class RealTimeService {
     var ws = new SockJS(environment.baseWS);
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({}, frame => {
-      callback();
+      for(var c of this.callbacks)
+        c();
     });
   }
 
@@ -41,7 +45,7 @@ export class RealTimeService {
   }
 
   public subscribe() {
-    if(!this.stompClient)
+    if(!this.stompClient || this.connecting)
       return;
 
     var that = this;
@@ -57,14 +61,17 @@ export class RealTimeService {
             break;
 
           case "pop":
-            model.pop();
+            if(!obj.data['index'] || obj.data['index'] < 0)
+              model.pop();
+            else
+              model.splice(obj.data['index'], obj.data['last'] ? obj.data['last'] : 1);
             break;
             
           case "revert":
             break;
           
           case "set":
-            var data = obj.data ? obj.data['index'] : 0;
+            var data = obj.data['index'] ? obj.data['index'] : 0;
             model[data] = obj.model
             break;
             

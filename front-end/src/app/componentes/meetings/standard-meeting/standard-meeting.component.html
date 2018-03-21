@@ -5,7 +5,12 @@
 
     <div class="col-md-8 agenda">
         <div *ngFor="let a of agendas">
-            <div class="points">{{a.number}}. {{a.description}}</div>
+            <div class="points">
+                <span>{{a.number}}. {{a.description}}</span>
+                <button class="btn btn-success add" (click)="addConclusion($event)" attr.data-index="{{a.number}}">+</button>
+                <div class="clear"></div>
+            </div>
+
             <ul>
                 <li
                 *ngFor="let c of a.conclusions; let i = index" 
@@ -13,7 +18,8 @@
                 attr.data-iagenda="{{a.number}}" 
                 attr.data-iconclusion="{{i}}" 
                 (focusout)="edit($event)"
-                (keydown.enter)="enter($event)">
+                (keydown)="enter($event)"
+                class="conclusion">
                     {{c.conclusion}}
                 </li>
             </ul>

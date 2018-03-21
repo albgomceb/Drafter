@@ -45,21 +45,50 @@ export class StandardMeetingComponent implements OnInit {
 
   edit(event) {
     if(this.hasEdit) {
-      var iagenda = event.srcElement.dataset.iagenda;
-      var iconclusion = event.srcElement.dataset.iconclusion;
-      var content = event.srcElement.textContent.trim();
+        var iagenda = event.srcElement.dataset.iagenda;
+        var iconclusion = event.srcElement.dataset.iconclusion;
+        var content = event.srcElement.textContent.trim();
 
-      this.realTimeService.send('/chat/send/', 
-                                WSResponseType.SET, 
-                                'c'+iagenda,  
-                                new Conclusion(content), 
-                                {index: iconclusion});
-    }
+        // Not send blank
+        if(!content || content.length==0 || /^\s*$/.test(content)) {
+          this.agendas[iagenda-1].conclusions.splice(iconclusion, 1);
+          this.realTimeService.send('/chat/send/', 
+                                  WSResponseType.POP, 
+                                  'c'+iagenda,  
+                                  {}, 
+                                  {index: iconclusion});
+        } else {
+          this.realTimeService.send('/chat/send/', 
+                                  WSResponseType.SET, 
+                                  'c'+iagenda,  
+                                  new Conclusion(content), 
+                                  {index: iconclusion});
+        }
+    } 
   }
 
   enter(event) {
-    event.srcElement.blur();
-    return false;
+    if(event.keyCode == 13) {
+      event.srcElement.blur();
+      return false;
+    }
+
+    return true;
+  }
+
+  addConclusion(event) {
+    var index = event.srcElement.dataset.index;
+    var agenda = this.agendas[index-1];
+
+    // Only one empty
+    var i = 0;
+    for(var c of agenda.conclusions) {
+      if(!c.conclusion || c.conclusion.length==0 || /^\s*$/.test(c.conclusion))
+        agenda.conclusions.splice(i, 1);
+      i++;
+    }
+
+    agenda.conclusions.push(new Conclusion(""));
   }
 
 }

@@ -8,7 +8,7 @@
   </div>
 
   <div class="chat-input">
-    <form class="content form-control" (ngSubmit)="onSubmit()">
+    <form class="content form-control" (ngSubmit)="onSubmit()" (click)="foco()">
       <button type="submit" class="send btn btn-primary">Send</button>
       <div #editable contenteditable="true" class="edit" (keydown)="lineBreak($event)"></div>
       <div class="clear"></div>
