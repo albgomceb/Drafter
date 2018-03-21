@@ -13,14 +13,15 @@ export class AgendaPageComponent implements OnInit {
 
   public entradas: Array<Agenda>;
   public counter: number;
+  public meetingId: number;
 
   constructor(private agendaService: AgendaService, 
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      let meetingId = params['meetingId'];
-      console.log(meetingId);
+      this.meetingId = params['meetingId'];
+      console.log(this.meetingId);
     });
     this.entradas=[];
     this.entradas.push(new Agenda());
@@ -30,8 +31,8 @@ export class AgendaPageComponent implements OnInit {
     this.counter = 1;
   }
 
-  saveAgenda(agenda : Agenda, id : number){
-    this.agendaService.saveAgenda(agenda, id).subscribe(res =>{
+  saveAgenda(agenda : Agenda){
+    this.agendaService.saveAgenda(agenda, this.meetingId).subscribe(res =>{
     });
   }
 
