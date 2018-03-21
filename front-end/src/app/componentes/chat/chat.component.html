@@ -11,6 +11,7 @@
     <form class="content form-control" (ngSubmit)="onSubmit()">
       <button type="submit" class="send btn btn-primary">Send</button>
       <div #editable contenteditable="true" class="edit" (keydown)="lineBreak($event)"></div>
+      <div class="clear"></div>
     </form>
   </div>
 </div>

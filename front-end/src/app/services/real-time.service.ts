@@ -8,8 +8,8 @@ export class RealTimeService {
 
   private stompClient;
   private meeting: number;
-  private models: Array<Object>;
   private user: string;
+  private models: Array<any>;
 
 
   constructor() { }
@@ -17,28 +17,32 @@ export class RealTimeService {
   public getUser(): string {
     return this.user;
   }
-  public setUser(user:string){
-    this.user = user;
-  }
 
 
   public connect(meeting: number, callback: Function = null) {
     this.meeting = meeting;
-    this.user= this.user?this.user:'Unnamed'; 
+    this.user= this.user ? this.user : 'Unnamed';
+    this.models = new Array<any>();
+
     var ws = new SockJS(environment.baseWS);
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({}, frame => {
-      
       if(callback)
         callback(frame);
     });
   }
 
-  public subscribe(url:string,model: Array<any>, callback: Function = null) {
+  public register(name: string, model: Array<any>, callback: Function = null) {
+    this.models[name] = {model: model, callback: callback};
+  }
+
+  public subscribe() {
     var that = this;
-    that.stompClient.subscribe(url + this.meeting, (msg) => {
+    that.stompClient.subscribe("/meeting/" + this.meeting, (msg) => {
       if(msg.body) {
         var obj: Model = JSON.parse(msg.body);
+        var model: any = this.models[obj.name].model;
+        var callback: Function = this.models[obj.name].callback;
 
         switch(obj.type) {
           case "push":
@@ -68,13 +72,13 @@ export class RealTimeService {
     });
   }
 
-  public send(uri: string, type: WSResponseType, model: any, data: any = null) {
+  public send(uri: string, type: WSResponseType, name: string, model: any, data: any = null) {
     if(!data)
       data = {};
 
     data.user = this.user;
 
-    var a = new Model(type, model, data);
+    var a = new Model(type, name, model, data);
     var json = JSON.stringify(a);
     this.stompClient.send('/app' + uri + this.meeting, {}, json);
   }
@@ -90,5 +94,5 @@ export enum WSResponseType {
 }
 
 export class Model {
-  constructor(public type: string, public model: any, public data: Object) { }
+  constructor(public type: string, public name: string, public model: any, public data: Object) { }
 }

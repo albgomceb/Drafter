@@ -42,8 +42,9 @@ li {
 }
 
 .edit {
-    width: $input-div;
+    width: calc(#{$input-div} - 0.25em);
     height: 100%;
+    float: left;
     
     overflow-y: auto;
     padding: 0.25em 0.5em;
@@ -57,4 +58,8 @@ li {
     width: 100%-$input-div;
     height: 100%;
     float: right;
+}
+
+.clear {
+    clear: both;
 }

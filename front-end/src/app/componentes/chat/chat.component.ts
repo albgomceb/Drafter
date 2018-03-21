@@ -1,6 +1,7 @@
 import { RealTimeService, WSResponseType } from './../../services/real-time.service';
 import { ChatMessage } from './../../models/chat-message';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'chat',
@@ -13,15 +14,16 @@ export class ChatComponent implements OnInit {
   messages: Array<ChatMessage>;
 
 
-  constructor(private realTimeService: RealTimeService) { }
+  constructor(private realTimeService: RealTimeService, private activeRoute: ActivatedRoute) { }
 
 
   ngOnInit() {
     this.messages = new Array<ChatMessage>();
-    this.realTimeService.connect(20, frame => {
-      this.realTimeService.subscribe('/meeting/',this.messages, obj => {
+    this.realTimeService.connect(this.activeRoute.snapshot.params['id'], frame => {
+      this.realTimeService.register('messages', this.messages, obj => {
         obj.model.user = obj.data.user;
       });
+      this.realTimeService.subscribe();
     })
   }
 
@@ -34,7 +36,7 @@ export class ChatComponent implements OnInit {
       return;
 
     var model = new ChatMessage(val, this.realTimeService.getUser(), "");
-    this.realTimeService.send('/chat/send/', WSResponseType.PUSH, model);
+    this.realTimeService.send('/chat/send/', WSResponseType.PUSH, 'messages',  model);
   }
 
   lineBreak(event) {
