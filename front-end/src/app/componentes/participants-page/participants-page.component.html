@@ -1,5 +1,5 @@
 
-  <div class="col-md-15 mx-auto mt-3">
+  <div class="col-md-18 mx-auto mt-3">
     <div class="card mx-auto pt-3 pb-3">
       <div class="mx-auto">
         <h2 class="participants"><span class="letter">S</span>tart meeting</h2>
@@ -19,7 +19,7 @@
               <div *ngFor="let user of users">
                 <a class="list-group-item list-group-item-action">
                     <button class="btn bt-lg mr-1 add">Add</button>
-                    <img src="{{user.photo}}" width="5%" /><span class="employed"> {{user.name}} <span class="organization" *ngFor="let o of user.organizations">{{o.name}}</span><span class="department" *ngFor="let d of user.departments"> ({{d.name}})</span></span>
+                    <img src="{{user.photo}}" width="8%" /><span class="employed"> {{user.name}} <span class="organization" *ngFor="let d of user.departments">{{d.organization}}</span><span class="department" *ngFor="let d of user.departments"> ({{d.name}})</span></span>
                 </a>
               </div>
             </div>
