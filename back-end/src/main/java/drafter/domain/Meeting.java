@@ -39,6 +39,7 @@ public abstract class Meeting extends DomainEntity{
 	//Constructor----------------------------------------
 	public Meeting() {
 		
+		
 	}
 	
 	//Methods--------------------------------------------
@@ -166,6 +167,11 @@ public abstract class Meeting extends DomainEntity{
 
 	public void setParticipants(Collection<Participant> participants) {
 		this.participants = participants;
+	}
+	
+	public void addParticipant(Participant participant) {
+		this.participants.add(participant) ;
+		participant.setMeeting(this);
 	}
 
 	

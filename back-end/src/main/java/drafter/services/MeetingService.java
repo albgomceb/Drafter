@@ -9,8 +9,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
+import drafter.domain.Step;
 import drafter.domain.User;
 import drafter.repositories.MeetingRepository;
 
@@ -34,11 +36,12 @@ public class MeetingService {
 
     public Meeting create(Meeting meeting) {
     	Date date = new Date(System.currentTimeMillis()-1);
-    	
-    	List<Participant> participants = new ArrayList<Participant>();
-    	meeting.setParticipants(participants);
+    	if(meeting.getParticipants() == null)
+    		meeting.setParticipants( new ArrayList<Participant>());
+    		
     	meeting.setDate(date);
-    	
+    	meeting.setSteps(new ArrayList<Step>());
+    	meeting.setAgendas(new ArrayList<Agenda>());
         return meetingRepository.save(meeting);
     }
 
