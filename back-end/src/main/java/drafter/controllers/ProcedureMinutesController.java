@@ -25,7 +25,7 @@ import drafter.services.MeetingService;
 
 @CrossOrigin
 @RestController
-@RequestMapping({"minutes"})
+@RequestMapping({"data/minutes"})
 public class ProcedureMinutesController {
 	
 	
@@ -33,12 +33,12 @@ public class ProcedureMinutesController {
 	@Autowired
 	private MeetingService meetingService;
 	
-	@Autowired
+	/*@Autowired
 	private AgendaService agendaService;
 	
 	
 	@Autowired 
-	private ConclusionService conclusionService; 
+	private ConclusionService conclusionService;*/ 
 	
 	//Constructor------------------------------------------------
 	public ProcedureMinutesController() {

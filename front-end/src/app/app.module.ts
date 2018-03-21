@@ -10,6 +10,7 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
+import { MinutesPageComponent } from './componentes/minutes-page/minutes-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
@@ -23,7 +24,8 @@ import { UserService } from './componentes/services/user.service';
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    MinutesPageComponent
   ],
   imports: [
     BrowserModule,
