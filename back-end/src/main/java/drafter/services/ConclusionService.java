@@ -52,6 +52,10 @@ public class ConclusionService {
         return conclusionRepository.getOne(id);
     }
 
+    
 	//Other business Methods-----------------------------------------------------------------------------
 
+    public List<Conclusion> findByAgenda(int agendaId) {
+    	return conclusionRepository.findByAgenda(agendaId);
+    }
 }
