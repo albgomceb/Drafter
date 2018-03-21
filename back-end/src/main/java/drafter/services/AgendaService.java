@@ -18,8 +18,6 @@ public class AgendaService {
 
 	@Autowired
 	private AgendaRepository	agendaRepository;
-//	@Autowired
-//	private MeetingRepository	meetingRepository;
 
 	//Constructor------------------------------------------------------------------------------
 
@@ -53,13 +51,10 @@ public class AgendaService {
         return null;
     }
 
+	public Agenda save(Agenda agenda) {
+		return agendaRepository.save(agenda);
+	}
+
 	//Other business Methods-----------------------------------------------------------------------------
 
-//    public Meeting addAgendaToMeeting(Collection<Agenda> agendas, int id) {
-//    	Meeting meeting = meetingRepository.findById(id);
-//    	meeting.setAgendas(agendas);
-//    	
-//    	meetingRepository.save(meeting);
-//    	return meeting;
-//    }
 }
