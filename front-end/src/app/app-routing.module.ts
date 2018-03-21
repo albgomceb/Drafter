@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {ParticipantsPageComponent} from './componentes/participants-page/participants-page.component';
+import { MeetingPageComponent} from './componentes/meeting-page/meeting-page.component';
 import { NotFoundPageComponent } from './componentes/not-found-page/not-found-page.component';
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
@@ -10,7 +10,7 @@ import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.compo
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
-  {path: 'participants', component: ParticipantsPageComponent},
+  {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
