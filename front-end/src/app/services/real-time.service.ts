@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { environment } from '../../environments/environment';
+import { send } from 'q';
 
 @Injectable()
 export class RealTimeService {
@@ -11,12 +12,29 @@ export class RealTimeService {
   private user: string;
   private models: Array<any>;
   private callbacks: Array<Function>;
+  private userUUID: string;
+  private users: Array<any>;
+  private subscribed: boolean = false;
 
 
   constructor() { }
 
-  public getUser(): string {
-    return this.user;
+  public getUserUUID(): string {
+    return this.userUUID;
+  }
+
+  public getUser(uuid: string): string {
+    return this.users[''+uuid];
+  }
+
+  public indexOfUser(uuid: string) {
+    var res = 0;
+    for(var key of this.users) {
+      if(key==uuid)
+        break;
+      res++;
+    }
+    return res;
   }
 
 
@@ -28,6 +46,8 @@ export class RealTimeService {
     if(this.stompClient) 
       return;
 
+    this.userUUID = ''+Math.ceil(Math.random()*0xFFFFFFFF);
+    this.users = new Array<any>();
     this.meeting = meeting;
     this.user= this.user ? this.user : 'Unnamed';
     this.models = new Array<any>();
@@ -35,8 +55,12 @@ export class RealTimeService {
     var ws = new SockJS(environment.baseWS);
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({}, frame => {
+      // Callbacks
       for(var c of this.callbacks)
         c();
+
+      // Request users
+      this.send('/chat/send/', WSResponseType.REQUEST_USERS, "", null, {});
     });
   }
 
@@ -45,38 +69,50 @@ export class RealTimeService {
   }
 
   public subscribe() {
-    if(!this.stompClient || this.connecting)
+    if(this.subscribed)
       return;
 
-    var that = this;
-    that.stompClient.subscribe("/meeting/" + this.meeting, (msg) => {
+    this.subscribed = true;
+    this.stompClient.subscribe("/meeting/" + this.meeting, (msg) => {
       if(msg.body) {
-        var obj: Model = JSON.parse(msg.body);
-        var model: any = this.models[obj.name].model;
-        var callback: Function = this.models[obj.name].callback;
+        var model: any;
+        var callback: Function;
+        var obj = JSON.parse(msg.body);
+        if(obj.type.charAt(0) != '*') {
+          model = this.models[obj.name].model;
+          callback = this.models[obj.name].callback;
+        }
 
         switch(obj.type) {
-          case "push":
+          case WSResponseType.PUSH:
             model.push(obj.model);
             break;
 
-          case "pop":
+          case WSResponseType.POP:
             if(!obj.data['index'] || obj.data['index'] < 0)
               model.pop();
             else
               model.splice(obj.data['index'], obj.data['last'] ? obj.data['last'] : 1);
             break;
             
-          case "revert":
+          case WSResponseType.REVERT:
             break;
           
-          case "set":
+          case WSResponseType.SET:
             var data = obj.data['index'] ? obj.data['index'] : 0;
             model[data] = obj.model
             break;
             
-          case "unset":
+          case WSResponseType.UNSET:
             model.splice(0, model.length);
+            break;
+
+          case WSResponseType.REQUEST_USERS:
+            this.send('/chat/send/', WSResponseType.RESPONSE_USERS, "", null, {});
+            break;
+
+          case WSResponseType.RESPONSE_USERS:
+            this.users[obj.data['userUUID']] = obj.data['user'];
             break;
         }
 
@@ -91,6 +127,7 @@ export class RealTimeService {
       data = {};
 
     data.user = this.user;
+    data.userUUID = this.userUUID;
 
     var a = new Model(type, name, model, data);
     var json = JSON.stringify(a);
@@ -104,7 +141,10 @@ export enum WSResponseType {
     POP = 'pop',
     REVERT = 'revert',
     SET = 'set',
-    UNSET = 'unset'
+    UNSET = 'unset',
+
+    REQUEST_USERS = '*request_users',
+    RESPONSE_USERS = '*reponse_users'
 }
 
 export class Model {

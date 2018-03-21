@@ -2,7 +2,7 @@
   <div class="chat-msg-list">
     <ul class="content">
       <li *ngFor="let msg of messages">
-        <b>{{msg.user}}:</b> {{msg.message}} <span>{{msg.time}}</span>
+        <b [style.color]="msg.color">{{getUser(msg.userUUID)}}:</b> {{msg.message}} <span>{{msg.time}}</span>
       </li>
     </ul>
   </div>

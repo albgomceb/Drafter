@@ -51,7 +51,6 @@ export class StandardMeetingComponent implements OnInit {
 
         // Not send blank
         if(!content || content.length==0 || /^\s*$/.test(content)) {
-          this.agendas[iagenda-1].conclusions.splice(iconclusion, 1);
           this.realTimeService.send('/chat/send/', 
                                   WSResponseType.POP, 
                                   'c'+iagenda,  
