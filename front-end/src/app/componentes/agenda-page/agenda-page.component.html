@@ -2,6 +2,7 @@
   agenda-page works!
 </p>
 {{entradas| json}}
+<div class="col-12">
 <table class="table table-hover">
   <div *ngFor="let entrada of entradas; let i=index">
     
@@ -11,6 +12,12 @@
       <td><div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.name}}</div></td>
       <td><button *ngIf="i!=0" type="button" (click)="removeAgenda(entrada, i)">Remove</button></td></tr>
     </div>
+    <button class="btn btn-primary btn-block" id="add_agenda" type="button" (click)="addAgenda()">Add</button>
 </table>
-<br/>
-<button type="button" (click)="addAgenda()">Add</button>
+
+<div>
+    <br/>
+  <button type="button" >Skip this step</button>
+  <button type="button" (click)="saveAgenda(entradas)">Save & create the meeting</button>
+</div>
+</div>

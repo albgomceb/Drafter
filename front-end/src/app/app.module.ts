@@ -15,6 +15,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { FormsModule } from '@angular/forms';
+import { AgendaService } from './componentes/services/agenda.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, AgendaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

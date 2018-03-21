@@ -1,6 +1,5 @@
 package drafter.services;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.domain.Agenda;
-import drafter.domain.Meeting;
 import drafter.repositories.AgendaRepository;
 
 @Service
