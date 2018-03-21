@@ -12,7 +12,6 @@ import { RegisterPageComponent } from './componentes/register-page/register-page
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
-import { UserService } from './componentes/services/user.service';
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { AgendaService } from './componentes/services/agenda.service';
 import { ParticipantService } from './componentes/services/participant.service';
@@ -46,7 +45,6 @@ import { StandardMeetingComponent } from './componentes/meetings/standard-meetin
     ParticipantService,
     FormsModule,
     ReactiveFormsModule,
-    UserService,
     RealTimeService
   ],
   bootstrap: [AppComponent]
