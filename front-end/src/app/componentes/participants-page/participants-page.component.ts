@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { ParticipantService } from '../services/participant.service';
+import { Participant } from '../models/participant.model';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { Meeting } from '../models/meeting.model';
 
 @Component({
   selector: 'participants-page',
@@ -10,25 +12,44 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ParticipantsPageComponent implements OnInit {
 
-  users: Array<User>;
-  errorListUsers:boolean = false;
+  hideme=[]
 
-  constructor(private userService: UserService) {
+  participants: Array<Participant>;
+  attendants: Array<string>;
 
-  }
+  errorListParticipants:boolean = false;
+
+  meeting: Meeting;
+
+  constructor(private participantService: ParticipantService) {}
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
+
+    this.meeting = new Meeting();
+
+    this.attendants = new Array<string>();
+
+    this.participantService.getParticipants().subscribe(
       data => 
       {
-        console.log(data);
-        this.users = data;
+        this.participants = data;
       },
       error => {
-        this.errorListUsers = true;
+        this.errorListParticipants = true;
       }
     );
 
   } 
+
+  addAttendant(id:string){
+    this.attendants.push(id);
+  }
+
+  onSubmit(meeting){
+      this.meeting.setAttendants(this.attendants);
+      this.participantService.saveMeeting(meeting).subscribe(res =>{});
+      console.log(meeting)
+  }
+
 
 }

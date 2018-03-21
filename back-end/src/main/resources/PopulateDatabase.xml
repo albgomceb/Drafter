@@ -330,7 +330,6 @@
 		<property name="meeting" ref="standard1" />
 	</bean>
 
-
 	<bean id="participant4" class="drafter.domain.Participant">
 		<property name="role" value="participant4" />
 		<property name="hasAttended" value="false" />
@@ -339,23 +338,11 @@
 		<property name="meeting" ref="standard2" />
 	</bean>
 
-
-
 	<bean id="participant5" class="drafter.domain.Participant">
 		<property name="role" value="participant5" />
 		<property name="hasAttended" value="true" />
 		<!-- <property name="department" ref="department1"/> -->
 		<property name="user" ref="user5" />
-		<property name="meeting" ref="standard2" />
-	</bean>
-
-
-
-	<bean id="participant6" class="drafter.domain.Participant">
-		<property name="role" value="participant6" />
-		<property name="hasAttended" value="true" />
-		<property name="department" ref="department1" />
-		<property name="user" ref="user1" />
 		<property name="meeting" ref="standard2" />
 	</bean>
 

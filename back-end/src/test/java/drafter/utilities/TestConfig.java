@@ -31,6 +31,5 @@ public class TestConfig {
 	public static final int participant3 = 21;
 	public static final int participant4 = 22;
 	public static final int participant5 = 23;
-	public static final int participant6 = 24;
 	
 }

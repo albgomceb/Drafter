@@ -5,39 +5,40 @@
         <h2 class="participants"><span class="letter">S</span>tart meeting</h2>
       </div>
       <h6 item-width="100%" class="sub-participants mx-auto">Please, select the meeting participants.</h6>
-      <form class="form mt-3">
+      <form (ngSubmit)="onSubmit(meeting)" class="form mt-3">
 
         <div class="container">
           <div class="form-participants">
             <div class="list-group">
-              <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
-              <div *ngIf="errorListUsers" class="errorList">
+              <span *ngIf="errorListParticipants==false && participants==null" class="errorList">Loading...</span>
+              <div *ngIf="errorListParticipants" class="errorList">
                 <img src="../../../assets/img/warning_turq.png" width="20%" />
                 <h4>505 Internal Server Error</h4>
                 <h6>Try again later</h6>
               </div>
-              <div *ngFor="let user of users">
+              
+              <div *ngFor="let parti of participants; let i = index">
                 <a class="list-group-item list-group-item-action">
-                    <button class="btn bt-lg mr-1 add">Add</button>
-                    <img src="{{user.photo}}" width="8%" /><span class="employed"> {{user.name}} <span class="organization" *ngFor="let d of user.departments">{{d.organization}}</span><span class="department" *ngFor="let d of user.departments"> ({{d.name}})</span></span>
+                    <button [hidden]="hideme[i]" type="button" (click)="addAttendant(parti.user.id); hideme[i] = !hideme[i]" class="btn bt-lg mr-1 add">Add</button>
+                    <img src="{{parti.user.photo}}" width="8%" /><span class="employed"> {{parti.user.name}} <span class="organization" *ngFor="let d of parti.departments">{{d.organization}}</span><span class="department" *ngFor="let d of parti.departments"> ({{d.name}})</span></span>
                 </a>
               </div>
             </div>
           </div>
 
-          <div class="form-meeting">
+          <div class="form-meeting form-group">
               <label for="title" class="title" >Title:</label><br/> 
-              <input class="form-control" placeholder="Enter meeting topic" type="text" id="title" name="title"><br/> <br/>
+              <input required [(ngModel)]="meeting.title" class="form-control" placeholder="Enter meeting topic" type="text" id="title" name="title"><br/> <br/>
               <label for="description" class="description" >Description:</label><br/> 
-              <textarea class="form-control desc-input" rows="8" id="description" name="description"></textarea>
+              <textarea [(ngModel)]="meeting.description" class="form-control desc-input" rows="8" id="description" name="description"></textarea>
           </div>
         </div>
 
         <br/>
 
         <div class="buttons">
-            <button type="submit" class="btn bt-lg mr-1">Next</button>
-            <button type="submit" class="btn bt-lg">Cancel</button>
+            <button [disabled]="!attendants.length > 0 || meeting.title == null || meeting.title == ''" type="submit" class="btn bt-lg mr-1">Next</button>
+            <button routerLink=".." class="btn bt-lg">Cancel</button>
         </div>
 
       </form>
