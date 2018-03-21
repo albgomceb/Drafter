@@ -7,13 +7,15 @@ import { LoginPageComponent } from './componentes/login-page/login-page.componen
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { CallbackComponent } from './callback/callback.component';
+import { AuthGuard } from './componentes/guards/auth.guard';
+
 
 const routes: Routes = [
+  { path: '', component: HomePageComponent },
   {path: 'participants', component: ParticipantsPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
-  {path: 'home', component: HomePageComponent},
-  {path:'callback',component:CallbackComponent},
+  {path: 'home', component: HomePageComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundPageComponent}
   
 ];

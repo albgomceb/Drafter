@@ -1,25 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
+import { HttpClient } from '@angular/common/http';
 
-import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {
-    constructor(
-        private http: Http,
-        private authenticationService: AuthenticationService) {
+    constructor(private http: HttpClient) { }
+
+    getAll() {
+        return this.http.get<User[]>('/api/users');
     }
 
-    getUsers(): Observable<User[]> {
-        // add authorization header with jwt token
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
+    getById(id: number) {
+        return this.http.get('/api/users/' + id);
+    }
 
-        // get users from api
-        return this.http.get('/api/users', options)
-            .map((response: Response) => response.json());
+    create(user: User) {
+        return this.http.post('/api/users', user);
+    }
+
+    update(user: User) {
+        return this.http.put('/api/users/' + user.id, user);
+    }
+
+    delete(id: number) {
+        return this.http.delete('/api/users/' + id);
     }
 }

@@ -10,18 +10,17 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
-import { fakeBackendProvider } from './componentes/helpers/fake-backend';
-import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
-import { AuthGuard } from './componentes/guards/auth.guard';
-import { AuthenticationService } from './componentes/services/authentication.service';
 import { UserService } from './componentes/services/user.service';
+import { AuthenticationService } from './componentes/services/authentication.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from './auth/auth.service';
-import { CallbackComponent } from './callback/callback.component';
+
+import { fakeBackendProvider } from './componentes/helpers/index';
+import { AuthGuard } from './componentes/guards/auth.guard';
+import { JwtInterceptor } from './componentes/helpers/index';
 
 
 @NgModule({
@@ -32,8 +31,7 @@ import { CallbackComponent } from './callback/callback.component';
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    HomePageComponent,
-    CallbackComponent
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -42,14 +40,17 @@ import { CallbackComponent } from './callback/callback.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthGuard,
-  AuthenticationService,
-  AuthService,
-  UserService,
-  // providers used to create fake backend
-  fakeBackendProvider,
-  MockBackend,
-  BaseRequestOptions],
+  providers: [ AuthGuard,
+    AuthenticationService,
+    UserService,
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: JwtInterceptor,
+        multi: true
+    },
+
+    // provider used to create fake backend
+    fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

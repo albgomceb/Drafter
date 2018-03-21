@@ -1,27 +1,20 @@
-<div class="row">
-  <div class="col-md-6 mx-auto mt-3">
-    <div class="card text-white bg-dark mb-3">
-      <div class="card-body">
-        <h1 class="text-center login pt-1">Login</h1>
-        <form novalidate [formGroup]="myform" (ngSubmit)="onSubmit()" method="post">
-          <div class="form-group">
-            <label for="email" >Email</label>
-            <input formControlName="email" placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="password" >Password</label>
-            <input formControlName="password" type="password" name="password" id="password" class="form-control">
-          </div>
-            <button type="submit" class="button-sent btn btn-lg">Enviar</button>
-        </form>
-          <div class="card bg-dark border-0">
-            <div class="buttons card-body d-flex justify-content-around">
-              <button class="btn btn-lg btn-facebook"><i class="fa fa-facebook"></i> Facebook</button>
-              <button class="btn btn-lg btn-google" (click)="onClickGoogleLogin()"><i class="fa fa-google-plus" aria-hidden="true"></i> Google</button>
-              <button class="btn btn-lg btn-twitter"><i class="fa fa-twitter"></i> Twitter</button>
-            </div>
-          </div>
+<div class="col-md-6 col-md-offset-3">
+  <h2>Login</h2>
+  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
+          <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
       </div>
-    </div>
-  </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+          <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+      </div>
+      <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">Login</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <a [routerLink]="['/register']" class="btn btn-link">Register</a>
+      </div>
+  </form>
 </div>
