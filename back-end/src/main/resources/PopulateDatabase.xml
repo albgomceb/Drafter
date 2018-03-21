@@ -347,18 +347,100 @@
 	</bean>
 
 
+	<!-- Agendas  -->
+	
+	<bean id="agenda1" class="drafter.domain.Agenda">
+		<property name="number" value="1" />
+		<property name="description" value="Introducción" />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="agenda2" class="drafter.domain.Agenda">
+		<property name="number" value="2" />
+		<property name="description" value="Planificación" />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="agenda3" class="drafter.domain.Agenda">
+		<property name="number" value="3" />
+		<property name="description" value="Conclusiones" />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="agenda4" class="drafter.domain.Agenda">
+		<property name="number" value="1" />
+		<property name="description" value="Introducción" />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="agenda5" class="drafter.domain.Agenda">
+		<property name="number" value="2" />
+		<property name="description" value="Planificación" />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="agenda6" class="drafter.domain.Agenda">
+		<property name="number" value="3" />
+		<property name="description" value="Conclusiones" />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
 
 
+	<!-- Conclusions -->
 
+	<bean id="conclusion1" class="drafter.domain.Conclusion">
+		<property name="conclusion" value="Nos planificamos mal" />
+		<property name="agenda" ref="agenda1" />
+	</bean>
+	
+	<bean id="conclusion2" class="drafter.domain.Conclusion">
+		<property name="conclusion" value="Perdemos mucho el tiempo" />
+		<property name="agenda" ref="agenda1" />
+	</bean>
+	
+	<bean id="conclusion3" class="drafter.domain.Conclusion">
+		<property name="conclusion" value="Más trabajo para todos" />
+		<property name="agenda" ref="agenda2" />
+	</bean>
 
+	<bean id="conclusion4" class="drafter.domain.Conclusion">
+		<property name="conclusion" value="Ponerse las pilas" />
+		<property name="agenda" ref="agenda2" />
+	</bean>
 
+	<bean id="conclusion5" class="drafter.domain.Conclusion">
+		<property name="conclusion" value="Planificar mejor" />
+		<property name="agenda" ref="agenda2" />
+	</bean>
 
-
-
-
-
-
-
+	<bean id="conclusion6" class="drafter.domain.Conclusion">
+		<property name="conclusion" value="Terminar con tiempo" />
+		<property name="agenda" ref="agenda3" />
+	</bean>
 
 
 

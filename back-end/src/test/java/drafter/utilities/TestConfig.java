@@ -31,5 +31,19 @@ public class TestConfig {
 	public static final int participant3 = 21;
 	public static final int participant4 = 22;
 	public static final int participant5 = 23;
+
+	public static final int agenda1 = 24;
+	public static final int agenda2 = 25;
+	public static final int agenda3 = 26;
+	public static final int agenda4 = 27;
+	public static final int agenda5 = 28;
+	public static final int agenda6 = 29;
+
+	public static final int conclusion1 = 30;
+	public static final int conclusion2 = 31;
+	public static final int conclusion3 = 32;
+	public static final int conclusion4 = 33;
+	public static final int conclusion5 = 34;
+	public static final int conclusion6 = 35;
 	
 }
