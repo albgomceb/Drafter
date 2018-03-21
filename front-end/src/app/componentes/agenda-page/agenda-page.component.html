@@ -1,0 +1,26 @@
+<p>
+  agenda-page works!
+</p>
+{{entradas| json}}
+<div class="container">
+<table class="table table-hover">
+  <div *ngFor="let entrada of entradas; let i=index">
+    
+    <tr><td>{{entradas.indexOf(entrada)+1}}.&nbsp;</td>
+      <td style ="width: 100%"><input class="col-12" type = "text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
+        (keyup.enter)="convert(entrada); addAgenda()" placeholder="Punto del día"/>
+      <div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.description}}</div></td>
+      <td><button *ngIf="i!=0" type="button" (click)="removeAgenda(entrada, i)">Remove</button></td></tr>
+    </div>
+    
+</table>
+<div class="text-center">
+  <button type="button" (click)="addAgenda()" class="btn btn-success btn-circle btn-lg">+</button>
+</div>
+
+<div>
+    <br/>
+  <button type="button" >Skip this step</button>
+  <button type="button" (click)="saveAgenda(entradas)">Save & create the meeting</button>
+</div>
+</div>

@@ -98,7 +98,7 @@
 		<property name="surname" value="MARIN CABRERA" />
 		<property name="email" value="user1@gmail.com" />
 		<property name="phone" value="900900900" />
-		<property name="photo" 
+		<property name="photo"
 			value="https://avatars3.githubusercontent.com/u/17437427?s=60&amp;v=4" />
 		<property name="departments">
 			<list>
@@ -206,7 +206,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="organization2" class="drafter.domain.Organization">
 		<property name="enterprise" value="Pivotal Software, Inc" />
 		<property name="description" value="organization1" />
@@ -235,7 +235,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="department2" class="drafter.domain.Department">
 		<property name="name" value="QA" />
 		<property name="organization" ref="organization2" />
@@ -246,7 +246,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Meetings -->
 
 	<bean id="standard1" class="drafter.domain.Standard">
@@ -330,7 +330,6 @@
 		<property name="meeting" ref="standard1" />
 	</bean>
 
-
 	<bean id="participant4" class="drafter.domain.Participant">
 		<property name="role" value="participant4" />
 		<property name="hasAttended" value="false" />
@@ -339,23 +338,11 @@
 		<property name="meeting" ref="standard2" />
 	</bean>
 
-
-
 	<bean id="participant5" class="drafter.domain.Participant">
 		<property name="role" value="participant5" />
 		<property name="hasAttended" value="true" />
 		<!-- <property name="department" ref="department1"/> -->
 		<property name="user" ref="user5" />
-		<property name="meeting" ref="standard2" />
-	</bean>
-
-
-
-	<bean id="participant6" class="drafter.domain.Participant">
-		<property name="role" value="participant6" />
-		<property name="hasAttended" value="true" />
-		<property name="department" ref="department1" />
-		<property name="user" ref="user1" />
 		<property name="meeting" ref="standard2" />
 	</bean>
 

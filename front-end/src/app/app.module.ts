@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -14,6 +13,10 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
+import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
+import { AgendaService } from './componentes/services/agenda.service';
+import { ParticipantService } from './componentes/services/participant.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
@@ -28,6 +31,7 @@ import { StandardMeetingComponent } from './componentes/meetings/standard-meetin
     LoginPageComponent,
     RegisterPageComponent,
     HomePageComponent,
+    AgendaPageComponent,
     ChatComponent,
     StandardMeetingComponent
   ],
@@ -38,6 +42,10 @@ import { StandardMeetingComponent } from './componentes/meetings/standard-meetin
     FormsModule
   ],
   providers: [
+    AgendaService,
+    ParticipantService,
+    FormsModule,
+    ReactiveFormsModule,
     UserService,
     RealTimeService
   ],

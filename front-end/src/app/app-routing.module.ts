@@ -7,6 +7,7 @@ import { LoginPageComponent } from './componentes/login-page/login-page.componen
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
+import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
   {path: 'meeting/:id', component: StandardMeetingComponent},
+  {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];
