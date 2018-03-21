@@ -8,7 +8,7 @@
     
     <tr><td>{{entradas.indexOf(entrada)+1}}.&nbsp;</td>
       <td style ="width: 100%"><input class="col-12" type = "text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
-        (keyup.enter)="convert(entrada); addAgenda()" placeholder="Punto del día"/>
+        (keyup.enter)="convert(entrada); addAgenda()" placeholder="Punto del día" required/>
       <div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.description}}</div></td>
       <td><button *ngIf="i!=0" type="button" (click)="removeAgenda(entrada, i)">Remove</button></td></tr>
     </div>

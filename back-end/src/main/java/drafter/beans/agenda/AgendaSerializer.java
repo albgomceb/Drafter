@@ -34,15 +34,16 @@ public class AgendaSerializer {
 	
 	public List<Agenda> fromBean(List<AgendaBean> agendasBean, Meeting meeting) {
 		List<Agenda> agendas = new ArrayList<Agenda>();
-		
+		int i = 1;
 		for(AgendaBean ab: agendasBean) {
 			Agenda a = new Agenda();
-			a.setNumber(ab.getNumber());
+			a.setNumber(i);
 			a.setDescription(ab.getDescription());
 			a.setMeeting(meeting);
 			a.setConclusion(new ArrayList<Conclusion>());
 			meeting.addAgenda(a);
 			agendas.add(a);
+			i++;
 		}
 		
 		return agendas;
