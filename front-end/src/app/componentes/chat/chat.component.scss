@@ -32,15 +32,25 @@ $input-div: 90%;
 
     border: 1px lighten(black, 60) solid;
     background: white;
+
+    li {
+        position: relative;
+
+        div {
+            width: 100%;
+            overflow-x: hidden;
+        }
+    }
 } 
 
 ul {
     list-style-type: none;
 }
 
+$li-padding: 0.5em;
 li {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-left: $li-padding;
+    padding-right: $li-padding;
 }
 
 .edit {
@@ -60,6 +70,16 @@ li {
     height: 100%;
     float: right;
     cursor: pointer;
+}
+
+.time {
+    font-size: 0.8em;
+    float: right;
+}
+
+.msg {
+    width: auto;
+    margin-right: 3em;
 }
 
 .clear {

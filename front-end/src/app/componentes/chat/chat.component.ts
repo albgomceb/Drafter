@@ -21,7 +21,10 @@ export class ChatComponent implements OnInit {
     this.messages = new Array<ChatMessage>();
     this.realTimeService.connect(this.activeRoute.snapshot.params['id'], frame => {
       this.realTimeService.register('messages', this.messages, obj => {
-        obj.model.color = this.getUserColor(obj.model.userUUID);
+        var date = new Date();
+        var min = "0" + date.getMinutes();
+        min = min.substring(min.length-2, min.length);
+        obj.model.time = date.getHours() + ":" + min;
       });
       this.realTimeService.subscribe();
     });
@@ -35,7 +38,7 @@ export class ChatComponent implements OnInit {
     if(!val || val.length==0 || /^\s*$/.test(val))
       return;
 
-    var model = new ChatMessage(val, this.realTimeService.getUserUUID(), "", "");
+    var model = new ChatMessage(val, this.realTimeService.getUserUUID(), "");
     this.realTimeService.send('/chat/send/', WSResponseType.PUSH, 'messages',  model);
   }
 
@@ -50,13 +53,12 @@ export class ChatComponent implements OnInit {
     this.editable.nativeElement.focus();
   }
 
-  public getUser(uuid: string): string {
-    return this.realTimeService.getUser(uuid);
+  public getUserColor(uuid: string): string {
+    return this.realTimeService.getUserColor(uuid);
   }
 
-  public getUserColor(uuid: string): string {
-    //var num = 360%this.realTimeService.indexOfUser(uuid);
-    return "hsl(" + 66 + ", 100%, 40%)";
+  public getUser(uuid: string): string {
+    return this.realTimeService.getUser(uuid);
   }
 
 }

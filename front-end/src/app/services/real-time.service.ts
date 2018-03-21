@@ -13,7 +13,8 @@ export class RealTimeService {
   private models: Array<any>;
   private callbacks: Array<Function>;
   private userUUID: string;
-  private users: Array<any>;
+  private users: { [key:string]:any; };
+  private usersCount: number;
   private subscribed: boolean = false;
 
 
@@ -24,17 +25,11 @@ export class RealTimeService {
   }
 
   public getUser(uuid: string): string {
-    return this.users[''+uuid];
+    return this.users[''+uuid].name;
   }
 
-  public indexOfUser(uuid: string) {
-    var res = 0;
-    for(var key of this.users) {
-      if(key==uuid)
-        break;
-      res++;
-    }
-    return res;
+  public getUserColor(uuid: string): string {
+    return this.users[''+uuid].color;
   }
 
 
@@ -47,7 +42,8 @@ export class RealTimeService {
       return;
 
     this.userUUID = ''+Math.ceil(Math.random()*0xFFFFFFFF);
-    this.users = new Array<any>();
+    this.users = {};
+    this.usersCount = 0;
     this.meeting = meeting;
     this.user= this.user ? this.user : 'Unnamed';
     this.models = new Array<any>();
@@ -109,17 +105,23 @@ export class RealTimeService {
 
           case WSResponseType.REQUEST_USERS:
             this.send('/chat/send/', WSResponseType.RESPONSE_USERS, "", null, {});
+            this.addUser(obj.data['userUUID'], obj.data['user']);
             break;
 
           case WSResponseType.RESPONSE_USERS:
-            this.users[obj.data['userUUID']] = obj.data['user'];
+            this.addUser(obj.data['userUUID'], obj.data['user']);
             break;
         }
-
+        console.log(this.users);
         if(callback)
           callback(obj);
       }
     });
+  }
+
+  private addUser(userUUID: string, user: string) {
+    this.users[userUUID] = {name: user, color: "hsl(" + this.usersCount*47%360 + ", 100%, 40%)"};
+    this.usersCount = this.usersCount+1;
   }
 
   public send(uri: string, type: WSResponseType, name: string, model: any, data: any = null) {
