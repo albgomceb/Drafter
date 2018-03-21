@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Option } from '../models/option.model';
 import { Agenda } from '../models/agenda.model';
 import { AgendaService } from '../services/agenda.service'; 
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'agenda-page',
@@ -13,10 +14,14 @@ export class AgendaPageComponent implements OnInit {
   public entradas: Array<Agenda>;
   public counter: number;
 
-  constructor(private agendaService: AgendaService) { }
+  constructor(private agendaService: AgendaService, 
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log('entered');
+    this.activatedRoute.params.subscribe((params: Params) => {
+      let meetingId = params['meetingId'];
+      console.log(meetingId);
+    });
     this.entradas=[];
     this.entradas.push(new Agenda());
     this.entradas[0].id = 0;
@@ -25,10 +30,8 @@ export class AgendaPageComponent implements OnInit {
     this.counter = 1;
   }
 
-  saveAgenda(agenda : Agenda){
-    console.log('wolooo');
-    this.agendaService.saveAgenda(agenda).subscribe(res =>{
-      console.log(res);
+  saveAgenda(agenda : Agenda, id : number){
+    this.agendaService.saveAgenda(agenda, id).subscribe(res =>{
     });
   }
 
