@@ -33,7 +33,7 @@ public class AgendaController {
 		return result;
 	}
 
-	@PostMapping("/")
+	@PostMapping("/{id}")
 	public String save(@RequestBody ArrayList<AgendaBean> agendas) {
 //		List<Agenda> result = AgendaSerializer.fromBean(agendas);
 
