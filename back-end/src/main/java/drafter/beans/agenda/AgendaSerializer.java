@@ -21,7 +21,7 @@ public class AgendaSerializer {
 		return res;
 	}
 	
-	public static Agenda fromBean(AgendaBean agenda) {
+	public static List<Agenda> fromBean(List<AgendaBean> agendas) {
 		return null;
 	}
 }

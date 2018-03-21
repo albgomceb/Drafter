@@ -34,10 +34,10 @@ public class AgendaController {
 	}
 
 	@PostMapping("/{idMeeting}")
-	public String save(@RequestBody ArrayList<AgendaBean> agendas) {
-//		List<Agenda> result = AgendaSerializer.fromBean(agendas);
+	public List<Agenda> save(@RequestBody ArrayList<AgendaBean> agendas) {
+		List<Agenda> result = AgendaSerializer.fromBean(agendas);
 
-		return "Aquí se devuelve el JSON con los objetos que se han guardado en back-end";
+		return result;
 	}
 
 }
