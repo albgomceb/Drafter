@@ -16,7 +16,8 @@ export class AgendaPageComponent implements OnInit {
   public meetingId: number;
 
   constructor(private agendaService: AgendaService, 
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -33,6 +34,7 @@ export class AgendaPageComponent implements OnInit {
 
   saveAgenda(agenda : Agenda){
     this.agendaService.saveAgenda(agenda, this.meetingId).subscribe(res =>{
+      this.router.navigate(["/meeting/"+this.meetingId]);
     });
   }
 
@@ -51,11 +53,21 @@ export class AgendaPageComponent implements OnInit {
 
   convert(entrada : Agenda){
     //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
-    if(entrada.description.length > 0 && entrada.isInput)
+    if(this.checkNotBlank(entrada.description) && entrada.isInput)
       entrada.isInput = false;
 
     //Si la entrada es un texto, se convierte en input
     else if(!entrada.isInput)
       entrada.isInput = true;
+  }
+
+  checkNotBlank(string : String) : boolean{
+    var res = true;
+
+    if(string.trim().length == 0){
+      res = false;
+    }
+
+    return res;
   }
 }

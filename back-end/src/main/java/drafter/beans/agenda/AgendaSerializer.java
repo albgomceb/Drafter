@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import drafter.beans.conclusion.ConclusionBean;
+import drafter.beans.ConclusionBean;
 import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Conclusion;
 import drafter.domain.Meeting;
-import drafter.services.AgendaService;
 
 
 public class AgendaSerializer {

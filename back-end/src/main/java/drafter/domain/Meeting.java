@@ -1,5 +1,6 @@
 package drafter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -7,7 +8,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -166,6 +166,13 @@ public abstract class Meeting extends DomainEntity{
 
 	public void setParticipants(Collection<Participant> participants) {
 		this.participants = participants;
+	}
+	
+	public void addParticipant(Participant participant) {
+		if(this.participants == null)
+			this.participants = new ArrayList<Participant>();
+		this.participants.add(participant);
+		participant.setMeeting(this);
 	}
 
 	

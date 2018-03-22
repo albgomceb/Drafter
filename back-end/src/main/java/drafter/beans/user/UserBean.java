@@ -6,6 +6,7 @@ import drafter.beans.Option;
 
 public class UserBean {
 
+	public String id;
 	public String name; 
 	public String surname; 
 	public  String email; 
@@ -49,6 +50,12 @@ public class UserBean {
 	}
 	public void setDepartments(List<Option> departments) {
 		this.departments = departments;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

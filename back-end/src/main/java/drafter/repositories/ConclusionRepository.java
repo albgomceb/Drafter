@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import drafter.domain.Conclusion;
 
 @Repository
-public interface ConclusionRepository extends JpaRepository<Conclusion, Integer> {
+public interface ConclusionRepository extends JpaRepository<Conclusion,Integer> {
+    @Query("select c from Conclusion c where c.agenda.id = ?1")
+    List<Conclusion> findByAgenda(int agendaId);
 
-	@Query("select c from Conclusion c where c.agenda.id = ?1")
-	List<Conclusion> findByAgenda(int agendaId);
 }

@@ -3,9 +3,9 @@ import { Option } from "./option.model";
 export class Meeting {
     title: string;
     description: string;
-    attendants: Array<string>
+    attendants: Array<Option>
 
-    setAttendants(attendants:Array<string>) {
+    setAttendants(attendants:Array<Option>) {
       this.attendants = attendants; 
     }
   }

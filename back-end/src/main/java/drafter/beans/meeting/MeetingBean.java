@@ -6,12 +6,19 @@ import drafter.beans.Option;
 import drafter.domain.Agenda;
 
 public class MeetingBean {
-
+	public Integer id;
 	public String title; 
 	public String description; 
 	public List<Option> attendants;
-	public List<Agenda> agendas;
+	public List<Option> agendas;
+
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -30,14 +37,12 @@ public class MeetingBean {
 	public void setAttendants(List<Option> attendants) {
 		this.attendants = attendants;
 	}
-	public List<Agenda> getAgendas() {
+	public List<Option> getAgendas() {
 		return agendas;
 	}
-	public void setAgendas(List<Agenda> agendas) {
+	public void setAgendas(List<Option> agendas) {
 		this.agendas = agendas;
 	}
-	
-	
 	
 	
 }

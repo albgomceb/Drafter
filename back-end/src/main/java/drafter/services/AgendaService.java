@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import drafter.domain.Agenda;
 import drafter.repositories.AgendaRepository;
 
+
 @Service
 @Transactional
 public class AgendaService {
@@ -55,10 +56,5 @@ public class AgendaService {
 		return agendaRepository.save(agenda);
 	}
 
-	
-	//Other business Methods-----------------------------------------------------------------------------
-	
-	public List<Agenda> findByMeeting(int id) {
-		return agendaRepository.findByMeeting(id);
-	}
+
 }
