@@ -23,7 +23,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.junit.Assert;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -86,15 +85,15 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	}
 
 	public void addAuthority(Authority authority) {
-		Assert.assertNotNull(authority);
-		Assert.assertTrue(!authorities.contains(authority));
+		//Assert.assertNotNull(authority);
+		//Assert.assertTrue(!authorities.contains(authority));
 
 		authorities.add(authority);
 	}
 
 	public void removeAuthority(Authority authority) {
-		Assert.assertNotNull(authority);
-		Assert.assertTrue(authorities.contains(authority));
+		//Assert.assertNotNull(authority);
+		//Assert.assertTrue(authorities.contains(authority));
 		
 		authorities.remove(authority);
 	}

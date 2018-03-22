@@ -1,16 +1,5 @@
-/* LoginService.java
- *
- * Copyright (C) 2016 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- * 
- */
-
 package drafter.security;
 
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -35,14 +24,14 @@ public class LoginService implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		Assert.assertNotNull(username);
+		//Assert.assertNotNull(username);
 
 		UserDetails result;
 
 		result = userRepository.findByUsername(username);
-		Assert.assertNotNull(result);		
+		//Assert.assertNotNull(result);		
 		// WARNING: The following sentences prevent lazy initialisation problems!
-		Assert.assertNotNull(result.getAuthorities());
+		//Assert.assertNotNull(result.getAuthorities());
 		result.getAuthorities().size();
 
 		return result;
@@ -62,14 +51,14 @@ public class LoginService implements UserDetailsService {
 		// republish your project, and start it over.
 
 		context = SecurityContextHolder.getContext();
-		Assert.assertNotNull(context);
+		//Assert.assertNotNull(context);
 		authentication = context.getAuthentication();
-		Assert.assertNotNull(authentication);
+		//Assert.assertNotNull(authentication);
 		principal = authentication.getPrincipal();
-		Assert.assertTrue(principal instanceof UserAccount);
+		//Assert.assertTrue(principal instanceof UserAccount);
 		result = (UserAccount) principal;
-		Assert.assertNotNull(result);
-		Assert.assertTrue(result.getId() != 0);
+		//Assert.assertNotNull(result);
+		//Assert.assertTrue(result.getId() != 0);
 
 		return result;
 	}

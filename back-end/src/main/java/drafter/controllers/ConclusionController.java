@@ -59,7 +59,8 @@ public class ConclusionController {
 	
 	@MessageMapping("/conclusion/delete/{conclusionId}/{meetingId}")
 	public void delete(@DestinationVariable int conclusionId, @DestinationVariable int meetingId, String json) {
-		conclusionService.delete(conclusionId);
+		if(conclusionId != 0)
+			conclusionService.delete(conclusionId);
 		template.convertAndSend("/meeting/" + meetingId, json);
 	}
 }

@@ -12,7 +12,6 @@ package drafter.security;
 
 import javax.validation.Valid;
 
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -48,8 +47,8 @@ public class LoginController extends AbstractController {
 			@RequestParam(required = false) boolean showError) {
 		
 		
-		Assert.assertNotNull(credentials);
-		Assert.assertNotNull(bindingResult);
+		//Assert.assertNotNull(credentials);
+		//Assert.assertNotNull(bindingResult);
 		
 		ModelAndView result;
 
