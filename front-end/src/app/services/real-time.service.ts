@@ -32,6 +32,10 @@ export class RealTimeService {
     return this.users[''+uuid].color;
   }
 
+  public getMeeting(): number {
+    return this.meeting;
+  }
+
 
   public connect(meeting: number, callback: Function) {
     if(!this.callbacks)
@@ -112,7 +116,7 @@ export class RealTimeService {
             this.addUser(obj.data['userUUID'], obj.data['user']);
             break;
         }
-        console.log(this.users);
+        
         if(callback)
           callback(obj);
       }
