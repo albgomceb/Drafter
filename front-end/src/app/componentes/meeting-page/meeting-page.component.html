@@ -1,0 +1,47 @@
+
+  <div class="col-md-18 mx-auto mt-3">
+    <div class="card mx-auto pt-3 pb-3">
+      <div class="mx-auto">
+        <h2 class="users"><span class="letter">S</span>tart meeting</h2>
+      </div>
+      <h6 item-width="100%" class="sub-users mx-auto">Please, select the meeting participants.</h6>
+      <form (ngSubmit)="onSubmit(meeting)" class="form mt-3">
+
+        <div class="container">
+          <div class="form-users">
+            <div class="list-group">
+              <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+              <div *ngIf="errorListUsers" class="errorList">
+                <img src="../../../assets/img/warning_turq.png" width="20%" />
+                <h4>505 Internal Server Error</h4>
+                <h6>Try again later</h6>
+              </div>
+              
+              <div *ngFor="let us of users; let i = index">
+                <a class="list-group-item list-group-item-action">
+                    <button [hidden]="hideme[i]" type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn bt-lg mr-1 add">Add</button>
+                    <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-meeting form-group">
+              <label for="title" class="title" >Title:</label><br/> 
+              <input required [(ngModel)]="meeting.title" class="form-control" placeholder="Enter meeting topic" type="text" id="title" name="title"><br/> <br/>
+              <label for="description" class="description" >Description:</label><br/> 
+              <textarea [(ngModel)]="meeting.description" class="form-control desc-input" rows="8" id="description" name="description"></textarea>
+          </div>
+        </div>
+
+        <br/>
+
+        <div class="buttons">
+            <button [disabled]="!attendants.length > 0 || meeting.title == null || meeting.title == ''" type="submit" class="btn bt-lg mr-1">Next</button>
+            <button routerLink=".." class="btn bt-lg">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+

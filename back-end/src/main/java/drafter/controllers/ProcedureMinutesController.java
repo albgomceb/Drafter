@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drafter.beans.AgendaBean;
 import drafter.beans.ConclusionBean;
-import drafter.beans.MeetingBean;
+import drafter.beans.agenda.AgendaBean;
 import drafter.beans.agenda.AgendaSerializer;
 import drafter.beans.conclusion.ConclusionSerializer;
+import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Conclusion;
@@ -49,8 +49,8 @@ public class ProcedureMinutesController {
 	@GetMapping("/meeting/{id}")
 	public MeetingBean findMeeting(@PathVariable("id") int idM) {    // con el id de la reunion saco la informacion necesaria de la reunion. 
 		
-		Meeting result = meetingService.findOne(idM); 
-		MeetingBean mbean = MeetingSerializer.fromMeeting(result); 
+		Meeting result = meetingService.findById(idM); 
+		MeetingBean mbean = new MeetingSerializer().fromMeeting(result); 
 		return mbean; 
 		
 	}
@@ -67,9 +67,10 @@ public class ProcedureMinutesController {
 	@GetMapping("/meeting/{id}/agenda")
 	public List<AgendaBean> findAgenda(@PathVariable("id")int idM){
 		
-		Meeting meet = meetingService.findOne(idM); 
+		Meeting meet = meetingService.findById(idM); 
+		AgendaSerializer serializer =new AgendaSerializer(); 
 		List<AgendaBean> result = meet.getAgendas().stream()
-				.map(a -> AgendaSerializer.fromAgenda(a))
+				.map(a -> serializer.fromAgenda(a))
 				.collect(Collectors.toList()); 
 		return result; 
 		
@@ -79,7 +80,7 @@ public class ProcedureMinutesController {
 	@GetMapping("/meeting/{id}/conclussions")
 	public List<ConclusionBean> findConclusion(@PathVariable("id")int idM){
 		
-		Meeting meet = meetingService.findOne(idM); 
+		Meeting meet = meetingService.findById(idM); 
 		List<Agenda> agendas = new ArrayList<Agenda>(meet.getAgendas());
 		List<ConclusionBean> result = new ArrayList<ConclusionBean>(); 
 		

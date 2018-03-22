@@ -1,4 +1,6 @@
 export class Option {
     id: String;
-   name: String;
+    name: String;
+    photo: String;
+    organization: String;
   }

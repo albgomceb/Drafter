@@ -1,12 +1,12 @@
 import { Option } from "./option.model";
 
 export class User {
-    id: number;
-    version: number;
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    picture: string;
+    id: string;
+    name:string
+    surname:string 
+    email:string 
+    phone:string
+    photo:string
     departments: Array<Option>;
+    
   }

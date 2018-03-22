@@ -1,16 +1,18 @@
-package drafter.beans;
+package drafter.beans.user;
 
 import java.util.List;
 
+import drafter.beans.Option;
+
 public class UserBean {
 
+	public String id;
 	public String name; 
 	public String surname; 
 	public  String email; 
 	public  String phone; 
 	public String photo;
 	public List<Option> departments;
-	public  List<Option> organizations;
 	
 	
 	public String getName() {
@@ -49,11 +51,11 @@ public class UserBean {
 	public void setDepartments(List<Option> departments) {
 		this.departments = departments;
 	}
-	public List<Option> getOrganizations() {
-		return organizations;
+	public String getId() {
+		return id;
 	}
-	public void setOrganizations(List<Option> organizations) {
-		this.organizations = organizations;
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

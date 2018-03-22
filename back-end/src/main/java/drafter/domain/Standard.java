@@ -11,9 +11,11 @@ public class Standard extends Meeting{
 	
 	//Constructor----------------------------------------
 	public Standard() {
-		
+		super();
 	}
-	
+	public Standard(Meeting meeting) {
+		super();
+	}
 	// Relationships-------------------------------------
 
 }

@@ -1,5 +1,5 @@
-import { Option } from "./option.model";
-
 export class Agenda {
-    id: number;
-}
+  id: number;
+  description: String;
+  isInput: Boolean;
+  }

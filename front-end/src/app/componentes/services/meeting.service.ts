@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Meeting } from '../models/meeting.model';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
+import { Meeting2 } from '../models/meeting.model2';
+import { Agenda2 } from '../models/agenda.model2';
 
 
 const httpOptions = {
@@ -17,16 +18,16 @@ export class MeetingService {
 
   staticUrl:String = environment.baseApi;
 
-  getMeeting(meetingId:number): Observable<Meeting> {
-    return this.http.get<Meeting>(this.staticUrl+'/minutes/meeting/'+meetingId);
+  getMeeting(meetingId:number): Observable<Meeting2> {
+    return this.http.get<Meeting2>(this.staticUrl+'/minutes/meeting/'+meetingId);
   }
 
-  getAgendas(meetingId:number): Observable<Array<Meeting>> {
-    return this.http.get<Array<Meeting>>(this.staticUrl+'/minutes/meeting/'+ meetingId + '/agenda');
+  getAgendas(meetingId:number): Observable<Array<Agenda2>> {
+    return this.http.get<Array<Agenda2>>(this.staticUrl+'/minutes/meeting/'+ meetingId + '/agenda');
   }
 
-  getConclusions(meetingId:number): Observable<Array<Meeting>> {
-    return this.http.get<Array<Meeting>>(this.staticUrl+'/minutes/meeting/' + meetingId + '/conclussions');
+  getConclusions(meetingId:number): Observable<Array<Meeting2>> {
+    return this.http.get<Array<Meeting2>>(this.staticUrl+'/minutes/meeting/' + meetingId + '/conclussions');
   }
 
 }

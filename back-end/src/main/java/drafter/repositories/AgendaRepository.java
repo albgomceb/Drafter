@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import drafter.domain.Agenda;
 
 @Repository
-public interface AgendaRepository extends JpaRepository<Agenda,Integer>{
+
+public interface AgendaRepository extends JpaRepository<Agenda, Integer> {
 
 }

@@ -1,33 +1,26 @@
-.navbar{
-    background-image: url("../../../assets/img/pw_maze_black.png");
+/* PRINCIPAL MENU */
+nav.navbar {
+    background:#333;
 }
 
-.navbar a{
-    color: rgb(168, 168, 168);
-    font-family: sans-serif;
+nav.navbar {
+    padding: 0 35px;
 }
 
-.navbar a:hover{
-    color:rgb(255, 255, 255);
+nav.navbar a.navbar-brand img.navbar-logo {
+    height: 30px;
+    width: auto;
 }
 
-.navbar-brand{
-    font-size: 40px;
-    font-family: serif;
-    margin-left: 3%;
-    padding-top: 0;
-    margin-top:0;
+nav.navbar a.nav-link {
+    padding: 15px;
+    color: #fff;
 }
 
-.navbar-brand span{
-    vertical-align: middle;
+nav.navbar a.nav-link:hover {
+    background-color: #00a98f;
 }
 
-.collapse a{
-    font-size: 20px;
-    font-family: sans-serif;
+nav.navbar button.navbar-toggler {
+	margin: 10px 0;
 }
-
-
-
-

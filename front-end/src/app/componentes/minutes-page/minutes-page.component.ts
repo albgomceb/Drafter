@@ -4,6 +4,8 @@ import { MeetingService } from '../services/meeting.service';
 import { Meeting } from '../models/meeting.model';
 import { Agenda } from '../models/agenda.model';
 import { Conclusion } from '../models/conclusion.model';
+import { Agenda2 } from '../models/agenda.model2';
+import { Meeting2 } from '../models/meeting.model2';
 
 @Component({
   selector: 'minutes-page',
@@ -12,8 +14,8 @@ import { Conclusion } from '../models/conclusion.model';
 })
 export class MinutesPageComponent implements OnInit {
   
-  meeting: Meeting;
-  agendas: Array<Agenda>;
+  meeting: Meeting2;
+  agendas: Array<Agenda2>;
   conclusions: Array<Conclusion>;
   meetingId: number;
 

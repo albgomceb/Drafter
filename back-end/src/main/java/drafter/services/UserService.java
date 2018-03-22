@@ -45,8 +45,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(int id) {
-        return userRepository.getOne(id);
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     public User update(User user) {
