@@ -1,5 +1,6 @@
 
-<div style="padding:5%; text-align:center"><h1>Agenda</h1>
+<div style="padding:5%; text-align:center">
+  <h2 class="users"><span class="letter">A</span>genda</h2>
 <p>Introduce your agenda using the inputs below. <br/>
 You can add as many points as you want by clicking the add (+) button (or pressing Enter key).</p></div>
 <div class="container">
@@ -11,7 +12,7 @@ You can add as many points as you want by clicking the add (+) button (or pressi
           <input class="col-12" type = "text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
           (keyup.enter)="convert(entrada); addAgenda()" placeholder="Point to deal with" required/>
         <div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.description}}</div></td>
-        <td><button *ngIf="i!=0" type="button" (click)="removeAgenda(entrada, i)">Remove</button></td>
+        <td><button *ngIf="i!=0" (click)="removeAgenda(entrada, i)" class="btn bt-lg">Remove</button></td>
         <td><div *ngIf="!checkNotBlank(entrada.description)" style="color: red; text-align: center">Required</div></td></tr>
     </div>
   </table>
@@ -22,6 +23,6 @@ You can add as many points as you want by clicking the add (+) button (or pressi
   <div style="margin:2%;text-align:center">
       <br/>
     <!-- <button type="button" >Skip this step</button> -->
-    <button type="button" (click)="saveAgenda(entradas)">Save & create the meeting</button>
+    <button  (click)="saveAgenda(entradas)" class="btn bt-lg">Save & create the meeting</button>
   </div>
 </div>

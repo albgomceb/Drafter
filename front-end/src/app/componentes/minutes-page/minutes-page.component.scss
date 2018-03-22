@@ -1,4 +1,24 @@
+.card {
+    background: #fafafa;
+}
+
 fieldset{
-border : solid #03b3b6 !important;
+border : 1px solid #ced4da !important;
 padding: 1%;
+}
+
+.letter{
+    color:#00A98F;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    font-weight: bold;
+    background-color:#333;    
+}
+
+button:hover:not([disabled=""]) {
+    background-color: #00A98F;
 }
