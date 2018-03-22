@@ -1,30 +1,30 @@
 package drafter.beans.agenda;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import drafter.beans.Option;
+import drafter.beans.conclusion.ConclusionBean;
+import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Conclusion;
 import drafter.domain.Meeting;
 import drafter.services.AgendaService;
 
+
 public class AgendaSerializer {
 	
-	
-	@Autowired
-	private static AgendaService agendaService;
-	
-	
-	public static AgendaBean fromAgenda(Agenda agenda) {
+	public AgendaBean fromAgenda(Agenda agenda) {
 		AgendaBean res = new AgendaBean();
 		
-		List<Option> conclusion = agenda.getConclusion().stream().map(us -> new Option(new Integer(us.getId()).toString(),us.getConclusion())).collect(Collectors.toList()); 
-		res.setConclusion(conclusion);
+		List<ConclusionBean> conclusion = new LinkedList<ConclusionBean>();
+		for(Conclusion c : agenda.getConclusion())
+			conclusion.add(new ConclusionSerializer().fromConclusion(c));
+		res.setConclusions(conclusion);
 		
+		res.setId(agenda.getId());
 		res.setMeetingId(agenda.getMeeting().getId());
 		res.setNumber(agenda.getNumber());
 		res.setDescription(agenda.getDescription());
@@ -32,7 +32,7 @@ public class AgendaSerializer {
 		return res;
 	}
 	
-	public static List<Agenda> fromBean(List<AgendaBean> agendasBean, Meeting meeting) {
+	public List<Agenda> fromBean(List<AgendaBean> agendasBean, Meeting meeting) {
 		List<Agenda> agendas = new ArrayList<Agenda>();
 		
 		for(AgendaBean ab: agendasBean) {

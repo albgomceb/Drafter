@@ -1,21 +1,13 @@
 package drafter.beans.conclusion;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import drafter.domain.Conclusion;
 import drafter.services.AgendaService;
 import drafter.services.ConclusionService;
 
+
 public class ConclusionSerializer {
-
-	@Autowired
-	private static AgendaService agendaService;
 	
-	@Autowired
-	private static ConclusionService conclusionService;
-	
-
-	public static ConclusionBean fromConclusion(Conclusion c) {
+	public ConclusionBean fromConclusion(Conclusion c) {
 		ConclusionBean res = new ConclusionBean();
 		res.setId(c.getId());
 		res.setAgendaId(c.getAgenda().getId());
@@ -24,7 +16,7 @@ public class ConclusionSerializer {
 		return res;
 	}
 	
-	public static Conclusion fromBean(ConclusionBean bean) {
+	public Conclusion fromBean(ConclusionBean bean, AgendaService agendaService, ConclusionService conclusionService) {
 		Conclusion res;
 		if(bean.getId() == 0)
 			res = new Conclusion();
@@ -36,5 +28,4 @@ public class ConclusionSerializer {
 		
 		return res;
 	}
-	
 }

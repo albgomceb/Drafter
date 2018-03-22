@@ -33,12 +33,13 @@ public class AgendaController {
 	
 	@Autowired
 	private MeetingService	meetingService;
+
 	
 	
 	@GetMapping("")
 	public List<AgendaBean> findAll() {
 		List<Agenda> res = this.agendaService.findAll();
-		List<AgendaBean> result = res.stream().map(agenda -> AgendaSerializer.fromAgenda(agenda)).collect(Collectors.toList());
+		List<AgendaBean> result = res.stream().map(agenda -> new AgendaSerializer().fromAgenda(agenda)).collect(Collectors.toList());
 
 		return result;
 	}
@@ -48,7 +49,7 @@ public class AgendaController {
 		List<AgendaBean> res = new LinkedList<AgendaBean>();
 		try {
 			for(Agenda a : agendaService.findByMeeting(meetingId))
-				res.add(AgendaSerializer.fromAgenda(a));
+				res.add(new AgendaSerializer().fromAgenda(a));
 		} catch(Throwable e) {
 			throw e;
 		}
@@ -59,7 +60,7 @@ public class AgendaController {
 	@GetMapping("/{agendaId}")
 	public AgendaBean findMeeting(@PathParam("id")Integer agendaId) {
 		Agenda res = this.agendaService.findById(agendaId);
-		AgendaBean result = AgendaSerializer.fromAgenda(res);
+		AgendaBean result = new AgendaSerializer().fromAgenda(res);
 
 		return result;
 	}
@@ -68,7 +69,7 @@ public class AgendaController {
 	@PostMapping("/{meetingId}")
 	public List<Agenda> save(@PathVariable("meetingId") int meetingId, @RequestBody ArrayList<AgendaBean> agendas) {
 		Meeting meeting = meetingService.findById(new Integer(meetingId));
-		List<Agenda> result = AgendaSerializer.fromBean(agendas, meeting);
+		List<Agenda> result = new AgendaSerializer().fromBean(agendas, meeting);
 		result.stream().forEach(a -> {
 			
 			agendaService.save(a);	

@@ -34,8 +34,8 @@ public class ConclusionService {
         return new Agenda();
     }
     
-    public Conclusion save(Conclusion conclusio) {
-    	return conclusionRepository.save(conclusio);
+    public Conclusion save(Conclusion conclusion) {
+    	return conclusionRepository.save(conclusion);
     }
 
     public void delete(int id) {

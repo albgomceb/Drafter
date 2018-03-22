@@ -2,16 +2,23 @@ package drafter.beans.agenda;
 
 import java.util.Collection;
 
-import drafter.beans.Option;
+import drafter.beans.conclusion.ConclusionBean;
 
 public class AgendaBean {
 
+	private int id;
 	private int number;
 	private String description;
 	private int meetingId;
-	private Collection<Option> conclusion;
+	private Collection<ConclusionBean> conclusions;
 	
 	
+	public Collection<ConclusionBean> getConclusions() {
+		return conclusions;
+	}
+	public void setConclusions(Collection<ConclusionBean> conclusions) {
+		this.conclusions = conclusions;
+	}
 	public int getNumber() {
 		return number;
 	}
@@ -30,11 +37,11 @@ public class AgendaBean {
 	public void setMeetingId(int meetingId) {
 		this.meetingId = meetingId;
 	}
-	public Collection<Option> getConclusion() {
-		return conclusion;
+	public int getId() {
+		return id;
 	}
-	public void setConclusion(Collection<Option> conclusion) {
-		this.conclusion = conclusion;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
