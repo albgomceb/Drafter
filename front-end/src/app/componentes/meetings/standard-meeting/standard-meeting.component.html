@@ -1,9 +1,14 @@
+<br>
+<h2 class="text-center"><span class="letter">S</span>tandard meeting</h2>
+<br>
 <div class="row">
     <div class="col-md-4">
+        <h3>Chat</h3>
         <chat></chat>
     </div>
 
     <div class="col-md-8 agenda">
+        <h3>Agenda</h3>
         <div *ngFor="let a of agendas">
             <div class="points">
                 <span>{{a.number}}. {{a.description}}</span>
@@ -25,7 +30,8 @@
             </ul>
         </div>
     </div>       
-    <div class="buttons">
-        <button routerLink="../../minutes/{{meetingId}}" class="btn bt-lg mr-1">Next</button>
-    </div>
  </div>
+
+<div class="buttons text-center">
+    <button routerLink="../../minutes/{{meetingId}}" class="btn bt-lg mr-1">Next</button>
+</div>
