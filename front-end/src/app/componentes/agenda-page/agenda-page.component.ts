@@ -32,8 +32,8 @@ export class AgendaPageComponent implements OnInit {
     this.counter = 1;
   }
 
-  saveAgenda(agenda : Agenda){
-    this.agendaService.saveAgenda(agenda, this.meetingId).subscribe(res =>{
+  saveAgenda(agendas : Agenda[]){
+    this.agendaService.saveAgenda(agendas, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
     });
   }

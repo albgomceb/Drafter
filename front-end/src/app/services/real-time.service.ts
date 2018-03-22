@@ -124,6 +124,9 @@ export class RealTimeService {
   }
 
   private addUser(userUUID: string, user: string) {
+    if(this.users[userUUID])
+      return;
+
     this.users[userUUID] = {name: user, color: "hsl(" + this.usersCount*47%360 + ", 100%, 40%)"};
     this.usersCount = this.usersCount+1;
   }

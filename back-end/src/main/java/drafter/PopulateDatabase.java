@@ -78,7 +78,8 @@ public class PopulateDatabase {
 			System.out.println("\n");
 			
 			System.out.println("Reading 'PopulateDatabase.xml'...");
-			applicationContext = new ClassPathXmlApplicationContext("file:src/main/resources/PopulateDatabase.xml");
+			//applicationContext = new ClassPathXmlApplicationContext("file:src/main/resources/PopulateDatabase.xml");
+			applicationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
 			
 			System.out.println("Persisting " + applicationContext.getBeanDefinitionCount() + " entities...\n\n");
 		

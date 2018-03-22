@@ -26,7 +26,7 @@ export class AgendaService {
     return this.http.get<Array<Agenda>>(this.staticUrl+'/agendas/list/' + meeting);
   }
 
-  saveAgenda(agenda:Agenda, id:number): Observable<Agenda> {
-    return this.http.post<Agenda>(this.staticUrl+'/agendas/'+id,agenda,{});
+  saveAgenda(agendas:Agenda[], id:number): Observable<Agenda> {
+    return this.http.post<Agenda>(this.staticUrl+'/agendas/'+id,agendas,{});
   }
 }
