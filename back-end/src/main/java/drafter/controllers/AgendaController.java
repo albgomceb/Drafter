@@ -56,16 +56,16 @@ public class AgendaController {
 	
 	
 	@PostMapping("/{meetingId}")
-	public List<Agenda> save(@PathVariable("meetingId") int meetingId, @RequestBody ArrayList<AgendaBean> agendas) {
+	public List<AgendaBean> save(@PathVariable("meetingId") int meetingId, @RequestBody ArrayList<AgendaBean> agendas) {
 		Meeting meeting = standardService.findById(new Integer(meetingId));
 		List<Agenda> result = new AgendaSerializer().fromBean(agendas, meeting);
 		result.stream().forEach(a -> {
 			
 			agendaService.save(a);	
 		});
-
+		List<AgendaBean> res = result.stream().map(agenda -> new AgendaSerializer().fromAgenda(agenda)).collect(Collectors.toList());
 		
-		return result;
+		return res;
 	}
 
 }
