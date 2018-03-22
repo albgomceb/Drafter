@@ -14,9 +14,10 @@ import { Meeting2 } from '../models/meeting.model2';
 })
 export class MinutesPageComponent implements OnInit {
   
-  meeting: Meeting2;
+  meeting: Meeting2 = new Meeting2();
+  model:any[];
   agendas: Array<Agenda2>;
-  conclusions: Array<Conclusion>;
+  conclusions: Array<Conclusion> = [];
   meetingId: number;
 
   constructor(private meetingService: MeetingService, 
@@ -27,13 +28,20 @@ export class MinutesPageComponent implements OnInit {
       this.meetingId = params['id'];
     });
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
-      this.meeting = data;
+       this.meeting = data;
     });
     this.meetingService.getAgendas(this.meetingId).subscribe(data => {
       this.agendas = data;
-    });
-    this.meetingService.getConclusions(this.meetingId).subscribe(data => {
-      this.conclusions = data;
+      this.model = [];
+      for(let ag of this.agendas){
+        var val = {
+          agenda: ag,
+          conclusion:ag
+        }
+
+       
+        this.model.push(val);
+      }
     });
   };
 

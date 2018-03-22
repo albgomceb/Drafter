@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { Meeting2 } from '../models/meeting.model2';
 import { Agenda2 } from '../models/agenda.model2';
+import { Conclusion } from '../../models/conclusion';
 
 
 const httpOptions = {
@@ -26,8 +27,8 @@ export class MeetingService {
     return this.http.get<Array<Agenda2>>(this.staticUrl+'/minutes/meeting/'+ meetingId + '/agenda');
   }
 
-  getConclusions(meetingId:number): Observable<Array<Meeting2>> {
-    return this.http.get<Array<Meeting2>>(this.staticUrl+'/minutes/meeting/' + meetingId + '/conclussions');
+  getConclusions(agendaId:number): Observable<Array<Conclusion>> {
+    return this.http.get<Array<Conclusion>>(this.staticUrl+'/agendas/' + agendaId + '/conclussion');
   }
 
 }

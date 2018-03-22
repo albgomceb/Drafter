@@ -17,13 +17,14 @@ export class StandardMeetingComponent implements OnInit {
   
   public agendas: Array<Agenda>;
   public hasEdit: boolean = true;
-
+  public meetingId: number;
 
   constructor(private activeRoute: ActivatedRoute, private realTimeService: RealTimeService, private agendaService: AgendaService) { }
 
   ngOnInit() {
     this.agendas = new Array<Agenda>();
-    this.realTimeService.connect(this.activeRoute.snapshot.params['id'], () => {
+    this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.realTimeService.connect(this.meetingId, () => {
 
       this.agendaService.getAgendasByMeeting(this.realTimeService.getMeeting()).subscribe( agenda => {
         this.agendas = agenda;

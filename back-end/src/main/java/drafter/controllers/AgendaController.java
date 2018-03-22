@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.agenda.AgendaBean;
 import drafter.beans.agenda.AgendaSerializer;
+import drafter.beans.conclusion.ConclusionBean;
+import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.services.AgendaService;
@@ -54,6 +56,15 @@ public class AgendaController {
 		return result;
 	}
 	
+	@GetMapping("/{agendaId}/conclussion")
+	public List<ConclusionBean> findConclussionsOfAgenda(@PathVariable("agendaId")Integer agendaId) {
+		Agenda res = this.agendaService.findById(agendaId);
+		
+		List<ConclusionBean> result = res.getConclusion().stream().map(conclussion -> new ConclusionSerializer().fromConclusion(conclussion))
+				.collect(Collectors.toList());
+
+		return result;
+	}
 	
 	@PostMapping("/{meetingId}")
 	public List<AgendaBean> save(@PathVariable("meetingId") int meetingId, @RequestBody ArrayList<AgendaBean> agendas) {
