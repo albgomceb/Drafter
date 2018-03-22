@@ -3,13 +3,12 @@ package drafter.beans.agenda;
 import java.util.Collection;
 
 import drafter.beans.Option;
-import drafter.domain.Meeting;
 
 public class AgendaBean {
 
 	private int number;
 	private String description;
-	private Meeting meeting;
+	private int meetingId;
 	private Collection<Option> conclusion;
 	
 	
@@ -25,11 +24,11 @@ public class AgendaBean {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Meeting getMeeting() {
-		return meeting;
+	public int getMeetingId() {
+		return meetingId;
 	}
-	public void setMeeting(Meeting meeting) {
-		this.meeting = meeting;
+	public void setMeetingId(int meetingId) {
+		this.meetingId = meetingId;
 	}
 	public Collection<Option> getConclusion() {
 		return conclusion;

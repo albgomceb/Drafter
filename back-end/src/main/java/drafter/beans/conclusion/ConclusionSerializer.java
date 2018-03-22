@@ -17,6 +17,7 @@ public class ConclusionSerializer {
 
 	public static ConclusionBean fromConclusion(Conclusion c) {
 		ConclusionBean res = new ConclusionBean();
+		res.setId(c.getId());
 		res.setAgendaId(c.getAgenda().getId());
 		res.setConclusion(c.getConclusion());
 		

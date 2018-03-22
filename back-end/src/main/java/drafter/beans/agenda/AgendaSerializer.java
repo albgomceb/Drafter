@@ -16,23 +16,23 @@ public class AgendaSerializer {
 	
 	
 	@Autowired
-	private AgendaService agendaService;
+	private static AgendaService agendaService;
 	
 	
-	public AgendaBean fromAgenda(Agenda agenda) {
+	public static AgendaBean fromAgenda(Agenda agenda) {
 		AgendaBean res = new AgendaBean();
 		
 		List<Option> conclusion = agenda.getConclusion().stream().map(us -> new Option(new Integer(us.getId()).toString(),us.getConclusion())).collect(Collectors.toList()); 
 		res.setConclusion(conclusion);
 		
-		res.setMeeting(res.getMeeting());
-		res.setNumber(res.getNumber());
-		res.setDescription(res.getDescription());
+		res.setMeetingId(agenda.getMeeting().getId());
+		res.setNumber(agenda.getNumber());
+		res.setDescription(agenda.getDescription());
 		
 		return res;
 	}
 	
-	public List<Agenda> fromBean(List<AgendaBean> agendasBean, Meeting meeting) {
+	public static List<Agenda> fromBean(List<AgendaBean> agendasBean, Meeting meeting) {
 		List<Agenda> agendas = new ArrayList<Agenda>();
 		
 		for(AgendaBean ab: agendasBean) {
