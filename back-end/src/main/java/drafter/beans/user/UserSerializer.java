@@ -21,7 +21,7 @@ public class UserSerializer {
 		res.setPhone(user.getPhone());
 		res.setPhoto(user.getPhoto());
 		res.setSurname(user.getSurname());
-		
+		res.setId(new Integer(user.getId()).toString());
 		return res;
 	}
 	

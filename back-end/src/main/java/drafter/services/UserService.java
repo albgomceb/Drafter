@@ -45,7 +45,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(int id) {
+    public User findById(Integer id) {
         return userRepository.getOne(id);
     }
 

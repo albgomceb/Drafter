@@ -11,17 +11,27 @@ import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.Standard;
+import drafter.domain.User;
+import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
+import drafter.services.UserService;
 
 public class MeetingSerializer {
 	
 	@Autowired
-	public ParticipantService participantService;
+	private ParticipantService participantService;
 	
-	public static MeetingBean fromMeeting(Meeting meeting) {
+	@Autowired
+	private MeetingService meetingService;
+	
+	
+	@Autowired
+	private UserService userService;
+	
+	public MeetingBean fromMeeting(Meeting meeting) {
 		
 		MeetingBean res = new MeetingBean();
-		
+		res.setId(meeting.getId());
 		res.setTitle(meeting.getTitle());
 		res.setDescription(meeting.getDescription());
 		
@@ -32,20 +42,38 @@ public class MeetingSerializer {
 		
 		List<Agenda> agendas = new ArrayList<Agenda>(meeting.getAgendas());
 		
-		res.setAgendas(agendas);
+//		res.setAgendas(agendas);
 		
 		return res;
 	}
 	
-	public static Standard fromBean(MeetingBean meetingBean) {
+	public Standard fromBean(MeetingBean meetingBean) {
 		
 		Standard res = new Standard();
 		
 		res.setTitle(meetingBean.getTitle());
 		res.setDescription(meetingBean.getDescription());
-//		List<Participant> attendants = meetingBean.getAttendants().stream()
-//				.map(us -> this.participantService.)
+		for(Option tem: meetingBean.getAttendants()) {
+			User us = userService.findById(new Integer(tem.getId()));
+			System.out.println(us.getId());
+		}
+
+		List<Participant> attendants = meetingBean.getAttendants()
+		.stream()
+		.map(att ->{
+			return userService.findById(new Integer(att.getId()));
+		})
+		.map(user -> {
+			Participant p = new Participant();
+			p.setUser(user);
+			p.setHasAttended(true);
+			p.setRole("default");
+			return p;
+			})
+		.peek(part -> res.addParticipant(part))
+		.collect(Collectors.toList());
 		
+//		res.setParticipants(new ArrayList<Participant>());
 		return res;
 		
 	}
