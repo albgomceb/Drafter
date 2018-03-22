@@ -27,15 +27,12 @@ export class MinutesPageComponent implements OnInit {
       this.meetingId = params['id'];
     });
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
-      console.log('meeting',data);
       this.meeting = data;
     });
     this.meetingService.getAgendas(this.meetingId).subscribe(data => {
-      console.log('agendas',data);
       this.agendas = data;
     });
     this.meetingService.getConclusions(this.meetingId).subscribe(data => {
-      console.log('conclussions',data);
       this.conclusions = data;
     });
   };
