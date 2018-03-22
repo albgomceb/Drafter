@@ -24,11 +24,10 @@ export class StandardMeetingComponent implements OnInit {
   ngOnInit() {
     this.agendas = new Array<Agenda>();
     this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
+      this.agendas = agenda;
+    });
     this.realTimeService.connect(this.meetingId, () => {
-
-      this.agendaService.getAgendasByMeeting(this.realTimeService.getMeeting()).subscribe( agenda => {
-        this.agendas = agenda;
-
         var i = 1;
         for(var cs of this.agendas) {
           this.realTimeService.register('c'+i, cs.conclusions);
@@ -36,7 +35,7 @@ export class StandardMeetingComponent implements OnInit {
         }
         this.realTimeService.subscribe();
       });
-    });
+
   }
 
 
