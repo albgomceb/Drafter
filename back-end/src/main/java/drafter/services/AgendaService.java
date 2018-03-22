@@ -55,6 +55,9 @@ public class AgendaService {
 	public Agenda save(Agenda agenda) {
 		return agendaRepository.save(agenda);
 	}
+    public List<Agenda> findByMeeting(int id) {
+        return agendaRepository.findByMeeting(id);
+    }
 
 
 }

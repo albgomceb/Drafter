@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drafter.beans.ConclusionBean;
+import drafter.beans.conclusion.ConclusionBean;
 import drafter.beans.agenda.AgendaBean;
 import drafter.beans.agenda.AgendaSerializer;
 import drafter.beans.conclusion.ConclusionSerializer;
@@ -87,7 +87,7 @@ public class ProcedureMinutesController {
 		for(Agenda a: agendas) {
 			for(Conclusion c: a.getConclusion()) {
 				
-				ConclusionBean cb = ConclusionSerializer.fromConclusion(c); 
+				ConclusionBean cb = new ConclusionSerializer().fromConclusion(c); 
 				result.add(cb); 
 				
 			}
