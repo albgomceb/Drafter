@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.AgendaBean;
@@ -19,13 +20,11 @@ import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Conclusion;
 import drafter.domain.Meeting;
-import drafter.services.AgendaService;
-import drafter.services.ConclusionService;
 import drafter.services.MeetingService;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping({"data/minutes"})
+@RequestMapping("/data/minutes")
 public class ProcedureMinutesController {
 	
 	
@@ -46,8 +45,9 @@ public class ProcedureMinutesController {
 	}
 	
 	//Procedure---------------------------------------------------
-	@RequestMapping(value="/meeting", produces = {"aplicaction/json"}, method = RequestMethod.GET)
-	public MeetingBean findMeeting(int idM) {    // con el id de la reunion saco la informacion necesaria de la reunion. 
+//	@RequestMapping(value="/meeting", produces = {"aplicaction/json"}, method = RequestMethod.GET)
+	@GetMapping("/meeting/{id}")
+	public MeetingBean findMeeting(@PathVariable("id") int idM) {    // con el id de la reunion saco la informacion necesaria de la reunion. 
 		
 		Meeting result = meetingService.findOne(idM); 
 		MeetingBean mbean = MeetingSerializer.fromMeeting(result); 
@@ -55,8 +55,17 @@ public class ProcedureMinutesController {
 		
 	}
 	
-	@RequestMapping(value="/agenda", produces  = {"aplication/json"}, method = RequestMethod.GET)
-	public List<AgendaBean> findAgenda(int idM){
+	@GetMapping("/meeting")
+	public String findsdsd() {    // con el id de la reunion saco la informacion necesaria de la reunion. 
+		
+		
+		return "hola"; 
+		
+	}
+	
+//	@RequestMapping(value="/agenda", produces  = {"aplication/json"}, method = RequestMethod.GET)
+	@GetMapping("/meeting/{id}/agenda")
+	public List<AgendaBean> findAgenda(@PathVariable("id")int idM){
 		
 		Meeting meet = meetingService.findOne(idM); 
 		List<AgendaBean> result = meet.getAgendas().stream()
@@ -66,10 +75,9 @@ public class ProcedureMinutesController {
 		
 	}
 	
-	
-	@RequestMapping(value="/conclusion", produces = {"aplication/json"}, method = RequestMethod.GET)
-	public List<ConclusionBean> findConclusion(int idM){
-		
+//	@RequestMapping(value="/conclusion", produces = {"aplication/json"}, method = RequestMethod.GET)
+	@GetMapping("/meeting/{id}/conclussions")
+	public List<ConclusionBean> findConclusion(@PathVariable("id")int idM){
 		
 		Meeting meet = meetingService.findOne(idM); 
 		List<Agenda> agendas = new ArrayList<Agenda>(meet.getAgendas());
@@ -88,12 +96,6 @@ public class ProcedureMinutesController {
 		return result; 
 		
 	}
-	
-	
-
-	
-	
-	
 	
 	
 }

@@ -14,6 +14,7 @@ import { MinutesPageComponent } from './componentes/minutes-page/minutes-page.co
 
 import {HttpClientModule} from "@angular/common/http";
 import { UserService } from './componentes/services/user.service';
+import { MeetingService } from './componentes/services/meeting.service';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { UserService } from './componentes/services/user.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [UserService],
+  providers: [UserService, MeetingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

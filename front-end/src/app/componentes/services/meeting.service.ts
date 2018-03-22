@@ -22,11 +22,11 @@ export class MeetingService {
   }
 
   getAgendas(meetingId:number): Observable<Array<Meeting>> {
-    return this.http.get<Array<Meeting>>(this.staticUrl+'/minutes/agenda/'+meetingId);
+    return this.http.get<Array<Meeting>>(this.staticUrl+'/minutes/meeting/'+ meetingId + '/agenda');
   }
 
-  getConclusions(agendaId:number): Observable<Array<Meeting>> {
-    return this.http.get<Array<Meeting>>(this.staticUrl+'/minutes/conclusion/'+agendaId);
+  getConclusions(meetingId:number): Observable<Array<Meeting>> {
+    return this.http.get<Array<Meeting>>(this.staticUrl+'/minutes/meeting/' + meetingId + '/conclussions');
   }
 
 }

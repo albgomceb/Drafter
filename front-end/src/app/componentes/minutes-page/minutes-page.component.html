@@ -1,6 +1,32 @@
-<h1>
-  Title: {{meeting.title}}
-</h1>
-<h2>
-  Description: {{meeting.description}}
-</h2>
+
+<div class="row">
+  <div class="col-md-12 mx-auto mt-3">
+    <div class="card mx-auto pt-3 pb-3">
+      <div item-width="100%" class="mx-auto">
+        <h2 class="participants"><span class="letter">M</span>inute of {{meeting.title}}</h2>
+      </div>
+      <form class="form mt-3">
+
+        <div class="container">
+          <fieldset>
+            <label for="title" class="title" >Agenda: {{meeting.title}}</label><br/> 
+          </fieldset>
+
+          <fieldset>
+            <label for="title" class="title" >Conclussions: {{meeting.title}}</label><br/> 
+          </fieldset>
+        </div>
+
+
+        <br/>
+
+        <div class="buttons">
+            <button type="submit" class="btn bt-lg mr-1">Next</button>
+            <button type="submit" class="btn bt-lg">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+

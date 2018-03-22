@@ -22,16 +22,20 @@ export class MinutesPageComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.meetingId = params['meetingId'];
+      this.meetingId = params['id'];
     });
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
-      console.log(data);
+      console.log('meeting',data);
       this.meeting = data;
     });
-    /*this.meetingService.getAgendas(this.meetingId).subscribe(data => {
-      console.log(data);
+    this.meetingService.getAgendas(this.meetingId).subscribe(data => {
+      console.log('agendas',data);
       this.agendas = data;
-    });*/
+    });
+    this.meetingService.getConclusions(this.meetingId).subscribe(data => {
+      console.log('conclussions',data);
+      this.conclusions = data;
+    });
   };
 
 }
