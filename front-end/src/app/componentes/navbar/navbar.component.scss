@@ -1,0 +1,26 @@
+/* PRINCIPAL MENU */
+nav.navbar {
+    background:#333;
+}
+
+nav.navbar {
+    padding: 0 35px;
+}
+
+nav.navbar a.navbar-brand img.navbar-logo {
+    height: 30px;
+    width: auto;
+}
+
+nav.navbar a.nav-link {
+    padding: 15px;
+    color: #fff;
+}
+
+nav.navbar a.nav-link:hover {
+    background-color: #00a98f;
+}
+
+nav.navbar button.navbar-toggler {
+	margin: 10px 0;
+}

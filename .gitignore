@@ -1,3 +1,5 @@
-/.metadata/
+.metadata/
 **/.vagrant/
 /.recommenders/
+RemoteSystemsTempFiles/
+RemoteSystemsTempFiles/.project
