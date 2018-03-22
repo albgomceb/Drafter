@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import drafter.beans.Option;
 import drafter.domain.Agenda;
@@ -16,18 +17,25 @@ import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
 import drafter.services.UserService;
 
+@Service
 public class MeetingSerializer {
 	
 	@Autowired
-	private ParticipantService participantService;
+	public ParticipantService participantService;
 	
 	@Autowired
-	private MeetingService meetingService;
+	public MeetingService meetingService;
+		
+
+	public UserService userService;
 	
-	
-	@Autowired
-	private UserService userService;
-	
+	public MeetingSerializer(UserService userService2) {
+		this.userService = userService2;
+	}
+
+	public MeetingSerializer() {
+		// TODO Auto-generated constructor stub
+	}
 	public MeetingBean fromMeeting(Meeting meeting) {
 		
 		MeetingBean res = new MeetingBean();
@@ -53,11 +61,7 @@ public class MeetingSerializer {
 		
 		res.setTitle(meetingBean.getTitle());
 		res.setDescription(meetingBean.getDescription());
-		for(Option tem: meetingBean.getAttendants()) {
-			User us = userService.findById(new Integer(tem.getId()));
-			System.out.println(us.getId());
-		}
-
+		
 		List<Participant> attendants = meetingBean.getAttendants()
 		.stream()
 		.map(att ->{
@@ -73,7 +77,6 @@ public class MeetingSerializer {
 		.peek(part -> res.addParticipant(part))
 		.collect(Collectors.toList());
 		
-//		res.setParticipants(new ArrayList<Participant>());
 		return res;
 		
 	}

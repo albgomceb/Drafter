@@ -24,7 +24,7 @@ export class UserService {
   }
 
   saveMeeting(meeting: Meeting): Observable<Meeting>{
-    return this.http.post<Meeting>(this.staticUrl+'/meeting/', meeting, {});
+    return this.http.post<Meeting>(this.staticUrl+'/meeting/standard/', meeting, {});
   }
 
 }

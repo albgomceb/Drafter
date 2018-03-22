@@ -8,5 +8,4 @@ import drafter.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-
 }
