@@ -33,7 +33,13 @@ export class AgendaPageComponent implements OnInit {
   }
 
   saveAgenda(agendas : Agenda[]){
-    this.agendaService.saveAgenda(agendas, this.meetingId).subscribe(res =>{
+    // Fix temporal para que no mande agendas vacias (que las duplica)
+    var temp = new Array<Agenda>();
+    for(var a of agendas)
+      if(a.description && a.description.trim() != '')
+        temp.push(a);
+
+    this.agendaService.saveAgenda(temp, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
     });
   }
