@@ -1,26 +1,25 @@
+@import '../../app.component';
+
 /* PRINCIPAL MENU */
 nav.navbar {
-    background:#333;
-}
+    padding: 0 2.1875em;
+    background-color: $primary-background-color;
 
-nav.navbar {
-    padding: 0 35px;
-}
+    a.navbar-brand img.navbar-logo {
+        height: 1.5em;
+        width: auto;
+    }
 
-nav.navbar a.navbar-brand img.navbar-logo {
-    height: 30px;
-    width: auto;
-}
+    button.navbar-toggler {
+        margin: 0.5em 0;
+    }
 
-nav.navbar a.nav-link {
-    padding: 15px;
-    color: #fff;
-}
+    a.nav-link {
+        padding: 0.9375em;
+        color: $font-color;
+    }
 
-nav.navbar a.nav-link:hover {
-    background-color: #00a98f;
-}
-
-nav.navbar button.navbar-toggler {
-	margin: 10px 0;
+    a.nav-link:hover {
+        background-color: $secondary-background-color;
+    }
 }
