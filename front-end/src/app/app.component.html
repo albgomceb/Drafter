@@ -6,4 +6,18 @@
     <footer class = "page-footer footer text-center">
         <span>© 2018 - Drafter, Inc. All rights reserved</span>
     </footer>
+
+    <div class="col-md-3 mx-auto mt-3">
+        <div class="card mx-auto pt-3 pb-3">
+            <div class="paypal-transaction">
+                <select class="selectModePay" [(ngModel)]="selectedLicense">
+                    <option *ngFor="let l of licenses" [ngValue]="l">{{l.name}}<span class="price">{{l.price}}</span></option>
+                </select>  
+            <h6 *ngIf="paypalLoad">Paypal is loading...</h6>
+            <div class="mt-3" id="paypal-checkout-btn"></div>
+            </div>
+        </div>
+    </div>
+    
+
 </div>

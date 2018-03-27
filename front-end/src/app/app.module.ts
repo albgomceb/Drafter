@@ -42,7 +42,8 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
 
   providers: [
