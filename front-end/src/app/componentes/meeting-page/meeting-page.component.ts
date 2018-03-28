@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Meeting } from '../models/meeting.model';
 import { Option } from '../models/option.model';
 import { Router } from '@angular/router';
+import { DynamicMeetingService } from '../services/dynamic-meeting.service';
 
 @Component({
   selector: 'meeting-page',
@@ -21,14 +22,17 @@ export class MeetingPageComponent implements OnInit {
 
   errorListUsers:boolean = false;
   meeting: Meeting;
+  kinds: Array<Option>;
+  selectedKind: Option;
 
-  constructor(private userService: UserService, private router:Router) {}
+  constructor(private userService: UserService, private router:Router, private meetingService:DynamicMeetingService) {}
 
   ngOnInit() {
 
     this.meeting = new Meeting();
     this.attendants = new Array<Option>();
-
+    this.kinds = this.meetingService.getMeetingTypes();
+    this.selectedKind = this.kinds[0];
     this.userService.getUsers().subscribe(
       data => 
       {
