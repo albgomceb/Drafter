@@ -54,18 +54,18 @@ public class Pros extends DomainEntity{
 	
 	// Relationships-------------------------------------
 	
-	private Idea ideaP; 
+	private Idea idea; 
 	
 	@Valid
 	@NotNull
 	@ManyToOne(optional = true)
 	public Idea getIdea() {
-		return ideaP;
+		return idea;
 	}
 
 
 
 	public void setIdea(Idea ideaP) {
-		this.ideaP = ideaP;
+		this.idea = ideaP;
 	}
 }

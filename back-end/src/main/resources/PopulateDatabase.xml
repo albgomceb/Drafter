@@ -267,7 +267,6 @@
 			<list>
 				<ref bean="participant1" />
 				<ref bean="participant2" />
-				<ref bean="participant3" />
 			</list>
 		</property>
 		<property name="steps">
@@ -292,13 +291,45 @@
 		</property>
 		<property name="participants">
 			<list>
-				<ref bean="participant1" />
+				<ref bean="participant3" />
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="brainstorming1" class="drafter.domain.BrainStorming">
+		<property name="title" value="brainstorming1" />
+		<property name="description" value="brainstorming1" />
+		<property name="date" value="2018/01/01 00:22" />
+		<property name="numberOfMeeting" value="4" />
+		<property name="image"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="timer" value="2018/01/01 00:22" />
+		<property name="hasfinished" value="false" />
+		<!-- <property name="project" ref="project1"/> -->
+		<property name="votingMode" value="ONETOTEN" />
+		<property name="agendas">
+			<list>
+			</list>
+		</property>
+		<property name="participants">
+			<list>
 				<ref bean="participant4" />
 				<ref bean="participant5" />
 			</list>
 		</property>
 		<property name="steps">
 			<list>
+			</list>
+		</property>
+		<property name="ideas">
+			<list>
+				<ref bean="idea1" />
+				<ref bean="idea2" />
+				<ref bean="idea3" />
 			</list>
 		</property>
 	</bean>
@@ -327,7 +358,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1" />
 		<property name="user" ref="user3" />
-		<property name="meeting" ref="standard1" />
+		<property name="meeting" ref="standard2" />
 	</bean>
 
 	<bean id="participant4" class="drafter.domain.Participant">
@@ -335,7 +366,7 @@
 		<property name="hasAttended" value="false" />
 		<!-- <property name="department" ref="department1"/> -->
 		<property name="user" ref="user4" />
-		<property name="meeting" ref="standard2" />
+		<property name="meeting" ref="brainstorming1" />
 	</bean>
 
 	<bean id="participant5" class="drafter.domain.Participant">
@@ -343,7 +374,7 @@
 		<property name="hasAttended" value="true" />
 		<!-- <property name="department" ref="department1"/> -->
 		<property name="user" ref="user5" />
-		<property name="meeting" ref="standard2" />
+		<property name="meeting" ref="brainstorming1" />
 	</bean>
 
 
@@ -441,7 +472,57 @@
 		<property name="conclusion" value="Terminar con tiempo" />
 		<property name="agenda" ref="agenda3" />
 	</bean>
-
+	
+	<!-- Ideas -->
+	
+	<bean id="idea1" class="drafter.domain.Idea">
+		<property name="number" value="1" />
+		<property name="text" value="idea1" />
+		<property name="ratingCount" value="2" />
+		<property name="ratingSum" value="2" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="idea2" class="drafter.domain.Idea">
+		<property name="number" value="2" />
+		<property name="text" value="idea2" />
+		<property name="ratingCount" value="2" />
+		<property name="ratingSum" value="2" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="idea3" class="drafter.domain.Idea">
+		<property name="number" value="3" />
+		<property name="text" value="idea3" />
+		<property name="ratingCount" value="2" />
+		<property name="ratingSum" value="2" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
 
 
 

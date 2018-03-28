@@ -21,6 +21,8 @@ import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
+import { IdeaService } from './componentes/services/idea.service';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     ChatComponent,
     StandardMeetingComponent,
     MinutesPageComponent,
-    AgendaPageComponent
+    AgendaPageComponent,
+    IdeasProsConsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     ReactiveFormsModule,
     RealTimeService,
     UserService,
+    IdeaService,
     ReactiveFormsModule
   ],  
   bootstrap: [AppComponent]

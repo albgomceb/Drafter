@@ -26,24 +26,30 @@ public class TestConfig {
 	public static final int standard1 = 17;
 	public static final int standard2 = 18;
 
-	public static final int participant1 = 19;
-	public static final int participant2 = 20;
-	public static final int participant3 = 21;
-	public static final int participant4 = 22;
-	public static final int participant5 = 23;
+	public static final int brainstorming1 = 19;
 
-	public static final int agenda1 = 24;
-	public static final int agenda2 = 25;
-	public static final int agenda3 = 26;
-	public static final int agenda4 = 27;
-	public static final int agenda5 = 28;
-	public static final int agenda6 = 29;
+	public static final int participant1 = 23;
+	public static final int participant2 = 24;
+	public static final int participant3 = 25;
+	public static final int participant4 = 26;
+	public static final int participant5 = 27;
 
-	public static final int conclusion1 = 30;
-	public static final int conclusion2 = 31;
-	public static final int conclusion3 = 32;
-	public static final int conclusion4 = 33;
-	public static final int conclusion5 = 34;
-	public static final int conclusion6 = 35;
+	public static final int agenda1 = 28;
+	public static final int agenda2 = 29;
+	public static final int agenda3 = 30;
+	public static final int agenda4 = 31;
+	public static final int agenda5 = 32;
+	public static final int agenda6 = 33;
+
+	public static final int conclusion1 = 34;
+	public static final int conclusion2 = 35;
+	public static final int conclusion3 = 36;
+	public static final int conclusion4 = 37;
+	public static final int conclusion5 = 38;
+	public static final int conclusion6 = 39;
+
+	public static final int idea1 = 20;
+	public static final int idea2 = 21;
+	public static final int idea3 = 22;
 	
 }
