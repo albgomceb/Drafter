@@ -22,7 +22,7 @@ export class DynamicMeetingComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
     if(this.meetingId){
-      this.meetingInfo = this.meetingService.getMeetingInfo(0);
+      this.meetingInfo = this.meetingService.getMeetingInfo(1);
       this.users = this.meetingInfo.users;
       if(this.meetingInfo.isFinished){
         this.router.navigate(['/minutes/'+this.meetingId]);

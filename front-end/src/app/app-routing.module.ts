@@ -9,7 +9,7 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { StandardMeetingComponent, DynamicMeetingComponent } from './componentes/meetings';
 import { MinutesPageComponent } from './componentes/minutes-page/minutes-page.component';
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
-import { SixHatsMeetingComponent } from './componentes/meetings/six-hats/six-hats-meeting/six-hats-meeting.component';
+
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -20,7 +20,6 @@ const routes: Routes = [
   {path: 'meeting/:id', component: DynamicMeetingComponent},
   {path: 'minutes/:id', component: MinutesPageComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
-  {path: 'six-hats', component: SixHatsMeetingComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];

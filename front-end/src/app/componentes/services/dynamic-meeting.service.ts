@@ -51,9 +51,9 @@ export class DynamicMeetingService {
     },
     {
       id:2,
-      tipo: '6hats',
+      tipo: 'six-hats',
       ultimoPaso: 0,
-      isFinished: true,
+      isFinished: false,
       users:[]
     },
     {
