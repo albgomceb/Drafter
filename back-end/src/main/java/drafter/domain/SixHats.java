@@ -2,6 +2,7 @@ package drafter.domain;
 
 import java.util.Collection;
 
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
