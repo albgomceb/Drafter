@@ -9,7 +9,6 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
-import { MinutesPageComponent } from './componentes/minutes-page/minutes-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
@@ -19,7 +18,7 @@ import { MeetingService } from './componentes/services/meeting.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
-import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, SixHatsMeetingComponent, SixHatsComponent } from './componentes/meetings';
+import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, SixHatsMeetingComponent, SixHatsComponent, DynamicMinutesComponent, StandardMinutesPageComponent } from './componentes/meetings';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
 
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
@@ -38,8 +37,9 @@ import { DynamicMeetingService } from './componentes/services/dynamic-meeting.se
     ChatComponent,
     StandardMeetingComponent,
     DynamicMeetingComponent,
+    DynamicMinutesComponent,
     StandardComponent,
-    MinutesPageComponent,
+    StandardMinutesPageComponent,
     AgendaPageComponent,
     SixHatsMeetingComponent,
     SixHatsComponent

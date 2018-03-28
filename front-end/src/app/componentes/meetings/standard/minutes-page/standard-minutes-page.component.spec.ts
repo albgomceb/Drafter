@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { StandardMinutesPageComponent } from './standard-minutes-page.component';
 
-import { MinutesPageComponent } from './minutes-page.component';
 
 describe('MinutesPageComponent', () => {
-  let component: MinutesPageComponent;
-  let fixture: ComponentFixture<MinutesPageComponent>;
+  let component: StandardMinutesPageComponent;
+  let fixture: ComponentFixture<StandardMinutesPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MinutesPageComponent ]
+      declarations: [ StandardMinutesPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MinutesPageComponent);
+    fixture = TestBed.createComponent(StandardMinutesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
