@@ -19,8 +19,10 @@ import { MeetingService } from './componentes/services/meeting.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
-import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
+import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent } from './componentes/meetings';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+
+import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     AgendaPageComponent,
     ChatComponent,
     StandardMeetingComponent,
+    DynamicMeetingComponent,
+    StandardComponent,
     MinutesPageComponent,
     AgendaPageComponent
   ],
@@ -53,7 +57,8 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     ReactiveFormsModule,
     RealTimeService,
     UserService,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DynamicMeetingService
   ],  
   bootstrap: [AppComponent]
 })
