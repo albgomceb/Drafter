@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
+import * as $ from 'jquery';
  
 declare let paypal: any;
 
@@ -15,20 +16,37 @@ export class AppComponent implements AfterViewChecked {
   addScript: boolean = false;
   paypalLoad: boolean = true;
   
-  licenses:Array<Object> = [
-    {num: 1, name: "Enterprise", price: 4.99},
-    {num: 2, name: "Standalone", price: 3093.86}
+  licenses:Array<License> = [
+    new License("Enterprise", "4.99"),
+    new License("Standalone","3093.86")
 ];
 
   finalAmount: number = 1;
 
-  selectedLicense:Object = {num: 0, name: "Choosing a license", price:null} ;
+  selectedLicense = null;
 
   ngOnInit(){
     this.selectedLicense;
+
+    $(document).ready(function(){
+      $('.selectpicker').change(function(){
+        $('.selectpicker').css('color','white').css('background-color','#333');
+        $('.selectpicker option').css('color','black').css('background-color','white').css('text-align','left');
+        $('.selectpicker optgroup').css('color','black').css('background-color','rgb(240,240,240)').css('text-align','left');
+      });
+    });
+
   }
 
-  select = this.licenses[0];
+  
+
+  getLicense() {
+    this.selectedLicense = $('.selectpicker').val();
+    console.log(this.selectedLicense);
+    return this.selectedLicense;
+  }
+
+  
  
   paypalConfig = {
     env: 'sandbox',
@@ -37,11 +55,20 @@ export class AppComponent implements AfterViewChecked {
       production: 'AQGSKxRh-u9Ms3C3xcvhWfDKdIcJw34-wErV19hfjs7nTiA4ksSf-Ni5VN1BzUkC5WFrnvN2epBhon-u'
     },
     commit: true,
+
     payment: (data, actions) => {
+
+      alert(this.getLicense())
+
       return actions.payment.create({
         payment: {
           transactions: [
-            { amount: { total: this.finalAmount, currency: 'EUR' } }
+            { amount: 
+              { 
+              total: this.finalAmount, 
+              currency: 'EUR' 
+              } 
+            }
           ]
         }
       });
@@ -71,5 +98,13 @@ export class AppComponent implements AfterViewChecked {
       document.body.appendChild(scripttagElement);
     })
   }
+
+}
+
+class License {
+  name:string;
+  price:string;
+
+  constructor(name,price){this.name=name,this.price=price}
 
 }
