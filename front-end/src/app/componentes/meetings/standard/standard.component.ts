@@ -10,6 +10,8 @@ export class StandardComponent implements OnInit {
     public meetingInfo:any;
     @Input()
     public meetingId:number;
+    @Input()
+    public attendants:Array<any>;
     
     @Output() finish = new EventEmitter<number>();
 
