@@ -2,9 +2,11 @@ package drafter.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import drafter.repositories.SixHatsRepository;
 @Service
 @Transactional
 public class SixHatsService {
+	
+	private String string;
 
 	//Repository-------------------------------------------------------------------------------
 
@@ -56,6 +60,9 @@ public class SixHatsService {
     }
 
 	public SixHats save(SixHats sixHats) {
+		sixHats.getHats().stream()
+			.forEach(h -> h.getConclussions().stream().forEach(text -> {string = text; checkSafeHtml();}));
+		
 		List<String> colors = new ArrayList<>();
     	for(Hat hat : sixHats.getHats()) {
     		if(colors.contains(hat.getColor())) 
@@ -68,6 +75,10 @@ public class SixHatsService {
 	
 	// Other business methods -----------------------------------------------------------------
 	
+	@SafeHtml
+	public String checkSafeHtml() {
+		return string;
+	}
 
 
 }
