@@ -21,6 +21,7 @@ import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+import { OrganizationDepartmentPageComponent } from './componentes/organization-department-page/organization-department-page.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     ChatComponent,
     StandardMeetingComponent,
     MinutesPageComponent,
-    AgendaPageComponent
+    AgendaPageComponent,
+    OrganizationDepartmentPageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,43 @@
+button {
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    font-weight: bold;
+    background-color:#333;    
+}
+
+button:hover:not([disabled=""]) {
+    background-color: #00A98F;
+}
+
+.letter{
+    color:#00A98F;
+}
+
+.btn-circle:focus, .btn-circle.focus{
+    box-shadow: none;   
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    background: #00a98f;
+}
+
+.btn-circle:hover {
+    background: #007e6b;
+}
+
+.btn-circle.btn-lg {
+    width: 175px;
+    height: 40px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}

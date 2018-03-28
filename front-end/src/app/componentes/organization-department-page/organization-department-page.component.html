@@ -1,0 +1,44 @@
+<!-- <div class="col-md-6 mx-auto mt-3">
+<div class="card text-white bg-dark mb-3"> -->
+<div class="card-body">
+  <h2 class="text-center"><span class="letter">O</span>rganization</h2>
+  <form>
+    <div class="form-group">
+      <label for="enterprise" >Enterprise</label>
+      <input type="text" name="enterprise" id="enterprise" class="form-control">
+      <label for="description" >Description</label>
+      <input type="text" name="description" id="description" class="form-control">
+      <label for="address" >Address</label>
+      <input type="text" name="address" id="address" class="form-control">
+      <label for="phone" >Phone number</label>
+      <input type="text" name="phone" id="phone" class="form-control">
+      <label for="email" >Email</label>
+      <input type="email" name="email" id="email" class="form-control">
+      <label for="logo" >Logo (URL)</label>
+      <input type="text" name="logo" id="logo" class="form-control">
+
+      <table class="table table-hover">
+        <div *ngFor="let department of departments; let i=index">
+          <tr>
+            <td>{{departments.indexOf(department)+1}}.&nbsp;</td>
+            <td style ="width: 100%">
+              <input class="col-12" type="text" [(ngModel)]="department.name"  *ngIf="department.isInput" (focusout)="convert(department)"
+              (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
+            <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div></td>
+            <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
+            <td><div *ngIf="!checkNotBlank(department.name) && i!=0" style="color: red; text-align: center">Required</div></td>
+          </tr>
+        </div>
+      </table>
+      <div class="text-center">
+        <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
+      </div>
+      
+    </div>
+    <div style="margin:2%;text-align:center">
+      <button (click)="saveOrganization()" class="btn bt-lg">Create organization and department</button>
+    </div>
+  </form>
+</div>
+<!-- </div>
+</div> -->
