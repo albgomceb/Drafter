@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 import { take, map } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
@@ -7,12 +7,16 @@ import { SixHatsService } from '../../../services/sixhats.service';
 import { SixHats } from '../../../models/sixHats.model';
 
 @Component({
-  selector: 'six-hats-page',
+  selector: 'six-hats-meeting',
   templateUrl: './six-hats-meeting.component.html',
   styleUrls: ['./six-hats-meeting.component.scss']
 })
 export class SixHatsMeetingComponent implements OnInit {
 
+  @Input()
+  public meetingId:number;
+  @Input()
+  public attendants:Array<any>;
   public countDown;
   public count = 6;
   //participants: Array de participantes (users y value=sombrero)
