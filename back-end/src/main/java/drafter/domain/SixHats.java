@@ -11,13 +11,11 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class SixHats extends DomainEntity{
+public class SixHats extends Meeting{
 
 	public SixHats() {
 		
 	}
-	
-	
 
 	private Collection<Hat> hats; 
 	
