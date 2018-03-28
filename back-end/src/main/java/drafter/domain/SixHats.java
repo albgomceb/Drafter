@@ -17,8 +17,6 @@ public class SixHats extends Meeting{
 	public SixHats() {
 		
 	}
-	
-	
 
 	private Collection<Hat> hats; 
 	
