@@ -39,7 +39,10 @@
       </div>
 
       <div class="buttons">
-          <button [disabled]="!(attendants.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" type="submit" class="btn bt-lg mr-1">Next</button>
+          <button 
+          [disabled]="!(attendants.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
+          
+          type="submit" class="btn bt-lg mr-1">Next</button>
           <button routerLink=".." class="btn bt-lg">Cancel</button>
       </div>
 

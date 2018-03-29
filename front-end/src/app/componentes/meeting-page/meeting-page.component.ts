@@ -50,9 +50,15 @@ export class MeetingPageComponent implements OnInit {
   }
 
   onSubmit(meeting){
+      meeting.type = this.selectedKind.id;
       this.meeting.setAttendants(this.attendants);
       this.userService.saveMeeting(meeting).subscribe((res:any) =>{
-        this.router.navigate(['/agenda/'+res.id])
+        if(meeting.type === 'standard'){
+          this.router.navigate(['/agenda/'+res.id])
+        }else{
+          this.router.navigate(['/meeting/'+res.id])
+
+        }
       });
 
   }

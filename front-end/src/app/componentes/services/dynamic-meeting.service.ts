@@ -24,11 +24,11 @@ export class DynamicMeetingService {
   
   getMeetingInfo(meetingId: number){
     //llamar a un endpoint que obtenga los datos de una reunión, los datos deben mantener el formato falseado
-   
-    if(meetingId < this.reunionesFalsas.length)
-     { return this.reunionesFalsas[meetingId];}
-    else 
-      {return null; }
+   return this.http.get(this.staticUrl + '/meeting/standard/'+meetingId);
+    // if(meetingId < this.reunionesFalsas.length)
+    //  { return this.reunionesFalsas[meetingId];}
+    // else 
+    //   {return null; }
   }
 
   finish(meetingId: number) {
@@ -37,8 +37,10 @@ export class DynamicMeetingService {
   }
 
   addUserToMeeting(meetingId:number,user:User){
-    let meeting = this.getMeetingInfo(meetingId);
-    meeting.users.push(user);
+    let meeting = this.getMeetingInfo(meetingId).subscribe((res:any) => {
+
+      res.users.push(user);
+    });
   }
   getMeetingTypes():Array<Option>{
     //un endoint que devuelva la lista de tipos de reuniones existentes en una lista de Option.java con id =

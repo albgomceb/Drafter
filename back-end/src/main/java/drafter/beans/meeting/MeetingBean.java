@@ -3,7 +3,6 @@ package drafter.beans.meeting;
 import java.util.List;
 
 import drafter.beans.Option;
-import drafter.domain.Agenda;
 
 public class MeetingBean {
 	public Integer id;
@@ -11,6 +10,8 @@ public class MeetingBean {
 	public String description; 
 	public List<Option> attendants;
 	public List<Option> agendas;
+	public String type;
+	public boolean isFinished;
 
 	
 	public Integer getId() {
@@ -43,6 +44,19 @@ public class MeetingBean {
 	public void setAgendas(List<Option> agendas) {
 		this.agendas = agendas;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public boolean isFinished() {
+		return isFinished;
+	}
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
+	
 	
 	
 }

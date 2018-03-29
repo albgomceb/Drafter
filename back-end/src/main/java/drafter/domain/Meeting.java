@@ -34,6 +34,7 @@ public abstract class Meeting extends DomainEntity{
 	private String image;
 	private Date timer;
 	private boolean hasfinished; 
+	protected String type; 
 	
 	
 	//Constructor----------------------------------------
@@ -124,7 +125,13 @@ public abstract class Meeting extends DomainEntity{
 		
 	}
 	
+	public String getType() {
+		return type;
+	}
 	
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	// Relationships-------------------------------------
 	
