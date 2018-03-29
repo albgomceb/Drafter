@@ -59,7 +59,7 @@ public class Hat extends DomainEntity{
 		return conclusions;
 	}
 
-	public void setConclussions(ArrayList<String> conclusions) {
+	public void setConclusions(ArrayList<String> conclusions) {
 		this.conclusions = conclusions;
 	}
 

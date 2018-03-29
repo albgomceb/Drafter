@@ -26,7 +26,7 @@ public class HatSerializer {
 			hat.setId(hb.getId());
 			hat.setColor(hb.getColor());
 			hat.setOrden(hb.getOrder());
-			hat.setConclussions(hb.getConclusions());
+			hat.setConclusions(hb.getConclusions());
 		}
 		
 		return hats;

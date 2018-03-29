@@ -24,10 +24,9 @@ export class SixHatsMeetingComponent implements OnInit {
   public participantsNumber = 2;
   public actualUser : User;
   public colorString;
-  public meetingId : number;
+  public sixHats : SixHats;
 
-   constructor(private sixHatsService: SixHatsService, 
-    private activatedRoute: ActivatedRoute,
+   constructor(private sixHatsService: SixHatsService,
     private router: Router) {
     this.countDown = timer(0,1000).pipe(
       take(this.count),
@@ -35,7 +34,20 @@ export class SixHatsMeetingComponent implements OnInit {
   }   
 
   ngOnInit() {
+    this.getSixHats(this.meetingId);
     this.assignHats();
+  }
+
+  getSixHats(id : number){
+    this.sixHatsService.getSixHatsByMeeting(id).subscribe(sixHats => {
+      this.sixHats = sixHats;
+    });
+  }
+
+  saveSixHats(){
+    this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
+      this.router.navigate(["/meeting/"+this.meetingId]);
+    });
   }
 
   assignHats(){

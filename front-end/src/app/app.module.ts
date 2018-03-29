@@ -22,6 +22,7 @@ import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, S
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
 
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
+import { SixHatsService } from './componentes/services/sixhats.service';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { DynamicMeetingService } from './componentes/services/dynamic-meeting.se
     RealTimeService,
     UserService,
     ReactiveFormsModule,
-    DynamicMeetingService
+    DynamicMeetingService,
+    SixHatsService
   ],  
   bootstrap: [AppComponent]
 })

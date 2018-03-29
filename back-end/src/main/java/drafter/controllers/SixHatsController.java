@@ -28,14 +28,6 @@ public class SixHatsController {
 	@Autowired
 	private MeetingService	meetingService;
 	
-	
-//	@GetMapping("")
-//	public List<AgendaBean> findAll() {
-//		List<SixHats> res = this.sixHatsService.findAll();
-//		List<AgendaBean> result = res.stream().map(agenda -> new AgendaSerializer().fromAgenda(agenda)).collect(Collectors.toList());
-//
-//		return result;
-//	}
 
 	@GetMapping("/{meetingId}")
 	public SixHatsBean findMeeting(@PathVariable("meetingId")Integer meetingId) {

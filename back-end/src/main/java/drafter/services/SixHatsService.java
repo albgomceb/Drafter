@@ -1,8 +1,8 @@
 package drafter.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -10,8 +10,11 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import drafter.domain.Agenda;
 import drafter.domain.Hat;
+import drafter.domain.Participant;
 import drafter.domain.SixHats;
+import drafter.domain.Step;
 import drafter.repositories.SixHatsRepository;
 
 
@@ -25,6 +28,9 @@ public class SixHatsService {
 
 	@Autowired
 	private SixHatsRepository	sixHatsRepository;
+	
+	@Autowired
+	private MeetingService		meetingService;
 
 	//Constructor------------------------------------------------------------------------------
 
@@ -34,9 +40,16 @@ public class SixHatsService {
 
 	//CRUD Methods------------------------------------------------------------------------------
 
-    public SixHats create(SixHats sixHats) {
+    public SixHats create() {
+    	SixHats sixHats = new SixHats();
+    	Date date = new Date(System.currentTimeMillis()-1);
+    	sixHats.setParticipants( new ArrayList<Participant>());
+    	sixHats.setDate(date);
+    	sixHats.setSteps(new ArrayList<Step>());
+    	sixHats.setAgendas(new ArrayList<Agenda>());
     	sixHats.setHats(new ArrayList<Hat>());
-        return sixHatsRepository.save(sixHats);
+    	
+        return sixHats;
     }
 
     public SixHats delete(int id) {
@@ -61,7 +74,7 @@ public class SixHatsService {
 
 	public SixHats save(SixHats sixHats) {
 		sixHats.getHats().stream()
-			.forEach(h -> h.getConclussions().stream().forEach(text -> {string = text; checkSafeHtml();}));
+			.forEach(h -> h.getConclusions().stream().forEach(text -> {string = text; checkSafeHtml();}));
 		
 		List<String> colors = new ArrayList<>();
     	for(Hat hat : sixHats.getHats()) {
