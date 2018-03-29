@@ -1,8 +1,7 @@
 import { Conclusion } from "../../models/conclusion";
+import { Hat } from "./hat.model";
 
 export class SixHats {
   id: number;
-  color: String;
-  order: number;
-  conclusions: Array<String>;
+  hats: Array<Hat>;
 }

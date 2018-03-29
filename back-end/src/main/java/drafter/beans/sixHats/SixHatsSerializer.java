@@ -3,8 +3,8 @@ package drafter.beans.sixHats;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import drafter.domain.Hat;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
 
@@ -13,10 +13,12 @@ public class SixHatsSerializer {
 	
 	public SixHatsBean fromSixHats(SixHats sixHats) {
 		SixHatsBean res = new SixHatsBean();
-		
 		List<HatBean> hats = new ArrayList<HatBean>();
-		for(Hat hat : sixHats.getHats())
-			hats.add(new HatSerializer().fromHat(hat));
+		if(sixHats.getHats() != null) 
+			hats = sixHats.getHats().stream()
+					.map(hat -> new HatSerializer().fromHat(hat))
+					.collect(Collectors.toList());
+		
 		res.setHats(hats);
 		res.setMeetingId(sixHats.getId());
 		

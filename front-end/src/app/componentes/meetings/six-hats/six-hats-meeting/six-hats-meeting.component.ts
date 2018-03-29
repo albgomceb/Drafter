@@ -5,6 +5,7 @@ import { User } from '../../../models/user.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SixHatsService } from '../../../services/sixhats.service';
 import { SixHats } from '../../../models/sixHats.model';
+import { Hat } from '../../../models/hat.model';
 
 @Component({
   selector: 'six-hats-meeting',
@@ -17,24 +18,22 @@ export class SixHatsMeetingComponent implements OnInit {
   public meetingId:number;
   @Input()
   public attendants:Array<any>;
+
+  public colors : Array<String>; 
   public countDown;
   public count = 6;
-  //participants: Array de participantes (users y value=sombrero)
-  public participants = new Map();
-  public participantsNumber = 2;
   public actualUser : User;
-  public colorString;
   public sixHats : SixHats;
 
    constructor(private sixHatsService: SixHatsService,
     private router: Router) {
-    this.countDown = timer(0,1000).pipe(
-      take(this.count),
-      map(()=> --this.count)); 
   }   
 
   ngOnInit() {
     this.getSixHats(this.meetingId);
+    this.countDown = timer(0,1000).pipe(
+      take(this.count),
+      map(()=> --this.count)); 
     this.assignHats();
   }
 
@@ -60,26 +59,34 @@ export class SixHatsMeetingComponent implements OnInit {
     var users = [user, user1];
     this.actualUser = user;
 
-    var color = this.getHat();
-    for(let user of users){
-      this.participants.set(user, color);
-      if(color == 5)
-        color = 0;
-      else
-        color++;
+    var firstColor = 'RED';
+    for(var i=0; i<6; i++){
+      this.colors[i] = 
     }
-    console.log("participantes antes");
-    console.log([this.participants.keys()]);
-    console.log("colores antes");
-    console.log([this.participants.values()]);
+    // var color = this.getHat();
+    // for(let user of users){
+    //   this.participants.set(user, color);
+    //   if(color == 5)
+    //     color = 0;
+    //   else
+    //     color++;
+    // }
+    // console.log("participantes antes");
+    // console.log([this.participants.keys()]);
+    // console.log("colores antes");
+    // console.log([this.participants.values()]);
   }
 
   reassignHats(){
-    for(let participant of Array.from(this.participants.keys())){
-      var color = this.participants.get(participant);
-      
+
+    for(let participant of this.attendants){
+      //TODO var color = participant.
+      var hat : Hat;
+      hat.color = color;
+      hat.order = 
+      this.sixHats.hats.push();
       if(color == 5)
-        color = 0;       
+        color = 0;
       else
         color++;
       this.participants.set(participant, color); 

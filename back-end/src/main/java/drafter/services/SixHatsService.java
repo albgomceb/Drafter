@@ -43,13 +43,30 @@ public class SixHatsService {
     public SixHats create() {
     	SixHats sixHats = new SixHats();
     	Date date = new Date(System.currentTimeMillis()-1);
+    	List<Hat> hats = new ArrayList<Hat>();
+    	hats.add(create("RED", 0));
+    	hats.add(create("BLUE", 1));
+    	hats.add(create("BLACK", 2));
+    	hats.add(create("WHITE", 3));
+    	hats.add(create("YELLOW", 4));
+    	hats.add(create("GREEN", 5));
+    	
     	sixHats.setParticipants( new ArrayList<Participant>());
     	sixHats.setDate(date);
     	sixHats.setSteps(new ArrayList<Step>());
     	sixHats.setAgendas(new ArrayList<Agenda>());
-    	sixHats.setHats(new ArrayList<Hat>());
+    	sixHats.setHats(hats);
     	
         return sixHats;
+    }
+    
+    public Hat create(String color, int orden) {
+    	Hat res = new Hat();
+    	res.setColor(color);
+    	res.setOrden(orden);
+    	res.setConclusions(new ArrayList<String>());
+    	
+    	return res;
     }
 
     public SixHats delete(int id) {

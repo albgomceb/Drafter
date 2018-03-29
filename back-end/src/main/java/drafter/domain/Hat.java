@@ -63,7 +63,7 @@ public class Hat extends DomainEntity{
 		this.conclusions = conclusions;
 	}
 
-	// Relationships
+	// Relationships ---------------------------------------------------------------
 	private SixHats sixHats; 
 	
 	@NotNull
