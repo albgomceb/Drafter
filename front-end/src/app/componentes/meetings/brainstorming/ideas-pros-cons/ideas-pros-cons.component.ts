@@ -56,13 +56,13 @@ export class IdeasProsConsComponent implements OnInit {
         if(!content || content.length==0 || /^\s*$/.test(content)) {
           this.realTimeService.send('/pro/delete/' + pro.id + "/", 
                                   WSResponseType.POP, 
-                                  'c'+iidea,  
+                                  'p'+iidea,  
                                   {}, 
                                   {index: iidea});
         } else {
           this.realTimeService.send('/pro/save/', 
                                   WSResponseType.SET, 
-                                  'c'+iidea,  
+                                  'p'+iidea,  
                                   this.ideas[iidea-1].pros[ipro], 
                                   {index: ipro});
         }
