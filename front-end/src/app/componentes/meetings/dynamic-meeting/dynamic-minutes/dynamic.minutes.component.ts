@@ -10,7 +10,7 @@ import { DynamicMeetingService } from "../../../services/dynamic-meeting.service
   })
   export class DynamicMinutesComponent implements OnInit {
     public meetingId :number;
-    public meetingInfo:any;
+    public meetingInfo:any = {};
     public users:Array<any>;
 
     constructor(private activatedRoute:ActivatedRoute,private meetingService: DynamicMeetingService, private router:Router){}
@@ -18,7 +18,9 @@ import { DynamicMeetingService } from "../../../services/dynamic-meeting.service
     ngOnInit(){
       this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
       if(this.meetingId){
-        this.meetingInfo = this.meetingService.getMeetingInfo(0);
+         this.meetingService.getMeetingInfo(this.meetingId).subscribe(res =>{
+          this.meetingInfo = res;
+        });
         this.users = this.meetingInfo.users;
         
       }

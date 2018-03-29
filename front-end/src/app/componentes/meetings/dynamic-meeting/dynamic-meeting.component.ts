@@ -14,21 +14,23 @@ import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 export class DynamicMeetingComponent implements OnInit {
 
   public meetingId :number;
-  public meetingInfo:any;
+  public meetingInfo:any={};
   public users:Array<any>;
+  public isFinished:boolean;
 
   constructor(private userService: UserService, private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
     if(this.meetingId){
-      this.meetingInfo = this.meetingService.getMeetingInfo(1);
-      this.users = this.meetingInfo.users;
-      if(this.meetingInfo.isFinished){
-        this.router.navigate(['/minutes/'+this.meetingId]);
-      }else{
-        
-      }
+      this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
+        this.meetingInfo = res;
+        if(this.meetingInfo.isFinished){
+          this.router.navigate(['/minutes/'+this.meetingId]);
+        }else{
+          this.users = res.attendants;
+        }
+      });
     }
     
 
