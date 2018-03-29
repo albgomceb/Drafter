@@ -22,7 +22,6 @@ export class AgendaPageComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['meetingId'];
-      console.log(this.meetingId);
     });
     this.entradas=[];
     this.entradas.push(new Agenda());

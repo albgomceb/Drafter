@@ -14,7 +14,7 @@ public class HatSerializer {
 		
 		res.setId(hat.getId());
 		res.setColor(hat.getColor());
-		res.setConclussions(hat.getConclussions());
+		res.setConclussions(hat.getConclusions());
 		
 		return res;
 	}
@@ -25,8 +25,8 @@ public class HatSerializer {
 			Hat hat = new Hat();
 			hat.setId(hb.getId());
 			hat.setColor(hb.getColor());
-			hat.setOrder(hb.getOrder());
-			hat.setConclussions(hb.getConclussions());
+			hat.setOrden(hb.getOrder());
+			hat.setConclusions(hb.getConclusions());
 		}
 		
 		return hats;

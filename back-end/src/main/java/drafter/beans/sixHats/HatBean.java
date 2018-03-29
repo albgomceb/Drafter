@@ -1,13 +1,13 @@
 package drafter.beans.sixHats;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class HatBean {
 
 	private int id;
 	private String color;
 	private int order;
-	private Collection<String> conclussions;
+	private ArrayList<String> conclusions;
 	
 	public int getId() {
 		return id;
@@ -28,11 +28,11 @@ public class HatBean {
 	public void setOrder(int order) {
 		this.order = order;
 	}
-	public Collection<String> getConclussions() {
-		return conclussions;
+	public ArrayList<String> getConclusions() {
+		return conclusions;
 	}
-	public void setConclussions(Collection<String> conclussions) {
-		this.conclussions = conclussions;
+	public void setConclussions(ArrayList<String> conclusions) {
+		this.conclusions = conclusions;
 	}
 
 	

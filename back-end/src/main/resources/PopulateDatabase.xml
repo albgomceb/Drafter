@@ -1045,52 +1045,71 @@
 	<!-- Hat -->
 
 	<bean id="hat1" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="0"/>
 		<property name="color" value="BLUE"/>
+		<property name="conclusions">
+			<list>
+			</list>
+		</property>
 		<property name="sixHats" ref="sixhats1" />
 	
 	</bean>
 
 	<bean id="hat2" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="1"/>
 		<property name="color" value="WHITE"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	
 	<bean id="hat3" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="2"/>
 		<property name="color" value="BLACK"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	
 	
 	<bean id="hat4" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="3"/>
 		<property name="color" value="RED"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+		<list>
+		</list>
+		</property>
 	</bean>
 	
 	
 	
 	<bean id="hat5" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="4"/>
 		<property name="color" value="YELLOW"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+		<list>
+		</list>
+		</property>
 	</bean>
 	
 	
 	
 	<bean id="hat6" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="5"/>
 		<property name="color" value="GREEN"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+		<list>
+		</list>
+		</property>
 	</bean>
 	
 	

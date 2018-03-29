@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 import { take, map } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { SixHatsService } from '../../../services/sixhats.service';
+import { SixHats } from '../../../models/sixHats.model';
 
 @Component({
   selector: 'six-hats-meeting',
@@ -21,16 +24,30 @@ export class SixHatsMeetingComponent implements OnInit {
   public participantsNumber = 2;
   public actualUser : User;
   public colorString;
+  public sixHats : SixHats;
 
-   constructor() {
+   constructor(private sixHatsService: SixHatsService,
+    private router: Router) {
     this.countDown = timer(0,1000).pipe(
       take(this.count),
       map(()=> --this.count)); 
   }   
 
   ngOnInit() {
+    this.getSixHats(this.meetingId);
     this.assignHats();
-    
+  }
+
+  getSixHats(id : number){
+    this.sixHatsService.getSixHatsByMeeting(id).subscribe(sixHats => {
+      this.sixHats = sixHats;
+    });
+  }
+
+  saveSixHats(){
+    this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
+      this.router.navigate(["/meeting/"+this.meetingId]);
+    });
   }
 
   assignHats(){
@@ -51,11 +68,6 @@ export class SixHatsMeetingComponent implements OnInit {
       else
         color++;
     }
-    if(this.participants.get(user) == 0)
-      this.colorString = "BLANCO";
-    else if(this.participants.get(user) == 0)
-      this.colorString = "BLANCO";
-    this.colorString
     console.log("participantes antes");
     console.log([this.participants.keys()]);
     console.log("colores antes");

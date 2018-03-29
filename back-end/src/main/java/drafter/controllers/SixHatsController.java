@@ -1,11 +1,6 @@
 
 package drafter.controllers;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drafter.beans.agenda.AgendaBean;
-import drafter.beans.agenda.AgendaSerializer;
-import drafter.beans.conclusion.ConclusionBean;
-import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.beans.sixHats.SixHatsBean;
 import drafter.beans.sixHats.SixHatsSerializer;
-import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
 import drafter.services.MeetingService;
@@ -29,7 +19,7 @@ import drafter.services.SixHatsService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/data/agendas")
+@RequestMapping("/data/sixHats")
 public class SixHatsController {
 
 	@Autowired
@@ -38,14 +28,6 @@ public class SixHatsController {
 	@Autowired
 	private MeetingService	meetingService;
 	
-	
-//	@GetMapping("")
-//	public List<AgendaBean> findAll() {
-//		List<SixHats> res = this.sixHatsService.findAll();
-//		List<AgendaBean> result = res.stream().map(agenda -> new AgendaSerializer().fromAgenda(agenda)).collect(Collectors.toList());
-//
-//		return result;
-//	}
 
 	@GetMapping("/{meetingId}")
 	public SixHatsBean findMeeting(@PathVariable("meetingId")Integer meetingId) {
@@ -64,18 +46,6 @@ public class SixHatsController {
 		
 		return res;
 	}
-	
-	@GetMapping("/list/{meetingId}")
-	public List<AgendaBean> findByMeeting(@PathVariable int meetingId) {
-		List<AgendaBean> res = new LinkedList<AgendaBean>();
-		try {
-			for(Agenda a : agendaService.findByMeeting(meetingId))
-				res.add(new AgendaSerializer().fromAgenda(a));
-		} catch(Throwable e) {
-			throw e;
-		}
 
-		return res;
-	}
 
 }
