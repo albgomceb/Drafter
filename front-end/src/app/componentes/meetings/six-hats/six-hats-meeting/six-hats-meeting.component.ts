@@ -85,23 +85,14 @@ export class SixHatsMeetingComponent implements OnInit {
   // }
 
   reassignHats(){
-
-    for(let participant of this.attendants){
-      //TODO var color = participant.
-      var hat : Hat;
-      hat.color = color;
-      hat.order = 
-      this.sixHats.hats.push();
-      if(color == 5)
-        color = 0;
-      else
-        color++;
-      this.participants.set(participant, color); 
+    var temp = this.colorList[0];
+    for(var i=0; i < 6; i++){
+      if(i < 5)
+        this.colorList[i] = this.colorList[i+1];
+      else if (i == 5)
+        this.colorList[i] = temp;
     }
-    console.log("participantes después");
-    console.log([this.participants.keys()]);
-    console.log("colores después");
-    console.log([this.participants.values()]);
+    this.saveSixHats();
   }
 
   getHat() {
