@@ -17,39 +17,38 @@ export class AppComponent implements AfterViewChecked {
   paypalLoad: boolean = true;
   
   licenses:Array<License> = [
-    new License("Enterprise", "4.99"),
-    new License("Standalone","3093.86")
+    new License("Enterprise", 4.99),
+    new License("Standalone",3093.86)
 ];
 
-  finalAmount: number = 1;
-
+  amount: number = 0;
   selectedLicense = null;
 
   ngOnInit(){
     this.selectedLicense;
 
     $(document).ready(function(){
+      $("#paypal-checkout-btn").hide();
       $('.selectpicker').change(function(){
+        $("#paypal-checkout-btn").show();
         $('.selectpicker').css('color','white').css('background-color','#333');
         $('.selectpicker option').css('color','black').css('background-color','white').css('text-align','left');
         $('.selectpicker optgroup').css('color','black').css('background-color','rgb(240,240,240)').css('text-align','left');
       });
     });
-
   }
 
-  
-
-  getLicense() {
-    this.selectedLicense = $('.selectpicker').val();
-    console.log(this.selectedLicense);
-    return this.selectedLicense;
-  }
-
-  
- 
   paypalConfig = {
-    env: 'sandbox',
+    env: 'production',
+    locale: 'en_US',
+    style: {
+      size: 'small',
+      color: 'gold',
+      shape: 'rect',
+      label: 'checkout',
+      tagline: false,
+      fundingicons: true
+    },
     client: {
       sandbox: 'AfksXIAeg7LE2T5D8WIP3DAgd2oLCWK5PcF0fCVxvpGqLiaJFtpeDp8RX3iWbXfVsvQM_kxTqdXnJSI3',
       production: 'AQGSKxRh-u9Ms3C3xcvhWfDKdIcJw34-wErV19hfjs7nTiA4ksSf-Ni5VN1BzUkC5WFrnvN2epBhon-u'
@@ -57,25 +56,24 @@ export class AppComponent implements AfterViewChecked {
     commit: true,
 
     payment: (data, actions) => {
-
-      alert(this.getLicense())
-
-      return actions.payment.create({
-        payment: {
-          transactions: [
-            { amount: 
-              { 
-              total: this.finalAmount, 
-              currency: 'EUR' 
-              } 
-            }
-          ]
-        }
-      });
+        this.amount = this.licenses[(this.selectedLicense-1)].price;
+        return actions.payment.create({
+          payment: {
+            transactions: [
+              { amount: 
+                { 
+                total: this.amount, 
+                currency: 'EUR' 
+                } 
+              }
+            ]
+          }
+        });
     },
+
     onAuthorize: (data, actions) => {
       return actions.payment.execute().then((payment) => {
-        alert("CONGRATULATIONS");
+        alert("CONGRATULATIONS. Payment finished succesfully!");
       })
     }
   };
@@ -103,8 +101,7 @@ export class AppComponent implements AfterViewChecked {
 
 class License {
   name:string;
-  price:string;
+  price:number;
 
-  constructor(name,price){this.name=name,this.price=price}
-
+  constructor(name,price){this.name=name,this.price=price};
 }
