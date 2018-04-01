@@ -1,11 +1,13 @@
 import { NgModule, Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { OrganizationService } from '../services/organization.service';
 import { User } from '../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Meeting } from '../models/meeting.model';
 import { Option } from '../models/option.model';
 import { Router } from '@angular/router';
+import { Organization } from '../models/organization.model';
 
 @Component({
   selector: 'meeting-page',
@@ -18,11 +20,12 @@ export class MeetingPageComponent implements OnInit {
 
   users: Array<User>;
   attendants: Array<Option>;
+  organizations: Array<Organization>
 
   errorListUsers:boolean = false;
   meeting: Meeting;
 
-  constructor(private userService: UserService, private router:Router) {}
+  constructor(private userService: UserService, private organizationService: OrganizationService, private router:Router) {}
 
   ngOnInit() {
 
@@ -33,6 +36,16 @@ export class MeetingPageComponent implements OnInit {
       data => 
       {
         this.users = data;
+      },
+      error => {
+        this.errorListUsers = true;
+      }
+    );
+
+    this.organizationService.getOrganizations().subscribe(
+      data => 
+      {
+        this.organizations = data;
       },
       error => {
         this.errorListUsers = true;

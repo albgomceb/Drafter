@@ -17,11 +17,21 @@
               <h6>Try again later</h6>
             </div>
             
+            <div *ngFor="let o of organizations; let j = index">
+              <a class="list-group-item">{{o.enterprise}}</a>
             <div *ngFor="let us of users; let i = index">
-              <a class="list-group-item list-group-item-action">
-                  <button [hidden]="hideme[i]" type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn bt-lg mr-1 add">Add</button>
-                  <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
-              </a>
+              <div *ngFor="let d of us.departments">
+                <div *ngIf="o.enterprise == d.organization">
+                  <a class="list-group-item list-group-item-action">
+                    <button [hidden]="hideme[i]" type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn bt-lg mr-1 add">Add</button>
+                    <!-- Estos dos botones se autocomplementan desapareciendo uno y apareciendo otro, pero no consigo hacerlo solo para cada usuario
+                    <button *ngIf="!removeButton" id="addButton" type="button" (click)="addAttendant(us); addButton = !addButton; removeButton = !removeButton" class="btn bt-lg mr-1 add">Add</button>
+                    <button *ngIf="addButton" id="removeButton" type="button" (click)="addButton = !addButton; removeButton = !removeButton" class="btn bt-lg mr-1 add">Remove</button> -->
+                    <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                  </a>
+                </div>
+              </div>
+            </div>
             </div>
           </div>
         </div>
