@@ -2,6 +2,7 @@ package drafter.domain;
 
 import java.util.Collection;
 
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -22,9 +23,7 @@ public class Idea extends DomainEntity{
 	
 	private int number; 
 	private String text; 
-	private Integer ratingCount; 
-	private Integer ratingSum; 
-	
+	private Double ratingValue; 
 	
 	//Constructor----------------------------------------
 	public Idea() {
@@ -53,40 +52,27 @@ public class Idea extends DomainEntity{
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	
 	@Min(0)
-	public Integer getRatingCount() {
-		return ratingCount;
+	public Double getRatingValue() {
+		return ratingValue;
 	}
 
-
-	public void setRatingCount(Integer ratingCount) {
-		this.ratingCount = ratingCount;
-	}
-
-	@Min(0)
-	public Integer getRatingSum() {
-		return ratingSum;
-	}
-
-
-	public void setRatingSum(Integer ratingSum) {
-		this.ratingSum = ratingSum;
+	public void setRatingValue(Double ratingValue) {
+		this.ratingValue = ratingValue;
 	}
 	
-	public Double ratingValue() {
-		
-		Double result; 
-		result = (double) (this.getRatingSum()/this.getRatingCount()); 
-		return result; 
-	}
 	
 	// Relationships-------------------------------------
 	
 
+
+
+
 	private BrainStorming brain; 
 	private Collection<Pros> pros; 
 	private Collection<Cons> cons; 
+	private Collection<Vote> votes; 
 	
 	@NotNull
 	@Valid
@@ -121,6 +107,18 @@ public class Idea extends DomainEntity{
 
 	public void setCons(Collection<Cons> cons) {
 		this.cons = cons;
+	}
+
+	
+	@Valid
+	@NotNull
+	@OneToMany(mappedBy = "idea")
+	public Collection<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Collection<Vote> votes) {
+		this.votes = votes;
 	}
 
 	
