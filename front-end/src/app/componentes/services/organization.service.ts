@@ -18,14 +18,18 @@ export class OrganizationService {
     staticUrl:String = environment.baseApi;
 
     getOrganization(): Observable<Organization> {
-        return this.http.get<Organization>(this.staticUrl+'/organization-department');
+        return this.http.get<Organization>(this.staticUrl+'/organization');
     }
     
     getOrganizationsByUser(user: number): Observable<Array<Organization>> {
-        return this.http.get<Array<Organization>>(this.staticUrl+'/organization-department/list/' + user);
+        return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list/' + user);
+    }
+
+    getOrganizations(): Observable<Array<Organization>> {
+        return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list');
     }
     
     saveOrganization(organization:Organization, id:number): Observable<Organization> {
-        return this.http.post<Organization>(this.staticUrl+'/organization-department/'+id,organization,{});
+        return this.http.post<Organization>(this.staticUrl+'/organization/'+id,organization,{});
     }
 }
