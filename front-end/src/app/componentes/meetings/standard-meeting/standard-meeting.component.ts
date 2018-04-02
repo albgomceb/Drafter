@@ -25,7 +25,7 @@ export class StandardMeetingComponent implements OnInit {
     this.agendas = new Array<Agenda>();
     this.meetingId = this.activeRoute.snapshot.params['id'];
     this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
-      this.agendas = agenda;
+    this.agendas = agenda;
     });
     this.realTimeService.connect(this.meetingId, () => {
         var i = 1;

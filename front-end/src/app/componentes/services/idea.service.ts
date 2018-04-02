@@ -5,6 +5,7 @@ import { Idea } from '../models/idea.model';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { Meeting } from '../models/meeting.model';
+import { RealTimeService } from '../../services/real-time.service';
 
 
 const httpOptions = {

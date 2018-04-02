@@ -18,29 +18,34 @@ export class IdeasProsConsComponent implements OnInit {
   public errorListIdeas:boolean = false;
   public hasEdit: boolean = true;
   public meetingId: number;
+  
 
   constructor(private ideaService: IdeaService, private realTimeService: RealTimeService, private activeRoute: ActivatedRoute,) { }
 
   ngOnInit() {
 
+    this.meetingId = this.activeRoute.snapshot.params['id'];
+
     this.ideaService.getIdeas().subscribe(
       data => 
       {
         this.ideas = data;
+        this.realTimeService.connect(this.meetingId, () => {
+          var i = 1;
+          for(var idea of this.ideas) {
+            this.realTimeService.register('p'+i, idea.pros);
+            this.realTimeService.register('c'+i, idea.cons);
+            i++;
+          }
+          this.realTimeService.subscribe();
+          });
+
       },
       error => {
         this.errorListIdeas = true;
       }
     );
-    this.realTimeService.connect(this.meetingId, () => {
-      var i = 1;
-      for(var idea of this.ideas) {
-        this.realTimeService.register('p'+i, idea.pros);
-        this.realTimeService.register('c'+i, idea.cons);
-        i++;
-      }
-      this.realTimeService.subscribe();
-      });
+    
 
   }
 
