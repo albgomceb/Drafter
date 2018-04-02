@@ -375,35 +375,6 @@
 		</property>
 		<property name="participants">
 			<list>
-<<<<<<< HEAD
-				<ref bean="participant3" />
-			</list>
-		</property>
-		<property name="steps">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="brainstorming1" class="drafter.domain.BrainStorming">
-		<property name="title" value="brainstorming1" />
-		<property name="description" value="brainstorming1" />
-		<property name="date" value="2018/01/01 00:22" />
-		<property name="numberOfMeeting" value="4" />
-		<property name="image"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
-		<property name="timer" value="2018/01/01 00:22" />
-		<property name="hasfinished" value="false" />
-		<!-- <property name="project" ref="project1"/> -->
-		<property name="votingMode" value="ONETOTEN" />
-		<property name="agendas">
-			<list>
-			</list>
-		</property>
-		<property name="participants">
-			<list>
-=======
->>>>>>> 97e5496b96e555bc681cc3afd3da0ac9b7bca977
 				<ref bean="participant4" />
 				<ref bean="participant5" />
 				<ref bean="participant6" />
@@ -739,17 +710,10 @@
 
 	<bean id="participant4" class="drafter.domain.Participant">
 		<property name="role" value="participant4" />
-<<<<<<< HEAD
-		<property name="hasAttended" value="false" />
-		<!-- <property name="department" ref="department1"/> -->
-		<property name="user" ref="user4" />
-		<property name="meeting" ref="brainstorming1" />
-=======
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1" />
 		<property name="user" ref="user1" />
 		<property name="meeting" ref="standard2" />
->>>>>>> 97e5496b96e555bc681cc3afd3da0ac9b7bca977
 	</bean>
 
 	<bean id="participant5" class="drafter.domain.Participant">

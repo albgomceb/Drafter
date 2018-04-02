@@ -11,50 +11,6 @@ public class TestConfig {
 	public static final int userAccount7 = 7;
 	public static final int userAccount8 = 8;
 
-<<<<<<< HEAD
-	public static final int admin1 = 7;
-
-	public static final int user1 = 8;
-	public static final int user2 = 9;
-	public static final int user3 = 10;
-	public static final int user4 = 11;
-	public static final int user5 = 12;
-
-	public static final int organization1 = 13;
-	public static final int organization2 = 15;
-
-	public static final int department1 = 14;
-	public static final int department2 = 16;
-
-	public static final int standard1 = 17;
-	public static final int standard2 = 18;
-
-	public static final int brainstorming1 = 19;
-
-	public static final int participant1 = 23;
-	public static final int participant2 = 24;
-	public static final int participant3 = 25;
-	public static final int participant4 = 26;
-	public static final int participant5 = 27;
-
-	public static final int agenda1 = 28;
-	public static final int agenda2 = 29;
-	public static final int agenda3 = 30;
-	public static final int agenda4 = 31;
-	public static final int agenda5 = 32;
-	public static final int agenda6 = 33;
-
-	public static final int conclusion1 = 34;
-	public static final int conclusion2 = 35;
-	public static final int conclusion3 = 36;
-	public static final int conclusion4 = 37;
-	public static final int conclusion5 = 38;
-	public static final int conclusion6 = 39;
-
-	public static final int idea1 = 20;
-	public static final int idea2 = 21;
-	public static final int idea3 = 22;
-=======
 	public static final int admin1 = 9;
 
 	public static final int user1 = 10;
@@ -149,6 +105,5 @@ public class TestConfig {
 	public static final int hat4 = 84;
 	public static final int hat5 = 85;
 	public static final int hat6 = 86;
->>>>>>> 97e5496b96e555bc681cc3afd3da0ac9b7bca977
 	
 }

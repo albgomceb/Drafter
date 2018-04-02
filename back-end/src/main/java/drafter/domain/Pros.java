@@ -65,12 +65,7 @@ public class Pros extends DomainEntity{
 
 
 
-<<<<<<< HEAD
-	public void setIdea(Idea ideaP) {
-		this.idea = ideaP;
-=======
 	public void setIdea(Idea idea) {
 		this.idea = idea;
->>>>>>> 97e5496b96e555bc681cc3afd3da0ac9b7bca977
 	}
 }
