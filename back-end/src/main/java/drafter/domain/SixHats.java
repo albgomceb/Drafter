@@ -2,6 +2,7 @@ package drafter.domain;
 
 import java.util.Collection;
 
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class SixHats extends DomainEntity{
+public class SixHats extends Meeting{
 
 	public SixHats() {
 		
