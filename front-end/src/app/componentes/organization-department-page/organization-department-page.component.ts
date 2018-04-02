@@ -12,7 +12,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class OrganizationDepartmentPageComponent implements OnInit {
 
-  // TODO Añadir los atributos de la organizacion
+  public organization: Organization;
   public departments: Array<Department>;
   public userId: number;
   public counter: number;
@@ -26,12 +26,15 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       this.userId = params['userId'];
       console.log(this.userId);
     });
+    this.organization = new Organization();
     this.departments=[];
     this.departments.push(new Department());
     this.departments[0].id = 0;
     this.departments[0].isInput = true;
     this.departments[0].name = "";
     this.counter = 1;
+    console.log(this.departments);
+
   }
 
   saveOrganization(departments: Department[], organization: Organization){
@@ -53,6 +56,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     this.counter++;
     this.departments[length].isInput = true;
     this.departments[length].name = "";
+    console.log(this.departments);
   } 
 
   removeDepartment(department : Department, departmenstIndex : number){    

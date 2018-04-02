@@ -47,6 +47,10 @@ public class OrganizationService {
     public Organization findById(Integer id) {
         return organizationRepository.findById(id).orElse(null);
     }
+    
+    public Organization save(Organization organization) {
+		return organizationRepository.save(organization);
+	}
 
 	//Other business Methods-----------------------------------------------------------------------------
 

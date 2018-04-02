@@ -5,11 +5,12 @@ import java.util.stream.Collectors;
 
 import drafter.beans.Option;
 import drafter.domain.Organization;
+import drafter.domain.User;
 
 public class OrganizationSerializer {
 
 	
-	public static OrganizationBean fromOrganization(Organization organization) {
+	public OrganizationBean fromOrganization(Organization organization) {
 		OrganizationBean res = new OrganizationBean();
 		List<Option> depar = organization.getDepartments()
 			.stream()
@@ -26,7 +27,17 @@ public class OrganizationSerializer {
 		return res;
 	}
 	
-	public static Organization fromBean(OrganizationBean organization) {
-		return null;
+	public Organization fromBean(OrganizationBean organizationBean, User user) {
+		Organization organization = new Organization();
+		
+		organization.setEnterprise(organizationBean.getEnterprise());
+		organization.setDescription(organizationBean.getDescription());
+		organization.setAddress(organizationBean.getAddress());
+		organization.setEmail(organizationBean.getEmail());
+		organization.setPhone(organizationBean.getPhone());
+		organization.setLogo(organizationBean.getLogo());
+		organization.setUser(user);
+		
+		return organization;
 	}
 }
