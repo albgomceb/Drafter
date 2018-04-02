@@ -1,36 +1,43 @@
 
 package drafter.controllers;
 
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 public class FixFrontEndController implements ErrorController {
-
+	
     private static final String PATH = "/error";
 
     @GetMapping(PATH)
     public String error(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	if(response.getStatus() == 404) {
-	    	StringBuilder sb = new StringBuilder();
 	    	response.setStatus(200);
-	    	for(String s : Files.readAllLines(Paths.get(this.getClass().getResource("/static/index.html").toURI()), Charset.forName("UTF-8"))) {
-	    		sb.append(s);
-	    	}
-	    	
-	    	return sb.toString();
+	    	return read(new ClassPathResource("static/index.html").getInputStream());
     	} else
     		return "";
     }
+    
+	private String read(InputStream in) throws IOException {
+		ByteArrayOutputStream result = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int length;
+		while((length = in.read(buffer)) != -1)
+			result.write(buffer, 0, length);
+
+		return result.toString(StandardCharsets.UTF_8.name());
+	}
 
     @Override
     public String getErrorPath() {

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseApi: "/data/",
+  baseApi: "/data",
   baseWS: "/socket"
 };

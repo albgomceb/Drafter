@@ -24,11 +24,10 @@ export class StandardMeetingComponent implements OnInit {
   ngOnInit() {
     this.agendas = new Array<Agenda>();
     this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
+      this.agendas = agenda;
+    });
     this.realTimeService.connect(this.meetingId, () => {
-
-      this.agendaService.getAgendasByMeeting(this.realTimeService.getMeeting()).subscribe( agenda => {
-        this.agendas = agenda;
-
         var i = 1;
         for(var cs of this.agendas) {
           this.realTimeService.register('c'+i, cs.conclusions);
@@ -36,15 +35,15 @@ export class StandardMeetingComponent implements OnInit {
         }
         this.realTimeService.subscribe();
       });
-    });
+
   }
 
 
   edit(event) {
     if(this.hasEdit) {
-        var iagenda = event.srcElement.dataset.iagenda;
-        var iconclusion = event.srcElement.dataset.iconclusion;
-        var content = event.srcElement.textContent.trim();
+        var iagenda = event.target.dataset.iagenda;
+        var iconclusion = event.target.dataset.iconclusion;
+        var content = event.target.textContent.trim();
         var conclusion: Conclusion = this.agendas[iagenda-1].conclusions[iconclusion];
         conclusion.conclusion = content;
 
@@ -67,7 +66,7 @@ export class StandardMeetingComponent implements OnInit {
 
   enter(event) {
     if(event.keyCode == 13) {
-      event.srcElement.blur();
+      event.target.blur();
       return false;
     }
 
@@ -75,7 +74,7 @@ export class StandardMeetingComponent implements OnInit {
   }
 
   addConclusion(event) {
-    var index = event.srcElement.dataset.index;
+    var index = event.target.dataset.index;
     var agenda = this.agendas[index-1];
 
     // Only one empty

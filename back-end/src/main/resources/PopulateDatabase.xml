@@ -766,7 +766,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1" />
 		<property name="user" ref="user1" />
-		<property name="meeting" ref="brainstorming1" />	
+		<property name="meeting" ref="brainstorming1" />
 	</bean>
 
 	<bean id="participant12" class="drafter.domain.Participant">
