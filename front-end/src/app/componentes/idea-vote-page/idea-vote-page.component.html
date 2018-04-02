@@ -1,0 +1,42 @@
+<br>
+<h2 class="text-center"><span class="letter">B</span>rainstorming meeting</h2>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <h3>Chat</h3>
+        <chat></chat>
+    </div>
+
+    <div class="col-md-8 info-panel ideas">
+        <div class="title"><h1>Ideas</h1></div>
+        <div *ngFor="let i of ideas">
+            <div class="card server-action-menu">
+                <div class="title"><h2>{{i.text}}</h2></div>
+                <div class="row">
+                    <div class="col-md-6 card server-action-menu pros">
+                        <div class="col-md-12">
+                            <h3>Pros</h3>
+                            <div class="col-md-12" *ngFor="let p of i.pros">
+                                {{p.pros}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 card server-action-menu cons">
+                        <div class="col-md-12">
+                            <h3>Cons</h3>
+                            <div class="col-md-12" *ngFor="let c of i.cons">
+                                {{c.cons}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-danger" (click)="addVote($event)" attr.data-index="{{i.number}}">Vote</button>
+                <div class="clear"></div>
+            </div>
+            <br/>
+        </div>
+    </div>       
+ </div>
+<div class="buttons text-center">
+    <button routerLink="../../minutes/{{meetingId}}" class="btn bt-lg mr-1">Next</button>
+</div>

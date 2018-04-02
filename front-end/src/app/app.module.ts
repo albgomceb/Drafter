@@ -1,3 +1,4 @@
+import { IdeaService } from './componentes/services/idea.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -21,6 +22,7 @@ import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+import { IdeaVotePageComponent } from './componentes/idea-vote-page/idea-vote-page.component';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     ChatComponent,
     StandardMeetingComponent,
     MinutesPageComponent,
-    AgendaPageComponent
+    AgendaPageComponent,
+    IdeaVotePageComponent
   ],
   imports: [
     BrowserModule,
@@ -52,8 +55,7 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
     FormsModule,
     ReactiveFormsModule,
     RealTimeService,
-    UserService,
-    ReactiveFormsModule
+    IdeaService
   ],  
   bootstrap: [AppComponent]
 })

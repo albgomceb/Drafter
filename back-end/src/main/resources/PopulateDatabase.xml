@@ -78,6 +78,33 @@
 		</property>
 	</bean>
 
+
+	<bean id="userAccount7" class="drafter.security.UserAccount">
+		<property name="username" value="user6" />
+		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="authorities">
+			<list>
+				<bean class="drafter.security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount8" class="drafter.security.UserAccount">
+		<property name="username" value="user7" />
+		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="authorities">
+			<list>
+				<bean class="drafter.security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+
+
 	<!-- Admin -->
 
 	<bean id="admin1" class="drafter.domain.Administrator">
@@ -94,7 +121,7 @@
 
 	<bean id="user1" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount2" />
-		<property name="name" value="MARCOS" />
+		<property name="name" value="user1" />
 		<property name="surname" value="MARIN CABRERA" />
 		<property name="email" value="user1@gmail.com" />
 		<property name="phone" value="900900900" />
@@ -103,6 +130,7 @@
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
+				<ref bean="department3" />
 			</list>
 		</property>
 		<property name="organizations">
@@ -114,7 +142,7 @@
 
 	<bean id="user2" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount3" />
-		<property name="name" value="ALBERTO" />
+		<property name="name" value="user2" />
 		<property name="surname" value="GOMEZ CEBALLOS" />
 		<property name="email" value="user2@gmail.com" />
 		<property name="phone" value="900900900" />
@@ -122,19 +150,19 @@
 			value="https://avatars3.githubusercontent.com/u/26671664?s=60&amp;v=4" />
 		<property name="departments">
 			<list>
-				<ref bean="department2" />
+				<ref bean="department1" />
 			</list>
 		</property>
 		<property name="organizations">
 			<list>
-				<ref bean="organization2" />
+
 			</list>
 		</property>
 	</bean>
 
 	<bean id="user3" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount4" />
-		<property name="name" value="CRISTIAN" />
+		<property name="name" value="user3" />
 		<property name="surname" value="GALAN BLANCO" />
 		<property name="email" value="user3@gmail.com" />
 		<property name="phone" value="900900900" />
@@ -142,7 +170,7 @@
 			value="https://avatars0.githubusercontent.com/u/32903920?s=460&amp;v=4" />
 		<property name="departments">
 			<list>
-				<ref bean="department2" />
+				<ref bean="department1" />
 			</list>
 		</property>
 		<property name="organizations">
@@ -153,7 +181,7 @@
 
 	<bean id="user4" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount5" />
-		<property name="name" value="FERNANDO" />
+		<property name="name" value="user4" />
 		<property name="surname" value="DE TUERO BARROSO" />
 		<property name="email" value="user4@gmail.com" />
 		<property name="phone" value="900900900" />
@@ -172,7 +200,7 @@
 
 	<bean id="user5" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount6" />
-		<property name="name" value="DANIEL J." />
+		<property name="name" value="user5" />
 		<property name="surname" value="MARTINEZ SUAREZ" />
 		<property name="email" value="user5@gmail.com" />
 		<property name="phone" value="900900900" />
@@ -180,7 +208,7 @@
 			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
 		<property name="departments">
 			<list>
-				<ref bean="department1" />
+				<ref bean="department2" />
 			</list>
 		</property>
 		<property name="organizations">
@@ -189,10 +217,51 @@
 		</property>
 	</bean>
 
+	<bean id="user6" class="drafter.domain.User">
+		<property name="userAccount" ref="userAccount7" />
+		<property name="name" value="user6" />
+		<property name="surname" value="user6" />
+		<property name="email" value="user6@gmail.com" />
+		<property name="phone" value="900900900" />
+		<property name="photo"
+			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
+		<property name="departments">
+			<list>
+				<ref bean="department3" />
+			</list>
+		</property>
+		<property name="organizations">
+			<list>
+				<ref bean="organization2" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="user7" class="drafter.domain.User">
+		<property name="userAccount" ref="userAccount8" />
+		<property name="name" value="user7" />
+		<property name="surname" value="user7" />
+		<property name="email" value="user7@gmail.com" />
+		<property name="phone" value="900900900" />
+		<property name="photo"
+			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
+		<property name="departments">
+			<list>
+
+			</list>
+		</property>
+		<property name="organizations">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+
 	<!-- Organization -->
 
 	<bean id="organization1" class="drafter.domain.Organization">
-		<property name="enterprise" value="Facebook" />
+		<property name="enterprise" value="organization1" />
 		<property name="description" value="organization1" />
 		<property name="address" value="organization" />
 		<property name="phone" value="900900900" />
@@ -203,22 +272,23 @@
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
+				<ref bean="department2" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="organization2" class="drafter.domain.Organization">
-		<property name="enterprise" value="Pivotal Software, Inc" />
-		<property name="description" value="organization1" />
+		<property name="enterprise" value="Organization2" />
+		<property name="description" value="organization2" />
 		<property name="address" value="organization" />
 		<property name="phone" value="900900900" />
 		<property name="logo"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="email" value="organization@gmail.com" />
-		<property name="user" ref="user1" />
+		<property name="user" ref="user6" />
 		<property name="departments">
 			<list>
-				<ref bean="department2" />
+				<ref bean="department3" />
 			</list>
 		</property>
 	</bean>
@@ -226,23 +296,35 @@
 	<!-- Department -->
 
 	<bean id="department1" class="drafter.domain.Department">
-		<property name="name" value="Development" />
+		<property name="name" value="department1" />
 		<property name="organization" ref="organization1" />
 		<property name="users">
 			<list>
 				<ref bean="user1" />
 				<ref bean="user2" />
+				<ref bean="user3" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="department2" class="drafter.domain.Department">
-		<property name="name" value="QA" />
+		<property name="name" value="department2" />
+		<property name="organization" ref="organization1" />
+		<property name="users">
+			<list>
+				<ref bean="user4" />
+				<ref bean="user5" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="department3" class="drafter.domain.Department">
+		<property name="name" value="department3" />
 		<property name="organization" ref="organization2" />
 		<property name="users">
 			<list>
 				<ref bean="user1" />
-				<ref bean="user2" />
+				<ref bean="user6" />
 			</list>
 		</property>
 	</bean>
@@ -253,7 +335,7 @@
 		<property name="title" value="standard1" />
 		<property name="description" value="standard1" />
 		<property name="date" value="2018/01/01 00:22" />
-		<property name="numberOfMeeting" value="2" />
+		<property name="numberOfMeeting" value="10" />
 		<property name="image"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2018/01/01 00:22" />
@@ -280,21 +362,25 @@
 		<property name="title" value="standard2" />
 		<property name="description" value="standard2" />
 		<property name="date" value="2018/01/01 00:22" />
-		<property name="numberOfMeeting" value="3" />
+		<property name="numberOfMeeting" value="8" />
 		<property name="image"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2018/01/01 00:22" />
-		<property name="hasfinished" value="false" />
-		<!-- <property name="project" ref="project1"/> -->
+		<property name="hasfinished" value="true" />
+		<property name="project" ref="project1" />
 		<property name="agendas">
 			<list>
+				<ref bean="agenda1" />
+				<ref bean="agenda2" />
 			</list>
 		</property>
 		<property name="participants">
 			<list>
-				<ref bean="participant1" />
 				<ref bean="participant4" />
 				<ref bean="participant5" />
+				<ref bean="participant6" />
+				<ref bean="participant7" />
+				<ref bean="participant8" />
 			</list>
 		</property>
 		<property name="steps">
@@ -302,6 +388,292 @@
 			</list>
 		</property>
 	</bean>
+
+
+	<bean id="standard3" class="drafter.domain.Standard">
+		<property name="title" value="standard3" />
+		<property name="description" value="standard3" />
+		<property name="date" value="2018/02/01 00:22" />
+		<property name="numberOfMeeting" value="4" />
+		<property name="image"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="timer" value="2018/01/01 00:22" />
+		<property name="hasfinished" value="true" />
+		<!-- <property name="project" ref="project1" /> -->
+		<property name="agendas">
+			<list>
+				<ref bean="agenda3" />
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref bean="participant9" />
+				<ref bean="participant10" />
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+				<ref bean="step1" />
+				<ref bean="step2" />
+			</list>
+		</property>
+	</bean>
+
+
+
+	<bean id="brainstorming1" class="drafter.domain.BrainStorming">
+		<property name="title" value="brainstorming1" />
+		<property name="description" value="brainstorming1" />
+		<property name="date" value="2018/01/01 00:22" />
+		<property name="numberOfMeeting" value="6" />
+		<property name="image"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="timer" value="2018/01/01 10:22" />
+		<property name="hasfinished" value="true" />
+		<!-- <property name="project" ref="project1" /> -->
+		<property name="votingMode" value="ONETOFIVE" />
+		<property name="agendas">
+			<list>
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref bean="participant11" />
+				<ref bean="participant12" />
+				<ref bean="participant13" />
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+				<ref bean="step3" />
+				<ref bean="step4" />
+			</list>
+		</property>
+		<property name="ideas">
+			<list>
+				<ref bean="idea1" />
+				<ref bean="idea2" />
+			</list>
+		</property>
+
+	</bean>
+	
+	
+	<bean id="brainstorming2" class="drafter.domain.BrainStorming">
+		<property name="title" value="brainstorming2" />
+		<property name="description" value="brainstorming2" />
+		<property name="date" value="2019/01/01 00:22" />
+		<property name="numberOfMeeting" value="6" />
+		<property name="image"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+	<!--  <property name="timer" value="2019/01/01 10:22" />-->	
+		<property name="hasfinished" value="false" />
+		<!-- <property name="project" ref="project1" /> -->
+		<property name="votingMode" value="ONETOFIVE" />
+		<property name="agendas">
+			<list>
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref bean="participant14" />
+				<ref bean="participant15" />
+				<ref bean="participant16" />
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+			</list>
+		</property>
+		<property name="ideas">
+			<list>
+			</list>
+		</property>
+
+	</bean>
+	
+	
+	
+	<bean id="sixhats1" class="drafter.domain.SixHats">
+		<property name="title" value="sixhats1" />
+		<property name="description" value="sixhats1" />
+		<property name="date" value="2018/01/01 00:22" />
+		<property name="numberOfMeeting" value="6" />
+		<property name="image"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="timer" value="2019/01/01 10:22" />	
+		<property name="hasfinished" value="true" />
+		<!-- <property name="project" ref="project1" /> -->
+		<property name="agendas">
+			<list>
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref bean="participant17" />
+				<ref bean="participant18" />
+				<ref bean="participant19" />
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+				<ref bean="step5"/>
+				<ref bean="step6"/> 
+			</list>
+		</property>
+		<property name="hats">
+			<list>
+				<ref bean="hat1"/>
+				<ref bean="hat2"/>
+				<ref bean="hat3"/>
+				<ref bean="hat4"/>
+				<ref bean="hat5"/>
+				<ref bean="hat6"/>
+				
+			</list>
+		</property>
+
+	</bean>
+	
+	
+		<bean id="sixhats2" class="drafter.domain.SixHats">
+		<property name="title" value="sixhats2" />
+		<property name="description" value="sixhats2" />
+		<property name="date" value="2019/01/01 00:22" />
+		<property name="numberOfMeeting" value="6" />
+		<property name="image"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+	<!--  <property name="timer" value="2019/01/01 10:22" />-->	
+		<property name="hasfinished" value="false" />
+		<!-- <property name="project" ref="project1" /> -->
+		<property name="agendas">
+			<list>
+			</list>
+		</property>
+		<property name="participants">
+			<list>
+				<ref bean="participant20" />
+				<ref bean="participant21" />
+				<ref bean="participant22" />
+				<ref bean="participant23" />
+				<ref bean="participant24" />
+			</list>
+		</property>
+		<property name="steps">
+			<list>
+			</list>
+		</property>
+		<property name="hats">
+			<list>
+				
+			</list>
+		</property>
+
+	</bean>
+
+
+	<!-- Idea -->
+
+	<bean id="idea1" class="drafter.domain.Idea">
+		<property name="number" value="1" />
+		<property name="text" value="idea1" />
+		<property name="ratingValue" value="3.0" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+				<ref bean="pros1" />
+				<ref bean="pros2" />
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+				<ref bean="cons1" />
+			</list>
+		</property>
+		<property name="votes">
+			<list>
+				<ref bean="vote1" />
+				<ref bean="vote2" />
+				<ref bean="vote3" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="idea2" class="drafter.domain.Idea">
+		<property name="number" value="2" />
+		<property name="text" value="idea2" />
+		<property name="ratingValue" value="0.0" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+				<ref bean="pros3" />
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+				<ref bean="cons2" />
+				<ref bean="cons3" />
+			</list>
+		</property>
+		<property name="votes">
+			<list>
+				<ref bean="vote4" />
+				<ref bean="vote5" />
+				<ref bean="vote6" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Pros -->
+
+	<bean id="pros1" class="drafter.domain.Pros">
+		<property name="numberPros" value="1" />
+		<property name="pros" value="pros1" />
+		<property name="idea" ref="idea1" />
+
+	</bean>
+
+	<bean id="pros2" class="drafter.domain.Pros">
+		<property name="numberPros" value="2" />
+		<property name="pros" value="pros2" />
+		<property name="idea" ref="idea1" />
+
+	</bean>
+
+	<bean id="pros3" class="drafter.domain.Pros">
+		<property name="numberPros" value="1" />
+		<property name="pros" value="pros3" />
+		<property name="idea" ref="idea2" />
+
+	</bean>
+
+
+
+	<!-- Cons -->
+
+	<bean id="cons1" class="drafter.domain.Cons">
+		<property name="numberCons" value="1" />
+		<property name="cons" value="cons1" />
+		<property name="idea" ref="idea1" />
+
+	</bean>
+
+	<bean id="cons2" class="drafter.domain.Cons">
+		<property name="numberCons" value="1" />
+		<property name="cons" value="cons2" />
+		<property name="idea" ref="idea2" />
+
+	</bean>
+
+	<bean id="cons3" class="drafter.domain.Cons">
+		<property name="numberCons" value="2" />
+		<property name="cons" value="cons3" />
+		<property name="idea" ref="idea2" />
+
+	</bean>
+	
+
 
 
 	<!-- Participant -->
@@ -332,132 +704,396 @@
 
 	<bean id="participant4" class="drafter.domain.Participant">
 		<property name="role" value="participant4" />
-		<property name="hasAttended" value="false" />
-		<!-- <property name="department" ref="department1"/> -->
-		<property name="user" ref="user4" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user1" />
 		<property name="meeting" ref="standard2" />
 	</bean>
 
 	<bean id="participant5" class="drafter.domain.Participant">
 		<property name="role" value="participant5" />
 		<property name="hasAttended" value="true" />
-		<!-- <property name="department" ref="department1"/> -->
+		<property name="department" ref="department1" />
+		<property name="user" ref="user2" />
+		<property name="meeting" ref="standard2" />
+	</bean>
+
+
+	<bean id="participant6" class="drafter.domain.Participant">
+		<property name="role" value="participant6" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user3" />
+		<property name="meeting" ref="standard2" />
+	</bean>
+
+	<bean id="participant7" class="drafter.domain.Participant">
+		<property name="role" value="participant7" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department2" />
+		<property name="user" ref="user4" />
+		<property name="meeting" ref="standard2" />
+	</bean>
+
+	<bean id="participant8" class="drafter.domain.Participant">
+		<property name="role" value="participant8" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department2" />
 		<property name="user" ref="user5" />
 		<property name="meeting" ref="standard2" />
 	</bean>
 
+	<bean id="participant9" class="drafter.domain.Participant">
+		<property name="role" value="participant9" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department3" />
+		<property name="user" ref="user1" />
+		<property name="meeting" ref="standard3" />
+	</bean>
 
-	<!-- Agendas  -->
+
+	<bean id="participant10" class="drafter.domain.Participant">
+		<property name="role" value="participant10" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department3" />
+		<property name="user" ref="user6" />
+		<property name="meeting" ref="standard3" />
+	</bean>
+
+
+	<bean id="participant11" class="drafter.domain.Participant">
+		<property name="role" value="participant11" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user1" />
+		<property name="meeting" ref="brainstorming1" />	
+	</bean>
+
+	<bean id="participant12" class="drafter.domain.Participant">
+		<property name="role" value="participant12" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user2" />
+		<property name="meeting" ref="brainstorming1" />
+	</bean>
+
+
+	<bean id="participant13" class="drafter.domain.Participant">
+		<property name="role" value="participant13" />
+		<property name="hasAttended" value="true" />
+		<!-- <property name="department" ref="department1" /> -->
+		<property name="user" ref="user7" />
+		<property name="meeting" ref="brainstorming1" />
+	</bean>
+
+	<bean id="participant14" class="drafter.domain.Participant">
+		<property name="role" value="participant13" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user3" />
+		<property name="meeting" ref="brainstorming2" />
+	</bean>
 	
+	<bean id="participant15" class="drafter.domain.Participant">
+		<property name="role" value="participant15" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department2" />
+		<property name="user" ref="user4" />
+		<property name="meeting" ref="brainstorming2" />
+	</bean>
+	
+	
+	<bean id="participant16" class="drafter.domain.Participant">
+		<property name="role" value="participant16" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department2" />
+		<property name="user" ref="user5" />
+		<property name="meeting" ref="brainstorming2" />
+	</bean>
+	
+	<bean id="participant17" class="drafter.domain.Participant">
+		<property name="role" value="participant17" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user1" />
+		<property name="meeting" ref="sixhats1" />
+	</bean>
+	
+	<bean id="participant18" class="drafter.domain.Participant">
+		<property name="role" value="participant18" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user2" />
+		<property name="meeting" ref="sixhats1" />
+	</bean>
+	
+	<bean id="participant19" class="drafter.domain.Participant">
+		<property name="role" value="participant19" />
+		<property name="hasAttended" value="true" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user3" />
+		<property name="meeting" ref="sixhats1" />
+	</bean>
+	
+	
+	<bean id="participant20" class="drafter.domain.Participant">
+		<property name="role" value="participant20" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user1" />
+		<property name="meeting" ref="sixhats2" />
+	</bean>
+	
+	
+	<bean id="participant21" class="drafter.domain.Participant">
+		<property name="role" value="participant21" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user2" />
+		<property name="meeting" ref="sixhats2" />
+	</bean>
+	
+	
+	<bean id="participant22" class="drafter.domain.Participant">
+		<property name="role" value="participant22" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department1" />
+		<property name="user" ref="user3" />
+		<property name="meeting" ref="sixhats2" />
+	</bean>
+	
+	
+	
+	<bean id="participant23" class="drafter.domain.Participant">
+		<property name="role" value="participant23" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department2" />
+		<property name="user" ref="user4" />
+		<property name="meeting" ref="sixhats2" />
+	</bean>
+
+	<bean id="participant24" class="drafter.domain.Participant">
+		<property name="role" value="participant24" />
+		<property name="hasAttended" value="false" />
+		<property name="department" ref="department2" />
+		<property name="user" ref="user5" />
+		<property name="meeting" ref="sixhats2" />
+	</bean>
+	
+	
+	<!-- Votes -->
+
+	<bean id="vote1" class="drafter.domain.Vote">
+		<property name="value" value="1" />
+		<property name="idea" ref="idea1" />
+		<property name="participant" ref="participant11" />
+	</bean>
+
+	<bean id="vote2" class="drafter.domain.Vote">
+		<property name="value" value="2" />
+		<property name="idea" ref="idea1" />
+		<property name="participant" ref="participant12" />
+	</bean>
+
+
+	<bean id="vote3" class="drafter.domain.Vote">
+		<property name="value" value="1" />
+		<property name="idea" ref="idea1" />
+		<property name="participant" ref="participant13" />
+	</bean>
+
+
+	<bean id="vote4" class="drafter.domain.Vote">
+		<property name="value" value="1" />
+		<property name="idea" ref="idea2" />
+		<property name="participant" ref="participant11" />
+	</bean>
+
+	<bean id="vote5" class="drafter.domain.Vote">
+		<property name="value" value="1" />
+		<property name="idea" ref="idea2" />
+		<property name="participant" ref="participant12" />
+	</bean>
+
+	<bean id="vote6" class="drafter.domain.Vote">
+		<property name="value" value="3" />
+		<property name="idea" ref="idea2" />
+		<property name="participant" ref="participant13" />
+	</bean>
+	
+
+
+	<!-- Agendas -->
+
 	<bean id="agenda1" class="drafter.domain.Agenda">
 		<property name="number" value="1" />
-		<property name="description" value="Introducción" />
-		<property name="meeting" ref="standard1" />
+		<property name="description" value="agenda1" />
+		<property name="meeting" ref="standard2" />
 		<property name="conclusion">
 			<list>
+				<ref bean="conclusion1" />
+				<ref bean="conclusion2" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="agenda2" class="drafter.domain.Agenda">
 		<property name="number" value="2" />
-		<property name="description" value="Planificación" />
-		<property name="meeting" ref="standard1" />
+		<property name="description" value="agenda2" />
+		<property name="meeting" ref="standard2" />
 		<property name="conclusion">
 			<list>
+				<ref bean="conclusion3" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="agenda3" class="drafter.domain.Agenda">
 		<property name="number" value="3" />
-		<property name="description" value="Conclusiones" />
-		<property name="meeting" ref="standard1" />
+		<property name="description" value="agenda3" />
+		<property name="meeting" ref="standard3" />
 		<property name="conclusion">
 			<list>
+				<ref bean="conclusion4" />
 			</list>
 		</property>
 	</bean>
-
-	<bean id="agenda4" class="drafter.domain.Agenda">
-		<property name="number" value="1" />
-		<property name="description" value="Introducción" />
-		<property name="meeting" ref="standard2" />
-		<property name="conclusion">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="agenda5" class="drafter.domain.Agenda">
-		<property name="number" value="2" />
-		<property name="description" value="Planificación" />
-		<property name="meeting" ref="standard2" />
-		<property name="conclusion">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="agenda6" class="drafter.domain.Agenda">
-		<property name="number" value="3" />
-		<property name="description" value="Conclusiones" />
-		<property name="meeting" ref="standard2" />
-		<property name="conclusion">
-			<list>
-			</list>
-		</property>
-	</bean>
-
 
 	<!-- Conclusions -->
 
 	<bean id="conclusion1" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Nos planificamos mal" />
+		<property name="conclusion" value="conclusion1" />
 		<property name="agenda" ref="agenda1" />
 	</bean>
-	
+
 	<bean id="conclusion2" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Perdemos mucho el tiempo" />
+		<property name="conclusion" value="conclusion2" />
 		<property name="agenda" ref="agenda1" />
 	</bean>
-	
+
 	<bean id="conclusion3" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Más trabajo para todos" />
+		<property name="conclusion" value="conclusion3" />
 		<property name="agenda" ref="agenda2" />
 	</bean>
 
 	<bean id="conclusion4" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Ponerse las pilas" />
-		<property name="agenda" ref="agenda2" />
-	</bean>
-
-	<bean id="conclusion5" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Planificar mejor" />
-		<property name="agenda" ref="agenda2" />
-	</bean>
-
-	<bean id="conclusion6" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Terminar con tiempo" />
+		<property name="conclusion" value="conclusion4" />
 		<property name="agenda" ref="agenda3" />
 	</bean>
 
 
+	<!-- Projects -->
+
+	<bean id="project1" class="drafter.domain.Project">
+		<property name="name" value="project1" />
+		<property name="description" value="project1" />
+	</bean>
 
 
+	<!-- Steps -->
+
+	<bean id="step1" class="drafter.domain.Step">
+		<property name="number" value="1" />
+		<property name="description" value="step1" />
+		<property name="picture"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="meeting" ref="standard3" />
+	</bean>
+
+	<bean id="step2" class="drafter.domain.Step">
+		<property name="number" value="2" />
+		<property name="description" value="step2" />
+		<property name="picture"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="meeting" ref="standard3" />
+	</bean>
+
+	<bean id="step3" class="drafter.domain.Step">
+		<property name="number" value="1" />
+		<property name="description" value="step1" />
+		<property name="picture"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="meeting" ref="brainstorming1" />
+	</bean>
+
+	<bean id="step4" class="drafter.domain.Step">
+		<property name="number" value="2" />
+		<property name="description" value="step2" />
+		<property name="picture"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="meeting" ref="brainstorming1" />
+	</bean>
 
 
+	<bean id="step5" class="drafter.domain.Step">
+		<property name="number" value="1" />
+		<property name="description" value="step1" />
+		<property name="picture"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="meeting" ref="sixhats1" />
+	</bean>
+	
+	<bean id="step6" class="drafter.domain.Step">
+		<property name="number" value="2" />
+		<property name="description" value="step2" />
+		<property name="picture"
+			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+		<property name="meeting" ref="sixhats1" />
+	</bean>
 
+	
+	<!-- Hat -->
 
+	<bean id="hat1" class="drafter.domain.Hat">
+		<property name="time" value="15"/>
+		<property name="color" value="BLUE"/>
+		<property name="sixHats" ref="sixhats1" />
+	
+	</bean>
 
-
-
-
-
-
-
-
-
+	<bean id="hat2" class="drafter.domain.Hat">
+		<property name="time" value="15"/>
+		<property name="color" value="WHITE"/>
+		<property name="sixHats" ref="sixhats1" />
+	
+	</bean>
+	
+	
+	<bean id="hat3" class="drafter.domain.Hat">
+		<property name="time" value="15"/>
+		<property name="color" value="BLACK"/>
+		<property name="sixHats" ref="sixhats1" />
+	
+	</bean>
+	
+	
+	
+	<bean id="hat4" class="drafter.domain.Hat">
+		<property name="time" value="15"/>
+		<property name="color" value="RED"/>
+		<property name="sixHats" ref="sixhats1" />
+	
+	</bean>
+	
+	
+	
+	<bean id="hat5" class="drafter.domain.Hat">
+		<property name="time" value="15"/>
+		<property name="color" value="YELLOW"/>
+		<property name="sixHats" ref="sixhats1" />
+	
+	</bean>
+	
+	
+	
+	<bean id="hat6" class="drafter.domain.Hat">
+		<property name="time" value="15"/>
+		<property name="color" value="GREEN"/>
+		<property name="sixHats" ref="sixhats1" />
+	
+	</bean>
+	
+	
 
 
 

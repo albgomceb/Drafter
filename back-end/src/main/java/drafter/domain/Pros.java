@@ -28,14 +28,14 @@ public class Pros extends DomainEntity{
 
 	//Constructor----------------------------------------
 	@Min(1)
-	public int getNumber() {
+	public int getNumberPros() {
 		return numberPros;
 	}
 
 	//Methods--------------------------------------------
 	
 	
-	public void setNumber(int number) {
+	public void setNumberPros(int number) {
 		this.numberPros = number;
 	}
 
