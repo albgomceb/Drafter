@@ -5,3 +5,5 @@ export { SixHatsComponent } from './six-hats/six-hats.component';
 export { DynamicMeetingComponent } from './dynamic-meeting/dynamic-meeting.component'; 
 export { DynamicMinutesComponent } from './dynamic-meeting/dynamic-minutes/dynamic.minutes.component';
 export { StandardMinutesPageComponent } from './standard/minutes-page/standard-minutes-page.component';
+export { BrainstormingComponent } from './brainstorming/brainstorming.component';
+export { IdeasProsConsComponent } from './brainstorming/ideas-pros-cons/ideas-pros-cons.component';

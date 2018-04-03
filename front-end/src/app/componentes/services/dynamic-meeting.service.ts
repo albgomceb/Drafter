@@ -52,10 +52,15 @@ export class DynamicMeetingService {
     let op2:Option = new Option();
     op2.id = 'six-hats';
     op2.name = '6-hats meeting';
+    
+    let op3:Option = new Option();
+    op3.id = 'brainstorming';
+    op3.name = 'Brainstorming meeting';
 
     return [ 
      op1,
-      op2
+      op2,
+      op3
     ]
   }
 

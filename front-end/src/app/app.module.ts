@@ -18,11 +18,13 @@ import { MeetingService } from './componentes/services/meeting.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
-import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, SixHatsMeetingComponent, SixHatsComponent, DynamicMinutesComponent, StandardMinutesPageComponent } from './componentes/meetings';
+import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, SixHatsMeetingComponent, SixHatsComponent, DynamicMinutesComponent, StandardMinutesPageComponent, IdeasProsConsComponent, BrainstormingComponent } from './componentes/meetings';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+import { IdeaService } from './componentes/services/idea.service';
 
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
+
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { SixHatsService } from './componentes/services/sixhats.service';
     StandardMinutesPageComponent,
     AgendaPageComponent,
     SixHatsMeetingComponent,
-    SixHatsComponent
+    SixHatsComponent,
+    IdeasProsConsComponent,
+    BrainstormingComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,9 @@ import { SixHatsService } from './componentes/services/sixhats.service';
     UserService,
     ReactiveFormsModule,
     DynamicMeetingService,
-    SixHatsService
+    SixHatsService,
+    IdeaService,
+    IdeasProsConsComponent
   ],  
   bootstrap: [AppComponent]
 })

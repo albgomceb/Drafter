@@ -9,6 +9,7 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesComponent } from './componentes/meetings';
 
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
+import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
 
 
 const routes: Routes = [
