@@ -9,7 +9,7 @@
 
     <div class="col-md-8 info-panel ideas">
         <div class="title"><h1>Ideas</h1></div>
-        <div *ngFor="let i of ideas">
+        <div *ngFor="let i of ideas;let index = index">
             <div class="card server-action-menu">
                 <div class="title"><h2>{{i.text}}</h2></div>
                 <div class="row">
@@ -30,10 +30,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-danger" (click)="addVote($event)" attr.data-index="{{i.number}}">Vote</button>
+                <input class="title" type="number" min="1" max="10" [(ngModel)]="votes[index].value">
+                <button class="btn btn-success" (click)="save($event)"  attr.data-iidea="{{index}}">Vote</button>
+                <button class="btn btn-danger" (click)="delete($event)" attr.data-iidea="{{index}}">Remove</button>
                 <div class="clear"></div>
             </div>
-            <br/>
+            <br/> 
         </div>
     </div>       
  </div>
