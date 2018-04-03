@@ -1,32 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MeetingService } from '../services/meeting.service';
-import { Meeting } from '../models/meeting.model';
-import { Agenda } from '../models/agenda.model';
-import { Conclusion } from '../models/conclusion.model';
-import { Agenda2 } from '../models/agenda.model2';
-import { Meeting2 } from '../models/meeting.model2';
+import { Meeting2 } from '../../../models/meeting.model2';
+import { Agenda2 } from '../../../models/agenda.model2';
+import { Conclusion } from '../../../../models/conclusion';
+import { MeetingService } from '../../../services/meeting.service';
 
 @Component({
-  selector: 'minutes-page',
-  templateUrl: './minutes-page.component.html',
-  styleUrls: ['./minutes-page.component.scss']
+  selector: 'standard-minutes-page',
+  templateUrl: './standard-minutes-page.component.html',
+  styleUrls: ['./standard-minutes-page.component.scss']
 })
-export class MinutesPageComponent implements OnInit {
+export class StandardMinutesPageComponent implements OnInit {
   
   meeting: Meeting2 = new Meeting2();
   model:any[];
   agendas: Array<Agenda2>;
   conclusions: Array<Conclusion> = [];
-  meetingId: number;
+  @Input() meetingId: number;
+  @Input() meetingInfo: any;
+  
 
   constructor(private meetingService: MeetingService, 
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.meetingId = params['id'];
-    });
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
        this.meeting = data;
     });

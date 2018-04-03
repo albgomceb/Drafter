@@ -24,7 +24,7 @@ import drafter.domain.User;
 import drafter.services.OrganizationService;
 import drafter.services.UserService;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/data/organization")
 public class OrganizationController {
