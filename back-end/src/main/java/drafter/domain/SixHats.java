@@ -1,7 +1,7 @@
 package drafter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
-
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -15,10 +15,9 @@ import javax.validation.constraints.NotNull;
 public class SixHats extends Meeting{
 
 	public SixHats() {
-		
+		this.hats = new ArrayList<Hat>();
+		super.type = "six-hats";
 	}
-	
-	
 
 	private Collection<Hat> hats; 
 	
