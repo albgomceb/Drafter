@@ -4,7 +4,8 @@
 $primary-background-color: #333333;
 $secondary-background-color: #00a98f;
 $content-background-color: #fafafa;
-$font-color: #fff;
+$primary-font-color: #fff;
+$secondary-font-color: #000;
 
 /* G E N E R A L */
 html {
@@ -36,7 +37,8 @@ nav.navbar {
 
     a.nav-link {
         padding: 0.9375rem;
-        color: $font-color !important;
+        color: $primary-font-color !important;
+        transition: all .2s ease-in;
     }
 
     a.nav-link:hover {
@@ -51,8 +53,39 @@ footer.page-footer {
     bottom: 0;
     left: 0;
     padding: 1rem 0;
-    color: $font-color;
+    color: $primary-font-color;
     background-color: $primary-background-color; 
 }
 
 /* F O R M */
+div.login-form form {
+    height: 100%;
+    /*border-top-right-radius: 0.3125rem;
+    border-bottom-right-radius: 0.3125rem;*/
+    padding: 1.25rem 2.5rem;
+    background-color: #333;
+    color: #fff;
+}
+
+div.login-form form img.img-logo {
+    max-width: 9.375rem;
+}
+
+div.login-form form hr {
+    margin-bottom: 1.875rem;
+    background-color: #e6e6e6;    
+}
+
+button.btn-2 {
+    border: none;
+    border-radius: 0;
+    color: $primary-font-color;
+    font-weight: bold;
+    background-color: $secondary-background-color;
+    transition: all .2s ease-in; 
+}
+
+button.btn-2:hover {
+    color: $secondary-font-color;
+    background-color: $content-background-color;
+}
