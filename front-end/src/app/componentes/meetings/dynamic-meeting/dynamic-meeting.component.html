@@ -1,0 +1,4 @@
+<standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard'" 
+[meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></standard>
+<six-hats *ngIf="!meetingInfoisFinished && meetingInfo.type === 'six-hats'" 
+[meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></six-hats>

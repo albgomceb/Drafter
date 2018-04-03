@@ -6,9 +6,10 @@ import { NotFoundPageComponent } from './componentes/not-found-page/not-found-pa
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
-import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
-import { MinutesPageComponent } from './componentes/minutes-page/minutes-page.component';
+import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesComponent } from './componentes/meetings';
+
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
+
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -16,8 +17,8 @@ const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
-  {path: 'meeting/:id', component: StandardMeetingComponent},
-  {path: 'minutes/:id', component: MinutesPageComponent},
+  {path: 'meeting/:id', component: DynamicMeetingComponent},
+  {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: '**', component: NotFoundPageComponent}
 

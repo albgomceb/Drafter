@@ -1,12 +1,12 @@
-import { ConclusionService } from './../../../services/conclusion.service';
-import { Conclusion } from './../../../models/conclusion';
-import { Agenda } from './../../models/agenda.model';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
-import { Option } from '../../models/option.model';
-import { ChatMessage } from '../../../models/chat-message';
-import { ActivatedRoute } from '@angular/router';
-import { AgendaService } from '../../services/agenda.service';
+
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
+import { AgendaService } from '../../../services/agenda.service';
+import { Agenda } from '../../../models/agenda.model';
+import { Conclusion } from '../../../../models/conclusion';
 
 @Component({
   selector: 'standard-meeting',
@@ -14,16 +14,22 @@ import { AgendaService } from '../../services/agenda.service';
   styleUrls: ['./standard-meeting.component.scss']
 })
 export class StandardMeetingComponent implements OnInit {
-  
+  @Input()
+  public meetingInfo:any;
+  @Output()
+  public finishMeeting = new EventEmitter<number>();
+
   public agendas: Array<Agenda>;
   public hasEdit: boolean = true;
   public meetingId: number;
 
-  constructor(private activeRoute: ActivatedRoute, private realTimeService: RealTimeService, private agendaService: AgendaService) { }
+  constructor(private activeRoute: ActivatedRoute, private realTimeService: RealTimeService, private agendaService: AgendaService,
+  private router:Router) { }
 
   ngOnInit() {
+
     this.agendas = new Array<Agenda>();
-    this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingId = this.activeRoute.snapshot.params['id']; 
     this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
       this.agendas = agenda;
     });
@@ -86,6 +92,10 @@ export class StandardMeetingComponent implements OnInit {
     }
 
     agenda.conclusions.push({id: 0, agendaId: agenda.id, conclusion: ""});
+  }
+
+  finish(){
+    this.finishMeeting.emit(this.meetingId);
   }
 
 }
