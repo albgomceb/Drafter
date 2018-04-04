@@ -2,15 +2,19 @@ package drafter.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Meeting;
 import drafter.services.MeetingService;
+import drafter.services.SixHatsService;
 import drafter.services.StandardService;
 import drafter.services.UserService;
 
@@ -26,6 +30,9 @@ public class MeetingController {
 	private StandardService standardService;
 	
 	@Autowired
+	private SixHatsService sixHatsService;
+	
+	@Autowired
 	private UserService userService;
 
 	@PostMapping("/")
@@ -33,6 +40,16 @@ public class MeetingController {
 		MeetingSerializer serializer =new MeetingSerializer(userService); 
 		Meeting result = serializer.fromBean(meeting);
 		result = meetingService.create(result);
+		MeetingBean res = serializer.fromMeeting(result);
+		
+		return res;
+	}
+	
+	@GetMapping("/{meetingId}")
+	public MeetingBean getOne(@PathVariable Integer meetingId) {
+		MeetingSerializer serializer =new MeetingSerializer(userService); 
+		Meeting result = meetingService.findById(meetingId);
+		
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		return res;

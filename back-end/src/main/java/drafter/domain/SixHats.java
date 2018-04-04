@@ -1,5 +1,6 @@
 package drafter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Access;
@@ -11,13 +12,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class SixHats extends DomainEntity{
+public class SixHats extends Meeting{
 
 	public SixHats() {
-		
+		this.hats = new ArrayList<Hat>();
+		super.type = "six-hats";
 	}
-	
-	
 
 	private Collection<Hat> hats; 
 	

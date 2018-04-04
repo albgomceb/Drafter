@@ -31,11 +31,18 @@
             <input required [(ngModel)]="meeting.title" class="form-control" placeholder="Enter meeting topic" type="text" id="title" name="title"><br/> <br/>
             <label for="description" class="description" >Description:</label><br/> 
             <textarea [(ngModel)]="meeting.description" class="form-control desc-input" rows="8" id="description" name="description"></textarea>
+            <label for="kind" class="kind" >Kind of meeting:</label><br/> 
+            <select [(ngModel)]="selectedKind" class="form-control desc-input" rows="8" id="kind" name="kind">
+              <option *ngFor = "let kind of kinds" [ngValue] = "kind">{{kind.name}}</option>
+            </select>
         </div>
       </div>
 
       <div class="buttons">
-          <button [disabled]="!(attendants.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" type="submit" class="btn bt-lg mr-1">Next</button>
+          <button 
+          [disabled]="!(attendants.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
+          
+          type="submit" class="btn bt-lg mr-1">Next</button>
           <button routerLink=".." class="btn bt-lg">Cancel</button>
       </div>
 
