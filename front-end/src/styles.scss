@@ -1,11 +1,6 @@
 @import '~bootstrap/scss/bootstrap.scss';
-
-/* C O L O R S */
-$primary-background-color: #333333;
-$secondary-background-color: #00a98f;
-$content-background-color: #fafafa;
-$primary-font-color: #fff;
-$secondary-font-color: #000;
+@import 'scss/colors.scss';
+@import 'scss/menu.scss';
 
 /* G E N E R A L */
 html {
@@ -19,31 +14,6 @@ body {
     margin: 0;
     padding-bottom: 6rem;
     background-color: $content-background-color;
-}
-
-/* M E N U */
-nav.navbar {
-    padding: 0 2.1875rem;
-    background-color: $primary-background-color;
-
-    a.navbar-brand img.navbar-logo {
-        height: 1.875rem;
-        width: auto;
-    }
-
-    button.navbar-toggler {
-        margin: 0.625rem 0;
-    }
-
-    a.nav-link {
-        padding: 0.9375rem;
-        color: $primary-font-color !important;
-        transition: all .2s ease-in;
-    }
-
-    a.nav-link:hover {
-        background-color: $secondary-background-color;
-    }
 }
 
 /* F O O T E R */
