@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
+import { FooterComponent } from './componentes/footer/footer.component';
 import { NotFoundPageComponent } from './componentes/not-found-page/not-found-page.component';
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
@@ -26,12 +27,12 @@ import { DynamicMeetingService } from './componentes/services/dynamic-meeting.se
 import { SixHatsService } from './componentes/services/sixhats.service';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
     MeetingPageComponent,
     NavbarComponent,
+    FooterComponent,
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,

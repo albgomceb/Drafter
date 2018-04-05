@@ -1,0 +1,35 @@
+/* F O O T E R */
+footer.main-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0.8rem 0;
+    color: $mp_font_color;
+    background-color: $mp_primary_color;
+
+    a {
+        margin: 0 1.5rem;
+        color: $mp_font_color;
+    }
+
+    @media only screen and (min-width: 992px) {
+        div.row div {
+            text-align: right;
+        }
+
+        div.row div:first-child {
+            text-align: left;
+        }
+    }
+
+    @media only screen and (max-width: 991px) {
+        div.row div {
+            text-align: center;
+        }
+
+        div.row div:first-child {
+            margin-bottom: 0.5rem;
+        }
+    }
+}

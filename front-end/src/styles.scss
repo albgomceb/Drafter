@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/bootstrap.scss';
 @import 'scss/colors.scss';
 @import 'scss/menu.scss';
+@import 'scss/footer.scss';
 
 /* G E N E R A L */
 html {
@@ -12,19 +13,7 @@ body {
     position: relative;
     min-height: 100%;
     margin: 0;
-    padding-bottom: 6rem;
     background-color: $content-background-color;
-}
-
-/* F O O T E R */
-footer.page-footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem 0;
-    color: $primary-font-color;
-    background-color: $primary-background-color; 
 }
 
 /* F O R M */
