@@ -29,6 +29,31 @@
             <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
             <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
           </tr>
+          <!-- TODO
+          <tr>
+          <div class="container">
+          <div class="form-users">
+            <label>Select the department participants:</label>
+              <div class="list-group">
+                <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+                <div *ngIf="errorListUsers" class="errorList">
+                  <img src="../../../assets/img/warning_turq.png" width="20%" />
+                  <h4>505 Internal Server Error</h4>
+                  <h6>Try again later</h6>
+                </div>
+
+                <div *ngFor="let us of users; let i = index">
+                  <div *ngFor="let d of us.departments">
+                    <a class="list-group-item list-group-item-action">
+                      <button type="button" (click)="addUser(us)" class="btn bt-lg mr-1 add">Add</button>
+                      <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+          </tr> -->
         </div>
       </table>
       <div class="text-center">
@@ -37,7 +62,6 @@
       
     </div>
     <div style="margin:2%;text-align:center">
-      <!-- Meter todo los valores al saveOrganization -->
       <button (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
       <button routerLink=".." class="btn bt-lg">Cancel</button>
     </div>

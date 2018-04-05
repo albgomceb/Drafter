@@ -3,6 +3,8 @@ import { Option } from '../models/option.model';
 import { Organization } from '../models/organization.model';
 import { Department } from '../models/department.model';
 import { OrganizationService } from '../services/organization.service';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -12,12 +14,15 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class OrganizationDepartmentPageComponent implements OnInit {
 
+  public users: Array<User>;
   public organization: Organization;
   public departments: Array<Department>;
   public userId: number;
   public counter: number;
 
-  constructor(private organizationService: OrganizationService, 
+  errorListUsers:boolean = false;
+
+  constructor(private userService: UserService, private organizationService: OrganizationService, 
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
@@ -35,14 +40,29 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     this.counter = 1;
     console.log(this.departments);
 
+    // Cogemos los usuarios de la base de datos
+    this.userService.getUsers().subscribe(
+      data => 
+      {
+        this.users = data;
+      },
+      error => {
+        this.errorListUsers = true;
+      }
+    );
+
   }
 
   saveOrganization(departments: Department[], organization: Organization){
+    var temp = new Array<Department>();
     for(var a of departments){
       if(a.name && a.name.trim() != ''){
-        organization.departments.push(a);
+        temp.push(a);
       }
     }
+    organization.departments = temp;
+    // TODO Sacar el usuario logueado que hace la organización
+    this.userId = 10;
 
     this.organizationService.saveOrganization(organization, this.userId).subscribe(res =>{
       this.router.navigate(["/organization-department/list/"+this.userId]);

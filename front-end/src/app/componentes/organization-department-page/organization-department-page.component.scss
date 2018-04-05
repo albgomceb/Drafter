@@ -41,3 +41,40 @@ button:hover:not([disabled=""]) {
     line-height: 1.33;
     border-radius: 25px;
 }
+
+.list-group{
+    width:90%;
+    height: 45vh;
+    overflow:scroll;
+    overflow-x: hidden;
+    z-index:10;
+    background-color: #ffffff;
+    float: right;
+    border-radius: 1% 1%;
+}
+
+.list-group .employed{
+    font-size: 18px;
+}
+
+.list-group .department{
+    color:rgb(107, 107, 107);
+    font-size: 15px;
+}
+
+.list-group a:hover .department{
+    color:black;
+}
+
+.list-group .organization{
+    color:rgb(107, 107, 107);
+}
+
+.list-group a:hover .organization{
+    color:black;
+}
+
+.list-group a:hover{
+    background:#00A98F;
+    color: white;
+}

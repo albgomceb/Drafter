@@ -1,6 +1,5 @@
 package drafter.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,12 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drafter.beans.agenda.AgendaBean;
-import drafter.beans.agenda.AgendaSerializer;
 import drafter.beans.organization.OrganizationBean;
 import drafter.beans.organization.OrganizationSerializer;
-import drafter.domain.Agenda;
-import drafter.domain.Meeting;
 import drafter.domain.Organization;
 import drafter.domain.User;
 import drafter.services.OrganizationService;
