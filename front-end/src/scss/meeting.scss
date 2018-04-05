@@ -1,0 +1,29 @@
+/* MEETING */
+.agenda {
+    position: relative;
+}
+
+.points {
+    width: 100%;
+    border: 1px black solid;
+    background: white;
+    margin: 1em 0;
+    padding: 0.2em;
+    font-weight: bold;
+
+    span {
+        float: left;
+    }
+}
+
+.add {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.glyphicon .glyphicon-triangle-right{
+    color:white;
+}

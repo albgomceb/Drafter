@@ -1,0 +1,37 @@
+/* CHAT */
+ul.chat-msg-list {
+    height: 60vh;
+    margin: 0;
+    border: 1px solid $content_border;
+    padding: 0.3rem 0.5rem;
+    background-color: white;
+    list-style-type: none;
+    overflow-y: auto;
+    word-wrap: break-word;
+
+    li {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+form.form-chat {
+    max-height: 4rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+
+    div.chat-input {
+        width: 80%;
+        border: 1px solid $content_border;
+        border-top: 0;
+        padding: 0.4rem 0.75rem;
+        background: white;
+        overflow-y: scroll;
+        word-wrap: break-word;
+    }
+
+    button.send {
+        width: 20%;
+    }
+}
