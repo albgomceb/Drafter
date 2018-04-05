@@ -42,7 +42,7 @@ public class MeetingController extends AbstractController {
 	public MeetingBean save(@RequestBody MeetingBean meeting) {
 		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = serializer.fromBean(meeting);
-		result = meetingService.create(result);
+		result = meetingService.save(result);
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		return res;
@@ -76,6 +76,12 @@ public class MeetingController extends AbstractController {
 							 "review",
 							 "retrospective",
 							 "six-hats");
+	}
+	
+	@GetMapping("/finish/{meetingId}")
+	public String finish(@PathVariable int meetingId) {
+		meetingService.finish(meetingId);
+		return "";
 	}
 	
 }

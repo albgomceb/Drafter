@@ -17,9 +17,14 @@ public class AbstractController {
 	}
 	
 	@ExceptionHandler(EntityNotFoundException.class)
-	public String notEntityFound(HttpServletResponse response, Throwable oops) {
+	public String notEntityFound(HttpServletResponse response, EntityNotFoundException oops) {
 		response.setStatus(404);
 		return "Resource not found!";
 	}
 
+	@ExceptionHandler(IllegalArgumentException.class)
+	public String notEntityFound(HttpServletResponse response, IllegalArgumentException oops) {
+		response.setStatus(422);
+		return oops.getLocalizedMessage();
+	}
 }

@@ -14,7 +14,6 @@ import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.Step;
-import drafter.domain.User;
 import drafter.repositories.MeetingRepository;
 
 @Service
@@ -35,7 +34,7 @@ public class MeetingService {
 
 	//CRUD Methods------------------------------------------------------------------------------
 
-    public Meeting create(Meeting meeting) {
+    public Meeting save(Meeting meeting) {
     	Date date = new Date(System.currentTimeMillis()-1);
     	if(meeting.getParticipants() == null)
     		meeting.setParticipants( new ArrayList<Participant>());
@@ -62,8 +61,14 @@ public class MeetingService {
         return meetingRepository.getOne(id);
     }
 
-    public User update(User user) {
-        return null;
+    public Meeting finish(int id) {
+    	Meeting m = findById(id);
+    	int size = m.getSteps().size();
+    	
+    	m.setStatus(size == 0 ? 1 : size);
+    	m.setHasfinished(true);
+    	
+    	return save(m);
     }
 
 	//Other business Methods-----------------------------------------------------------------------------

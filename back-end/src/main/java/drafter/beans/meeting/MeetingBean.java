@@ -15,8 +15,15 @@ public class MeetingBean {
 	private List<Option> attendants;
 	private String type;
 	private boolean isFinished;
+	private int status;
 
 	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public Integer getId() {
 		return id;
 	}
