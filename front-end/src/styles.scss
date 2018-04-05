@@ -1,50 +1,6 @@
 @import '~bootstrap/scss/bootstrap.scss';
 @import 'scss/colors.scss';
+@import 'scss/general.scss';
 @import 'scss/menu.scss';
 @import 'scss/footer.scss';
-
-/* G E N E R A L */
-html {
-    height: 100%;
-    box-sizing: border-box;
-}
-
-body {
-    position: relative;
-    min-height: 100%;
-    margin: 0;
-    background-color: $content-background-color;
-}
-
-/* F O R M */
-div.login-form form {
-    height: 100%;
-    /*border-top-right-radius: 0.3125rem;
-    border-bottom-right-radius: 0.3125rem;*/
-    padding: 1.25rem 2.5rem;
-    background-color: #333;
-    color: #fff;
-}
-
-div.login-form form img.img-logo {
-    max-width: 9.375rem;
-}
-
-div.login-form form hr {
-    margin-bottom: 1.875rem;
-    background-color: #e6e6e6;    
-}
-
-button.btn-2 {
-    border: none;
-    border-radius: 0;
-    color: $primary-font-color;
-    font-weight: bold;
-    background-color: $secondary-background-color;
-    transition: all .2s ease-in; 
-}
-
-button.btn-2:hover {
-    color: $secondary-font-color;
-    background-color: $content-background-color;
-}
+@import 'scss/form.scss';

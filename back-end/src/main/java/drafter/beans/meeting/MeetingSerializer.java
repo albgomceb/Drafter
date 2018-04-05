@@ -15,7 +15,7 @@ import drafter.domain.SixHats;
 import drafter.domain.Standard;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
-import drafter.services.SixHatsService;
+//import drafter.services.SixHatsService;
 import drafter.services.UserService;
 
 @Service

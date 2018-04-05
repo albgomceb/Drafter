@@ -1,0 +1,20 @@
+/* G E N E R A L */
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+    background-color: $content-background-color;
+}
+
+h1.title-page {
+    margin: 1rem 0 1.5rem 0;
+
+    span.capital-letter {
+        color: $capital-letter;
+    }
+} 
