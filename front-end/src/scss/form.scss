@@ -10,6 +10,10 @@ form.general-form {
 
         div.push {
             height: 3rem;
+
+            @media only screen and (max-width: 350px) {
+                height: 6.2rem;
+            }
         }
 
         div.btn-card {
@@ -20,19 +24,6 @@ form.general-form {
                 margin-bottom: 2rem;
             }
         }
-    }
-
-    button.btn {
-        border: none;
-        border-radius: 0;
-        color: $button_font_color;
-        font-weight: bold;
-        background-color: $button;
-        transition: all .2s ease-in;   
-    }
-    
-    button.btn:hover:not([disabled=""]) {
-        background-color: $button_hover;
     }
 }
 
@@ -70,8 +61,20 @@ form.form-2 {
     }
 
     @media only screen and (max-width: 991px) {
-        margin-left: 1.2rem;
-        margin-right: 1.2rem;
         border-radius: 5px;
+    }
+}
+
+/* Table agenda */
+table.table-agenda {
+    width: 100%;
+
+    input.point {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    span.required {
+        color: red;
     }
 }
