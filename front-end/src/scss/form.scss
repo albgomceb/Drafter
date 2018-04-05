@@ -1,6 +1,6 @@
 /* F O R M */
 form.general-form {
-    border: 1px solid $border;
+    border: 1px solid $content_border;
     border-radius: 5px;
     padding: 1.25rem 2.5rem;
 
@@ -27,7 +27,8 @@ form.general-form {
         border-radius: 0;
         color: $button_font_color;
         font-weight: bold;
-        background-color: $button;    
+        background-color: $button;
+        transition: all .2s ease-in;   
     }
     
     button.btn:hover:not([disabled=""]) {
@@ -35,34 +36,42 @@ form.general-form {
     }
 }
 
-div.login-form form {
-    height: 100%;
-    /*border-top-right-radius: 0.3125rem;
-    border-bottom-right-radius: 0.3125rem;*/
+/* Form login and register */
+form.form-2 {
+    max-width: 450px;
+    margin-top: 1rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     padding: 1.25rem 2.5rem;
-    background-color: #333;
-    color: #fff;
-}
+    color: $mp_font_color;
+    background-color: $mp_primary_color;
 
-div.login-form form img.img-logo {
-    max-width: 9.375rem;
-}
+    img.img-logo {
+        max-width: 9.375rem;
+    }
 
-div.login-form form hr {
-    margin-bottom: 1.875rem;
-    background-color: #e6e6e6;    
-}
+    hr {
+        margin-bottom: 1.875rem;
+        background-color: $content_border;
+    }
 
-button.btn-2 {
-    border: none;
-    border-radius: 0;
-    color: $primary-font-color;
-    font-weight: bold;
-    background-color: $secondary-background-color;
-    transition: all .2s ease-in; 
-}
+    button.btn-2 {
+        border: none;
+        border-radius: 0;
+        color: $button_font_color_2;
+        font-weight: bold;
+        background-color: $button_2;
+        transition: all .2s ease-in; 
+    }
+    
+    button.btn-2:hover {
+        color: $button_font_color;
+        background-color: $button_hover;
+    }
 
-button.btn-2:hover {
-    color: $secondary-font-color;
-    background-color: $content-background-color;
+    @media only screen and (max-width: 991px) {
+        margin-left: 1.2rem;
+        margin-right: 1.2rem;
+        border-radius: 5px;
+    }
 }
