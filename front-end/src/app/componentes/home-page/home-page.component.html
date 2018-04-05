@@ -5,22 +5,39 @@
       <img src="../../../assets/img/welcome-image.jpg" class="img-fluid">      
     </div>
     <div class="col-lg-6 login-form">
-      <form>
+      <form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" method="post">
         <div class="text-center">
           <img src="../../../assets/img/white-logo.png" class="img-logo img-fluid">
           <p>Your meeting manager</p>
           <hr>
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Username or email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+        <div *ngIf="showError == true">
+          <div class="form-group">
+            <label for="email" >Email</label>
+            <input formControlName="email" placeholder="example@domain.com" type="email" name="email" id="email" class="form-control error">
+          </div>
+          <div class="form-group">
+            <label for="password" >Password</label>
+            <input formControlName="password" type="password" name="password" id="password" class="form-control error">
+          </div>
+          <p style="color:#FF0000;">El usuario y/o contraseña son incorrectos.</p>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+
+        <div *ngIf="showError == false">
+          <div class="form-group">
+            <label for="email" >Email</label>
+            <input formControlName="email" placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password" >Password</label>
+            <input formControlName="password" type="password" name="password" id="password" class="form-control">
+          </div>
         </div>
+        
+        
         <div class="text-center">
-          <button type="submit" class="btn btn-primary">Sign in</button>
+          <button type="submit" class="button-sent btn btn-lg">Sign in</button>
         </div>
       </form>
     </div>

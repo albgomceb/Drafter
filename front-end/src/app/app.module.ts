@@ -12,6 +12,7 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { MinutesPageComponent } from './componentes/minutes-page/minutes-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
+
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { AgendaService } from './componentes/services/agenda.service';
 import { UserService } from './componentes/services/user.service';
@@ -21,6 +22,9 @@ import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent } from './componentes/meetings/standard-meeting/standard-meeting.component';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+import { LoginService } from './componentes/services/login.service';
+import { RegisterService } from './componentes/services/register.service';
+import { BaseRequestOptions } from '@angular/http';
 
 
 @NgModule({
@@ -41,17 +45,21 @@ import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.co
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FormsModule
   ],
 
   providers: [
     UserService, 
+    LoginService,
+    RegisterService,
     MeetingService,
     AgendaService,
     FormsModule,
     ReactiveFormsModule,
     RealTimeService,
+    BaseRequestOptions,
     UserService,
     ReactiveFormsModule
   ],  

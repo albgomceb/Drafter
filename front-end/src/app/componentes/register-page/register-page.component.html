@@ -1,29 +1,136 @@
-<div class="row">
-  <div class="col-md-6 mx-auto mt-3">
-    <div class="card text-white bg-dark mb-3">
-      <div class="card-body">
-        <h1 class="text-center pt-1">Register</h1>
-        <form>
-          <div class="form-group">
-            <label for="nombre" >Name</label>
-            <input type="nombre" name="nombre" id="nombre" class="form-control">
-
-            <label for="apellidos" >Surname</label>
-            <input type="apellidos" name="apellidos" id="apellidos" class="form-control">
-
-            <label for="nombreUsuario" >User name</label>
-            <input type="nombreUsuario" name="nombreUsuario" id="nombreUsuario" class="form-control">
-
-            <label for="email" >Email</label>
-            <input placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="password" >Password</label>
-            <input type="password" name="password" id="password" class="form-control">
-          </div>
-          <button type="submit" class="button btn btn-lg">Enviar</button>
-        </form>
+<div class="container">
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script> -->
+    <div class="row d-flex justify-content-md-center align-items-stretch">
+      <div class="col-lg-6 d-none d-lg-block welcome-info">
+        <div class="text-center"><strong>Sign up</strong></div>
+        <img src="../../../assets/img/register.jpg" class="img-fluid">      
       </div>
+      <div class="col-lg-6 login-form">
+         
+        <form novalidate [formGroup]="registerForm" id="register" (ngSubmit)="onSubmit(registerForm)" method="post">
+             
+            <div class="text-center">
+                  <img src="../../../assets/img/white-logo.png" class="img-logo img-fluid">
+                  <p>Your meeting manager</p>
+                  <hr>
+                </div>
+            
+            <div class="form-group">
+                <label for="name" >Name</label>
+                <input formControlName="name" type="text" name="name" id="name" class="form-control" ng-required="true">
+              </div>
+
+              <div class="form-group">
+                  <label for="surname" >Surname</label>
+                  <input formControlName="surname" type="text" name="surname" id="surname" class="form-control" required>
+              </div>
+
+              <div *ngIf="usernameError == false">
+                    <div class="form-group">
+                        <label for="username" >Username</label>
+                        <input formControlName="username" type="text" name="username" id="username" class="form-control" required>
+                    </div>
+                </div>
+
+                <div *ngIf="usernameError == true">
+                        <div class="form-group">
+                            <label for="username" >Username</label>
+                            <input formControlName="username" type="text" name="username" id="username" class="form-control error" required>
+                            <p style="color:#FF0000;">Username must contains at least 5 characters.</p>
+                        </div>
+                    </div>
+                <div *ngIf="emailError == false && correctEmailError == false">
+                    <div class="form-group">
+                        <label for="email" >Email</label>
+                        <input type="text" formControlName="email" name="email" id="email" class="form-control" required/>
+                    </div>
+                </div>
+
+                <div *ngIf="emailError == true">
+                        <div class="form-group">
+                            <label for="email" >Email</label>
+                            <input type="text" formControlName="email" name="email" id="email" class="form-control error" required/>
+                            <p style="color:#FF0000;">The email is already in use.</p>
+                        </div>
+                    </div>
+
+                <div *ngIf="correctEmailError == true">
+                        <div class="form-group">
+                            <label for="email" >Email</label>
+                            <input type="text" formControlName="email" name="email" id="email" class="form-control error" required/>
+                            <p style="color:#FF0000;">The format of email is not correct.</p>
+                        </div>
+                    </div>
+            
+                <div *ngIf="passwordError == false">
+                    <div class="form-group">
+                        <label for="password" >Password</label>
+                        <input formControlName="password" type="password" name="password" id="password" class="form-control" required>
+                    </div>
+                </div>
+
+                <div *ngIf="passwordError == true">
+                    <div class="form-group">
+                        <label for="password" >Password</label>
+                        <input formControlName="password" type="password" name="password" id="password" class="form-control error" required>
+                        <p style="color:#FF0000;">Password must contains at least 5 characters.</p>
+                    </div>
+                </div>
+                <div *ngIf="missingFields == true"  >
+                    <p style="color:#FF0000;">All fields are required</p>
+                    
+                </div>
+
+                <div *ngIf="missingFields == false"  >
+                    <p>All fields are required</p>
+                    
+                </div>
+
+              <div class="text-center">
+              <button type="submit" class="button btn btn-primary">Enviar</button>
+            </div>
+        </form>
     </div>
   </div>
 </div>
+
+<!-- 
+<script>
+    $(document).ready(function () {
+      $('#register').validate({
+          rules: {
+              name: { required: true },
+              surname: {required: true},
+              email: {
+                  required: true,
+                  email: true
+              },
+              password: {
+                  required: true,
+                  minlength: 5
+              }
+          },
+          messages: {
+              name: {
+                  required: "Please write a name",
+              },
+              surname:{
+                  required: "Please write a surname",
+              },
+              email: {
+                  required: "Please write an email",
+                  email: "Format must be: example@domain.com",
+              },
+              pass: {
+                  required: "Please write a password...",
+                  minlength: "Password must have at least 5 characters...",
+              }
+              
+          },
+          submitHandler: function (registerForm) {
+              register();
+          }
+      });
+    });
+    
+    </script> -->
