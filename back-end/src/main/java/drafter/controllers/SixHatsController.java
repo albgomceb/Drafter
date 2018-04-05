@@ -41,11 +41,11 @@ public class SixHatsController {
 	public SixHatsBean save(@PathVariable("meetingId") int meetingId, @RequestBody SixHatsBean sixHats) {
 		Meeting meeting = sixHatsService.findById(new Integer(meetingId));
 		SixHats result = new SixHatsSerializer().fromBean(sixHats, meeting);
+		result.setHats(sixHatsService.reassignHats(result));
 		sixHatsService.save(result);
 		SixHatsBean res =new SixHatsSerializer().fromSixHats(result);
 		
 		return res;
 	}
-
 
 }

@@ -1,11 +1,13 @@
 package drafter.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.assertj.core.util.Arrays;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,6 +110,20 @@ public class SixHatsService {
 	@SafeHtml
 	public String checkSafeHtml() {
 		return string;
+	}
+	
+	public Collection<Hat> reassignHats(SixHats sixHats){
+		List<Hat> res = new ArrayList<Hat>(sixHats.getHats());
+		
+		for(Hat hat : res) {
+			int orden = hat.getOrden();
+			if(orden < 5) 
+				hat.setOrden(orden++);
+			else
+				hat.setOrden(0);	
+		}
+		
+		return res;
 	}
 
 
