@@ -7,6 +7,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -38,6 +39,13 @@ public class BrainStorming extends Meeting{
 		this.votingMode = votingMode;
 	}
 	
+	
+	@Override
+	@Transient
+	public String getType() {
+		return "brainstorming";
+	}
+	
 	// Relationships-------------------------------------
 	
 	
@@ -54,7 +62,6 @@ public class BrainStorming extends Meeting{
 	public void setIdeas(Collection<Idea> ideas) {
 		this.ideas = ideas;
 	}
-	
 	
 	
 }

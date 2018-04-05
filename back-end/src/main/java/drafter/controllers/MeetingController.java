@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.meeting.MeetingBean;
@@ -20,8 +19,8 @@ import drafter.services.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/data/meeting/standard")
-public class MeetingController {
+@RequestMapping("/data/meeting")
+public class MeetingController extends AbstractController {
 
 	@Autowired
 	private MeetingService meetingService;
@@ -34,10 +33,11 @@ public class MeetingController {
 	
 	@Autowired
 	private UserService userService;
+	
 
-	@PostMapping("/")
+	@PostMapping("/standard")
 	public MeetingBean save(@RequestBody MeetingBean meeting) {
-		MeetingSerializer serializer =new MeetingSerializer(userService); 
+		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = serializer.fromBean(meeting);
 		result = meetingService.create(result);
 		MeetingBean res = serializer.fromMeeting(result);
@@ -45,9 +45,19 @@ public class MeetingController {
 		return res;
 	}
 	
+	@GetMapping("/standard/{meetingId}")
+	public MeetingBean getOneStandard(@PathVariable Integer meetingId) {
+		MeetingSerializer serializer = new MeetingSerializer(); 
+		Meeting result = meetingService.findById(meetingId);
+		
+		MeetingBean res = serializer.fromMeeting(result);
+		
+		return res;
+	}
+	
 	@GetMapping("/{meetingId}")
-	public MeetingBean getOne(@PathVariable Integer meetingId) {
-		MeetingSerializer serializer =new MeetingSerializer(userService); 
+	public MeetingBean getMeeting(@PathVariable int meetingId) {
+		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = meetingService.findById(meetingId);
 		
 		MeetingBean res = serializer.fromMeeting(result);
