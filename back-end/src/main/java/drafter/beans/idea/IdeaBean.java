@@ -1,14 +1,10 @@
 package drafter.beans.idea;
 
-import java.util.List;
-
-import drafter.beans.Option;
 
 public class IdeaBean {
 
 	public String text; 
 	public Double ratingValue;
-	public List<Option> votes; 
 	
 	
 	public String getText() {
@@ -28,13 +24,4 @@ public class IdeaBean {
 	}
 	
 
-	public List<Option> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(List<Option> votes) {
-		this.votes = votes;
-	}
-
-	
 }

@@ -1,5 +1,6 @@
 package drafter.beans.idea;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import drafter.domain.Idea;
@@ -22,6 +23,7 @@ public class IdeaSerializer {
 		res.setRatingValue(idea.getRatingValue());
 		
 		return res; 
+
 	}
 
 }

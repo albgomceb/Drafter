@@ -1,6 +1,5 @@
 package drafter.services;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -9,12 +8,14 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import drafter.domain.Idea;
 import drafter.repositories.IdeaRepository;
 
 @Service
 @Transactional
 public class IdeaService {
+
 
 	
 	
@@ -42,13 +43,12 @@ public class IdeaService {
 		return ideaRepository.getOne(id); 
 	}
 	
-	public Collection<Idea> findIdeasByBSId(int id){
+	public Collection<Idea> findIdeasByBSId(int idBS){
 		
 		Collection<Idea> ideas;
-		ideas = ideaRepository.findIdeasByBSId(id);
+		ideas = ideaRepository.findIdeasByBSId(idBS);
 		return ideas; 
 		
 	}
-	
 	
 }
