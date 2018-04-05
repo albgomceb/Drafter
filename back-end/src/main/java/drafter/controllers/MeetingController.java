@@ -1,5 +1,8 @@
 package drafter.controllers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +66,16 @@ public class MeetingController extends AbstractController {
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		return res;
+	}
+	
+	@GetMapping("/types")
+	public List<String> getTypes() {
+		return Arrays.asList("brainstorming",
+							 "standard",
+							 "planning",
+							 "review",
+							 "retrospective",
+							 "six-hats");
 	}
 	
 }

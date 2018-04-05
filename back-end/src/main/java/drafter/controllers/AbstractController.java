@@ -12,6 +12,7 @@ public class AbstractController {
 	@ExceptionHandler(Throwable.class)
 	public String internalError(HttpServletResponse response, Throwable oops) {
 		response.setStatus(500);
+		oops.printStackTrace();
 		return oops.getLocalizedMessage();
 	}
 	
