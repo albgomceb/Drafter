@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import drafter.domain.Agenda;
 import drafter.domain.Meeting;
@@ -67,6 +68,16 @@ public class MeetingService {
     	
     	m.setStatus(size == 0 ? 1 : size);
     	m.setHasfinished(true);
+    	
+    	return save(m);
+    }
+    
+    public Meeting nextStep(int id) {
+    	Meeting m = findById(id);
+    	int size = m.getSteps().size();
+    	
+    	Assert.isTrue(size >= m.getStatus(), "The meeting hasn't more steps, you must finish it!");
+    	m.setStatus(m.getStatus()+1);
     	
     	return save(m);
     }
