@@ -11,6 +11,7 @@ import { RegisterPageComponent } from './componentes/register-page/register-page
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
+
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { AgendaService } from './componentes/services/agenda.service';
 import { UserService } from './componentes/services/user.service';
@@ -25,6 +26,9 @@ import { IdeaService } from './componentes/services/idea.service';
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
 
+import { LoginService } from './componentes/services/login.service';
+import { RegisterService } from './componentes/services/register.service';
+import { BaseRequestOptions } from '@angular/http';
 
 
 @NgModule({
@@ -52,6 +56,7 @@ import { SixHatsService } from './componentes/services/sixhats.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
@@ -59,11 +64,14 @@ import { SixHatsService } from './componentes/services/sixhats.service';
 
   providers: [
     UserService, 
+    LoginService,
+    RegisterService,
     MeetingService,
     AgendaService,
     FormsModule,
     ReactiveFormsModule,
     RealTimeService,
+    BaseRequestOptions,
     UserService,
     ReactiveFormsModule,
     DynamicMeetingService,
