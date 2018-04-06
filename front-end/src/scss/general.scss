@@ -1,18 +1,26 @@
 /* G E N E R A L */
-html {
+html, body {
     height: 100%;
     box-sizing: border-box;
 }
 
 body {
-    position: relative;
-    min-height: 100%;
     margin: 0;
     background-color: $content_background_color;
 }
 
-div.content {
-    padding: 1.5rem;
+div.page-wrapper {
+    position: relative;
+    max-width: 100%;
+    min-height: 100%;
+
+    div.content {
+        padding: 1.5rem 1.5rem 4.5rem;
+    
+        @media only screen and (max-width: 991px) {
+            padding-bottom: 9rem;
+        }
+    }
 }
 
 h1.title-page {
