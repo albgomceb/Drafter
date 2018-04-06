@@ -4,10 +4,10 @@ div.point-container {
 
     div.points {
         width: 100%;
-        border: 1px solid $content_border;
-        background: white;
         margin: 1em 0;
+        border: 1px solid $content_border;
         padding: 0.2em;
+        background: white;
         font-weight: bold;
     
         span {
@@ -17,9 +17,23 @@ div.point-container {
 
     ul.input-container {
         margin: 0;
-        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
         border: 1px solid $content_border;
+        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
         background: white;
         word-wrap: break-word;
+    }
+}
+
+div.minutes-container {
+    margin-bottom: 2rem;
+    border: 1px solid $content_border;
+    padding: 0.5rem;
+    word-wrap: break-word;
+
+    div.point-container {
+        margin: 0.5rem;
+        border: 1px solid $content_border;
+        padding: 0.5rem;
+        background: white;
     }
 }
