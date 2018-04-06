@@ -1,29 +1,25 @@
 /* MEETING */
-.agenda {
-    position: relative;
-}
+div.point-container {
+    margin-bottom: 2rem;
 
-.points {
-    width: 100%;
-    border: 1px black solid;
-    background: white;
-    margin: 1em 0;
-    padding: 0.2em;
-    font-weight: bold;
-
-    span {
-        float: left;
+    div.points {
+        width: 100%;
+        border: 1px solid $content_border;
+        background: white;
+        margin: 1em 0;
+        padding: 0.2em;
+        font-weight: bold;
+    
+        span {
+            float: left;
+        }
     }
-}
 
-.add {
-    float: right;
-}
-
-.clear {
-    clear: both;
-}
-
-.glyphicon .glyphicon-triangle-right{
-    color:white;
+    ul.input-container {
+        margin: 0;
+        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+        border: 1px solid $content_border;
+        background: white;
+        word-wrap: break-word;
+    }
 }
