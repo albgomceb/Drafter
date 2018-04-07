@@ -28,4 +28,8 @@ export class IdeaService {
     return this.http.get<Array<Idea>>(this.staticUrl+'/ideas/list/' + meeting);
   }
 
+  saveIdea(ideas:Idea[], id:number): Observable<Idea> {
+    return this.http.post<Idea>(this.staticUrl+'/ideas/'+id,ideas,{});
+  }
+
 }

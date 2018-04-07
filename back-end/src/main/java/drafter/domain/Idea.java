@@ -120,6 +120,11 @@ public class Idea extends DomainEntity{
 	public void setVotes(Collection<Vote> votes) {
 		this.votes = votes;
 	}
+	
+	public void addVote(Vote v) {
+		this.votes.add(v);
+		v.setIdea(this);
+	}
 
 	
 	

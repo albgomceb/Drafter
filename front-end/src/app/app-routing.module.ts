@@ -10,6 +10,7 @@ import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesCompon
 
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
+import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'meeting/:id', component: DynamicMeetingComponent},
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
+  {path: 'ideas', component: IdeasCreateComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];

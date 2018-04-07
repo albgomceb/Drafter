@@ -1,0 +1,28 @@
+
+<div style="padding:5%; text-align:center">
+  <h2 class="users"><span class="letter">I</span>deas</h2>
+<p>Write down your ideas! <br/>
+You can add as many ideas as you want by clicking the add (+) button (or pressing Enter key).</p></div>
+<div class="container">
+  <table class="table table-hover">
+    <div *ngFor="let entrada of entradas; let i=index">
+      <tr>
+        <td>{{entradas.indexOf(entrada)+1}}.&nbsp;</td>
+        <td style ="width: 100%">
+          <input class="col-12" type = "text" [(ngModel)]="entrada.text"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
+          (keyup.enter)="convert(entrada); addIdea()" placeholder="Point to deal with" required/>
+        <div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.text}}</div></td>
+        <td><button (click)="removeIdea(entrada, i)" class="btn bt-lg">Remove</button></td>
+      </tr>
+    </div>
+  </table>
+  <div class="text-center">
+    <button type="button" (click)="addIdea()" class="btn btn-success btn-circle btn-lg">+</button>
+  </div>
+
+  <div style="margin:2%;text-align:center">
+      <br/>
+    <!-- <button type="button" >Skip this step</button> -->
+    <button  (click)="saveIdea(entradas)" class="btn bt-lg">Next</button>
+  </div>
+</div>
