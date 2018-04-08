@@ -2,13 +2,17 @@
 package drafter.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import drafter.beans.Option;
+import drafter.domain.Meeting;
 import drafter.domain.Participant;
+import drafter.domain.User;
 import drafter.repositories.ParticipantRepository;
 
 @Service
@@ -19,6 +23,9 @@ public class ParticipantService {
 
 	@Autowired
 	private ParticipantRepository	participantRepository;
+	
+	@Autowired
+	private UserService userService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -52,6 +59,24 @@ public class ParticipantService {
     public Participant update(Participant participant) {
         return null;
     }
+    
+    public Participant save(Participant participant) {
+    	return this.participantRepository.save(participant);
+    }
+
+	public void relateWithParticipants(Meeting result, List<Option> attendants) {
+		attendants.stream().forEach(op -> {
+				Participant part = new Participant();
+				part.setRole("default");
+				part.setHasAttended(false);
+				User user = userService.findById(new Integer(op.getId()));
+				part.setUser(user);
+				result.addParticipant(part);
+				save(part);
+			});
+
+		
+	}
 
 	//Other business Methods-----------------------------------------------------------------------------
 

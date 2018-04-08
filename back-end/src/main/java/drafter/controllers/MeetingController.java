@@ -2,6 +2,7 @@ package drafter.controllers;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import drafter.beans.Option;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Meeting;
+import drafter.domain.Participant;
 import drafter.services.MeetingService;
+import drafter.services.ParticipantService;
 //import drafter.services.SixHatsService;
 import drafter.services.StandardService;
 import drafter.services.UserService;
@@ -37,13 +41,21 @@ public class MeetingController extends AbstractController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ParticipantService participantService;
+	
 
 	@PostMapping("/standard")
 	public MeetingBean save(@RequestBody MeetingBean meeting) {
 		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = serializer.fromBean(meeting);
+		//Falta guardar la relacion con los participantes
+		
+		
 		result = meetingService.save(result);
+		participantService.relateWithParticipants(result, meeting.getAttendants());
 		MeetingBean res = serializer.fromMeeting(result);
+		
 		
 		return res;
 	}
