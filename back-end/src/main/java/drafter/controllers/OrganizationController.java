@@ -41,7 +41,7 @@ public class OrganizationController {
 	@PostMapping("/{userId}")
 	public OrganizationBean save(@PathVariable("userId") int userId, @RequestBody OrganizationBean organizationBean){
 		User user = userService.findById(new Integer(userId));
-		Organization result = new OrganizationSerializer().fromBean(organizationBean, user);
+		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService);
 		
 		organizationService.save(result);
 		OrganizationBean res = new OrganizationSerializer().fromOrganization(result);

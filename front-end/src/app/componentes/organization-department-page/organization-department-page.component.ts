@@ -14,7 +14,11 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class OrganizationDepartmentPageComponent implements OnInit {
 
+  addButton=[]
+  removeButton=[]
+  
   public users: Array<User>;
+  public usersDepartment: Array<User>
   public organization: Organization;
   public departments: Array<Department>;
   public userId: number;
@@ -32,6 +36,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       console.log(this.userId);
     });
     this.organization = new Organization();
+    this.usersDepartment = new Array<User>();
     this.departments=[];
     this.departments.push(new Department());
     this.departments[0].id = 0;
@@ -51,6 +56,32 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       }
     );
 
+  }
+
+  addUser(user:User, department: Department, index: number){
+    var temp = new Array<User>();
+    if(department.users != null){
+      for(var u of department.users){
+        temp.push(u);
+      }
+    }
+    temp.push(user);
+    this.departments.splice(index, 1);
+    department.users = temp;
+    this.departments.push(department);
+  }
+
+  deleteUser(user: User, department: Department, index: number){
+    var temp = new Array<User>();
+    // Meto todos los usuarios menos el que se quiere eliminar
+    for(var u of department.users){
+      if(u != user){
+        temp.push(u);
+      }
+    }
+    this.departments.splice(index, 1);
+    department.users = temp;
+    this.departments.push(department);
   }
 
   saveOrganization(departments: Department[], organization: Organization){

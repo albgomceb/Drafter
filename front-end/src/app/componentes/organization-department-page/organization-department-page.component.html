@@ -29,7 +29,7 @@
             <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
             <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
           </tr>
-          <!-- TODO
+
           <tr>
           <div class="container">
           <div class="form-users">
@@ -42,18 +42,18 @@
                   <h6>Try again later</h6>
                 </div>
 
-                <div *ngFor="let us of users; let i = index">
-                  <div *ngFor="let d of us.departments">
+                <div *ngFor="let us of users; let j = index">
                     <a class="list-group-item list-group-item-action">
-                      <button type="button" (click)="addUser(us)" class="btn bt-lg mr-1 add">Add</button>
-                      <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                      <button *ngIf="!removeButton[j]" [hidden]="addButton[j]" type="button" (click)="addUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Add</button>
+                      <button *ngIf="addButton[j]" [hidden]="removeButton[j]" type="button" (click)="deleteUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Remove</button>
+                      <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
                     </a>
-                  </div>
                 </div>
               </div>
           </div>
           </div>
-          </tr> -->
+          </tr>
+
         </div>
       </table>
       <div class="text-center">

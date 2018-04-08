@@ -9,6 +9,7 @@ import drafter.beans.Option;
 import drafter.domain.Department;
 import drafter.domain.Organization;
 import drafter.domain.User;
+import drafter.services.UserService;
 
 public class OrganizationSerializer {
 	
@@ -29,7 +30,7 @@ public class OrganizationSerializer {
 		return res;
 	}
 	
-	public Organization fromBean(OrganizationBean organizationBean, User user) {
+	public Organization fromBean(OrganizationBean organizationBean, User user, UserService userService) {
 		Organization organization = new Organization();
 		
 		organization.setEnterprise(organizationBean.getEnterprise());
@@ -44,7 +45,14 @@ public class OrganizationSerializer {
 			Department department = new Department();
 			department.setName(d.getName());
 			departments.add(department);
-			department.setUsers(new ArrayList<User>());
+			
+			List<User> users = new ArrayList<User>();
+			for(Option u: d.users) {
+				User newUser = userService.findById(new Integer(u.id));
+				users.add(newUser);
+			}
+			department.setUsers(users);
+			
 			department.setOrganization(organization);
 		}
 		
