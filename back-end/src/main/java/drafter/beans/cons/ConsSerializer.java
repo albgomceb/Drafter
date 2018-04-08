@@ -1,37 +1,31 @@
 package drafter.beans.cons;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import drafter.beans.cons.ConsBean;
-import drafter.domain.Idea;
 import drafter.domain.Cons;
+import drafter.services.ConsService;
+import drafter.services.IdeaService;
 
 public class ConsSerializer {
 	
-	public ConsBean fromCons(Cons cons) {
+	public ConsBean fromCons(Cons c) {
 		ConsBean res = new ConsBean();
-
-		res.setId(cons.getId());
-		res.setNumberCons(cons.getNumberCons());
-		res.setCons(cons.getCons());
-		res.setIdeaId(cons.getIdea().getId());
+		res.setId(c.getId());
+		res.setIdeaId(c.getIdea().getId());
+		res.setCons(c.getCons());
 
 		return res;
 	}
 
-	public List<Cons> fromBean(List<ConsBean> consBean, Idea idea) {
-		List<Cons> cons = new ArrayList<Cons>();
-		int i = 1;
-		for (ConsBean pb : consBean) {
-			Cons p = new Cons();
-			p.setNumberCons(i);
-			p.setIdea(idea);
-			p.setCons(pb.getCons());
-			idea.addCons(p);
-			cons.add(p);
-			i++;
-		}
-		return cons;
+	public Cons fromBean(ConsBean bean, IdeaService ideaService, ConsService consService) {
+		Cons res;
+		if (bean.getId() == 0)
+			res = new Cons();
+		else
+			res = consService.findById(bean.getId());
+
+		res.setIdea(ideaService.findById(bean.getIdeaId()));
+		res.setCons(bean.getCons());
+
+		return res;
 	}
+
 }

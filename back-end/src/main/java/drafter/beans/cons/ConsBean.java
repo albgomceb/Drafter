@@ -2,23 +2,10 @@ package drafter.beans.cons;
 
 public class ConsBean {
 	
-	private int id;
-	private int numberCons; 
-	private String cons; 
+	private String cons;
 	private int ideaId;
+	private int id;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getNumberCons() {
-		return numberCons;
-	}
-	public void setNumberCons(int numberCons) {
-		this.numberCons = numberCons;
-	}
 	public String getCons() {
 		return cons;
 	}
@@ -31,5 +18,14 @@ public class ConsBean {
 	public void setIdeaId(int ideaId) {
 		this.ideaId = ideaId;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
+	
+	
+
 }

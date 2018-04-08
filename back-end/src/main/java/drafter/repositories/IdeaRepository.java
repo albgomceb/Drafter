@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 import drafter.domain.Idea;
 
 @Repository
-public interface IdeaRepository extends JpaRepository<Idea, Integer> {
 
+public interface IdeaRepository extends JpaRepository<Idea, Integer> {
+	
 	@Query("select i from Idea i where i.brain.id = ?1")
-    List<Idea> findByBrain(int id);
+    List<Idea> findByMeeting(int id);
+
 }

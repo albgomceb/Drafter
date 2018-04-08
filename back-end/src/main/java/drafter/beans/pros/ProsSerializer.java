@@ -1,35 +1,31 @@
 package drafter.beans.pros;
 
-import java.util.ArrayList;
-import java.util.List;
-import drafter.domain.Idea;
 import drafter.domain.Pros;
+import drafter.services.IdeaService;
+import drafter.services.ProsService;
 
 public class ProsSerializer {
-
-	public ProsBean fromPros(Pros pros) {
+	
+	public ProsBean fromPros(Pros p) {
 		ProsBean res = new ProsBean();
-
-		res.setId(pros.getId());
-		res.setNumberPros(pros.getNumberPros());
-		res.setPros(pros.getPros());
-		res.setIdeaId(pros.getIdea().getId());
+		res.setId(p.getId());
+		res.setIdeaId(p.getIdea().getId());
+		res.setPros(p.getPros());
 
 		return res;
 	}
 
-	public List<Pros> fromBean(List<ProsBean> prosBean, Idea idea) {
-		List<Pros> pros = new ArrayList<Pros>();
-		int i = 1;
-		for (ProsBean pb : prosBean) {
-			Pros p = new Pros();
-			p.setNumberPros(i);
-			p.setIdea(idea);
-			p.setPros(pb.getPros());
-			idea.addPros(p);
-			pros.add(p);
-			i++;
-		}
-		return pros;
+	public Pros fromBean(ProsBean bean, IdeaService ideaService, ProsService prosService) {
+		Pros res;
+		if (bean.getId() == 0)
+			res = new Pros();
+		else
+			res = prosService.findById(bean.getId());
+
+		res.setIdea(ideaService.findById(bean.getIdeaId()));
+		res.setPros(bean.getPros());
+
+		return res;
 	}
+
 }

@@ -1,23 +1,20 @@
 package drafter.beans.idea;
 
-import java.util.Collection;
+import java.util.List;
 
 import drafter.beans.cons.ConsBean;
 import drafter.beans.pros.ProsBean;
 import drafter.beans.vote.VoteBean;
 
-
 public class IdeaBean {
 	
 	private int id;
-	private int number; 
-	private String text; 
-	private Double ratingValue; 
-	private int brainstormingId;
-	private Collection<ProsBean> pros; 
-	private Collection<ConsBean> cons;
-	private Collection<VoteBean> votes;
-
+	private int number;
+	private String text;
+	private int brainId;
+	private List<ProsBean> pros;
+	private List<ConsBean> cons;
+	private List<VoteBean> votes;
 	
 	public int getId() {
 		return id;
@@ -37,36 +34,31 @@ public class IdeaBean {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public int getBrainstormingId() {
-		return brainstormingId;
+	public int getBrainId() {
+		return brainId;
 	}
-	public void setBrainstormingId(int brainstormingId) {
-		this.brainstormingId = brainstormingId;
+	public void setBrainId(int brainId) {
+		this.brainId = brainId;
 	}
-	public Collection<ProsBean> getPros() {
+	public List<ProsBean> getPros() {
 		return pros;
 	}
-	public void setPros(Collection<ProsBean> pros) {
+	public void setPros(List<ProsBean> pros) {
 		this.pros = pros;
 	}
-	public Collection<ConsBean> getCons() {
+	public List<ConsBean> getCons() {
 		return cons;
 	}
-	public void setCons(Collection<ConsBean> cons) {
+	public void setCons(List<ConsBean> cons) {
 		this.cons = cons;
 	}
-	public Collection<VoteBean> getVotes() {
+	public List<VoteBean> getVotes() {
 		return votes;
 	}
-	public void setVotes(Collection<VoteBean> votes) {
+	public void setVotes(List<VoteBean> votes) {
 		this.votes = votes;
 	}
-	public Double getRatingValue() {
-		return ratingValue;
-	}
-	public void setRatingValue(Double ratingValue) {
-		this.ratingValue = ratingValue;
-	} 
 	
 	
+
 }

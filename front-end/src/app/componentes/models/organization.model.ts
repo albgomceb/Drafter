@@ -1,4 +1,4 @@
-import { Departament } from './departament.model';
+import { Departament } from './department.model';
 import { User } from './user.model';
 
 export class Organization {

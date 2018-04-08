@@ -61,6 +61,12 @@ public class BrainStorming extends Meeting{
 		
 	}
 	
+	public void addIdea(Idea idea) {
+		this.ideas.add(idea);
+		idea.setBrain(this);
+		
+	}
+	
 	
 	
 }

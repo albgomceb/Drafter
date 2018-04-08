@@ -120,7 +120,7 @@ public class Idea extends DomainEntity{
 	public void setVotes(Collection<Vote> votes) {
 		this.votes = votes;
 	}
-	
+
 
 	public void addPros(Pros p) {
 		this.pros.add(p);

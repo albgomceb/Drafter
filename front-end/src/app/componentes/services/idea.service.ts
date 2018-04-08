@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Idea } from './../models/idea.model';
+import { Idea } from '../models/idea.model';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
+import { Meeting } from '../models/meeting.model';
+import { RealTimeService } from '../../services/real-time.service';
 
 
 const httpOptions = {
@@ -26,7 +28,8 @@ export class IdeaService {
     return this.http.get<Array<Idea>>(this.staticUrl+'/ideas/list/' + meeting);
   }
 
-  saveIdea(idea:Idea, id:number): Observable<Idea> {
-    return this.http.post<Idea>(this.staticUrl+'/ideas/'+id,idea,{});
+  saveIdea(ideas:Idea[], id:number): Observable<Idea> {
+    return this.http.post<Idea>(this.staticUrl+'/ideas/'+id,ideas,{});
   }
+
 }
