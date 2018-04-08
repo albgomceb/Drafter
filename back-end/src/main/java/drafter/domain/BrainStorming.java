@@ -1,5 +1,6 @@
 package drafter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Access;
@@ -23,7 +24,8 @@ public class BrainStorming extends Meeting{
 	
 	//Constructor----------------------------------------
 	public BrainStorming() {
-		
+		this.votingMode = ONETOFIVE;
+		this.ideas = new ArrayList<Idea>();
 	}
 
 	//Methods--------------------------------------------

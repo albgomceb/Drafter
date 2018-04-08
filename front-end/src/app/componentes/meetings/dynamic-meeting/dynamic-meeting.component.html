@@ -15,7 +15,7 @@
         <six-hats *ngIf="!meetingInfoisFinished && meetingInfo.type === 'six-hats'" 
         [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></six-hats>
         <brainstorming *ngIf="!meetingInfoisFinished && meetingInfo.type === 'brainstorming'" 
-        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></brainstorming>
+        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="meetingInfo.attendats" (finish) = "finishMeeting($event)"></brainstorming>
     </div>
 
     <div class="col-lg-4">

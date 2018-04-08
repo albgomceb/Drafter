@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.beans.Option;
+import drafter.domain.BrainStorming;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
 import drafter.domain.Standard;
@@ -86,6 +87,8 @@ public class MeetingSerializer {
 		switch(type) {
 		case "six-hats":
 			return new SixHats();
+		case "brainstorming":
+			return new BrainStorming();
 		
 		default:
 			return new Standard();
