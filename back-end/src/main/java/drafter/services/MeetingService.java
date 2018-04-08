@@ -41,6 +41,7 @@ public class MeetingService {
     		meeting.setParticipants( new ArrayList<Participant>());
     		
     	meeting.setDate(date);
+    	meeting.setTimer(date);
     	meeting.setSteps(new ArrayList<Step>());
     	meeting.setAgendas(new ArrayList<Agenda>());
         return meetingRepository.save(meeting);

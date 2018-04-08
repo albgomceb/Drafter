@@ -55,6 +55,7 @@ public class MeetingSerializer {
 		Meeting res = meetingByType(meetingBean.getType());
 		res.setTitle(meetingBean.getTitle());
 		res.setDescription(meetingBean.getDescription());
+		res.setStatus(1);
 //		res.setType(meetingBean.getType());
 //		
 //		List<Participant> attendants = meetingBean.getAttendants()
