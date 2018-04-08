@@ -12,9 +12,11 @@ public class Standard extends Meeting{
 	//Constructor----------------------------------------
 	public Standard() {
 		super();
+		super.type = "standard";
 	}
 	public Standard(Meeting meeting) {
 		super();
+		super.type = "standard";
 	}
 	// Relationships-------------------------------------
 

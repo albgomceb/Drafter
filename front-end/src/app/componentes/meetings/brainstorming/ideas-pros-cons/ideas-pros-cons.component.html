@@ -1,0 +1,46 @@
+<br>
+<h2 class="text-center"><span class="letter">B</span>rainstorming</h2>
+<br>
+<div class="row">
+    <div class="col-md-8 idea">
+        <h3>Now, add pros and cons to the ideas</h3>
+        <div *ngFor="let idea of ideas">
+            <div class="points">
+                <span>{{idea.number}}. {{idea.text}}</span>
+                <div class="clear"></div>
+                <div>
+                    <button class="btn btn-success addPro" (click)="addPro($event)" attr.data-index="{{idea.number}}">+</button>
+                    <button class="btn btn-success addCon" (click)="addCon($event)" attr.data-index="{{idea.number}}">+</button>
+                </div>   
+            </div>
+            <i class="fa fa-check" aria-hidden="true"></i>
+            <div class="row">
+            <ul class="col-6">
+                <li 
+                *ngFor="let p of idea.pros; let i = index" 
+                attr.contenteditable="{{hasEdit}}"
+                attr.data-iidea="{{idea.number}}" 
+                attr.data-ipro="{{i}}" 
+                (focusout)="editPro($event)"
+                (keydown)="enter($event)"
+                class="pro">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <span>{{p.pros}}</span>
+                </li>
+            </ul>
+            <ul class="col-6">
+                <li
+                *ngFor="let c of idea.cons; let i = index" 
+                attr.contenteditable="{{hasEdit}}"
+                attr.data-iidea="{{idea.number}}" 
+                attr.data-icon="{{i}}" 
+                (focusout)="editCon($event)"
+                (keydown)="enter($event)"
+                class="con">
+                    {{c.cons}}
+                </li>
+            </ul>
+            </div>
+        </div>
+    </div>  
+</div>     

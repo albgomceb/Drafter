@@ -349,7 +349,6 @@
 			<list>
 				<ref bean="participant1" />
 				<ref bean="participant2" />
-				<ref bean="participant3" />
 			</list>
 		</property>
 		<property name="steps">
@@ -385,6 +384,13 @@
 		</property>
 		<property name="steps">
 			<list>
+			</list>
+		</property>
+		<property name="ideas">
+			<list>
+				<ref bean="idea1" />
+				<ref bean="idea2" />
+				<ref bean="idea3" />
 			</list>
 		</property>
 	</bean>
@@ -699,7 +705,7 @@
 		<property name="hasAttended" value="true" />
 		<property name="department" ref="department1" />
 		<property name="user" ref="user3" />
-		<property name="meeting" ref="standard1" />
+		<property name="meeting" ref="standard2" />
 	</bean>
 
 	<bean id="participant4" class="drafter.domain.Participant">
@@ -740,7 +746,7 @@
 		<property name="hasAttended" value="false" />
 		<property name="department" ref="department2" />
 		<property name="user" ref="user5" />
-		<property name="meeting" ref="standard2" />
+		<property name="meeting" ref="brainstorming1" />
 	</bean>
 
 	<bean id="participant9" class="drafter.domain.Participant">
@@ -980,7 +986,57 @@
 		<property name="conclusion" value="conclusion4" />
 		<property name="agenda" ref="agenda3" />
 	</bean>
-
+	
+	<!-- Ideas -->
+	
+	<bean id="idea1" class="drafter.domain.Idea">
+		<property name="number" value="1" />
+		<property name="text" value="idea1" />
+		<property name="ratingCount" value="2" />
+		<property name="ratingSum" value="2" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="idea2" class="drafter.domain.Idea">
+		<property name="number" value="2" />
+		<property name="text" value="idea2" />
+		<property name="ratingCount" value="2" />
+		<property name="ratingSum" value="2" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="idea3" class="drafter.domain.Idea">
+		<property name="number" value="3" />
+		<property name="text" value="idea3" />
+		<property name="ratingCount" value="2" />
+		<property name="ratingSum" value="2" />
+		<property name="brain" ref="brainstorming1" />
+		<property name="pros">
+			<list>
+			</list>
+		</property>
+		<property name="cons">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
 
 	<!-- Projects -->
 
@@ -1045,52 +1101,71 @@
 	<!-- Hat -->
 
 	<bean id="hat1" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="0"/>
 		<property name="color" value="BLUE"/>
+		<property name="conclusions">
+			<list>
+			</list>
+		</property>
 		<property name="sixHats" ref="sixhats1" />
 	
 	</bean>
 
 	<bean id="hat2" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="1"/>
 		<property name="color" value="WHITE"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	
 	<bean id="hat3" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="2"/>
 		<property name="color" value="BLACK"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	
 	
 	<bean id="hat4" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="3"/>
 		<property name="color" value="RED"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+		<list>
+		</list>
+		</property>
 	</bean>
 	
 	
 	
 	<bean id="hat5" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="4"/>
 		<property name="color" value="YELLOW"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+		<list>
+		</list>
+		</property>
 	</bean>
 	
 	
 	
 	<bean id="hat6" class="drafter.domain.Hat">
-		<property name="time" value="15"/>
+		<property name="orden" value="5"/>
 		<property name="color" value="GREEN"/>
 		<property name="sixHats" ref="sixhats1" />
-	
+		<property name="conclusions">
+		<list>
+		</list>
+		</property>
 	</bean>
 	
 	
