@@ -1,0 +1,21 @@
+/* Welcome */
+div.welcome-info {
+    max-width: 450px;
+    padding: 0;
+    color: $mp_font_color;
+}
+
+div.welcome-info {
+    margin-top: 1rem;
+
+    div {
+        border-top-left-radius: 5px;
+        padding: 15px;
+        font-size: 2em;
+        background-color: $mp_secondary_color;
+    }
+
+    img {
+        border-bottom-left-radius: 5px;
+    }
+}

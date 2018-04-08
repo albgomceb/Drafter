@@ -16,7 +16,7 @@ import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Meeting;
 import drafter.services.MeetingService;
-import drafter.services.SixHatsService;
+//import drafter.services.SixHatsService;
 import drafter.services.StandardService;
 import drafter.services.UserService;
 
@@ -31,8 +31,8 @@ public class MeetingController extends AbstractController {
 	@Autowired
 	private StandardService standardService;
 	
-	@Autowired
-	private SixHatsService sixHatsService;
+	//@Autowired
+	//private SixHatsService sixHatsService;
 	
 	@Autowired
 	private UserService userService;

@@ -1,0 +1,80 @@
+/* F O R M */
+form.general-form {
+    border: 1px solid $content_border;
+    border-radius: 5px;
+    padding: 1.25rem 2.5rem;
+
+    div.card {
+        max-width: 14rem;
+        margin: 0 1.5rem 1.5rem 0.5rem;
+
+        div.push {
+            height: 3rem;
+
+            @media only screen and (max-width: 350px) {
+                height: 6.2rem;
+            }
+        }
+
+        div.btn-card {
+            position: absolute;
+            bottom: 0;
+
+            button {
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}
+
+/* Form login and register */
+form.form-2 {
+    max-width: 450px;
+    margin-top: 1rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 1.25rem 2.5rem;
+    color: $mp_font_color;
+    background-color: $mp_primary_color;
+
+    img.img-logo {
+        max-width: 9.375rem;
+    }
+
+    hr {
+        margin-bottom: 1.875rem;
+        background-color: $content_border;
+    }
+
+    button.btn-2 {
+        border: none;
+        border-radius: 0;
+        color: $button_font_color_2;
+        font-weight: bold;
+        background-color: $button_2;
+        transition: all .2s ease-in; 
+    }
+    
+    button.btn-2:hover {
+        color: $button_font_color;
+        background-color: $button_hover;
+    }
+
+    @media only screen and (max-width: 991px) {
+        border-radius: 5px;
+    }
+}
+
+/* Table agenda */
+table.table-agenda {
+    width: 100%;
+
+    input.point {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    span.required {
+        color: red;
+    }
+}

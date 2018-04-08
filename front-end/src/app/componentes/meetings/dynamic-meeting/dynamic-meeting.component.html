@@ -1,12 +1,25 @@
-<div class="col-md-4">
-    <h3>Chat</h3>
-    <chat></chat>
+<h1 class="title-page text-center" *ngIf="meetingInfo.type === 'standard'">
+    <span class="capital-letter">S</span>tandard meeting
+</h1>
+<h1 class="title-page text-center" *ngIf="meetingInfo.type === 'six-hats'">
+    <span class="capital-letter">S</span>ix hats meeting
+</h1>
+<h1 class="title-page text-center" *ngIf="meetingInfo.type === 'brainstorming'">
+    <span class="capital-letter">B</span>rainstorming meeting
+</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard'" 
+        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></standard>
+        <six-hats *ngIf="!meetingInfoisFinished && meetingInfo.type === 'six-hats'" 
+        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></six-hats>
+        <brainstorming *ngIf="!meetingInfoisFinished && meetingInfo.type === 'brainstorming'" 
+        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></brainstorming>
+    </div>
+
+    <div class="col-lg-4">
+        <h3>Chat</h3>
+        <chat></chat>
+    </div>
 </div>
-
-
-<standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard'" 
-[meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></standard>
-<six-hats *ngIf="!meetingInfoisFinished && meetingInfo.type === 'six-hats'" 
-[meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></six-hats>
-<brainstorming *ngIf="!meetingInfoisFinished && meetingInfo.type === 'brainstorming'" 
-[meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" (finish) = "finishMeeting($event)"></brainstorming>

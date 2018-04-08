@@ -1,0 +1,45 @@
+/* G E N E R A L */
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: $content_background_color;
+}
+
+div.page-wrapper {
+    position: relative;
+    max-width: 100%;
+    min-height: 100%;
+
+    div.content {
+        padding: 1.5rem 1.5rem 4.5rem;
+    
+        @media only screen and (max-width: 991px) {
+            padding-bottom: 9rem;
+        }
+    }
+}
+
+h1.title-page {
+    margin: 0 0 1.5rem;
+
+    span.capital-letter {
+        color: $content_letter_title;
+    }
+}
+
+button.btn {
+    border: none;
+    border-radius: 0;
+    color: $button_font_color;
+    font-weight: bold;
+    background-color: $button;
+    transition: all .2s ease-in;   
+}
+
+button.btn:hover:not([disabled=""]) {
+    background-color: $button_hover;
+}
