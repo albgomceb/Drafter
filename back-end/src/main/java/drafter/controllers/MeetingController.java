@@ -91,9 +91,12 @@ public class MeetingController extends AbstractController {
 	}
 	
 	@GetMapping("/finish/{meetingId}")
-	public String finish(@PathVariable int meetingId) {
+	public MeetingBean finish(@PathVariable int meetingId) {
 		meetingService.finish(meetingId);
-		return "";
+		Meeting result = meetingService.findById(meetingId);
+		
+		MeetingBean res = new MeetingSerializer().fromMeeting(result);
+		return res;
 	}
 	
 	@GetMapping("/nextStep/{meetingId}")

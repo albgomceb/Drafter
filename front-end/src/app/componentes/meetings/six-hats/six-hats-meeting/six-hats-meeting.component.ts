@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 import { take, map } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SixHatsService } from '../../../services/sixhats.service';
 import { SixHats } from '../../../models/sixHats.model';
 import { Hat } from '../../../models/hat.model';
+
 
 @Component({
   selector: 'six-hats-meeting',
@@ -18,6 +19,8 @@ export class SixHatsMeetingComponent implements OnInit {
   public meetingId:number;
   @Input()
   public attendants:Array<any>;
+  @Output()
+  public finishMeeting = new EventEmitter<number>();
 
   public colorList : Array<String>; 
   public countDown;
@@ -54,6 +57,10 @@ export class SixHatsMeetingComponent implements OnInit {
     this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
     });
+  }
+
+  finish(){
+    this.finishMeeting.emit(this.meetingId);
   }
 
   // assignHats(){
