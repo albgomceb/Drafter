@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.vote.VoteBean;
@@ -19,37 +20,38 @@ import drafter.domain.Vote;
 import drafter.services.IdeaService;
 import drafter.services.VoteService;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/data/votes")
-public class VoteController {
-	
+public class VoteController extends AbstractController {
+
 	@Autowired
 	private VoteService voteService;
-	
+
 	@Autowired
 	private IdeaService ideaService;
-	
+
 	@GetMapping("")
 	public List<VoteBean> findAll() {
 		List<Vote> res = this.voteService.findAll();
-		List<VoteBean> result = res.stream().map(vote -> new VoteSerializer().fromVote(vote)).collect(Collectors.toList());
+		List<VoteBean> result = res.stream().map(vote -> new VoteSerializer().fromVote(vote))
+				.collect(Collectors.toList());
 
 		return result;
 	}
-	
+
 	@PostMapping("")
-	public List<VoteBean> save(@RequestBody ArrayList<VoteBean> votes) {
+	public @ResponseBody List<VoteBean> save(@RequestBody ArrayList<VoteBean> votes) {
 		List<Vote> result = new VoteSerializer().fromBean(votes);
 		result.stream().forEach(i -> {
-			
-			Idea idea=i.getIdea();
+
+			Idea idea = i.getIdea();
 			voteService.save(i);
-			idea.setRatingValue(idea.getRatingValue()+i.getValue());
+			idea.setRatingValue(idea.getRatingValue() + i.getValue());
 			ideaService.save(idea);
 		});
-		List<VoteBean> res = result.stream().map(vote -> new VoteSerializer().fromVote(vote)).collect(Collectors.toList());
-		
+		List<VoteBean> res = result.stream().map(vote -> new VoteSerializer().fromVote(vote))
+				.collect(Collectors.toList());
 		return res;
 	}
 }

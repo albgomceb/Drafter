@@ -1,19 +1,13 @@
 <br>
-<h2 class="text-center"><span class="letter">B</span>rainstorming</h2>
-<br>
 <div class="row">
-    <div class="col-md-4">
-        <h3>Chat</h3>
-        <chat></chat>
-    </div>
-
-    <div class="col-md-8 info-panel ideas">
+    <div class="col-md-12 ideas">
         <div class="title"><h1>Ideas</h1></div>
-        <div *ngFor="let i of ideas;let index = index">
-            <div class="card server-action-menu">
-                <div class="title"><h2>{{i.text}}</h2></div>
+        <div *ngFor="let i of ideas;let index = index">  
                 <div class="row">
-                    <div class="col-md-6 card server-action-menu pros">
+                    <div class="col-md-12 card title">
+                        <h2>{{i.text}}</h2>
+                    </div>
+                    <div class="col-md-6 card pros">
                         <div class="col-md-12">
                             <h3>Pros</h3>
                             <div class="col-md-12" *ngFor="let p of i.pros">
@@ -21,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 card server-action-menu cons">
+                    <div class="col-md-6 card cons">
                         <div class="col-md-12">
                             <h3>Cons</h3>
                             <div class="col-md-12" *ngFor="let c of i.cons">
@@ -29,14 +23,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 card value">
+                        <input class="title" type="number" min="1" max="10" [(ngModel)]="votes[index].value">
+                    </div>
                 </div>
-                <input class="title" type="number" min="1" max="10" [(ngModel)]="votes[index].value">
-                <div class="clear"></div>
-            </div>
             <br/> 
         </div>
     </div>       
  </div>
 <div class="buttons text-center">
-        <button class="btn btn-success" (click)="save($event)">Vote</button>
+    <button class="btn btn-success" (click)="save($event)">Vote</button>
 </div>

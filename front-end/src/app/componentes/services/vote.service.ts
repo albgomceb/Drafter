@@ -18,6 +18,6 @@ export class VoteService {
   staticUrl:String = environment.baseApi;
 
   saveVote(votes:Vote[]): Observable<Vote> {
-    return this.http.post<Vote>(this.staticUrl+'/votes/',votes,{});
+    return this.http.post<Vote>(this.staticUrl+'/votes/',votes,{}) ;
   }
 }

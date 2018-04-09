@@ -31,7 +31,7 @@ public class VoteSerializer {
 			Idea idea=ideaService.findById(ib.getIdeaId());
 			vote.setValue(ib.getValue());
 			vote.setParticipant(participantService.findById(ib.getParticipantId()));
-			vote.setIdea(ideaService.findById(ib.getIdeaId()));
+			vote.setIdea(idea);
 			idea.addVote(vote);
 			votes.add(vote);
 		}

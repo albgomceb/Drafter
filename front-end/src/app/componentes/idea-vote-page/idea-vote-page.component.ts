@@ -28,8 +28,9 @@ export class IdeaVotePageComponent implements OnInit {
 
   ngOnInit() {
     this.ideas = new Array<Idea>();
-    //this.participantId=
-    this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.participantId=47;
+    //this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingId=25;
     this.ideaService.getIdeasByMeeting(25).subscribe(idea => {
       this.ideas = idea;
     });
