@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, EventEmitter, Renderer } from '@angular/core';
 import { Option } from '../models/option.model';
 import { Agenda } from '../models/agenda.model';
 import { AgendaService } from '../services/agenda.service'; 
@@ -11,13 +11,18 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class AgendaPageComponent implements OnInit {
 
+  @ViewChild('inp') inp:ElementRef;
   public entradas: Array<Agenda>;
   public counter: number;
   public meetingId: number;
+ 
 
   constructor(private agendaService: AgendaService, 
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private renderer2: Renderer2,
+    private elementRef: ElementRef,
+  private renderer: Renderer ) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -70,4 +75,18 @@ export class AgendaPageComponent implements OnInit {
 
     return res;
   }
+
+  setFocus(event: HTMLElement){
+    // let onElement = this.renderer2.getElementById('#'+id);
+    // onElement.focus();
+    // let elem:HTMLElement = document.getElementById('inp-'+(id+1));
+    // elem.focus();
+    // console.log(elem);
+    let next = new ElementRef(event.nextSibling);
+
+    next.nativeElement.focus();
+  }
+
+
+  
 }

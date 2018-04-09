@@ -9,8 +9,8 @@ You can add as many points as you want by clicking the add (+) button (or pressi
       <tr>
         <td>{{entradas.indexOf(entrada)+1}}.&nbsp;</td>
         <td style ="width: 100%">
-          <input class="col-12" type = "text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
-          (keyup.enter)="convert(entrada); addAgenda()" placeholder="Point to deal with" required/>
+          <input #inp{{i}} id="{{'inp-' + i}}" class="col-12" type = "text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
+          (keyup.enter)="convert(entrada); addAgenda(); setFocus($event);" [appAutoFocus]="id == entradas.length" placeholder="Point to deal with" required/>
         <div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.description}}</div></td>
         <td><button *ngIf="i!=0" (click)="removeAgenda(entrada, i)" class="btn bt-lg">Remove</button></td>
         <td><div *ngIf="!checkNotBlank(entrada.description)" style="color: red; text-align: center">Required</div></td></tr>
