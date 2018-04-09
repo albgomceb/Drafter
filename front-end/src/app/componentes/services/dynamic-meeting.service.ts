@@ -31,9 +31,8 @@ export class DynamicMeetingService {
     //   {return null; }
   }
 
-  finish(meetingId: number) {
-    //llamar a un endpoint que marque la reunión como terminada
-    console.log('meetingFinished');
+  finish(meetingId: number): Observable<any> {
+    return this.http.get(this.staticUrl+'/meeting/finish/'+meetingId);
   }
 
   addUserToMeeting(meetingId:number,user:User){

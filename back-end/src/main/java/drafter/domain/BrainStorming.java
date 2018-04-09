@@ -71,5 +71,4 @@ public class BrainStorming extends Meeting{
 		
 	}
 	
-	
 }

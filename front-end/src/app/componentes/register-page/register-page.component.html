@@ -1,29 +1,38 @@
-<div class="row">
-  <div class="col-md-6 mx-auto mt-3">
-    <div class="card text-white bg-dark mb-3">
-      <div class="card-body">
-        <h1 class="text-center pt-1">Register</h1>
-        <form>
-          <div class="form-group">
-            <label for="nombre" >Name</label>
-            <input type="nombre" name="nombre" id="nombre" class="form-control">
-
-            <label for="apellidos" >Surname</label>
-            <input type="apellidos" name="apellidos" id="apellidos" class="form-control">
-
-            <label for="nombreUsuario" >User name</label>
-            <input type="nombreUsuario" name="nombreUsuario" id="nombreUsuario" class="form-control">
-
-            <label for="email" >Email</label>
-            <input placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="password" >Password</label>
-            <input type="password" name="password" id="password" class="form-control">
-          </div>
-          <button type="submit" class="button btn btn-lg">Enviar</button>
-        </form>
-      </div>
+<div class="d-flex justify-content-center align-items-stretch">
+  <div class="col-lg-6 d-none d-lg-block welcome-info">
+    <div class="text-center">
+      <strong>Sign up</strong>
     </div>
+    <img src="../../../assets/img/sign-up.jpg" class="img-fluid">      
   </div>
+  <form class="col-lg-6 form-2">
+    <div class="text-center">
+      <img src="../../../assets/img/white-logo.png" class="img-logo img-fluid">
+      <p>Your meeting manager</p>
+      <hr>
+    </div>
+    <div class="form-group">
+      <label for="inputName">Name</label>
+      <input type="text" class="form-control" id="inputName">
+    </div>
+    <div class="form-group">
+      <label for="inputSurname">Surname</label>
+      <input type="text" class="form-control" id="inputSurname">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email</label>
+      <input type="email" class="form-control" id="inputEmail">
+    </div>
+    <div class="form-group">
+      <label for="inputUsername">Username</label>
+      <input type="text" class="form-control" id="inputUsername">
+    </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" class="form-control" id="inputPassword">
+    </div>    
+    <div class="text-center">
+      <button type="submit" class="btn btn-2">Sign up</button>
+    </div>
+  </form>
 </div>

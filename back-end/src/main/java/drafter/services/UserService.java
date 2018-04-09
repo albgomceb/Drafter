@@ -55,6 +55,9 @@ public class UserService {
 
 	//Other business Methods-----------------------------------------------------------------------------
 
+    public User findByEmail(String email) {
+    	return userRepository.findByEmail(email);
+    }
 
 	/*public User findByPrincipal() {
 		final UserAccount userAccount = LoginService.getPrincipal();

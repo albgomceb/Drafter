@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
+import { FooterComponent } from './componentes/footer/footer.component';
 import { NotFoundPageComponent } from './componentes/not-found-page/not-found-page.component';
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
+
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { AgendaService } from './componentes/services/agenda.service';
 import { UserService } from './componentes/services/user.service';
@@ -26,13 +28,16 @@ import { IdeaVotePageComponent } from './componentes/idea-vote-page/idea-vote-pa
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
-
+import { LoginService } from './componentes/services/login.service';
+import { RegisterService } from './componentes/services/register.service';
+import { BaseRequestOptions } from '@angular/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     MeetingPageComponent,
     NavbarComponent,
+    FooterComponent,
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
@@ -55,16 +60,20 @@ import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
 
   providers: [
+    LoginService,
+    RegisterService,
     MeetingService,
     AgendaService,
     FormsModule,
     RealTimeService,
+    BaseRequestOptions,
     UserService,
     ReactiveFormsModule,
     DynamicMeetingService,

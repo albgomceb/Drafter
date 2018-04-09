@@ -17,7 +17,7 @@ public class Planning extends Meeting{
 
 	
 	public Planning() {
-		
+		super();
 	}
 	
 	private Collection<SprintBacklog> backlog;
@@ -39,7 +39,7 @@ public class Planning extends Meeting{
 	@Transient
 	public String getType() {
 		return "planning";
-}
+	}
 
 
 

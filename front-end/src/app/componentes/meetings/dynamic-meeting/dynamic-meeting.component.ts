@@ -25,6 +25,7 @@ export class DynamicMeetingComponent implements OnInit {
     if(this.meetingId){
       this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
         this.meetingInfo = res;
+        this.meetingInfo.isFinished = res.finished;
         if(this.meetingInfo.isFinished){
           this.router.navigate(['/minutes/'+this.meetingId]);
         }else{
@@ -37,8 +38,9 @@ export class DynamicMeetingComponent implements OnInit {
   } 
 
   finishMeeting(meetingId:number){
-    this.meetingService.finish(meetingId);
-    this.router.navigate(['/minutes/'+meetingId]);
+    this.meetingService.finish(meetingId).subscribe(res =>{
+      this.router.navigate(['/minutes/'+meetingId]);
+    })
   }
 
 }
