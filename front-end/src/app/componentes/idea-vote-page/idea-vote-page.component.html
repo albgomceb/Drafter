@@ -1,5 +1,5 @@
 <br>
-<h2 class="text-center"><span class="letter">B</span>rainstorming meeting</h2>
+<h2 class="text-center"><span class="letter">B</span>rainstorming</h2>
 <br>
 <div class="row">
     <div class="col-md-4">
@@ -31,8 +31,6 @@
                     </div>
                 </div>
                 <input class="title" type="number" min="1" max="10" [(ngModel)]="votes[index].value">
-                <button class="btn btn-success" (click)="save($event)"  attr.data-iidea="{{index}}">Vote</button>
-                <button class="btn btn-danger" (click)="delete($event)" attr.data-iidea="{{index}}">Remove</button>
                 <div class="clear"></div>
             </div>
             <br/> 
@@ -40,5 +38,5 @@
     </div>       
  </div>
 <div class="buttons text-center">
-    <button routerLink="../../minutes/{{meetingId}}" class="btn bt-lg mr-1">Next</button>
+        <button class="btn btn-success" (click)="save($event)">Vote</button>
 </div>

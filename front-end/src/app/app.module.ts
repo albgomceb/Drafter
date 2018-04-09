@@ -1,3 +1,4 @@
+import { VoteService } from './componentes/services/vote.service';
 import { IdeaService } from './componentes/services/idea.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -68,7 +69,8 @@ import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas
     ReactiveFormsModule,
     DynamicMeetingService,
     SixHatsService,
-    IdeaService
+    IdeaService,
+    VoteService
   ],  
   bootstrap: [AppComponent]
 })

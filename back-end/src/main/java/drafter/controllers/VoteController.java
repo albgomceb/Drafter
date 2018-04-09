@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.vote.VoteBean;
 import drafter.beans.vote.VoteSerializer;
+import drafter.domain.Idea;
 import drafter.domain.Vote;
+import drafter.services.IdeaService;
 import drafter.services.VoteService;
 
 @CrossOrigin
@@ -25,6 +27,9 @@ public class VoteController {
 	@Autowired
 	private VoteService voteService;
 	
+	@Autowired
+	private IdeaService ideaService;
+	
 	@GetMapping("")
 	public List<VoteBean> findAll() {
 		List<Vote> res = this.voteService.findAll();
@@ -33,12 +38,15 @@ public class VoteController {
 		return result;
 	}
 	
-	@PostMapping("/{ideaId}")
+	@PostMapping("")
 	public List<VoteBean> save(@RequestBody ArrayList<VoteBean> votes) {
 		List<Vote> result = new VoteSerializer().fromBean(votes);
 		result.stream().forEach(i -> {
 			
-			voteService.save(i);	
+			Idea idea=i.getIdea();
+			voteService.save(i);
+			idea.setRatingValue(idea.getRatingValue()+i.getValue());
+			ideaService.save(idea);
 		});
 		List<VoteBean> res = result.stream().map(vote -> new VoteSerializer().fromVote(vote)).collect(Collectors.toList());
 		
