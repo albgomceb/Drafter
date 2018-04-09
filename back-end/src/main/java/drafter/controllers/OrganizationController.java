@@ -38,6 +38,14 @@ public class OrganizationController {
 		return result;
 	}
 	
+	@GetMapping("/list/{userId}")
+	public List<OrganizationBean> findByUser(@PathVariable("userId") int userId) {
+		List<Organization> res = this.organizationService.findByUserId(userId);
+		List<OrganizationBean> result = res.stream().map(organization -> new OrganizationSerializer().fromOrganization(organization)).collect(Collectors.toList());
+
+		return result;
+	}
+	
 	@PostMapping("/{userId}")
 	public OrganizationBean save(@PathVariable("userId") int userId, @RequestBody OrganizationBean organizationBean){
 		User user = userService.findById(new Integer(userId));

@@ -26,6 +26,7 @@ import { OrganizationService } from './componentes/services/organization.service
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
 import { IdeaService } from './componentes/services/idea.service';
+import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-meeting-page.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { IdeaService } from './componentes/services/idea.service';
     SixHatsMeetingComponent,
     SixHatsComponent,
     IdeasProsConsComponent,
-    BrainstormingComponent
+    BrainstormingComponent,
+    ListMeetingPageComponent
   ],
   imports: [
     BrowserModule,

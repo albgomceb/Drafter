@@ -52,6 +52,10 @@ public class OrganizationService {
 		return organizationRepository.save(organization);
 	}
 
+
 	//Other business Methods-----------------------------------------------------------------------------
 
+	public List<Organization> findByUserId(int userId) {
+		return organizationRepository.findByUserId(userId);
+	}
 }

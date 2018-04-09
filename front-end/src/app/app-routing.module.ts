@@ -10,6 +10,7 @@ import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesCompon
 
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { OrganizationDepartmentPageComponent } from './componentes/organization-department-page/organization-department-page.component';
+import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-meeting-page.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: 'organization-department', component: OrganizationDepartmentPageComponent},
+  {path: 'organization/list/:userId', component: ListMeetingPageComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];

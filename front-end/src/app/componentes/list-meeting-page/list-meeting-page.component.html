@@ -1,0 +1,11 @@
+<div class="card-body">
+  <h2 class="text-center"><span class="letter">O</span>rganizations</h2>
+  <div *ngFor="let organization of organizations; let i=index">
+    <label class="mt-4" >Organization: {{organization.enterprise}}</label>
+
+    <div *ngFor="let department of organization.departments; let i=index">
+        <label class="mt-4" >Department: {{organization.enterprise}}</label>
+        <button type="button" (click)="seeMeeting(meeting)" class="btn btn-success btn-circle btn-lg">See Meeting</button>
+    </div>
+  </div>
+</div>
