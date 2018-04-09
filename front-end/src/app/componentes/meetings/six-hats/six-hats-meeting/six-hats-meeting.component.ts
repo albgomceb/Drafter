@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 import { take, map } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SixHatsService } from '../../../services/sixhats.service';
 import { SixHats } from '../../../models/sixHats.model';
 import { Hat } from '../../../models/hat.model';
+
 
 @Component({
   selector: 'six-hats-meeting',
@@ -18,6 +19,8 @@ export class SixHatsMeetingComponent implements OnInit {
   public meetingId:number;
   @Input()
   public attendants:Array<any>;
+  @Output()
+  public finishMeeting = new EventEmitter<number>();
 
   public colorList : Array<String>; 
   public countDown;
@@ -55,25 +58,8 @@ export class SixHatsMeetingComponent implements OnInit {
     });
   }
 
-  assignHats(){
-    
-
-  //   // var firstColor = 'RED';
-  //   // for(var i=0; i<6; i++){
-  //   //   this.colors[i] = 
-  //   // }
-  //   // var color = this.getHat();
-  //   // for(let user of users){
-  //   //   this.participants.set(user, color);
-  //   //   if(color == 5)
-  //   //     color = 0;
-  //   //   else
-  //   //     color++;
-  //   // }
-  //   // console.log("participantes antes");
-  //   // console.log([this.participants.keys()]);
-  //   // console.log("colores antes");
-  //   // console.log([this.participants.values()]);
-   }
+  finish(){
+    this.finishMeeting.emit(this.meetingId);
+  }
 
 }

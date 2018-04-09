@@ -3,21 +3,41 @@
     <div class="card text-white bg-dark mb-3">
       <div class="card-body">
         <h1 class="text-center login pt-1">Login</h1>
-        <form>
+        <form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" method="post">
+          
+
+          <div *ngIf="showError == true">
+            <div class="form-group">
+              <label for="email" >Email</label>
+              <input formControlName="email" placeholder="example@domain.com" type="email" name="email" id="email" class="form-control error">
+            </div>
+            
+            <div class="form-group">
+              <label for="password" >Password</label>
+              <input formControlName="password" type="password" name="password" id="password" class="form-control error">
+            </div>
+            
+        </div>
+
+        <div *ngIf="emailError == false">
           <div class="form-group">
             <label for="email" >Email</label>
-            <input placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
+            <input formControlName="email" placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
           </div>
+        
           <div class="form-group">
             <label for="password" >Password</label>
-            <input type="password" name="password" id="password" class="form-control">
+            <input formControlName="password" type="password" name="password" id="password" class="form-control">
           </div>
+        </div>
+
             <button type="submit" class="button-sent btn btn-lg">Enviar</button>
-        </form>
+        
+          </form>
           <div class="card bg-dark border-0">
             <div class="buttons card-body d-flex justify-content-around">
               <button class="btn btn-lg btn-facebook"><i class="fa fa-facebook"></i> Facebook</button>
-              <button class="btn btn-lg btn-google"><i class="fa fa-google-plus"></i> Google</button>
+              <button class="btn btn-lg btn-google" (click)="onClickGoogleLogin()"><i class="fa fa-google-plus" aria-hidden="true"></i> Google</button>
               <button class="btn btn-lg btn-twitter"><i class="fa fa-twitter"></i> Twitter</button>
             </div>
           </div>
@@ -25,3 +45,4 @@
     </div>
   </div>
 </div>
+

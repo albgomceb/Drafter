@@ -340,6 +340,7 @@
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2018/01/01 00:22" />
 		<property name="hasfinished" value="false" />
+		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1"/> -->
 		<property name="agendas">
 			<list>
@@ -367,6 +368,7 @@
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2018/01/01 00:22" />
 		<property name="hasfinished" value="true" />
+		<property name="status" value="1" />
 		<property name="project" ref="project1" />
 		<property name="agendas">
 			<list>
@@ -399,6 +401,7 @@
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2018/01/01 00:22" />
 		<property name="hasfinished" value="true" />
+		<property name="status" value="2" />
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="agendas">
 			<list>
@@ -430,6 +433,7 @@
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2018/01/01 10:22" />
 		<property name="hasfinished" value="true" />
+		<property name="status" value="2" />
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="votingMode" value="ONETOFIVE" />
 		<property name="agendas">
@@ -468,6 +472,7 @@
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 	<!--  <property name="timer" value="2019/01/01 10:22" />-->	
 		<property name="hasfinished" value="false" />
+		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="votingMode" value="ONETOFIVE" />
 		<property name="agendas">
@@ -502,7 +507,8 @@
 		<property name="image"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="timer" value="2019/01/01 10:22" />	
-		<property name="hasfinished" value="true" />
+		<property name="hasfinished" value="false" />
+		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="agendas">
 			<list>
@@ -532,7 +538,6 @@
 				
 			</list>
 		</property>
-
 	</bean>
 	
 	
@@ -545,6 +550,7 @@
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 	<!--  <property name="timer" value="2019/01/01 10:22" />-->	
 		<property name="hasfinished" value="false" />
+		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="agendas">
 			<list>

@@ -33,13 +33,13 @@ public abstract class Meeting extends DomainEntity{
 	private Integer numberOfMeeting;
 	private String image;
 	private Date timer;
-	private boolean hasfinished; 
-	protected String type; 
+	private boolean hasfinished;
+	private int status;
 	
 	
 	//Constructor----------------------------------------
 	public Meeting() {
-		
+		super();
 	}
 	
 	//Methods--------------------------------------------
@@ -119,19 +119,19 @@ public abstract class Meeting extends DomainEntity{
 	}
 
 	
+	@Min(1)
+	public int getStatus() {
+		return status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	
 	@Transient
-	public int getStatus(Step step) {
-		return step.getNumber(); 
-		
-	}
+	public abstract String getType();
 	
-	public String getType() {
-		return type;
-	}
-	
-	public void setType(String type) {
-		this.type = type;
-	}
 	
 	// Relationships-------------------------------------
 	
