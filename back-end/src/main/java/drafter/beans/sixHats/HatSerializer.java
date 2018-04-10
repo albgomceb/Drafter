@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import drafter.domain.Hat;
+import drafter.domain.SixHats;
 
 
 public class HatSerializer {
@@ -20,7 +21,7 @@ public class HatSerializer {
 		return res;
 	}
 	
-	public List<Hat> fromBean(Collection<HatBean> collection) {
+	public List<Hat> fromBean(Collection<HatBean> collection, SixHats sixHats) {
 		List<Hat> hats = new ArrayList<Hat>();
 		for(HatBean hb: collection) {
 			Hat hat = new Hat();
@@ -28,6 +29,8 @@ public class HatSerializer {
 			hat.setColor(hb.getColor());
 			hat.setOrden(hb.getOrder());
 			hat.setConclusions(hb.getConclusions());
+			hat.setSixHats(sixHats);
+			hats.add(hat);
 		}
 		
 		return hats;

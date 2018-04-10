@@ -1,22 +1,16 @@
 package drafter.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.domain.Agenda;
 import drafter.domain.Hat;
-import drafter.domain.Meeting;
-import drafter.domain.Participant;
 import drafter.domain.SixHats;
-import drafter.domain.Step;
 import drafter.repositories.SixHatsRepository;
 
 
@@ -24,12 +18,14 @@ import drafter.repositories.SixHatsRepository;
 @Transactional
 public class SixHatsService {
 	
-	private String string;
 
 	//Repository-------------------------------------------------------------------------------
 
 	@Autowired
 	private SixHatsRepository	sixHatsRepository;
+	
+	@Autowired
+	private HatService		hatService;
 	
 	@Autowired
 	private MeetingService		meetingService;
@@ -63,7 +59,7 @@ public class SixHatsService {
     	res.setHasfinished(false);
     	res.setNumberOfMeeting(meeting.getNumberOfMeeting());
     	res.setProject(meeting.getProject());
-    	res.setStatus(meeting.getStatus());
+    	res.setStatus(1);
     	res.setTimer(meeting.getTimer());
     	res.setTitle(meeting.getTitle());
     	
@@ -102,39 +98,19 @@ public class SixHatsService {
     }
 
 	public SixHats save(SixHats sixHats) {
-		sixHats.getHats().stream()
-			.forEach(h -> h.getConclusions().stream().forEach(text -> {string = text; checkSafeHtml();}));
-		
 		List<String> colors = new ArrayList<>();
     	for(Hat hat : sixHats.getHats()) {
     		if(colors.contains(hat.getColor())) 
     			throw new IllegalArgumentException("A meeting can have no hats with the same color.");
     		else 
     			colors.add(hat.getColor());
+    			hat.setSixHats(sixHats);
+    			hatService.save(hat);
     	}
 		return sixHatsRepository.save(sixHats);
 	}
 	
 	// Other business methods -----------------------------------------------------------------
-	
-	@SafeHtml
-	public String checkSafeHtml() {
-		return string;
-	}
-	
-	public Collection<Hat> reassignHats(SixHats sixHats){
-		List<Hat> res = new ArrayList<Hat>(sixHats.getHats());
-		
-		for(Hat hat : res) {
-			int orden = hat.getOrden();
-			if(orden < 5) 
-				hat.setOrden(orden++);
-			else
-				hat.setOrden(0);	
-		}
-		
-		return res;
-	}
 
 
 }

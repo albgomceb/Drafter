@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 import { take, map } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
@@ -29,31 +29,28 @@ export class SixHatsMeetingComponent implements OnInit {
   public colorUser : String;
 
    constructor(private sixHatsService: SixHatsService,
-    private router: Router) {
+    private router: Router,
+    private changeDetector: ChangeDetectorRef) {
   }   
 
   ngOnInit() {
-    // var user = new User();
-    // user.name = "nombre";
-    // var user1 = new User();
-    // user1.name = "nombre1";
-    // var users = [user, user1];
-    // this.attendants = users;
+    this.actualUser = this.attendants[0];
+    console.log("AAA ", this.actualUser);
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;
       this.getHatColor('88');
     });
     this.sortAttendants();
-    this.actualUser = this.attendants[0];
     this.countDown = timer(0,1000).pipe(
       take(this.count),
       map(()=> --this.count)); 
   }
 
-
   saveSixHats(){
     this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
+      this.sixHats = res;
+      this.getHatColor('88');
     });
   }
 

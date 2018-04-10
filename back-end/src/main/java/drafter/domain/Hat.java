@@ -1,9 +1,10 @@
 package drafter.domain;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ public class Hat extends DomainEntity{
 	private static final String WHITE = "WHITE"; 
 	private int orden; 
 	private String color; 
-	private ArrayList<String> conclusions;
+	private Collection<String> conclusions;
 	
 	public Hat() {
 		
@@ -54,12 +55,12 @@ public class Hat extends DomainEntity{
 		this.color = color;
 	}
 	
-	
-	public ArrayList<String> getConclusions() {
+	@ElementCollection
+	public Collection<String> getConclusions() {
 		return conclusions;
 	}
 
-	public void setConclusions(ArrayList<String> conclusions) {
+	public void setConclusions(Collection<String> conclusions) {
 		this.conclusions = conclusions;
 	}
 
