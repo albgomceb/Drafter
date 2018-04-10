@@ -24,7 +24,6 @@ import { IdeaService } from './componentes/services/idea.service';
 
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
-import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 
 
 
@@ -49,7 +48,6 @@ import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas
     SixHatsComponent,
     IdeasProsConsComponent,
     BrainstormingComponent,
-    IdeasCreateComponent
   ],
   imports: [
     BrowserModule,
