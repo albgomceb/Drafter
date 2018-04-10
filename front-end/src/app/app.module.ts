@@ -24,7 +24,6 @@ import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, SixHatsMeetingComponent, SixHatsComponent, DynamicMinutesComponent, StandardMinutesPageComponent, IdeasProsConsComponent, BrainstormingComponent } from './componentes/meetings';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
-import { IdeaVotePageComponent } from './componentes/idea-vote-page/idea-vote-page.component';
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
@@ -32,6 +31,8 @@ import { LoginService } from './componentes/services/login.service';
 import { RegisterService } from './componentes/services/register.service';
 import { BaseRequestOptions } from '@angular/http';
 import { PricingComponent } from './componentes/pricing/pricing.component';
+import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { PricingComponent } from './componentes/pricing/pricing.component';
     AgendaPageComponent,
     ChatComponent,
     StandardMeetingComponent,
-    IdeaVotePageComponent,
+    IdeaVotePageComponent, 
     DynamicMeetingComponent,
     DynamicMinutesComponent,
     StandardComponent,

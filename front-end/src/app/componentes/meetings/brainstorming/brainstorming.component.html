@@ -1,2 +1,3 @@
 <ideas-create *ngIf= "meetingInfo.status == 1" [meetingId] = "meetingId" (finishMeeting) = "finishMeeting($event)" (nextStep) = "nextStep($event)"></ideas-create>
 <ideas-pros-cons *ngIf= "meetingInfo.status == 2" [meetingId] = "meetingId" (finishMeeting) = "finishMeeting($event)" (nextStep) = "nextStep($event)"></ideas-pros-cons>
+<idea-vote-page *ngIf= "meetingInfo.status == 3" [meetingId] = "meetingId" (finishMeeting) = "finishMeeting($event)" (nextStep) = "nextStep($event)"></idea-vote-page>

@@ -20,7 +20,7 @@ export class IdeasProsConsComponent implements OnInit {
   @Input()
   public meetingId: number;
   @Output()
-  public finishMeeting: EventEmitter<number> = new EventEmitter<number>();
+  public nextStep: EventEmitter<number> = new EventEmitter<number>();
   
 
   constructor(private ideaService: IdeaService, private realTimeService: RealTimeService, private activeRoute: ActivatedRoute,) { }
@@ -142,8 +142,8 @@ export class IdeasProsConsComponent implements OnInit {
     idea.cons.push({id: 0, ideaId: idea.id, con: ""});
   }
 
-  finish(){
-    this.finishMeeting.emit(this.meetingId);
+  next(){
+    this.nextStep.emit(this.meetingId);
   }
 
 }
