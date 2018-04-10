@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SixHatsService } from '../../../services/sixhats.service';
 import { SixHats } from '../../../models/sixHats.model';
 import { Hat } from '../../../models/hat.model';
+import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
 
 
 @Component({
@@ -25,12 +26,14 @@ export class SixHatsMeetingComponent implements OnInit {
   public countDown;
   public count = 6;
   public actualUser : User;
-  public sixHats : SixHats;
-  public colorUser : String;
+  public sixHats : SixHats = new SixHats();
+  public currentHat : Hat;
+  public currentConclusion : String;
 
    constructor(private sixHatsService: SixHatsService,
     private router: Router,
-    private changeDetector: ChangeDetectorRef) {
+    private realTimeService: RealTimeService,
+    private activeRoute: ActivatedRoute) {
   }   
 
   ngOnInit() {
@@ -39,11 +42,40 @@ export class SixHatsMeetingComponent implements OnInit {
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;
       this.getHatColor('88');
+      this.addFirstConclusion();  
+      console.log("BBB ", this.sixHats);    
     });
     this.sortAttendants();
     this.countDown = timer(0,1000).pipe(
       take(this.count),
       map(()=> --this.count)); 
+
+    //Parte del WebSocket
+    this.realTimeService.connect(this.meetingId, () => {
+      var i = 1;
+      for(var ht of this.sixHats.hats) {
+        this.realTimeService.register('h'+i, ht.conclusions);
+        i++;
+      }
+      this.realTimeService.subscribe();
+    });
+  }
+
+  edit(event, i, hatIndex) {
+    this.realTimeService.send('/sixHats/save/', 
+                            WSResponseType.SET, 
+                            'h'+i,  
+                            this.sixHats.hats[hatIndex].conclusions[i], 
+                            {index: i});
+  }
+
+  enter(event) {
+    if(event.keyCode == 13) {
+      event.target.blur();
+      return false;
+    }
+
+    return true;
   }
 
   saveSixHats(){
@@ -69,9 +101,38 @@ export class SixHatsMeetingComponent implements OnInit {
     
     for(let hat of this.sixHats.hats){
       if(hat.order === attIndex){
-        this.colorUser = hat.color;
+        console.log("FUNCIONA ", hat);
+        
+        this.currentHat = hat;
       }
     }
+  }
+
+  addFirstConclusion(){
+    for(let hat of this.sixHats.hats){
+      if(hat == this.currentHat && hat.conclusions.length == 0){
+        hat.conclusions[0] = "aa"
+      }
+    }
+  }
+
+  addConclusion(hat : Hat){
+    for(let ht of this.sixHats.hats){
+      if(ht === this.currentHat){
+        ht.conclusions.push(this.currentConclusion);
+      }
+    }
+    console.log(this.sixHats.hats);
+  } 
+
+  checkNotBlank(string : String) : boolean{
+    var res = true;
+
+    if(string.trim().length == 0){
+      res = false;
+    }
+
+    return res;
   }
 
   finish(){

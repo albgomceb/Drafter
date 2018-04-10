@@ -1,12 +1,47 @@
-<p>
-  six-hats-page works!
-</p>
+<div [ngClass]="currentHat.color">You have the {{currentHat.color}} hat.
+  <div *ngIf="currentHat.color=='RED'">Get intuitive or instinctive gut reactions or statements of emotional feeling (but not any justification).</div>
+  <div *ngIf="currentHat.color=='BLACK'">Apply logic to identify reasons to be cautious and conservative. Be practical and realistic.</div>
+  <div *ngIf="currentHat.color=='BLUE'">You're the moderator. Answer the next questions: what is the subject? what are we thinking about? Are we reaching the goal?</div>
+  <div *ngIf="currentHat.color=='WHITE'">Consider purely what information is available. What are the facts?</div>
+  <div *ngIf="currentHat.color=='YELLOW'">Apply logic to identify benefits, seeking harmony. See the brighter, sunny side of situations.</div>
+  <div *ngIf="currentHat.color=='GREEN'">Think statements of provocation and investigation, seeing where a thought goes. Think creatively, outside the box.</div>
+</div>
 
-<div>Tu color es {{colorUser}}</div>
+<div *ngFor="let hat of sixHats.hats; let hatIndex=index">
+  <div [ngClass]="hat.color" *ngIf="hat === currentHat">
+      <span><h5>{{hat.color}}</h5></span>
+      <div *ngIf="hat.conclusions.length > 0">
+          Conclusions deduced by your coworkers: 
+          <span>{{hat.conclusions}}</span>
+      </div>
+      <span>Your conclusions: </span>
+      <div>
+          <tr *ngFor="let conclusion of hat.conclusions; let i=index">
+              <td>
+                {{hat.conclusions.indexOf(conclusion)+1}}.
+              </td>
+              <td>
+                <input type="text" [(ngModel)]="currentConclusion" (focusout)="edit($event, i, hatIndex)"
+                (keyup.enter)="enter($event)" placeholder="Conclusion" required class="point"/>
+                <span *ngIf="!checkNotBlank(conclusion)" class="required">
+                    Required
+                </span>
+              </td>
+          </tr>
+          <button (click)="addConclusion()" class="btn">New conclusion</button>
+      </div>
+  </div>
+  <div [ngClass]="hat.color" *ngIf="hat != currentHat">
+      <span><h5>{{hat.color}}</h5></span>
+      <span>Conclusions deduced:</span>
+      <span>{{hat.conclusions}}</span>
+  </div>
+</div>
+
 <!-- <div *ngIf="count > 0"><h2>{{countDown | async}}</h2></div>
 <div *ngIf="!(count > 0)"> -->
-  <button (click)="saveSixHats()">Reassign</button>
-  <button (click)="finish()">Finish</button>
+  <button class="btn" (click)="saveSixHats()">Reassign</button>
+  <button class="btn" (click)="finish()">Finish</button>
 <!-- </div> -->
 
 
