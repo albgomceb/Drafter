@@ -10,10 +10,12 @@ import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesCompon
 
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
+import { PricingComponent } from './componentes/pricing/pricing.component';
 
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
+  {path: 'pricing',component: PricingComponent},
   {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},

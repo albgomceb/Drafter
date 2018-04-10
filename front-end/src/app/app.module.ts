@@ -30,6 +30,7 @@ import { SixHatsService } from './componentes/services/sixhats.service';
 import { LoginService } from './componentes/services/login.service';
 import { RegisterService } from './componentes/services/register.service';
 import { BaseRequestOptions } from '@angular/http';
+import { PricingComponent } from './componentes/pricing/pricing.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { BaseRequestOptions } from '@angular/http';
     SixHatsMeetingComponent,
     SixHatsComponent,
     IdeasProsConsComponent,
-    BrainstormingComponent
+    BrainstormingComponent,
+    PricingComponent
   ],
   imports: [
     BrowserModule,

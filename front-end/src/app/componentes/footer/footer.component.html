@@ -6,25 +6,7 @@
     <div class="col-lg-6 col-md-12">
       <a href="#">Terms of use</a>
       <a href="#">Privacy</a>
-      <a (click)="toggleLicense()" id="pricing" >Pricing</a>
+      <a href="#" >Pricing</a>
     </div>
   </div>
-
-  <div [hidden]="!showOverlay" id="overlay" class="col-md-3">
-        <div  class="card mx-auto pt-1 pb-3">
-            <div class="img-container">
-              <img class="img-license" src="../../../assets/img/license.png" />
-            </div>
-            <div class="paypal-transaction">
-                <h5 class="mt-1 mb-1 pl-1 pr-1">Get your license now</h5>
-                <h6 class="mb-3 pl-3 pr-3">and have access to all the content we offer!</h6>
-                <span><b>{{licenses[0].name}}</b> <i>(Only {{licenses[0].price}}€)...</i></span>
-                <div class="mt-2" id="paypal-checkout-btn"></div>
-                <h6 class="mt-2" style="font-size:16px;color:white!important" *ngIf="paypalLoad">Paypal is loading...</h6>
-                <p class="mt-3 mb-0"><a href="#">...Or contact us for <b>Standalone</b></a></p>
-                <p class="contact pl-3 pr-3">Single payment and maintenance among other advantages.</p>
-            </div>
-        </div>
-    </div>
-
 </div>
