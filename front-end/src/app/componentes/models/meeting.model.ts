@@ -9,4 +9,4 @@ export class Meeting {
     setAttendants(attendants:Array<Option>) {
       this.attendants = attendants; 
     }
-  }
+}
