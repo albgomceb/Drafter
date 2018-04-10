@@ -31,8 +31,11 @@ export class MeetingPageComponent implements OnInit {
 
     this.meeting = new Meeting();
     this.attendants = new Array<Option>();
-    this.kinds = this.meetingService.getMeetingTypes();
-    this.selectedKind = this.kinds[0];
+     this.meetingService.getMeetingTypes().subscribe(list => 
+    {
+      this.kinds = list;
+      this.selectedKind = this.kinds[0];
+    });
     this.userService.getUsers().subscribe(
       data => 
       {

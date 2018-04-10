@@ -14,9 +14,14 @@ export class BrainstormingComponent implements OnInit {
     public attendants:Array<any>;
     
     @Output() finish = new EventEmitter<number>();
+    @Output() next = new EventEmitter<number>();
 
     public finishMeeting(meetingId:number){
         this.finish.emit(meetingId);
+    };
+
+    public nextStep(meetingId:number){
+        this.next.emit(meetingId);
     };
 
     
