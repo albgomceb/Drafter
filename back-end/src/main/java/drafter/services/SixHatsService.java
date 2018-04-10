@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.assertj.core.util.Arrays;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.domain.Agenda;
 import drafter.domain.Hat;
+import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.SixHats;
 import drafter.domain.Step;
@@ -42,31 +42,41 @@ public class SixHatsService {
 
 	//CRUD Methods------------------------------------------------------------------------------
 
-    public SixHats create() {
-    	SixHats sixHats = new SixHats();
-    	Date date = new Date(System.currentTimeMillis()-1);
+    public SixHats create(SixHats meeting) { 
+    	SixHats res = new SixHats();
     	List<Hat> hats = new ArrayList<Hat>();
-    	hats.add(create("RED", 0));
-    	hats.add(create("BLUE", 1));
-    	hats.add(create("BLACK", 2));
-    	hats.add(create("WHITE", 3));
-    	hats.add(create("YELLOW", 4));
-    	hats.add(create("GREEN", 5));
+    	hats.add(create("RED", 0, res));
+    	hats.add(create("BLUE", 1, res));
+    	hats.add(create("BLACK", 2, res));
+    	hats.add(create("WHITE", 3, res));
+    	hats.add(create("YELLOW", 4, res));
+    	hats.add(create("GREEN", 5, res));
     	
-    	sixHats.setParticipants( new ArrayList<Participant>());
-    	sixHats.setDate(date);
-    	sixHats.setSteps(new ArrayList<Step>());
-    	sixHats.setAgendas(new ArrayList<Agenda>());
-    	sixHats.setHats(hats);
+    	res.setParticipants(meeting.getParticipants());
+    	res.setDate(meeting.getDate());
+    	res.setSteps(meeting.getSteps());
+    	res.setAgendas(new ArrayList<Agenda>());
+    	res.setHats(hats);
+    	res.setDescription(meeting.getDescription());
+    	res.setId(meeting.getId());
+    	res.setImage(meeting.getImage());
+    	res.setHasfinished(false);
+    	res.setNumberOfMeeting(meeting.getNumberOfMeeting());
+    	res.setProject(meeting.getProject());
+    	res.setStatus(meeting.getStatus());
+    	res.setTimer(meeting.getTimer());
+    	res.setTitle(meeting.getTitle());
     	
-        return sixHats;
+    	return res;
+    	
     }
     
-    public Hat create(String color, int orden) {
+    public Hat create(String color, int orden, SixHats sixHats) {
     	Hat res = new Hat();
     	res.setColor(color);
     	res.setOrden(orden);
     	res.setConclusions(new ArrayList<String>());
+    	res.setSixHats(sixHats);
     	
     	return res;
     }

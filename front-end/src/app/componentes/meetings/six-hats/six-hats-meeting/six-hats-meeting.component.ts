@@ -22,11 +22,11 @@ export class SixHatsMeetingComponent implements OnInit {
   @Output()
   public finishMeeting = new EventEmitter<number>();
 
-  public colorList : Array<String>; 
   public countDown;
   public count = 6;
   public actualUser : User;
   public sixHats : SixHats;
+  public colorUser : String;
 
    constructor(private sixHatsService: SixHatsService,
     private router: Router) {
@@ -39,23 +39,42 @@ export class SixHatsMeetingComponent implements OnInit {
     // user1.name = "nombre1";
     // var users = [user, user1];
     // this.attendants = users;
-    // this.actualUser = user;
-    this.getSixHats(this.meetingId);
+    this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
+      this.sixHats = sixHats;
+      this.getHatColor('88');
+    });
+    this.sortAttendants();
+    this.actualUser = this.attendants[0];
     this.countDown = timer(0,1000).pipe(
       take(this.count),
       map(()=> --this.count)); 
   }
 
-  getSixHats(id : number){
-    this.sixHatsService.getSixHatsByMeeting(id).subscribe(sixHats => {
-      this.sixHats = sixHats;
-    });
-  }
 
   saveSixHats(){
     this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
     });
+  }
+
+  sortAttendants(){
+    this.attendants = this.attendants.sort();
+  }
+
+  getHatColor(userId : String){
+    let attIndex;
+    
+    for(let i=0; i<this.attendants.length;i++){
+      if(this.attendants[i].id === userId){
+        attIndex = i;
+      }
+    }
+    
+    for(let hat of this.sixHats.hats){
+      if(hat.order === attIndex){
+        this.colorUser = hat.color;
+      }
+    }
   }
 
   finish(){

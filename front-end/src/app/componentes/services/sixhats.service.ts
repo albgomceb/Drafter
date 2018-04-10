@@ -18,8 +18,8 @@ export class SixHatsService {
 
   staticUrl:String = environment.baseApi;
 
-  getSixHatsByMeeting(meeting: number): Observable<SixHats> {
-    return this.http.get<SixHats>(this.staticUrl+'/sixHats/' + meeting);
+  getSixHatsByMeeting(meetingId: number): Observable<SixHats> {
+    return this.http.get<SixHats>(this.staticUrl+'/sixHats/' + meetingId);
   }
 
   saveSixHats(sixHats:SixHats, id:number): Observable<SixHats> {

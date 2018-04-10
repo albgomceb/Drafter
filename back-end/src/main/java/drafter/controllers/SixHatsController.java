@@ -1,6 +1,9 @@
 
 package drafter.controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.sixHats.SixHatsBean;
 import drafter.beans.sixHats.SixHatsSerializer;
+import drafter.domain.Hat;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
 import drafter.services.MeetingService;
@@ -32,6 +36,11 @@ public class SixHatsController {
 	@GetMapping("/{meetingId}")
 	public SixHatsBean findMeeting(@PathVariable("meetingId")Integer meetingId) {
 		SixHats res = this.sixHatsService.findById(meetingId);
+		if(res.getHats().isEmpty()) {
+			
+			res = sixHatsService.create(res);
+
+		}
 		SixHatsBean result = new SixHatsSerializer().fromSixHats(res);
 
 		return result;
