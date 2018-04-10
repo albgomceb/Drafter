@@ -3,13 +3,19 @@ package drafter.beans.vote;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import drafter.domain.Idea;
 import drafter.domain.Vote;
 import drafter.services.IdeaService;
 import drafter.services.ParticipantService;
 
 public class VoteSerializer {
+	
+	@Autowired
 	private ParticipantService participantService;
+	
+	@Autowired
 	private IdeaService ideaService;
 
 	public VoteBean fromVote(Vote vote) {
