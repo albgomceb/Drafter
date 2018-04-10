@@ -15,7 +15,7 @@ div.page-wrapper {
     min-height: 100%;
 
     div.content {
-        padding: 1.5rem 1.5rem 4.5rem;
+        padding: 2rem 1.5rem 4.5rem;
     
         @media only screen and (max-width: 991px) {
             padding-bottom: 9rem;
@@ -42,4 +42,8 @@ button.btn {
 
 button.btn:hover:not([disabled=""]) {
     background-color: $button_hover;
+}
+
+.shadow {
+	box-shadow: 0px 1px 5px 0px #4a4a4a;
 }
