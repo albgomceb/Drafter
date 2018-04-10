@@ -1,5 +1,8 @@
 package drafter.beans.user2;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +50,24 @@ public class UserSerializer2 {
 		authorities.add(au);
 		ua.setAuthorities(authorities);
 		ua.setUsername(user.getUsername());
-		ua.setPassword(user.getPassword());
+		ua.setPassword(encodePassword(user.getPassword()));
 		
 		res.setUserAccount(ua);
 		
 		return res;
 		
+	}
+	
+	private String encodePassword(String password) {
+		//Para coger el password y codificarlo para compararlo con el de la base de datos
+	    MessageDigest m = null;
+		try {
+			m = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+	    m.update(password.getBytes(),0,password.length());
+	    String res = new BigInteger(1,m.digest()).toString(16);
+	    return res;
 	}
 }
