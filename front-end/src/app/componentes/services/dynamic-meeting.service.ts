@@ -48,6 +48,10 @@ export class DynamicMeetingService {
     
   }
 
+  nextStep(meetingId: number): Observable<string>{
+    return this.http.get<string>(this.staticUrl+'/meeting/nextStep/'+meetingId);
+  }
+
  
   public reunionesFalsas:Array<any>=[
     {

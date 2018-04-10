@@ -76,8 +76,8 @@ public class MeetingService {
     public Meeting nextStep(int id) {
     	Meeting m = findById(id);
     	int size = m.getSteps().size();
-    	
-    	Assert.isTrue(size >= m.getStatus(), "The meeting hasn't more steps, you must finish it!");
+    	//Revisar la construccion de steps
+//    	Assert.isTrue(size >= m.getStatus(), "The meeting hasn't more steps, you must finish it!");
     	m.setStatus(m.getStatus()+1);
     	
     	return save(m);

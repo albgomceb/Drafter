@@ -1,1 +1,2 @@
-<ideas-pros-cons [meetingId] = "meetingId" (finishMeeting) = "finishMeeting($event)"></ideas-pros-cons>
+<ideas-create *ngIf= "meetingInfo.status == 1" [meetingId] = "meetingId" (finishMeeting) = "finishMeeting($event)" (nextStep) = "nextStep($event)"></ideas-create>
+<ideas-pros-cons *ngIf= "meetingInfo.status == 2" [meetingId] = "meetingId" (finishMeeting) = "finishMeeting($event)" (nextStep) = "nextStep($event)"></ideas-pros-cons>

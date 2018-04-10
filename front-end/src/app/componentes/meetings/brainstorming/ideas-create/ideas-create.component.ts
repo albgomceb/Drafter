@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
 import { Idea } from '../../../models/idea.model';
+import { DynamicMeetingService } from '../../../services/dynamic-meeting.service';
+
 
 @Component({
   selector: 'ideas-create',
@@ -14,15 +16,21 @@ export class IdeasCreateComponent implements OnInit {
   public entradas: Array<Idea>;
   public counter: number;
   public brainId: number;
+  @Input()
+  public meetingId: number;
+  @Input()
+  public meetingInfo: any;
 
-  constructor(private ideaService: IdeaService, 
+  @Output()
+  public nextStep = new EventEmitter<number>();
+
+  constructor(private ideaService: IdeaService,
+    private dynamicMeetingService: DynamicMeetingService, 
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.brainId = params['brainId'];
-    });
+    this.brainId = this.meetingId;
     this.entradas=[];
     this.entradas.push(new Idea());
     this.entradas[0].id = 0;
@@ -40,7 +48,7 @@ export class IdeasCreateComponent implements OnInit {
 
     this.ideaService.saveIdea(temp, this.brainId).subscribe(res =>{
       //To Do: cambiar ruta
-      this.router.navigate(["/brainstorming/"+this.brainId]);
+      this.nextStep.emit(this.brainId);
     });
   }
 

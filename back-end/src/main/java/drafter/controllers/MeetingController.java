@@ -101,7 +101,7 @@ public class MeetingController extends AbstractController {
 	
 	@GetMapping("/nextStep/{meetingId}")
 	public String nextStep(@PathVariable int meetingId) {
-		meetingService.nextStep(meetingId);
-		return "";
+		Meeting meeting = meetingService.nextStep(meetingId);
+		return meeting.getStatus() +"";
 	}
 }

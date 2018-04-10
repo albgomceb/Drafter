@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Idea } from '../../../models/idea.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
@@ -19,6 +19,8 @@ export class IdeasProsConsComponent implements OnInit {
   public hasEdit: boolean = true;
   @Input()
   public meetingId: number;
+  @Output()
+  public finishMeeting: EventEmitter<number> = new EventEmitter<number>();
   
 
   constructor(private ideaService: IdeaService, private realTimeService: RealTimeService, private activeRoute: ActivatedRoute,) { }
@@ -138,6 +140,10 @@ export class IdeasProsConsComponent implements OnInit {
     }
 
     idea.cons.push({id: 0, ideaId: idea.id, con: ""});
+  }
+
+  finish(){
+    this.finishMeeting.emit(this.meetingId);
   }
 
 }
