@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
-import * as $ from 'jquery';
 
 declare let paypal: any;
 
@@ -28,13 +27,6 @@ export class FooterComponent implements OnInit,AfterViewChecked {
 
     this.showOverlay;
 
-    $(document).ready(function(){
-      $('.selectpicker').change(function(){
-        $('.selectpicker').css('color','white').css('background-color','#333');
-        $('.selectpicker option').css('color','black').css('background-color','white').css('text-align','left');
-        $('.selectpicker optgroup').css('color','black').css('background-color','rgb(240,240,240)').css('text-align','left');
-      });
-    });
   }
 
   paypalConfig = {
