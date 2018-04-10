@@ -9,11 +9,15 @@ import { HomePageComponent } from './componentes/home-page/home-page.component';
 import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesComponent } from './componentes/meetings';
 
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
+import { IdeaVotePageComponent } from './componentes/idea-vote-page/idea-vote-page.component';
 import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
+import { PricingComponent } from './componentes/pricing/pricing.component';
 
+import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
+  {path: 'pricing',component: PricingComponent},
   {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
@@ -21,6 +25,8 @@ const routes: Routes = [
   {path: 'meeting/:id', component: DynamicMeetingComponent},
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
+  {path:'idea/:ideaId',component:IdeaVotePageComponent},
+  {path: 'ideas', component: IdeasCreateComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];
