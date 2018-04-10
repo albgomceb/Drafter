@@ -1,0 +1,53 @@
+
+#overlay{
+    -webkit-box-shadow: 0px -11px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -11px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px -11px 5px 0px rgba(0,0,0,0.75);
+}
+
+#overlay, #overlay .card{
+    text-align: center;
+    background: #333!important;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0%;
+    width: 490px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#overlay .img-license{
+    position:relative;
+    text-align:center;
+    margin:0 auto;
+}
+
+#overlay .img-container{
+    width: 100%;
+    background-color: #00a98f;
+}
+
+.paypal-transaction{
+    min-width: 250px;
+    
+    h5{
+        color:white;
+    }
+    h6{
+        color: #00c4a6;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 18px;
+    }
+}
+
+.selectpicker{
+    width: 200px!important;
+}
+
+.contact{
+    padding-bottom: 30px;
+    color: #00c4a6;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 15px;
+}
