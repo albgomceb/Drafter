@@ -22,14 +22,14 @@
       <input formControlName="surname" ng-required="true" name="surname"
              type="text" class="form-control" id="inputSurname">
     </div>
-    <div *ngIf="usernameError == false"></div>
+    <div *ngIf="usernameError == false">
         <div class="form-group">
             <label for="inputUsername">Username</label>
             <input formControlName="username" ng-required="true" name="username"
                    type="text" class="form-control" id="inputUsername">
         </div>
     </div>
-    <div *ngIf="usernameError == true"></div>
+    <div *ngIf="usernameError == true">
         <div class="form-group">
             <label for="inputUsername">Username</label>
             <input formControlName="username" ng-required="true" name="username"
@@ -37,14 +37,14 @@
             <p class="text-error">Username must contains at least 5 characters</p>
         </div>
     </div>
-    <div *ngIf="emailError == false && correctEmailError == false"></div>
+    <div *ngIf="emailError == false && correctEmailError == false">
         <div class="form-group">
             <label for="inputEmail">Email</label>
             <input formControlName="email" ng-required="true" name="email"
                    type="email" class="form-control" id="inputEmail">
         </div>
     </div>
-    <div *ngIf="emailError == true"></div>
+    <div *ngIf="emailError == true">
         <div class="form-group">
             <label for="inputEmail">Email</label>
             <input formControlName="email" ng-required="true" name="email" 
@@ -52,7 +52,7 @@
             <p class="text-error">The email is already in use</p>
         </div>
     </div>
-    <div *ngIf="correctEmailError == true"></div>
+    <div *ngIf="correctEmailError == true">
         <div class="form-group">
             <label for="inputEmail">Email</label>
             <input formControlName="email" ng-required="true" name="email" 
@@ -64,7 +64,7 @@
         <div class="form-group">
             <label for="inputPassword">Password</label>
             <input formControlName="password" ng-required="true" name="password"
-                   type="password" class="form-control" id="inputPassword">
+                   type="password" class="form-control" id="inputPassword"/>
         </div>
     </div>
     <div *ngIf="passwordError == true">
