@@ -21,6 +21,7 @@ export class HomePageComponent implements OnInit {
   showError:Boolean = false;
   email:FormControl;
   password:FormControl;
+  authenticated = false;
 
   constructor(private loginService: LoginService,  private router:Router) { }
 
