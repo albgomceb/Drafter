@@ -41,26 +41,11 @@ export class DynamicMeetingService {
       res.users.push(user);
     });
   }
-  getMeetingTypes():Array<Option>{
+  getMeetingTypes():Observable<Array<Option>>{
     //un endoint que devuelva la lista de tipos de reuniones existentes en una lista de Option.java con id =
     // un string que identifique a la reunión y name = nombre más descriptivo
-    let op1:Option = new Option();
-    op1.id = 'standard';
-    op1.name = 'Standard meeting';
-
-    let op2:Option = new Option();
-    op2.id = 'six-hats';
-    op2.name = '6-hats meeting';
+    return this.http.get<Array<Option>>(this.staticUrl+'/meeting/types/');
     
-    let op3:Option = new Option();
-    op3.id = 'brainstorming';
-    op3.name = 'Brainstorming meeting';
-
-    return [ 
-     op1,
-      op2,
-      op3
-    ]
   }
 
  
