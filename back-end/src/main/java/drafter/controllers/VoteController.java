@@ -17,6 +17,7 @@ import drafter.beans.vote.VoteSerializer;
 import drafter.domain.Idea;
 import drafter.domain.Vote;
 import drafter.services.IdeaService;
+import drafter.services.ParticipantService;
 import drafter.services.VoteService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -29,6 +30,9 @@ public class VoteController {
 
 	@Autowired
 	private IdeaService ideaService;
+	
+	@Autowired
+	private ParticipantService participantService;
 
 	@GetMapping("")
 	public List<VoteBean> findAll() {
@@ -41,7 +45,7 @@ public class VoteController {
 
 	@PostMapping("")
 	public List<VoteBean> save(@RequestBody ArrayList<VoteBean> votes) {
-		List<Vote> result = new VoteSerializer().fromBean(votes);
+		List<Vote> result = new VoteSerializer().fromBean(votes,ideaService, participantService);
 		
 		result.stream().forEach(i -> {
 			Idea idea = i.getIdea();

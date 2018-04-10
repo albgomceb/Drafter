@@ -3,20 +3,12 @@ package drafter.beans.vote;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import drafter.domain.Idea;
 import drafter.domain.Vote;
 import drafter.services.IdeaService;
 import drafter.services.ParticipantService;
 
 public class VoteSerializer {
-	
-	@Autowired
-	private ParticipantService participantService;
-	
-	@Autowired
-	private IdeaService ideaService;
 
 	public VoteBean fromVote(Vote vote) {
 		VoteBean res = new VoteBean();
@@ -30,7 +22,7 @@ public class VoteSerializer {
 		return res;
 	}
 
-	public List<Vote> fromBean(List<VoteBean> votesBean) {
+	public List<Vote> fromBean(List<VoteBean> votesBean,IdeaService ideaService,ParticipantService participantService) {
 		List<Vote> votes = new ArrayList<Vote>();
 		for (VoteBean ib : votesBean) {
 			Vote vote = new Vote();
