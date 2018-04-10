@@ -21,10 +21,11 @@ public class VoteService {
 	// Constructor------------------------------------------------------------------------------
 
 	public VoteService() {
-			super();
-		}
+		super();
+	}
 
-	// CRUD Methods------------------------------------------------------------------------------
+	// CRUD
+	// Methods------------------------------------------------------------------------------
 
 	public Vote create(Vote vote) {
 		return voteRepository.save(vote);
@@ -49,8 +50,15 @@ public class VoteService {
 	public Vote update(Vote vote) {
 		return null;
 	}
-	
+
 	public Vote save(Vote vote) {
-		return voteRepository.save(vote);
+		Vote dbVote;
+		dbVote = voteRepository.findByParticipantAndIdea(vote.getParticipant().getId(), vote.getIdea().getId());
+		if (dbVote != null) {
+			dbVote.setValue(vote.getValue());
+			return voteRepository.save(dbVote);
+		} else {
+			return voteRepository.save(vote);
+		}
 	}
 }
