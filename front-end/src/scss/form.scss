@@ -1,4 +1,12 @@
 /* F O R M */
+.error {
+    border:solid 2px red;
+}
+
+.text-error {
+    color: red;
+}
+
 form.general-form {
     border: 1px solid $content_border;
     border-radius: 5px;
@@ -28,6 +36,27 @@ form.general-form {
 }
 
 /* Form login and register */
+div.form-info {
+    max-width: 450px;
+    padding: 0;
+    color: $mp_font_color;
+}
+
+div.form-info {
+    margin-top: 1rem;
+
+    div {
+        border-top-left-radius: 5px;
+        padding: 15px;
+        font-size: 2em;
+        background-color: $mp_secondary_color;
+    }
+
+    img {
+        border-bottom-left-radius: 5px;
+    }
+}
+
 form.form-2 {
     max-width: 450px;
     margin-top: 1rem;
