@@ -81,6 +81,13 @@ public class MeetingService {
     	
     	return save(m);
     }
+    
+    public Meeting setTimer(int id, int timer) {
+    	Meeting m = findById(id);
+    	m.setTimer(timer);
+    	
+    	return save(m);
+    }
 
 	//Other business Methods-----------------------------------------------------------------------------
 
