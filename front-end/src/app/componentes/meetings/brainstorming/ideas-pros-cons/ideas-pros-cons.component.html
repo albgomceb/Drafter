@@ -13,7 +13,7 @@
                 <div class="d-flex justify-content-between flex-wrap">
                     <div>
                         <button class="btn" (click)="addPro($event)" attr.data-index="{{idea.number}}">
-                            <i class="fas fa-check"></i> Add pros
+                            Add pros
                         </button>
                         <ul class="list-pros">
                             <li *ngFor="let p of idea.pros; let i = index" 
@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <button class="btn" (click)="addCon($event)" attr.data-index="{{idea.number}}">
-                            <i class="fas fa-times"></i> Add cons
+                            Add cons
                         </button>
                         <ul class="list-cons">
                             <li *ngFor="let c of idea.cons; let i = index" 
