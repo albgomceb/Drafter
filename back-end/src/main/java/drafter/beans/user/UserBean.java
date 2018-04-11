@@ -6,15 +6,23 @@ import drafter.beans.Option;
 
 public class UserBean {
 
-	public String id;
-	public String name; 
-	public String surname; 
-	public  String email; 
-	public  String phone; 
-	public String photo;
-	public List<Option> departments;
+	private String id;
+	private String name; 
+	private String surname; 
+	private String email; 
+	private String phone; 
+	private String photo;
+	private String username;
+	private List<Option> departments;
+	private List<String> authorities;
 	
 	
+	public List<String> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(List<String> authority) {
+		this.authorities = authority;
+	}
 	public String getName() {
 		return name;
 	}
@@ -57,7 +65,12 @@ public class UserBean {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	
 	
 }

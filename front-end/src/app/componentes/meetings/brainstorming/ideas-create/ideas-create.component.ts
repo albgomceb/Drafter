@@ -67,8 +67,11 @@ export class IdeasCreateComponent implements OnInit {
 
   convert(entrada : Idea){
     //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
-    if(this.checkNotBlank(entrada.text) && entrada.isInput)
+    if(this.checkNotBlank(entrada.text) && entrada.isInput) {
       entrada.isInput = false;
+      if(this.counter == (entrada.id+1))
+        this.addIdea();
+    }
 
     //Si la entrada es un texto, se convierte en input
     else if(!entrada.isInput)
