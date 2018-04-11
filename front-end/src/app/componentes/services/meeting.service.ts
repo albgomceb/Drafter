@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { Meeting2 } from '../models/meeting.model2';
 import { Agenda2 } from '../models/agenda.model2';
 import { Conclusion } from '../../models/conclusion';
+import { Meeting } from '../models/meeting.model';
 
 
 const httpOptions = {
@@ -29,6 +30,10 @@ export class MeetingService {
 
   getConclusions(agendaId:number): Observable<Array<Conclusion>> {
     return this.http.get<Array<Conclusion>>(this.staticUrl+'/agendas/' + agendaId + '/conclussion');
+  }
+
+  getMeetingsByUser(userId: number): Observable<Array<Meeting>> {
+    return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/list/' + userId);;
   }
 
 }

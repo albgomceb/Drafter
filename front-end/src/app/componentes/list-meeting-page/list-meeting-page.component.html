@@ -1,11 +1,17 @@
 <div class="card-body">
-  <h2 class="text-center"><span class="letter">O</span>rganizations</h2>
-  <div *ngFor="let organization of organizations; let i=index">
+  <h2 class="text-center"><span class="letter">M</span>eetings</h2>
+  <div *ngFor="let meeting of meetings; let i=index">
+    <label class="mt-4" >Meeting: {{meeting.title}} Date: {{meeting.date}} Type: {{meeting.type}} Finished: {{meeting.hasfinished}}</label>
+    <button type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">See Minutes</button>
+  </div>
+
+  <!-- TODO si es necesario una vista donde se vean las organizaciones y sus departamentos -->
+  <!-- <div *ngFor="let organization of organizations; let i=index">
     <label class="mt-4" >Organization: {{organization.enterprise}}</label>
 
     <div *ngFor="let department of organization.departments; let i=index">
         <label class="mt-4" >Department: {{organization.enterprise}}</label>
         <button type="button" (click)="seeMeeting(meeting)" class="btn btn-success btn-circle btn-lg">See Meeting</button>
     </div>
-  </div>
+  </div> -->
 </div>

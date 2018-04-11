@@ -1,5 +1,6 @@
 package drafter.beans.meeting;
 
+import java.util.Date;
 import java.util.List;
 
 import drafter.beans.Option;
@@ -8,10 +9,11 @@ public class MeetingBean {
 	public Integer id;
 	public String title; 
 	public String description; 
+	public Date date;
 	public List<Option> attendants;
 	public List<Option> agendas;
 	public String type;
-	public boolean isFinished;
+	public boolean hasfinished;
 
 	
 	public Integer getId() {
@@ -32,6 +34,12 @@ public class MeetingBean {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public List<Option> getAttendants() {
 		return attendants;
 	}
@@ -50,12 +58,14 @@ public class MeetingBean {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public boolean isFinished() {
-		return isFinished;
+	public boolean hasFinished() {
+		return hasfinished;
 	}
-	public void setFinished(boolean isFinished) {
-		this.isFinished = isFinished;
+	public void setFinished(boolean hasfinished) {
+		this.hasfinished = hasfinished;
 	}
+	
+	
 	
 	
 	

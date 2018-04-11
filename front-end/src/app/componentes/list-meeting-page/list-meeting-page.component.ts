@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Organization } from '../models/organization.model';
-import { OrganizationService } from '../services/organization.service';
+import { MeetingService } from '../services/meeting.service';
+import { Meeting } from '../models/meeting.model';
 
 
 @Component({
@@ -11,27 +11,37 @@ import { OrganizationService } from '../services/organization.service';
 })
 export class ListMeetingPageComponent implements OnInit {
 
-  public organizations: Array<Organization>;
+  public meetings: Array<Meeting>;
   public userId: number; 
 
   errorListUsers:boolean = false;
 
-  constructor(private organizationService: OrganizationService,
+  constructor(private meetingService: MeetingService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    // Cogemos las organizaciones que el usuario tenga
-    this.userId = 10;
-    this.organizationService.getOrganizationsByUser(this.userId).subscribe(
+    this.userId = 11;
+    // Cogemos las meeting que el usuario tenga
+    this.meetingService.getMeetingsByUser(this.userId).subscribe(
       data => 
       {
-        this.organizations = data;
+        this.meetings = data;
       },
       error => {
         this.errorListUsers = true;
       }
     );
+  }
+
+  seeMeeting(meetingId: number){
+    
+  }
+
+  seeMinutesMeeting(meetingId: number){
+    this.meetingService.getMeeting(meetingId).subscribe(res =>{
+      this.router.navigate(['/minutes/' + meetingId]);
+    });
   }
 
 }

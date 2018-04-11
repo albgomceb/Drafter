@@ -46,6 +46,7 @@ public class MeetingSerializer {
 		res.setDescription(meeting.getDescription());
 		res.setType(meeting.getType()==null?"standard":meeting.getType());
 		res.setFinished(meeting.isHasfinished());
+		res.setDate(meeting.getDate());
 		
 		List<Option> attendants = meeting.getParticipants().stream()
 				.map(us -> new Option(new Integer(us.getId()).toString(), us.getUser().getName()))
