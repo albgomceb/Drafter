@@ -33,7 +33,7 @@ export class MeetingService {
   }
 
   getMeetingsByUser(userId: number): Observable<Array<Meeting>> {
-    return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/list/' + userId);;
+    return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/list/' + userId);
   }
 
 }

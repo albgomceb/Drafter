@@ -1,9 +1,16 @@
 <div class="card-body">
   <h2 class="text-center"><span class="letter">M</span>eetings</h2>
   <div *ngFor="let meeting of meetings; let i=index">
-    <label class="mt-4" >Meeting: {{meeting.title}} Date: {{meeting.date}} Type: {{meeting.type}} Finished: {{meeting.hasfinished}}</label>
-    <button type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">See Minutes</button>
+    <label class="mt-4" ><strong>Meeting:</strong> {{meeting.title}} 
+      <strong>Date:</strong> {{meeting.date | date : "fullDate"}} 
+      <strong>Type:</strong> {{meeting.type}} 
+      <strong>Finished:</strong><span *ngIf="meeting.hasfinished"> Yes</span><span *ngIf="!meeting.hasfinished"> No</span>
+    </label>
+    <button *ngIf="meeting.hasfinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">See Minutes</button>
+    <button *ngIf="!meeting.hasfinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">Go to meeting!</button>
+    <h4 *ngIf="!meeting.hasfinished">The meeting is not ready yet</h4>
   </div>
+  <span>Prueba fecha actual en entero: {{today}}</span>
 
   <!-- TODO si es necesario una vista donde se vean las organizaciones y sus departamentos -->
   <!-- <div *ngFor="let organization of organizations; let i=index">

@@ -13,6 +13,7 @@ export class ListMeetingPageComponent implements OnInit {
 
   public meetings: Array<Meeting>;
   public userId: number; 
+  public today: number;
 
   errorListUsers:boolean = false;
 
@@ -22,6 +23,7 @@ export class ListMeetingPageComponent implements OnInit {
 
   ngOnInit() {
     this.userId = 11;
+    this.today = new Date().getTime();
     // Cogemos las meeting que el usuario tenga
     this.meetingService.getMeetingsByUser(this.userId).subscribe(
       data => 
@@ -34,8 +36,10 @@ export class ListMeetingPageComponent implements OnInit {
     );
   }
 
-  seeMeeting(meetingId: number){
-    
+  goToMeeting(meetingId: number){
+    this.meetingService.getMeeting(meetingId).subscribe(res =>{
+      this.router.navigate(['/meeting/' + meetingId]);
+    });
   }
 
   seeMinutesMeeting(meetingId: number){
