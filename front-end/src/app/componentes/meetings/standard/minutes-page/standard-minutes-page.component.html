@@ -1,9 +1,37 @@
 <h1 class="title-page text-center">
     <span class="capital-letter">M</span>inutes
 </h1>
-<h2 class="text-center">
-    {{meeting.title}}
-</h2>
+
+<div class="summary-container p-5">
+    <div class="summary">
+        <h2 class="text-center">
+            <span style="font-weight: 400;color: #00a98f">{{meeting.type}}</span> Meeting Summary
+        </h2>
+        <div class="topic">
+        <span class="principal mt-2 ">Topic:</span> <span class="principal" style="color: black;">{{meeting.title}}</span>
+        </div>
+        <span class="secundary mt-5"><i class="fas fa-gavel fa-lg"></i> Session leader</span> <span>(LIDER)</span>
+        <span class="secundary mt-2"><i class="fas fa-user fa-lg"></i> {{meeting.attendants.length}} participants</span> 
+        <table class="table table-hover mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Organization</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let at of meeting.attendants">
+                <tr>
+                    <td scope="col"><img src="{{at.photo}}" width="100px"/></td>
+                    <td scope="col">{{at.name}}</td>
+                    <td scope="col">{{at.organization}}</td>
+                </tr>
+            </tbody>
+        </table> 
+        <span class="secundary mt-2"><i class="fas fa-calendar-alt fa-lg"></i> Date</span> <span>{{meeting.date}}</span> 
+        <span class="secundary mt-2"><i class="fas fa-stopwatch fa-lg"></i> Length</span> <span>{{meeting.timer}}</span>
+    </div>
+</div>
 
 <div class="minutes-container">
   <div *ngFor="let agenda of agendas" class="point-container">
