@@ -1,0 +1,36 @@
+.summary-container{
+    border: 1px lighten(black,80%) solid;
+    background-color: white;
+    .topic{
+        text-align: center;
+    }
+    .principal{
+        color: #00a98f;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-weight: 600;
+        font-size: 1.5em;
+    }
+    .secundary{
+        color: #00a98f;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 17px;
+        font-weight: 600;
+        display: block;
+    }
+}
+
+.minutes-container{
+    border: none;
+}
+
+table tbody tr{
+    cursor: pointer;
+    td{
+        vertical-align: middle;
+    }
+}
+
+table thead tr{
+    background-color: #00a98f;
+    color: white;
+}

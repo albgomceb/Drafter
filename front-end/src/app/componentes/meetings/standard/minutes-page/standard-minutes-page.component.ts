@@ -4,6 +4,7 @@ import { Meeting2 } from '../../../models/meeting.model2';
 import { Agenda2 } from '../../../models/agenda.model2';
 import { Conclusion } from '../../../../models/conclusion';
 import { MeetingService } from '../../../services/meeting.service';
+import { Option } from '../../../models/option.model';
 
 @Component({
   selector: 'standard-minutes-page',
@@ -26,6 +27,7 @@ export class StandardMinutesPageComponent implements OnInit {
   ngOnInit() {
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
        this.meeting = data;
+       console.log(this.meeting);
     });
     this.meetingService.getAgendas(this.meetingId).subscribe(data => {
       this.agendas = data;
