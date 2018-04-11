@@ -1,3 +1,4 @@
+import { LoginService } from './../componentes/services/login.service';
 import { Injectable } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
@@ -18,7 +19,7 @@ export class RealTimeService {
   private subscribed: boolean = false;
 
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   public getUserUUID(): string {
     return this.userUUID;
@@ -49,7 +50,7 @@ export class RealTimeService {
     this.users = {};
     this.usersCount = 0;
     this.meeting = meeting;
-    this.user= this.user ? this.user : 'Unnamed';
+    this.user= this.loginService.getPrincipal().username;
     this.models = new Array<any>();
 
     var ws = new SockJS(environment.baseWS);
