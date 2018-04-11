@@ -70,10 +70,11 @@ div.ideas-container {
     }
 }
 
-div.point-container {
+/* STANDARD */
+div.topic-container {
     margin-bottom: 2rem;
 
-    div.points {
+    div.topic {
         width: 100%;
         margin: 1em 0;
         border: 1px solid $content_border;
