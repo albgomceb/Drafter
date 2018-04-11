@@ -6,6 +6,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,13 @@ public class Retrospective extends Meeting {
 		
 	public Retrospective() {
 		
+	}
+	
+	//Methods--------------------------------------------
+	@Override
+	@Transient
+	public String getType() {
+		return "retrospective";
 	}
 	
 	

@@ -3,16 +3,27 @@ package drafter.beans.meeting;
 import java.util.List;
 
 import drafter.beans.Option;
-import drafter.domain.Agenda;
 
 public class MeetingBean {
-	public Integer id;
-	public String title; 
-	public String description; 
-	public List<Option> attendants;
-	public List<Option> agendas;
+	private Integer id;
+	private String title; 
+	private String description;
+	private Integer numberOfMeeting;
+	private String image;
+	private long timer;
+	private long date;
+	private List<Option> attendants;
+	private String type;
+	private boolean isFinished;
+	private int status;
 
 	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -37,11 +48,41 @@ public class MeetingBean {
 	public void setAttendants(List<Option> attendants) {
 		this.attendants = attendants;
 	}
-	public List<Option> getAgendas() {
-		return agendas;
+	public String getType() {
+		return type;
 	}
-	public void setAgendas(List<Option> agendas) {
-		this.agendas = agendas;
+	public void setType(String type) {
+		this.type = type;
+	}
+	public boolean isFinished() {
+		return isFinished;
+	}
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
+	public Integer getNumberOfMeeting() {
+		return numberOfMeeting;
+	}
+	public void setNumberOfMeeting(Integer numberOfMeeting) {
+		this.numberOfMeeting = numberOfMeeting;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public long getTimer() {
+		return timer;
+	}
+	public void setTimer(long timer) {
+		this.timer = timer;
+	}
+	public long getDate() {
+		return date;
+	}
+	public void setDate(long date) {
+		this.date = date;
 	}
 	
 	

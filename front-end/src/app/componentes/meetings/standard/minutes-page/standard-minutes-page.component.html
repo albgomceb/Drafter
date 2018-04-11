@@ -1,0 +1,21 @@
+<h1 class="title-page text-center">
+    <span class="capital-letter">M</span>inutes
+</h1>
+<h2 class="text-center">
+    {{meeting.title}}
+</h2>
+
+<div class="minutes-container">
+  <div *ngFor="let agenda of agendas" class="point-container">
+      <h3>{{agenda.description}}</h3>
+      <span>Conclusion:</span>
+      <div *ngFor="let co of agenda.conclusions">
+        <p>{{co.conclusion}}</p> 
+      </div>
+  </div>
+</div>
+
+<div class="text-center">
+    <button routerLink="../../meeting" class="btn">New meeting</button>
+    <button routerLink="../../" class="btn">Finish</button>
+</div>
