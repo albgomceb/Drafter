@@ -1,37 +1,26 @@
-<br>
-<h2 class="text-center"><span class="letter">S</span>tandard meeting</h2>
-<br>
-<div class="row">
-    <div class="col-md-4">
-        <h3>Chat</h3>
-        <chat></chat>
-    </div>
-
-    <div class="col-md-8 agenda">
-        <h3>Agenda</h3>
-        <div *ngFor="let a of agendas">
-            <div class="points">
-                <span>{{a.number}}. {{a.description}}</span>
-                <button class="btn btn-success add" (click)="addConclusion($event)" attr.data-index="{{a.number}}">+</button>
-                <div class="clear"></div>
-            </div>
-
-            <ul>
-                <li
-                *ngFor="let c of a.conclusions; let i = index" 
-                attr.contenteditable="{{hasEdit}}"
-                attr.data-iagenda="{{a.number}}" 
-                attr.data-iconclusion="{{i}}" 
-                (focusout)="edit($event)"
-                (keydown)="enter($event)"
-                class="conclusion">
-                    {{c.conclusion}}
-                </li>
-            </ul>
+<div class="agenda">
+    <h3>Agenda</h3>
+    <div *ngFor="let a of agendas" class="point-container">
+        <div class="points d-flex justify-content-between">
+            <span>{{a.number}}. {{a.description}}</span>
+            <button class="btn" (click)="addConclusion($event)" attr.data-index="{{a.number}}">+</button>
         </div>
-    </div>       
- </div>
+
+        <ul class="input-container">
+            <li
+            *ngFor="let c of a.conclusions; let i = index" 
+            attr.contenteditable="{{hasEdit}}"
+            attr.data-iagenda="{{a.number}}" 
+            attr.data-iconclusion="{{i}}" 
+            (focusout)="edit($event)"
+            (keydown)="enter($event)"
+            class="conclusion">
+                {{c.conclusion}}
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="buttons text-center">
-    <button (click) = "finish()" class="btn bt-lg mr-1">Finish</button>
+    <button (click) = "finish()" class="btn">Finish</button>
 </div>

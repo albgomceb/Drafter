@@ -1,0 +1,89 @@
+/* G E N E R A L */
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: $content_background_color;
+}
+
+div.page-wrapper {
+    position: relative;
+    max-width: 100%;
+    min-height: 100%;
+
+    div.content {
+        padding: 2rem 1.5rem 4.5rem;
+    
+        @media only screen and (max-width: 991px) {
+            padding-bottom: 9rem;
+        }
+    }
+}
+
+h1.title-page {
+    margin: 0 0 2rem;
+
+    span.capital-letter {
+        color: $content_letter_title;
+    }
+}
+
+h2.subtitle {
+    font-size: 1.125rem;
+    margin-bottom: 1.2rem;
+}
+
+button.btn {
+    border: none;
+    border-radius: 0;
+    color: $button_font_color;
+    font-weight: bold;
+    background-color: $button;
+    transition: all .2s ease-in;   
+}
+
+button.btn:hover:not([disabled=""]) {
+    background-color: $button_hover;
+}
+
+.shadow {
+	box-shadow: 0px 1px 5px 0px #4a4a4a;
+}
+
+div.card {
+    margin: 1.5rem 2rem;
+
+    div.card-header {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding: 0.5rem 0.9rem;
+        background-color: $mp_primary_color;
+
+        h4.card-title {
+            margin: 0;
+            font-size: 2em;
+            color: white;
+            font-size: bolder;
+        }
+    }
+    
+    div.card-body {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 1.5rem 4rem;
+
+        p.card-price {
+            margin: 1.2rem 0;
+            font-size: 1.8rem;
+            font-weight: bolder;
+            color: $mp_secondary_color;
+        }
+    }
+
+    @include media-breakpoint-down(md) {
+        margin: 1.5rem 0.3rem;
+    }
+}

@@ -7,9 +7,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import drafter.domain.User;
 import drafter.repositories.UserRepository;
+import drafter.security.LoginService;
+import drafter.security.UserAccount;
 
 @Service
 @Transactional
@@ -19,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository	userRepository;
+	
+	@Autowired
+	private LoginService loginService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -55,13 +61,16 @@ public class UserService {
 
 	//Other business Methods-----------------------------------------------------------------------------
 
+    public User findByEmail(String email) {
+    	return userRepository.findByEmail(email);
+    }
 
-	/*public User findByPrincipal() {
-		final UserAccount userAccount = LoginService.getPrincipal();
-		final User user = this.userRepository.findByPrincipal(userAccount.getId());
-		Assert.isTrue(user.getUserAccount().getUsername().equals(userAccount.getUsername()));
+	public User findByPrincipal() {
+		final UserAccount userAccount = loginService.getPrincipal();
+		final User user = this.userRepository.findByUserAccount(userAccount.getId());
+		Assert.isTrue(user.getUserAccount().getUsername().equals(userAccount.getUsername()), "Invalid user name!");
 		return user;
-	}*/
+	}
 
 	/*public Boolean isUser() {
 		Boolean result = false;

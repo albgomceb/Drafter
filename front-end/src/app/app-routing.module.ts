@@ -11,10 +11,15 @@ import { StandardMeetingComponent, DynamicMeetingComponent, DynamicMinutesCompon
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { OrganizationDepartmentPageComponent } from './componentes/organization-department-page/organization-department-page.component';
 import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-meeting-page.component';
+import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
+import { PricingComponent } from './componentes/pricing/pricing.component';
 
+import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
+import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
+  {path: 'pricing',component: PricingComponent},
   {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
@@ -24,6 +29,7 @@ const routes: Routes = [
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: 'organization-department', component: OrganizationDepartmentPageComponent},
   {path: 'meeting/list/:userId', component: ListMeetingPageComponent},
+  {path: 'ideas', component: IdeasCreateComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];

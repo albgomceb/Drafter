@@ -4,6 +4,7 @@ import java.util.List;
 
 import drafter.beans.cons.ConsBean;
 import drafter.beans.pros.ProsBean;
+import drafter.beans.vote.VoteBean;
 
 public class IdeaBean {
 	
@@ -13,6 +14,7 @@ public class IdeaBean {
 	private int brainId;
 	private List<ProsBean> pros;
 	private List<ConsBean> cons;
+	private List<VoteBean> votes;
 	
 	public int getId() {
 		return id;
@@ -49,6 +51,12 @@ public class IdeaBean {
 	}
 	public void setCons(List<ConsBean> cons) {
 		this.cons = cons;
+	}
+	public List<VoteBean> getVotes() {
+		return votes;
+	}
+	public void setVotes(List<VoteBean> votes) {
+		this.votes = votes;
 	}
 	
 	

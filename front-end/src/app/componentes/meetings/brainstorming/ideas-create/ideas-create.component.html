@@ -1,0 +1,40 @@
+<h2>Type your ideas</h2>
+
+<div class="ideas-container">
+  <div class="ideas-title">
+    Ideas
+  </div>
+  <div class="ideas-body">
+    <ul class="list-ideas">
+        <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
+          <input type="text" [(ngModel)]="entrada.text" 
+                 *ngIf="entrada.isInput" (keyup.enter)="convert(entrada);" 
+                 placeholder="Type your idea here..." required class="idea">
+          <div *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
+            {{entrada.text}}
+          </div>
+          <div class="options-ideas text-right">
+            <button *ngIf="entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-check"></i>
+            </button>
+            <button *ngIf="!entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-pencil-alt"></i>
+            </button>          
+            <button (click)="removeIdea(entrada, i)" class="btn">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </li>
+    </ul>
+    <div class="text-center">
+      <button type="button" (click)="addIdea()" class="btn">
+        <i class="fas fa-lightbulb"></i> New idea
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <!-- <button type="button" >Skip this step</button> -->
+  <button  (click)="saveIdea(entradas)" class="btn">Next step</button>
+</div>

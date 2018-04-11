@@ -1,8 +1,10 @@
-import { User } from "./user.model";
+import { Organization } from './organization.model';
+import { Meeting } from './meeting.model';
+import { User } from './user.model';
 
-export class Department {
+export class Departament {
   id: number;
-  name: String;
-  isInput: Boolean;
-  users: Array<User>;
+  name:String;
+  organizationId:number;
+  users:Array<User>;
 }

@@ -1,3 +1,5 @@
+import { VoteService } from './componentes/services/vote.service';
+import { IdeaService } from './componentes/services/idea.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -5,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
+import { FooterComponent } from './componentes/footer/footer.component';
 import { NotFoundPageComponent } from './componentes/not-found-page/not-found-page.component';
 import { LoginPageComponent } from './componentes/login-page/login-page.component';
 import { RegisterPageComponent } from './componentes/register-page/register-page.component';
 import { HomePageComponent } from './componentes/home-page/home-page.component';
 
 import {HttpClientModule} from "@angular/common/http";
+
 import { AgendaPageComponent } from './componentes/agenda-page/agenda-page.component';
 import { AgendaService } from './componentes/services/agenda.service';
 import { UserService } from './componentes/services/user.service';
@@ -25,15 +29,21 @@ import { Organization } from './componentes/models/organization.model';
 import { OrganizationService } from './componentes/services/organization.service';
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
-import { IdeaService } from './componentes/services/idea.service';
 import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-meeting-page.component';
-
+import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
+import { LoginService } from './componentes/services/login.service';
+import { RegisterService } from './componentes/services/register.service';
+import { BaseRequestOptions } from '@angular/http';
+import { PricingComponent } from './componentes/pricing/pricing.component';
+import { ChronometerComponent } from './componentes/meetings/chronometer/chronometer.component';
+import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MeetingPageComponent,
     NavbarComponent,
+    FooterComponent,
     NotFoundPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
@@ -41,6 +51,7 @@ import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-m
     AgendaPageComponent,
     ChatComponent,
     StandardMeetingComponent,
+    IdeaVotePageComponent, 
     DynamicMeetingComponent,
     DynamicMinutesComponent,
     OrganizationDepartmentPageComponent,
@@ -51,30 +62,34 @@ import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-m
     SixHatsComponent,
     IdeasProsConsComponent,
     BrainstormingComponent,
-    ListMeetingPageComponent
+    PricingComponent,
+    IdeasCreateComponent,
+    ChronometerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
 
   providers: [
-    UserService, 
+    LoginService,
+    RegisterService,
     MeetingService,
     AgendaService,
     OrganizationService,
     FormsModule,
-    ReactiveFormsModule,
     RealTimeService,
+    BaseRequestOptions,
     UserService,
     ReactiveFormsModule,
     DynamicMeetingService,
     SixHatsService,
     IdeaService,
-    IdeasProsConsComponent
+    VoteService
   ],  
   bootstrap: [AppComponent]
 })
