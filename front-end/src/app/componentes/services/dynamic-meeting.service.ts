@@ -1,3 +1,4 @@
+import { Meeting } from './../models/meeting.model';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -22,13 +23,8 @@ export class DynamicMeetingService {
   staticUrl:String = environment.baseApi;
   
   
-  getMeetingInfo(meetingId: number){
-    //llamar a un endpoint que obtenga los datos de una reunión, los datos deben mantener el formato falseado
-   return this.http.get(this.staticUrl + '/meeting/standard/'+meetingId);
-    // if(meetingId < this.reunionesFalsas.length)
-    //  { return this.reunionesFalsas[meetingId];}
-    // else 
-    //   {return null; }
+  getMeetingInfo(meetingId: number): Observable<any> {
+    return this.http.get(this.staticUrl + '/meeting/'+meetingId);
   }
 
   finish(meetingId: number): Observable<any> {
@@ -41,6 +37,7 @@ export class DynamicMeetingService {
       res.users.push(user);
     });
   }
+
   getMeetingTypes():Observable<Array<Option>>{
     //un endoint que devuelva la lista de tipos de reuniones existentes en una lista de Option.java con id =
     // un string que identifique a la reunión y name = nombre más descriptivo
@@ -52,29 +49,7 @@ export class DynamicMeetingService {
     return this.http.get<string>(this.staticUrl+'/meeting/nextStep/'+meetingId);
   }
 
- 
-  public reunionesFalsas:Array<any>=[
-    {
-      id:0,
-      tipo: 'standard',
-      ultimoPaso: 1,
-      isFinished: false,
-      users:[]
-    },
-    {
-      id:2,
-      tipo: 'six-hats',
-      ultimoPaso: 0,
-      isFinished: false,
-      users:[]
-    },
-    {
-      id:0,
-      tipo: 'standard',
-      ultimoPaso: 1,
-      isFinished: false,
-      users:[]
-    }
-
-  ];
+  setTimer(meetingId: number, timer: number): Observable<any> {
+    return this.http.get(this.staticUrl+'/meeting/setTimer/'+meetingId+'/'+timer);
+  }
 }

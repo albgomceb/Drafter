@@ -2,7 +2,6 @@ package drafter.controllers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,6 @@ import drafter.beans.Option;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Meeting;
-import drafter.domain.Participant;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
 //import drafter.services.SixHatsService;
@@ -92,9 +90,7 @@ public class MeetingController extends AbstractController {
 	
 	@GetMapping("/finish/{meetingId}")
 	public MeetingBean finish(@PathVariable int meetingId) {
-		meetingService.finish(meetingId);
-		Meeting result = meetingService.findById(meetingId);
-		
+		Meeting result = meetingService.finish(meetingId);
 		MeetingBean res = new MeetingSerializer().fromMeeting(result);
 		return res;
 	}
@@ -103,5 +99,11 @@ public class MeetingController extends AbstractController {
 	public String nextStep(@PathVariable int meetingId) {
 		Meeting meeting = meetingService.nextStep(meetingId);
 		return meeting.getStatus() +"";
+	}
+	
+	@GetMapping("/setTimer/{meetingId}/{timer}")
+	public String nextStep(@PathVariable int meetingId, @PathVariable int timer) {
+		meetingService.setTimer(meetingId, timer);
+		return "";
 	}
 }
