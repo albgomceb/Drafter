@@ -104,4 +104,17 @@ public class MeetingController extends AbstractController {
 		Meeting meeting = meetingService.nextStep(meetingId);
 		return meeting.getStatus() +"";
 	}
+	
+	@GetMapping("/isParticipant/{meetingId}")
+	public String isParticipant(@PathVariable int meetingId) {
+		boolean res;
+		try {
+			res = meetingService.isParticipant(meetingId);
+		} catch(Throwable e) {
+			res = false;
+		}
+		
+		//return "{\"result\":" + res + "}";
+		return ""+res;
+	}
 }

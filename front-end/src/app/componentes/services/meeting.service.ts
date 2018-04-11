@@ -19,16 +19,19 @@ export class MeetingService {
 
   staticUrl:String = environment.baseApi;
 
-  getMeeting(meetingId:number): Observable<Meeting2> {
+  public getMeeting(meetingId:number): Observable<Meeting2> {
     return this.http.get<Meeting2>(this.staticUrl+'/minutes/meeting/'+meetingId);
   }
 
-  getAgendas(meetingId:number): Observable<Array<Agenda2>> {
+  public getAgendas(meetingId:number): Observable<Array<Agenda2>> {
     return this.http.get<Array<Agenda2>>(this.staticUrl+'/minutes/meeting/'+ meetingId + '/agenda');
   }
 
-  getConclusions(agendaId:number): Observable<Array<Conclusion>> {
+  public getConclusions(agendaId:number): Observable<Array<Conclusion>> {
     return this.http.get<Array<Conclusion>>(this.staticUrl+'/agendas/' + agendaId + '/conclussion');
   }
 
+  public isParticipant(meetingId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.staticUrl+'/meeting/isParticipant/' + meetingId);
+  }
 }

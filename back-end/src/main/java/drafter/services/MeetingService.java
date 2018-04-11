@@ -16,6 +16,7 @@ import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.Step;
+import drafter.domain.User;
 import drafter.repositories.MeetingRepository;
 
 @Service
@@ -26,6 +27,9 @@ public class MeetingService {
 
 	@Autowired
 	private MeetingRepository	meetingRepository;
+	
+	@Autowired
+	private UserService    	    userService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -82,6 +86,16 @@ public class MeetingService {
     	m.setStatus(m.getStatus()+1);
     	
     	return save(m);
+    }
+    
+    public boolean isParticipant(int id) {
+    	Meeting m = findById(id);
+    	User principal = userService.findByPrincipal();
+    	for(Participant p : m.getParticipants())
+    		if(p.getUser().equals(principal))
+    			return true;
+    	
+    	return false;
     }
 
 	//Other business Methods-----------------------------------------------------------------------------
