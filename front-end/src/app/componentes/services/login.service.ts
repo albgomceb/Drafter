@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
 import { Login } from '../models/login.model';
 import { Subject } from 'rxjs/Subject';
-import { Router } from '@angular/router/src/router';
+import { Router } from '@angular/router';
 
 const httpOptions = {
     headers: new Headers({ 'Content-Type': 'application/json' })
@@ -31,7 +31,7 @@ export class LoginService {
     public logout() {
         this.http.get(this.staticUrl+"/users/logout", {}).subscribe(res => {
             this.user = undefined;
-            this.router.navigate(['/home']);
+            this.router.navigate(['home']);
         });
     }
 
