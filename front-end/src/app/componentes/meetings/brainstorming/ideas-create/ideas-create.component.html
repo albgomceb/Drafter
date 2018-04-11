@@ -1,28 +1,41 @@
+<h2>Type your ideas <button  (click)="saveIdea(entradas)" class="btn">Next step</button></h2>
+<!--<p>Write down your ideas. You can add as many ideas as you want by clicking the add (+) button (or pressing enter key).</p>-->
 
-<div style="padding:5%; text-align:center">
-  <h2 class="users"><span class="letter">I</span>deas</h2>
-<p>Write down your ideas! <br/>
-You can add as many ideas as you want by clicking the add (+) button (or pressing Enter key).</p></div>
-<div class="container">
-  <table class="table table-hover">
-    <div *ngFor="let entrada of entradas; let i=index">
-      <tr>
-        <td>{{entradas.indexOf(entrada)+1}}.&nbsp;</td>
-        <td style ="width: 100%">
-          <input class="col-12" type = "text" [(ngModel)]="entrada.text"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
-          (keyup.enter)="convert(entrada); addIdea()" placeholder="Point to deal with" required/>
-        <div *ngIf="!entrada.isInput" (click)="convert(entrada)">{{entrada.text}}</div></td>
-        <td><button (click)="removeIdea(entrada, i)" class="btn bt-lg">Remove</button></td>
-      </tr>
+<div class="ideas-container">
+  <div class="ideas-title">
+    Ideas
+  </div>
+  <div class="ideas-body">
+    <ul class="list-ideas">
+        <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
+          <input type="text" [(ngModel)]="entrada.text" 
+                 *ngIf="entrada.isInput" (keyup.enter)="convert(entrada);" 
+                 placeholder="Type your idea here..." required class="idea">
+          <div *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
+            {{entrada.text}}
+          </div>
+          <div class="options-ideas text-right">
+            <button *ngIf="entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-check"></i>
+            </button>
+            <button *ngIf="!entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-pencil-alt"></i>
+            </button>          
+            <button (click)="removeIdea(entrada, i)" class="btn">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </li>
+    </ul>
+    <div class="text-center">
+      <button type="button" (click)="addIdea()" class="btn">
+        <i class="fas fa-lightbulb"></i> New idea
+      </button>
     </div>
-  </table>
-  <div class="text-center">
-    <button type="button" (click)="addIdea()" class="btn btn-success btn-circle btn-lg">+</button>
   </div>
+</div>
 
-  <div style="margin:2%;text-align:center">
-      <br/>
-    <!-- <button type="button" >Skip this step</button> -->
-    <button  (click)="saveIdea(entradas)" class="btn bt-lg">Next</button>
-  </div>
+<div class="text-center">
+  <!-- <button type="button" >Skip this step</button> -->
+  <button  (click)="saveIdea(entradas)" class="btn">Next step</button>
 </div>
