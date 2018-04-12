@@ -10,7 +10,7 @@ public class MeetingBean {
 	private String description;
 	private Integer numberOfMeeting;
 	private String image;
-	private long timer;
+	private int timer;
 	private long date;
 	private List<Option> attendants;
 	private String type;
@@ -72,10 +72,10 @@ public class MeetingBean {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public long getTimer() {
+	public int getTimer() {
 		return timer;
 	}
-	public void setTimer(long timer) {
+	public void setTimer(int timer) {
 		this.timer = timer;
 	}
 	public long getDate() {
