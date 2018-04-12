@@ -71,6 +71,10 @@ public class UserService {
 		Assert.isTrue(user.getUserAccount().getUsername().equals(userAccount.getUsername()), "Invalid user name!");
 		return user;
 	}
+	
+	public List<User> filterUsers(String keyword){
+		return userRepository.filterUsers(keyword);
+	}
 
 	/*public Boolean isUser() {
 		Boolean result = false;
