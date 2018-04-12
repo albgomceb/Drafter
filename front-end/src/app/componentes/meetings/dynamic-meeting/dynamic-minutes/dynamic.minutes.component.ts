@@ -19,6 +19,8 @@ import { DynamicMeetingService } from "../../../services/dynamic-meeting.service
       this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
       if(this.meetingId){
          this.meetingService.getMeetingInfo(this.meetingId).subscribe(res =>{
+           console.log('info', res);
+           
           this.meetingInfo = res;
         });
         this.users = this.meetingInfo.users;

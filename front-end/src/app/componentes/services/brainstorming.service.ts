@@ -20,6 +20,8 @@ export class BrainStormingService {
 
 
   getIdeas(meetingId): Observable<Array<Idea>> {
-    return this.http.get<Array<Idea>>(this.staticUrl+'minutes/meeting/'+meetingId+'/ideas');
+    console.log("AAA",this.staticUrl+'/minutes/meeting/'+meetingId+'/ideas');
+    
+    return this.http.get<Array<Idea>>(this.staticUrl+'/minutes/meeting/'+meetingId+'/ideas');
   }
 }

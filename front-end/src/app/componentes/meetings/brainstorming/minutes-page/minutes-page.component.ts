@@ -8,17 +8,14 @@ import { Meeting } from '../../../models/meeting.model';
 import { BrainStormingService } from '../../../services/brainstorming.service';
 
 @Component({
-  selector: 'minutes-page',
+  selector: 'brainstorming-minutes-page',
   templateUrl: './minutes-page.component.html',
   styleUrls: ['./minutes-page.component.scss']
 })
-export class MinutesPageComponent implements OnInit {
+export class BrainStormingMinutesPageComponent implements OnInit {
 
   meeting: Meeting = new Meeting();
-  model:any[];
-  ideas: Array<Idea>;
-  pros: Array<Pros> = [];
-  cons: Array<Cons> = [];
+  ideas: Array<Idea> = [];
   @Input() meetingId: number;
   @Input() meetingInfo: any;
 
@@ -26,24 +23,20 @@ export class MinutesPageComponent implements OnInit {
     private brainstormingService: BrainStormingService,
     private activatedRoute: ActivatedRoute) { }
 
-ngOnInit() {
-this.meetingService.getMeeting(this.meetingId).subscribe(data => {
-this.meeting = data;
-console.log(this.meeting);
-});
-this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
-this.ideas = data;
-this.model = [];
-for(let id of this.ideas){
-var val = {
-idea: id,
-pros: id.pros,
-cons: id.cons
-}
+  ngOnInit() {
+    
+    this.meetingService.getMeeting(this.meetingId).subscribe(data => {
+      this.meeting = data;
+      console.log("Antes de entrar en get ideas");
+      this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
+        this.ideas = data;
+        console.log("Dentro de get ideas", this.ideas);
+      });
+      console.log("Fuera de get ideas");
+    });
+  };
 
-this.model.push(val);
-}
-});
-};
-
+  getAverage(idea : Idea){    
+      return Math.round((idea.votes.map((vote)=> vote.value).reduce((v1,v2) => v1 + v2)/idea.votes.length) * 100)  / 100;
+  }
 }
