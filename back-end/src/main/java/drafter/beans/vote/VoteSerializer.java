@@ -9,8 +9,6 @@ import drafter.services.IdeaService;
 import drafter.services.ParticipantService;
 
 public class VoteSerializer {
-	private ParticipantService participantService;
-	private IdeaService ideaService;
 
 	public VoteBean fromVote(Vote vote) {
 		VoteBean res = new VoteBean();
@@ -24,14 +22,14 @@ public class VoteSerializer {
 		return res;
 	}
 
-	public List<Vote> fromBean(List<VoteBean> votesBean) {
+	public List<Vote> fromBean(List<VoteBean> votesBean,IdeaService ideaService,ParticipantService participantService) {
 		List<Vote> votes = new ArrayList<Vote>();
 		for (VoteBean ib : votesBean) {
 			Vote vote = new Vote();
 			Idea idea=ideaService.findById(ib.getIdeaId());
 			vote.setValue(ib.getValue());
 			vote.setParticipant(participantService.findById(ib.getParticipantId()));
-			vote.setIdea(ideaService.findById(ib.getIdeaId()));
+			vote.setIdea(idea);
 			idea.addVote(vote);
 			votes.add(vote);
 		}

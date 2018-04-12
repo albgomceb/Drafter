@@ -12,6 +12,6 @@ export class ProsService {
   staticUrl:String = environment.baseApi + '/data/pros';
 
   savePros(pros: Pros, meeting: number): Observable<Pros> {
-    return this.http.post<Pros>(this.staticUrl+'/save/'+meeting, pros, {});
+    return this.http.post<Pros>(this.staticUrl+'/savePro/'+meeting, pros, {});
   }
 }

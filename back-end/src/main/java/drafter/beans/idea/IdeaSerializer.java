@@ -19,6 +19,10 @@ import drafter.domain.Idea;
 import drafter.domain.Meeting;
 import drafter.domain.Pros;
 import drafter.domain.Vote;
+import drafter.services.ConsService;
+import drafter.services.IdeaService;
+import drafter.services.ParticipantService;
+import drafter.services.ProsService;
 
 public class IdeaSerializer {
 	
@@ -65,6 +69,36 @@ public class IdeaSerializer {
 	    }
 
 	    return ideas;
+	}
+	
+	public Idea fromBean(IdeaBean ideaBean, BrainStorming brainstorming, IdeaService ideaService, ProsService prosService,
+			ConsService consService, ParticipantService participantService) {
+	    Idea idea = new Idea();
+	    idea.setNumber(ideaBean.getNumber());
+	    idea.setText(ideaBean.getText());
+	    List<Pros> pros = new LinkedList<Pros>();
+	    if (ideaBean.getPros() != null) {
+		    for (ProsBean pr : ideaBean.getPros()) {
+		    	pros.add(new ProsSerializer().fromBean(pr, ideaService, prosService));
+		    }
+	    }
+	    idea.setPros(pros);
+	    List<Cons> cons = new LinkedList<Cons>();
+	    if (ideaBean.getCons() != null) {
+		    for (ConsBean c : ideaBean.getCons()) {
+		    	cons.add(new ConsSerializer().fromBean(c, ideaService, consService));
+		    }
+	    }
+	    idea.setPros(pros);
+	    idea.setCons(cons);
+	    List<Vote> votes = new LinkedList<Vote>();
+	    if (ideaBean.getVotes() != null) {
+	    	votes.addAll(new VoteSerializer().fromBean(ideaBean.getVotes(), ideaService, participantService));
+	    }
+	    idea.setVotes(votes);
+	    idea.setBrain(brainstorming);
+
+	    return idea;
 	}
 
 }
