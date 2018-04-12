@@ -22,7 +22,7 @@
           <a class="nav-link" routerLink="organization-department">New organization</a>
         </li>
         <li>
-            <a class="nav-link" routerLink="meeting/list/11">My meetings</a>
+            <a class="nav-link" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}">My meetings</a>
           </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="pricing">Pricing</a>

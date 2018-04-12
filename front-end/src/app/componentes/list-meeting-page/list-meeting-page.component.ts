@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MeetingService } from '../services/meeting.service';
 import { Meeting } from '../models/meeting.model';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 
 
 @Component({
@@ -12,20 +14,31 @@ import { Meeting } from '../models/meeting.model';
 export class ListMeetingPageComponent implements OnInit {
 
   public meetings: Array<Meeting>;
-  public userId: number; 
+  public user: User; 
   public today: number;
 
   errorListUsers:boolean = false;
 
-  constructor(private meetingService: MeetingService,
+  constructor(private userService: UserService,
+    private meetingService: MeetingService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    this.userId = 10;
+    this.userService.getLoginUser().subscribe(
+      data => 
+      {
+        this.user = data;
+      },
+      error => {
+        this.errorListUsers = true;
+      }
+    );
+
     this.today = new Date().getTime();
+
     // Cogemos las meeting que el usuario tenga
-    this.meetingService.getMeetingsByUser(this.userId).subscribe(
+    this.meetingService.getMeetingsByUser(10).subscribe(
       data => 
       {
         this.meetings = data;
