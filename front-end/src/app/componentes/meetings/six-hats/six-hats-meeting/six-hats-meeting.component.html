@@ -16,19 +16,12 @@
       </div>
       <span>Your conclusions: </span>
       <div>
-          <tr *ngFor="let conclusion of hat.conclusions; let i=index">
-              <td>
-                {{hat.conclusions.indexOf(conclusion)+1}}.
-              </td>
-              <td>
-                <input type="text" [(ngModel)]="currentConclusion" (focusout)="edit($event, i, hatIndex)"
-                (keyup.enter)="enter($event)" placeholder="Conclusion" required class="point"/>
-                <span *ngIf="!checkNotBlank(conclusion)" class="required">
-                    Required
-                </span>
-              </td>
-          </tr>
-          <button (click)="addConclusion()" class="btn">New conclusion</button>
+        <input id="con-'{{i}}'" type="text" [(ngModel)]="currentConclusion" (focusout)="edit($event, i, hatIndex)"
+        (keyup.enter)="enter($event)" placeholder="Conclusion" required class="point"/>
+        <span *ngIf="!checkNotBlank(conclusion)" class="required">
+            Required
+        </span>
+        <button (click)="addConclusion(hat)" class="btn">New conclusion</button>
       </div>
   </div>
   <div [ngClass]="hat.color" *ngIf="hat != currentHat">

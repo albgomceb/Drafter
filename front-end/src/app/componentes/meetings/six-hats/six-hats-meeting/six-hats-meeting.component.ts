@@ -7,6 +7,7 @@ import { SixHatsService } from '../../../services/sixhats.service';
 import { SixHats } from '../../../models/sixHats.model';
 import { Hat } from '../../../models/hat.model';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
+import { Option } from '../../../models/option.model';
 
 
 @Component({
@@ -25,15 +26,14 @@ export class SixHatsMeetingComponent implements OnInit {
 
   public countDown;
   public count = 6;
-  public actualUser : User;
+  public actualUser : User = new User();
   public sixHats : SixHats = new SixHats();
-  public currentHat : Hat;
-  public currentConclusion : String;
+  public currentHat : Hat = new Hat();
+  public currentConclusion : String ="";
 
    constructor(private sixHatsService: SixHatsService,
     private router: Router,
-    private realTimeService: RealTimeService,
-    private activeRoute: ActivatedRoute) {
+    private realTimeService: RealTimeService) {
   }   
 
   ngOnInit() {
@@ -42,8 +42,7 @@ export class SixHatsMeetingComponent implements OnInit {
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;
       this.getHatColor('88');
-      this.addFirstConclusion();  
-      console.log("BBB ", this.sixHats);    
+      this.addFirstConclusion();   
     });
     this.sortAttendants();
     this.countDown = timer(0,1000).pipe(
@@ -61,12 +60,12 @@ export class SixHatsMeetingComponent implements OnInit {
     });
   }
 
-  edit(event, i, hatIndex) {
+  edit(event, hatIndex) {
     this.realTimeService.send('/sixHats/save/', 
                             WSResponseType.SET, 
-                            'h'+i,  
-                            this.sixHats.hats[hatIndex].conclusions[i], 
-                            {index: i});
+                            'h'+hatIndex,  
+                            this.sixHats.hats[hatIndex].conclusions[this.sixHats.hats.length-1], 
+                            {index: hatIndex});
   }
 
   enter(event) {
@@ -110,19 +109,19 @@ export class SixHatsMeetingComponent implements OnInit {
 
   addFirstConclusion(){
     for(let hat of this.sixHats.hats){
-      if(hat == this.currentHat && hat.conclusions.length == 0){
+      if(hat.conclusions.length == 0){
         hat.conclusions[0] = "aa"
       }
     }
   }
 
-  addConclusion(hat : Hat){
+  addConclusion(hat : Hat, i){
+    
     for(let ht of this.sixHats.hats){
-      if(ht === this.currentHat){
-        ht.conclusions.push(this.currentConclusion);
+      if(ht.color === this.currentHat.color){
+        ht.conclusions.push("ass");
       }
     }
-    console.log(this.sixHats.hats);
   } 
 
   checkNotBlank(string : String) : boolean{
