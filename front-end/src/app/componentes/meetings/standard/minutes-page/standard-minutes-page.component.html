@@ -18,9 +18,6 @@
     <div class="summary-item d-inline-block">
         <span class="summary-item-title">Length</span> {{meeting.timer | date:"hh:mm:ss"}}
     </div>
-    <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Session leader</span>
-    </div>
     <div class="summary-item d-block">
         <span class="summary-item-title">Description</span> {{meeting.description}}
     </div>
@@ -35,28 +32,9 @@
             <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
             <div class="card-body">
                 <h4 class="card-title">{{at.name}}</h4>
+                <h5>prueba</h5>
             </div>
         </div>
-        <span class="secundary mt-5"><i class="fas fa-gavel fa-lg"></i> Session leader</span> <span>(LIDER)</span>
-        <span class="secundary mt-2"><i class="fas fa-user fa-lg"></i> {{meeting.attendants.length}} participants</span> 
-        <table class="table table-hover mt-3">
-            <thead>
-                <tr>
-                    <th scope="col">Photo</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Organization</th>
-                </tr>
-            </thead>
-            <tbody *ngFor="let at of meeting.attendants">
-                <tr>
-                    <td width="120px" scope="col"><img src="{{at.photo}}" width="100px"/></td>
-                    <td scope="col">{{at.name}}</td>
-                    <td scope="col">{{at.organization}}</td>
-                </tr>
-            </tbody>
-        </table> 
-        <span class="secundary mt-2"><i class="fas fa-calendar-alt fa-lg"></i> Date</span> <span>{{meeting.date | date:"EEEE, dd LLL yyyy HH:mm"}}</span> 
-        <span class="secundary mt-2"><i class="fas fa-stopwatch fa-lg"></i> Length</span> <span>{{meeting.timer | date:"hh:mm:ss"}}</span>
     </div>
 </div>
 
