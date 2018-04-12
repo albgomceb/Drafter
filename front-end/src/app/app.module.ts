@@ -24,8 +24,12 @@ import { RealTimeService } from './services/real-time.service';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { StandardMeetingComponent, StandardComponent, DynamicMeetingComponent, SixHatsMeetingComponent, SixHatsComponent, DynamicMinutesComponent, StandardMinutesPageComponent, IdeasProsConsComponent, BrainstormingComponent } from './componentes/meetings';
 import { MeetingPageComponent } from './componentes/meeting-page/meeting-page.component';
+import { OrganizationDepartmentPageComponent } from './componentes/organization-department-page/organization-department-page.component';
+import { Organization } from './componentes/models/organization.model';
+import { OrganizationService } from './componentes/services/organization.service';
 import { DynamicMeetingService } from './componentes/services/dynamic-meeting.service';
 import { SixHatsService } from './componentes/services/sixhats.service';
+import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-meeting-page.component';
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 import { LoginService } from './componentes/services/login.service';
 import { RegisterService } from './componentes/services/register.service';
@@ -50,6 +54,7 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
     IdeaVotePageComponent, 
     DynamicMeetingComponent,
     DynamicMinutesComponent,
+    OrganizationDepartmentPageComponent,
     StandardComponent,
     StandardMinutesPageComponent,
     AgendaPageComponent,
@@ -59,6 +64,7 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
     BrainstormingComponent,
     PricingComponent,
     IdeasCreateComponent,
+    ListMeetingPageComponent,
     ChronometerComponent
   ],
   imports: [
@@ -75,6 +81,7 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
     RegisterService,
     MeetingService,
     AgendaService,
+    OrganizationService,
     FormsModule,
     RealTimeService,
     BaseRequestOptions,

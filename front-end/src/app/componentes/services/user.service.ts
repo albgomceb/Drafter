@@ -31,4 +31,8 @@ export class UserService {
     return this.http.post<Meeting>(this.staticUrl+'/meeting/standard/', meeting, {});
   }
 
+  getLoginUser(): Observable<User> {
+    return this.http.get<User>(this.staticUrl+'/users/me/');
+  }
+
 }
