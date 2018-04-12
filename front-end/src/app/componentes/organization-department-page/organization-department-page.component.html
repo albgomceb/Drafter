@@ -1,0 +1,71 @@
+<!-- <div class="col-md-6 mx-auto mt-3">
+<div class="card text-white bg-dark mb-3"> -->
+<div class="card-body">
+  <h2 class="text-center"><span class="letter">O</span>rganization</h2>
+  <form>
+    <div class="form-group">
+      <label for="enterprise" >Enterprise:</label>
+      <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" class="form-control"/>
+      <label class="mt-4" for="description" >Description:</label>
+      <input [(ngModel)]="organization.description" type="text" name="description" id="description" class="form-control"/>
+      <label class="mt-4" for="address" >Address:</label>
+      <input [(ngModel)]="organization.address" type="text" name="address" id="address" class="form-control"/>
+      <label class="mt-4" for="phone" >Phone number:</label>
+      <input [(ngModel)]="organization.phone" type="text" name="phone" id="phone" class="form-control"/>
+      <label class="mt-4" for="email" >Email:</label>
+      <input [(ngModel)]="organization.email" type="email" name="email" id="email" class="form-control"/>
+      <label class="mt-4" for="logo" >Logo (URL):</label>
+      <input [(ngModel)]="organization.logo" type="text" name="logo" id="logo" class="form-control"/>
+
+      <h2 class="text-center m-4"><span class="letter">D</span>epartments</h2>
+      <table class="table table-hover">
+        <div *ngFor="let department of departments; let i=index">
+          <tr>
+            <td>{{departments.indexOf(department)+1}}.&nbsp;</td>
+            <td style ="width: 100%">
+              <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
+              (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
+            <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div></td>
+            <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
+            <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
+          </tr>
+
+          <tr>
+          <div class="container">
+          <div class="form-users">
+            <label>Select the department participants:</label>
+              <div class="list-group">
+                <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+                <div *ngIf="errorListUsers" class="errorList">
+                  <img src="../../../assets/img/warning_turq.png" width="20%" />
+                  <h4>505 Internal Server Error</h4>
+                  <h6>Try again later</h6>
+                </div>
+
+                <div *ngFor="let us of users; let j = index">
+                    <a class="list-group-item list-group-item-action">
+                      <button *ngIf="!removeButton[j]" [hidden]="addButton[j]" type="button" (click)="addUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Add</button>
+                      <button *ngIf="addButton[j]" [hidden]="removeButton[j]" type="button" (click)="deleteUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Remove</button>
+                      <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                    </a>
+                </div>
+              </div>
+          </div>
+          </div>
+          </tr>
+
+        </div>
+      </table>
+      <div class="text-center">
+        <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
+      </div>
+      
+    </div>
+    <div style="margin:2%;text-align:center">
+      <button (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
+      <button routerLink=".." class="btn bt-lg">Cancel</button>
+    </div>
+  </form>
+</div>
+<!-- </div>
+</div> -->

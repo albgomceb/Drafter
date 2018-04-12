@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import drafter.domain.Meeting;
-
+import drafter.domain.Organization;
 
 @Repository
-public interface MeetingRepository extends JpaRepository<Meeting, Integer>{
+public interface OrganizationRepository extends JpaRepository<Organization, Integer> {
 
-	@Query("select m from Meeting m join m.participants p where p.user.id = ?1")
-	List<Meeting> findByUserId(int userId);
+	@Query("select o from Organization o where o.user.id = ?1")
+	List<Organization> findByUserId(int userId);
+
 }
