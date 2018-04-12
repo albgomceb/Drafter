@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,14 @@ public class UserController extends AbstractController {
 		List<User> res = this.userService.findAll();
 		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
 
+		return result;
+	}
+	
+	@GetMapping("/filterUsers/{keyword}")
+	public List<UserBean> filterUsers(@PathVariable String keyword) {	
+		List<User> res = this.userService.filterUsers(keyword);	
+		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
+		
 		return result;
 	}
 	
