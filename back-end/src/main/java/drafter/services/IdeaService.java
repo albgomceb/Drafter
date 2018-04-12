@@ -7,7 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import drafter.domain.Agenda;
+import drafter.beans.idea.IdeaBean;
+import drafter.beans.idea.IdeaSerializer;
 import drafter.domain.Idea;
 import drafter.repositories.IdeaRepository;
 
@@ -31,6 +32,10 @@ public class IdeaService {
 	    
 	    public Idea save(Idea idea) {
 	    	return ideaRepository.save(idea);
+	    }
+	    
+	    public IdeaBean saveBean(Idea idea) {
+	    	return new IdeaSerializer().fromIdea(save(idea));
 	    }
 
 	    public void delete(int id) {

@@ -91,6 +91,21 @@ export class RealTimeService {
 
         switch(obj.type) {
           case WSResponseType.PUSH:
+            if(obj.data['id'] && obj.data['id'] != 0) {
+              var i = 0;
+              for(var o of model) {
+                if(o.id && o.id==obj.data['id']) {
+                  model.splice(i, 1);
+                  model.splice(i, 0, obj.model);
+                  break;
+                }
+                
+                i++;
+              }
+
+              break;
+            }
+
             model.push(obj.model);
             break;
 

@@ -74,16 +74,10 @@ export class IdeasCreateComponent implements OnInit {
   } 
 
   removeIdea(entrada : Idea, entradasIndex : number){ 
-    var i=0;
-    for(var en of this.entradas) {
-      if(!en.text || en.text.trim().length == 0) {
-        this.entradas.splice(i, 1);
-        return;
-      }
-      i++;
-    }
-    
-    this.deleteIdea(entrada.id);
+    if(!entrada.id || entrada.id == 0)
+      this.entradas.splice(entradasIndex, 1);
+    else
+      this.deleteIdea(entrada.id);
   }
 
   private deleteIdea(id: number) {
@@ -104,7 +98,7 @@ export class IdeasCreateComponent implements OnInit {
                                   WSResponseType.PUSH, 
                                   'entradas',  
                                   entrada, 
-                                  {});
+                                  {id: entrada.id});
         
       var i=0;                 
       for(var en of this.entradas) {

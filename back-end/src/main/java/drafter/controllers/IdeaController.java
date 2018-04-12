@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -47,6 +50,7 @@ public class IdeaController {
 	
 	@Autowired
 	private SimpMessagingTemplate template;
+	
 
 	@GetMapping("")
 	public List<IdeaBean> findAll() {
@@ -87,9 +91,8 @@ public class IdeaController {
 		BrainStorming brainstorming = brainStormingService.findById(new Integer(brainId));
 		Idea idea = new IdeaSerializer().fromBean(bean.getModel(), brainstorming, ideaService, 
 				prosService, consService, participantService);
-		idea = ideaService.save(idea);
+		bean.setModel(ideaService.saveBean(idea));
 		
-		bean.setModel(new IdeaSerializer().fromIdea(idea));
 		template.convertAndSend("/meeting/" + brainId, bean);
 	}
 	

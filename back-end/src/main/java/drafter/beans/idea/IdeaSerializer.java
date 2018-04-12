@@ -41,6 +41,7 @@ public class IdeaSerializer {
 		res.setVotes(votes);
 		
 		res.setId(idea.getId());
+		res.setVersion(idea.getVersion());
 		res.setBrainId(idea.getBrain().getId());
 		res.setNumber(idea.getNumber());
 		res.setText(idea.getText());
@@ -70,6 +71,8 @@ public class IdeaSerializer {
 	public Idea fromBean(IdeaBean ideaBean, BrainStorming brainstorming, IdeaService ideaService, ProsService prosService,
 			ConsService consService, ParticipantService participantService) {
 	    Idea idea = new Idea();
+	    idea.setId(ideaBean.getId());
+	    idea.setVersion(ideaBean.getVersion());
 	    idea.setNumber(ideaBean.getNumber());
 	    idea.setText(ideaBean.getText());
 	    List<Pros> pros = new LinkedList<Pros>();
