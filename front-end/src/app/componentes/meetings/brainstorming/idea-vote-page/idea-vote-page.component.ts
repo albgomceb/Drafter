@@ -1,3 +1,6 @@
+import { LoginService } from './../../../services/login.service';
+import { Participant } from './../../../models/participant.model';
+import { UserService } from './../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, NgModule, Input, Output, EventEmitter } from '@angular/core';
 import { Idea } from '../../../models/idea.model';
@@ -21,14 +24,17 @@ export class IdeaVotePageComponent implements OnInit {
   public meetingId: number;
   @Output()
   public finishMeeting: EventEmitter<number> = new EventEmitter<number>();
-  
+
   public votes: Array<Vote>;
 
-  constructor(private voteService: VoteService, private activeRoute: ActivatedRoute, private router: Router, private realTimeService: RealTimeService, private ideaService: IdeaService) { }
+  constructor(private voteService: VoteService, private activeRoute: ActivatedRoute, private router: Router, private realTimeService: RealTimeService, private ideaService: IdeaService, private userService: UserService, private loginService: LoginService) { }
 
   ngOnInit() {
     this.ideas = new Array<Idea>();
     this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.userService.getParticipant(this.meetingId).subscribe(participant => {
+      this.participantId = participant.id;
+    });
     this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(idea => {
       this.ideas = idea;
     });
@@ -49,7 +55,7 @@ export class IdeaVotePageComponent implements OnInit {
       this.router.navigate(["/meeting/" + this.meetingId]);
     });
   }
-  finish(){
+  finish() {
     this.finishMeeting.emit(this.meetingId);
   }
 

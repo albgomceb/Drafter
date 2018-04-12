@@ -1,3 +1,4 @@
+import { Participant } from './../models/participant.model';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -25,6 +26,11 @@ export class UserService {
 
   saveMeeting(meeting: Meeting): Observable<Meeting>{
     return this.http.post<Meeting>(this.staticUrl+'/meeting/standard/', meeting, {});
+  }
+
+  getParticipant(meetingId:number):Observable<Participant>{
+    
+    return this.http.get<Participant>(this.staticUrl+'/participants/'+meetingId);
   }
 
 }
