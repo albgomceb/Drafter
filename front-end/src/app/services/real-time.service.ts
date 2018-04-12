@@ -90,6 +90,12 @@ export class RealTimeService {
         var model: any;
         var callback: Function;
         var obj = JSON.parse(msg.body);
+
+        if(obj.data.noself) {
+          if(obj.data.userUUID == this.userUUID)
+            return;
+        }
+
         if(obj.type.charAt(0) != '*') {
           model = this.models[obj.name].model;
           callback = this.models[obj.name].callback;
@@ -102,10 +108,39 @@ export class RealTimeService {
             break;
 
           case WSResponseType.PUSH:
+            if(obj.data['id'] && obj.data['id'] != 0) {
+              var i = 0;
+              for(var o of model) {
+                if(o.id && o.id==obj.data['id']) {
+                  model.splice(i, 1);
+                  model.splice(i, 0, obj.model);
+                  break;
+                }
+                
+                i++;
+              }
+
+              break;
+            }
+
             model.push(obj.model);
             break;
 
           case WSResponseType.POP:
+            if(obj.data['id']) {
+              var i = 0;
+              for(var o of model) {
+                if(o.id && o.id==obj.data['id']) {
+                  model.splice(i, 1);
+                  break;
+                }
+                
+                i++;
+              }
+
+              break;
+            }
+
             if(!obj.data['index'] || obj.data['index'] < 0)
               model.pop();
             else

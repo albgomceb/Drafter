@@ -4,6 +4,7 @@ import { Vote } from "./vote.model";
 
 export class Idea {
     id: number;
+    version: number;
     number: number;
     text: string;
     isInput: Boolean;

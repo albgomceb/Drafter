@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Idea } from '../../../models/idea.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
+import { ProsService } from '../../../../services/pros.service';
+import { ConsService } from '../../../../services/cons.service';
 import { Pros } from '../../../../models/pros';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
 import { Cons } from '../../../../models/cons';
@@ -27,9 +29,9 @@ export class IdeasProsConsComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingId = this.activeRoute.snapshot.params['id'];
 
-    this.ideaService.getIdeas().subscribe(
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(
       data => 
       {
         this.ideas = data;
@@ -62,13 +64,13 @@ export class IdeasProsConsComponent implements OnInit {
 
         // Delete if blank and else update
         if(!content || content.length==0 || /^\s*$/.test(content)) {
-          this.realTimeService.send('/pro/delete/' + pro.id + "/", 
+          this.realTimeService.send('/pros/delete/' + pro.id + "/", 
                                   WSResponseType.POP, 
                                   'p'+iidea,  
                                   {}, 
                                   {index: iidea});
         } else {
-          this.realTimeService.send('/pro/save/', 
+          this.realTimeService.send('/pros/savePro/', 
                                   WSResponseType.SET, 
                                   'p'+iidea,  
                                   this.ideas[iidea-1].pros[ipro], 
@@ -87,13 +89,13 @@ export class IdeasProsConsComponent implements OnInit {
 
         // Delete if blank and else update
         if(!content || content.length==0 || /^\s*$/.test(content)) {
-          this.realTimeService.send('/con/delete/' + con.id + "/", 
+          this.realTimeService.send('/cons/delete/' + con.id + "/", 
                                   WSResponseType.POP, 
                                   'c'+iidea,  
                                   {}, 
                                   {index: iidea});
         } else {
-          this.realTimeService.send('/con/save/', 
+          this.realTimeService.send('/cons/saveCon/', 
                                   WSResponseType.SET, 
                                   'c'+iidea,  
                                   this.ideas[iidea-1].cons[icon], 
