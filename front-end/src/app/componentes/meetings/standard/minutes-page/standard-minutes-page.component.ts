@@ -1,6 +1,6 @@
+import { Meeting } from './../../../models/meeting.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Meeting2 } from '../../../models/meeting.model2';
 import { Agenda2 } from '../../../models/agenda.model2';
 import { Conclusion } from '../../../../models/conclusion';
 import { MeetingService } from '../../../services/meeting.service';
@@ -13,7 +13,7 @@ import { Option } from '../../../models/option.model';
 })
 export class StandardMinutesPageComponent implements OnInit {
   
-  meeting: Meeting2 = new Meeting2();
+  meeting: Meeting = new Meeting();
   model:any[];
   agendas: Array<Agenda2>;
   conclusions: Array<Conclusion> = [];
