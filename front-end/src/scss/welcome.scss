@@ -14,15 +14,21 @@ div.home-container {
             margin-bottom: 1.875rem;
             background-color: $content_border;
         }
-
-        blockquote.blockquote {
-            margin-top: 2rem;
-        }
+        
+        span.green-check {
+            margin-right: 0.3rem;
+            color: $mp_secondary_color;
+        }        
     }
+
     div.quote-container {
         border: 1px solid $content_border;
         border-radius: 5px;
         padding: 1.5rem 2.5rem;
+
+        blockquote.blockquote {
+            margin-top: 2rem;
+        }
     }
 
     @include media-breakpoint-down(md) {

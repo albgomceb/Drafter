@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark shadow">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" routerLink="home">
       <img src="../../../assets/img/white-logo.png" alt="Logo">
     </a>
     <!-- Button only for small screens -->
@@ -36,7 +36,10 @@
           <a class="nav-link" routerLink="login">Sign in</a>
         </li>
         <li class="nav-item dropdown" [hidden]="!getLoginService().isAuthenticated()">
-            <a href="#" data-toggle="dropdown" id="navbarDropdownUserLink" class="nav-link dropdown-toggle">User</a>
+            <a href="#" data-toggle="dropdown" id="navbarDropdownUserLink" class="nav-link dropdown-toggle position-relative">
+              <div class="img-profile"><img  attr.src="{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().photo : ''}}"></div>
+              <span class="username">{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}</span>
+            </a>
             <div class="dropdown-menu shadow">
                <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
             </div>

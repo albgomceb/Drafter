@@ -3,10 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
-import { Meeting2 } from '../models/meeting.model2';
+import { Meeting } from '../models/meeting.model';
 import { Agenda2 } from '../models/agenda.model2';
 import { Conclusion } from '../../models/conclusion';
-import { Meeting } from '../models/meeting.model';
 
 
 const httpOptions = {
@@ -20,15 +19,15 @@ export class MeetingService {
 
   staticUrl:String = environment.baseApi;
 
-  getMeeting(meetingId:number): Observable<Meeting2> {
-    return this.http.get<Meeting2>(this.staticUrl+'/minutes/meeting/'+meetingId);
+  public getMeeting(meetingId:number): Observable<Meeting> {
+    return this.http.get<Meeting>(this.staticUrl+'/minutes/meeting/'+meetingId);
   }
 
-  getAgendas(meetingId:number): Observable<Array<Agenda2>> {
+  public getAgendas(meetingId:number): Observable<Array<Agenda2>> {
     return this.http.get<Array<Agenda2>>(this.staticUrl+'/minutes/meeting/'+ meetingId + '/agenda');
   }
 
-  getConclusions(agendaId:number): Observable<Array<Conclusion>> {
+  public getConclusions(agendaId:number): Observable<Array<Conclusion>> {
     return this.http.get<Array<Conclusion>>(this.staticUrl+'/agendas/' + agendaId + '/conclussion');
   }
 
@@ -36,4 +35,7 @@ export class MeetingService {
     return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/list/' + userId);
   }
 
+  public isParticipant(meetingId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.staticUrl+'/meeting/isParticipant/' + meetingId);
+  }
 }

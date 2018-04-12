@@ -4,15 +4,15 @@ export class Meeting {
     id: number;
     title: string;
     description: string;
-    date: Date;
+    date: number;
     image: string;
-    timer: Date;
+    timer: number;
     hasFinished: boolean;
     numberOfMeeting: number;
     attendants: Array<Option>;
     type : string;
 
-    setAttendants(attendants:Array<Option>) {
-      this.attendants = attendants; 
-    }
+  setAttendants(attendants: Array<Option>) {
+    this.attendants = attendants;
+  }
 }
