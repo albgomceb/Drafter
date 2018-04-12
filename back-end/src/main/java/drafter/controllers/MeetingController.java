@@ -2,7 +2,6 @@ package drafter.controllers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,6 @@ import drafter.beans.Option;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Meeting;
-import drafter.domain.Participant;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
 //import drafter.services.SixHatsService;
@@ -75,6 +73,9 @@ public class MeetingController extends AbstractController {
 		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = meetingService.findById(meetingId);
 		
+		if(!meetingService.isParticipant(meetingId))
+			throw new IllegalStateException();
+		
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		return res;
@@ -114,7 +115,6 @@ public class MeetingController extends AbstractController {
 			res = false;
 		}
 		
-		//return "{\"result\":" + res + "}";
 		return ""+res;
 	}
 }
