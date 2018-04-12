@@ -22,14 +22,14 @@
             </thead>
             <tbody *ngFor="let at of meeting.attendants">
                 <tr>
-                    <td scope="col"><img src="{{at.photo}}" width="100px"/></td>
+                    <td width="120px" scope="col"><img src="{{at.photo}}" width="100px"/></td>
                     <td scope="col">{{at.name}}</td>
                     <td scope="col">{{at.organization}}</td>
                 </tr>
             </tbody>
         </table> 
-        <span class="secundary mt-2"><i class="fas fa-calendar-alt fa-lg"></i> Date</span> <span>{{meeting.date}}</span> 
-        <span class="secundary mt-2"><i class="fas fa-stopwatch fa-lg"></i> Length</span> <span>{{meeting.timer}}</span>
+        <span class="secundary mt-2"><i class="fas fa-calendar-alt fa-lg"></i> Date</span> <span>{{meeting.date | date:"dd/MM/yyyy hh:mm"}}</span> 
+        <span class="secundary mt-2"><i class="fas fa-stopwatch fa-lg"></i> Length</span> <span>{{meeting.timer | date:"hh:mm:ss"}}</span>
     </div>
 </div>
 
