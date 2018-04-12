@@ -17,9 +17,9 @@
       {{entradas.indexOf(entrada)+1}}
     </td>
     <td>
-      <input type="text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput" (focusout)="convert(entrada)" 
-              (keyup.enter)="convert(entrada); addAgenda()" placeholder="Point to deal with" required class="point">
-      <div *ngIf="!entrada.isInput" (click)="convert(entrada)">
+      <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput"  
+      (focusout)="convert(entrada)" (keyup.enter)="convert(entrada); addAgenda();" placeholder="Point to deal with" required class="point">
+      <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)">
         {{entrada.description}}
       </div>
       <span *ngIf="!checkNotBlank(entrada.description)" class="required">

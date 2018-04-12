@@ -15,12 +15,13 @@ import { Login } from '../models/login.model';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-
+ 
   login:Login;
-  showError:Boolean = false;
   loginForm:FormGroup;
+  showError:Boolean = false;
   email:FormControl;
   password:FormControl;
+  authenticated:Boolean = false;
 
   constructor(private loginService: LoginService,  private router:Router) { }
 
@@ -39,14 +40,14 @@ export class LoginPageComponent implements OnInit {
     this.login.setPassword(this.loginForm.value.password);
     
     this.loginService.login(this.login).subscribe((res:any) =>{
-      this.router.navigate(['meeting/'])
+      this.loginService.init();
+      this.router.navigate(['meeting/']);
     }, error => {
-        if(error.status == 424){
-          this.showError=true;
-        }
-    });
-    console.log(this.login);
+      if(error.status == 424){
+        this.showError=true;
+      }
+  });
+  console.log(this.login);
   
   }
-
 }

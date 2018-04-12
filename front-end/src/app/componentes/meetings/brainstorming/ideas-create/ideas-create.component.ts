@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
 import { Idea } from '../../../models/idea.model';
+import { DynamicMeetingService } from '../../../services/dynamic-meeting.service';
+import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
+
 
 @Component({
   selector: 'ideas-create',
@@ -12,23 +15,34 @@ import { Idea } from '../../../models/idea.model';
 export class IdeasCreateComponent implements OnInit {
 
   public entradas: Array<Idea>;
-  public counter: number;
-  public brainId: number;
+  @Input()
+  public meetingId: number;
+  @Input()
+  public meetingInfo: any;
 
-  constructor(private ideaService: IdeaService, 
+  @Output()
+  public nextStep = new EventEmitter<number>();
+
+  constructor(private ideaService: IdeaService,
+    private dynamicMeetingService: DynamicMeetingService, 
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private realTimeService: RealTimeService) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.brainId = params['brainId'];
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
+      this.entradas = res;
+      
+      var idea = new Idea();
+      idea.isInput = true;
+      idea.text = "";
+      this.entradas.push(idea);
+
+      this.realTimeService.connect(this.meetingId, () => {
+        this.realTimeService.register('entradas', this.entradas);
+        this.realTimeService.subscribe();
+      });
     });
-    this.entradas=[];
-    this.entradas.push(new Idea());
-    this.entradas[0].id = 0;
-    this.entradas[0].isInput = true;
-    this.entradas[0].text = "";
-    this.counter = 1;
   }
 
   saveIdea(ideas : Idea[]){
@@ -38,36 +52,75 @@ export class IdeasCreateComponent implements OnInit {
       if(ide.text && ide.text.trim() != '')
         temp.push(ide);
 
-    this.ideaService.saveIdea(temp, this.brainId).subscribe(res =>{
+      this.ideaService.saveIdea(temp, this.meetingId).subscribe(res =>{
       //To Do: cambiar ruta
-      this.router.navigate(["/brainstorming/"+this.brainId]);
+      this.nextStep.emit(this.meetingId);
     });
   }
 
   addIdea(){
+    var i=0;                            
+    for(var en of this.entradas) {
+      if(!en.text || en.text.trim().length == 0)
+        this.entradas.splice(i, 1);
+      
+      i++;
+    }
+
     var length = this.entradas.length;
     this.entradas.push(new Idea());
-    this.entradas[length].id = this.counter;
-    this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].text = "";
   } 
 
-  removeIdea(entrada : Idea, entradasIndex : number){    
-    this.entradas.splice(entradasIndex, 1);
-  } 
+  removeIdea(entrada : Idea, entradasIndex : number){ 
+    if(!entrada.id || entrada.id == 0)
+      this.entradas.splice(entradasIndex, 1);
+    else
+      this.deleteIdea(entrada.id);
+  }
 
-  convert(entrada : Idea){
+  private deleteIdea(id: number) {
+    this.realTimeService.send('/idea/delete/' + id + '/', 
+                                    WSResponseType.POP, 
+                                    'entradas',  
+                                    {}, 
+                                    {id: id});
+  }
+
+  convert(entrada){
+    entrada.number = 1;
+
     //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
-    if(this.checkNotBlank(entrada.text) && entrada.isInput)
+    if(this.checkNotBlank(entrada.text) && entrada.isInput) {
       entrada.isInput = false;
+      this.realTimeService.send('/idea/save/', 
+                                  WSResponseType.PUSH, 
+                                  'entradas',  
+                                  entrada, 
+                                  {id: entrada.id});
+        
+      var i=0;                 
+      for(var en of this.entradas) {
+        if(!en.text || en.text.trim().length == 0 || !en.id || en.id == 0)
+          this.entradas.splice(i, 1);
+        
+        i++;
+      } 
 
     //Si la entrada es un texto, se convierte en input
-    else if(!entrada.isInput)
+    } else if(!entrada.isInput) {
       entrada.isInput = true;
+      if(entrada.text.trim() == 0)
+        this.deleteIdea(entrada.id);
+        
+    }
   }
 
   checkNotBlank(string : String) : boolean{
+    if(!string)
+      return false;
+
     var res = true;
 
     if(string.trim().length == 0){

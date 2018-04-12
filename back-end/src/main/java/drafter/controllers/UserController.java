@@ -37,7 +37,7 @@ import drafter.services.UserService;
 @CrossOrigin
 @RestController
 @RequestMapping("/data/users")
-public class UserController {
+public class UserController extends AbstractController {
 
 	@Autowired
 	private UserService userService;
@@ -101,6 +101,9 @@ public class UserController {
 			User result = serializer.fromBean(user); //Pasa de userBean a user
 			result = userService.create(result); //Crea un usuario
 			UserBean2 res = serializer.fromUser(result); //Pasa de user a userBean
+			SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(result.getEmail(), 
+					result.getUserAccount().getPassword(), 
+					result.getUserAccount().getAuthorities()));
 			return res;
 		}
 		else {
@@ -165,6 +168,17 @@ public class UserController {
 			}		
 			return userDetails;
 		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		SecurityContextHolder.clearContext();
+		return "";
+	}
+	
+	@GetMapping("/me")
+	public UserBean me() {
+		return UserSerializer.fromUser(userService.findByPrincipal());
 	}
 
 //	private boolean existeEmail(String email) {

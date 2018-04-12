@@ -42,5 +42,12 @@ export class DynamicMeetingComponent implements OnInit {
       this.router.navigate(['/minutes/'+meetingId]);
     })
   }
+  nextStep(meetingId:number){
+    
+    this.meetingService.nextStep(meetingId).subscribe(res =>{
+      this.meetingInfo.status = res;
+      this.router.navigate(['/meeting/'+this.meetingId])
+    })
+  }
 
 }

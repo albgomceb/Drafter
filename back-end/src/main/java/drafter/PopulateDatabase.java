@@ -99,7 +99,7 @@ public class PopulateDatabase {
 				
 				System.out.print("" + (100*count/entries.size()+100/entries.size()) + "% > " +  beanName + ": " + entity.getClass().getSimpleName());
 				entityManager.persist(entity);
-				System.out.println(" -> id = " + entity.getId() + ", version = " + entity.getVersion());
+				System.out.println(" -> id = " + entity.getId());
 				
 				attributes += generateAttribute(beanName, entity.getId(), jump);
 				

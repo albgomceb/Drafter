@@ -12,6 +12,6 @@ export class ConsService {
   staticUrl:String = environment.baseApi + '/data/cons';
 
   saveCons(cons: Cons, meeting: number): Observable<Cons> {
-    return this.http.post<Cons>(this.staticUrl+'/save/'+meeting, cons, {});
+    return this.http.post<Cons>(this.staticUrl+'/saveCon/'+meeting, cons, {});
   }
 }
