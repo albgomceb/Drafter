@@ -1,0 +1,39 @@
+/* Welcome */
+div.home-container {
+    div.welcome-info {
+        border-radius: 5px;
+        padding: 1.5rem 2.5rem;
+        background-color: $mp_primary_color; 
+        color: $mp_font_color;
+
+        img.img-logo {
+            max-width: 9.375rem;
+        }
+        
+        hr {
+            margin-bottom: 1.875rem;
+            background-color: $content_border;
+        }
+
+        blockquote.blockquote {
+            margin-top: 2rem;
+        }
+    }
+    div.quote-container {
+        border: 1px solid $content_border;
+        border-radius: 5px;
+        padding: 1.5rem 2.5rem;
+    }
+
+    @include media-breakpoint-down(md) {
+        div.welcome-info,
+        div.quote-container {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+        }
+
+        div.quote-container {
+            margin-top: 3rem;
+        }
+    }
+}

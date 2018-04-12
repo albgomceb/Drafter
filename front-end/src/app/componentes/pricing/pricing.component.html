@@ -1,0 +1,35 @@
+<h1 class="title-page text-center">
+  <span class="capital-letter">P</span>ricing
+</h1>
+<h2 class="subtitle text-center">
+  Get your license now and have access to all the content we offer!
+</h2>
+
+<div class="pricing-container d-flex justify-content-center flex-wrap">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="card-title">{{licenses[0].name}}</h4>
+    </div>
+    <div class="card-body text-center">
+      <p class="card-text">Standard meeting</p>
+      <p class="card-text">Brainstorming meeting</p>
+      <p class="card-text">Six Thinking Hats meeting</p>
+      <p class="card-text">Space for organizations</p>
+      <p class="card-text">Service & Support</p>
+      <p class="card-price">€ {{licenses[0].price}} <small>per month</small></p>
+      <div id="paypal-checkout-btn"></div>
+      <p style="font-size:16px;color:white!important" *ngIf="paypalLoad">Paypal is loading...</p>                
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="card-title">Standalone</h4>
+    </div>
+    <div class="card-body text-center">
+      <p class="card-text">All enterprise services</p>
+      <p class="card-text">Personalized service</p>
+      <button href="mailto:drafter.ispp.app@gmail.com" target="_top" class="btn">Contact us</button>
+    </div>
+  </div>
+</div>
+

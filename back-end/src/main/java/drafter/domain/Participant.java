@@ -1,12 +1,8 @@
 package drafter.domain;
 
-
-
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -96,10 +92,6 @@ public class Participant extends DomainEntity{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
-	
 	
 	
 }

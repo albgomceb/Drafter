@@ -1,27 +1,29 @@
-<div class="row">
-  <div class="col-md-6 mx-auto mt-3">
-    <div class="card text-white bg-dark mb-3">
-      <div class="card-body">
-        <h1 class="text-center login pt-1">Login</h1>
-        <form>
-          <div class="form-group">
-            <label for="email" >Email</label>
-            <input placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="password" >Password</label>
-            <input type="password" name="password" id="password" class="form-control">
-          </div>
-            <button type="submit" class="button-sent btn btn-lg">Enviar</button>
-        </form>
-          <div class="card bg-dark border-0">
-            <div class="buttons card-body d-flex justify-content-around">
-              <button class="btn btn-lg btn-facebook"><i class="fa fa-facebook"></i> Facebook</button>
-              <button class="btn btn-lg btn-google"><i class="fa fa-google-plus"></i> Google</button>
-              <button class="btn btn-lg btn-twitter"><i class="fa fa-twitter"></i> Twitter</button>
-            </div>
-          </div>
-      </div>
+<div class="d-flex justify-content-center align-items-stretch">
+  <div class="col-lg-6 d-none d-lg-block form-info">
+    <div class="text-center">
+      <strong>Sign in</strong>
     </div>
+    <img src="../../../assets/img/sign-in.jpg" class="img-fluid">      
   </div>
+  <form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" method="post" class="col-lg-6 form-2">
+    <div class="text-center">
+      <img src="../../../assets/img/white-logo.png" class="img-logo img-fluid">
+      <p>Your meeting manager</p>
+      <hr>
+    </div>
+    <div *ngIf="showError == true">
+      <p class="text-error">Incorrect email or password</p>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input formControlName="email" type="email" class="form-control" name="email" id="inputEmail">
+    </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input formControlName="password" type="password" class="form-control" name="password" id="inputPassword">
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-2">Sign in</button>
+    </div>
+  </form>
 </div>

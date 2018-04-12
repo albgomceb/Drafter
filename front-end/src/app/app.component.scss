@@ -1,45 +1,10 @@
-div.page {
+/*div.page {
     background: #fafafa;
     min-height: 100vh!important;
     margin:0;
     padding:0;
     z-index: 0;
     width: 100%;
-}
+}*/
 
-footer.page-footer {
-    padding: 20px 0;
-    color:black;
-}
 
-#overlay{
-    text-align: center;
-    background: #333!important;
-    z-index:3;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border-radius: 5px 5px 0px 0px;
-}
-
-#overlay .img-license{
-    position:relative;
-    text-align:center;
-    margin:0 auto;
-}
-.paypal-transaction{
-    min-width: 250px;
-    
-    h4{
-        color:white;
-    }
-    h6{
-        color: #00c4a6;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 18px;
-    }
-}
-
-.selectpicker{
-    width: 200px!important;
-}

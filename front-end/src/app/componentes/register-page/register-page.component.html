@@ -1,29 +1,85 @@
-<div class="row">
-  <div class="col-md-6 mx-auto mt-3">
-    <div class="card text-white bg-dark mb-3">
-      <div class="card-body">
-        <h1 class="text-center pt-1">Register</h1>
-        <form>
-          <div class="form-group">
-            <label for="nombre" >Name</label>
-            <input type="nombre" name="nombre" id="nombre" class="form-control">
-
-            <label for="apellidos" >Surname</label>
-            <input type="apellidos" name="apellidos" id="apellidos" class="form-control">
-
-            <label for="nombreUsuario" >User name</label>
-            <input type="nombreUsuario" name="nombreUsuario" id="nombreUsuario" class="form-control">
-
-            <label for="email" >Email</label>
-            <input placeholder="example@domain.com" type="email" name="email" id="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="password" >Password</label>
-            <input type="password" name="password" id="password" class="form-control">
-          </div>
-          <button type="submit" class="button btn btn-lg">Enviar</button>
-        </form>
-      </div>
+<div class="d-flex justify-content-center align-items-stretch">
+  <div class="col-lg-6 d-none d-lg-block form-info">
+    <div class="text-center">
+      <strong>Sign up</strong>
     </div>
+    <img src="../../../assets/img/sign-up.jpg" class="img-fluid">      
   </div>
+  <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)" method="post" 
+        id="register" class="col-lg-6 form-2">
+    <div class="text-center">
+      <img src="../../../assets/img/white-logo.png" class="img-logo img-fluid">
+      <p>Your meeting manager</p>
+      <hr>
+    </div>
+    <div class="form-group">
+      <label for="inputName">Name</label>
+      <input formControlName="name" ng-required="true" name="name"
+             type="text" class="form-control" id="inputName">
+    </div>
+    <div class="form-group">
+      <label for="inputSurname">Surname</label>
+      <input formControlName="surname" ng-required="true" name="surname"
+             type="text" class="form-control" id="inputSurname">
+    </div>
+    <div *ngIf="usernameError == false">
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input formControlName="username" ng-required="true" name="username"
+                   type="text" class="form-control" id="inputUsername">
+        </div>
+    </div>
+    <div *ngIf="usernameError == true">
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input formControlName="username" ng-required="true" name="username"
+                   type="text" class="form-control error" id="inputUsername">
+            <p class="text-error">Username must contains at least 5 characters</p>
+        </div>
+    </div>
+    <div *ngIf="emailError == false && correctEmailError == false">
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input formControlName="email" ng-required="true" name="email"
+                   type="email" class="form-control" id="inputEmail">
+        </div>
+    </div>
+    <div *ngIf="emailError == true">
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input formControlName="email" ng-required="true" name="email" 
+                   type="email" class="form-control error" id="inputEmail">
+            <p class="text-error">The email is already in use</p>
+        </div>
+    </div>
+    <div *ngIf="correctEmailError == true">
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input formControlName="email" ng-required="true" name="email" 
+                   type="email" class="form-control error" id="inputEmail">
+            <p class="text-error">The format of email is not correct</p>
+        </div>
+    </div>
+    <div *ngIf="passwordError == false">
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input formControlName="password" ng-required="true" name="password"
+                   type="password" class="form-control" id="inputPassword"/>
+        </div>
+    </div>
+    <div *ngIf="passwordError == true">
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input formControlName="password" ng-required="true" name="password"
+                    type="password" class="form-control error" id="inputPassword">
+            <p class="text-error">Password must contains at least 5 characters.</p>
+        </div>
+    </div>
+    <div *ngIf="missingFields == true"  >
+        <p class="text-error">All fields are required</p>            
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-2">Sign up</button>
+    </div>
+  </form>
 </div>
