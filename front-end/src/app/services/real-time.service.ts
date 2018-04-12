@@ -133,7 +133,7 @@ export class RealTimeService {
             this.addUser(obj.data['userUUID'], obj.data['user']);
             break;
         }
-        
+
         if(callback)
           callback(obj);
       }
@@ -172,8 +172,9 @@ export enum WSResponseType {
     REQUEST_USERS = '*request_users',
     RESPONSE_USERS = '*reponse_users',
 
-    HEARTBEAT = '*heartbeat'
+    HEARTBEAT = '*heartbeat',
 
+    RUN = 'run'
 }
 
 export class Model {

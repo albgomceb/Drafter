@@ -46,7 +46,6 @@ public class MeetingService {
     		meeting.setParticipants( new ArrayList<Participant>());
     		
     	meeting.setDate(date);
-    	meeting.setTimer(date);
     	meeting.setSteps(new ArrayList<Step>());
     	meeting.setAgendas(new ArrayList<Agenda>());
         return meetingRepository.save(meeting);
@@ -102,6 +101,13 @@ public class MeetingService {
     			return true;
     	
     	return false;
+    }
+    
+    public Meeting setTimer(int id, int timer) {
+    	Meeting m = findById(id);
+    	m.setTimer(timer);
+    	
+    	return save(m);
     }
 
 	//Other business Methods-----------------------------------------------------------------------------
