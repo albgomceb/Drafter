@@ -7,6 +7,7 @@ import { RealTimeService, WSResponseType } from '../../../../services/real-time.
 import { AgendaService } from '../../../services/agenda.service';
 import { Agenda } from '../../../models/agenda.model';
 import { Conclusion } from '../../../../models/conclusion';
+import { MeetingService } from '../../../services/meeting.service';
 
 @Component({
   selector: 'standard-meeting',
@@ -24,16 +25,23 @@ export class StandardMeetingComponent implements OnInit {
   public meetingId: number;
 
   constructor(private activeRoute: ActivatedRoute, private realTimeService: RealTimeService, private agendaService: AgendaService,
-  private router:Router) { }
+  private router:Router, private meetingService: MeetingService) { }
 
   ngOnInit() {
 
-    this.agendas = new Array<Agenda>();
-    this.meetingId = this.activeRoute.snapshot.params['id']; 
-    this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
-    this.agendas = agenda;
-    });
-    this.realTimeService.connect(this.meetingId, () => {
+    var meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingService.isParticipant(meetingId).subscribe(res => {
+      if(!res) {
+        this.router.navigate(['home']);
+        return;
+      }
+
+      this.agendas = new Array<Agenda>();
+      this.meetingId = meetingId; 
+      this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
+      this.agendas = agenda;
+      });
+      this.realTimeService.connect(this.meetingId, () => {
         var i = 1;
         for(var cs of this.agendas) {
           this.realTimeService.register('c'+i, cs.conclusions);
@@ -41,6 +49,7 @@ export class StandardMeetingComponent implements OnInit {
         }
         this.realTimeService.subscribe();
       });
+    })
 
   }
 

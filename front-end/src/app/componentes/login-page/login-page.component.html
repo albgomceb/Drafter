@@ -1,3 +1,7 @@
+<div *ngIf="showError == true" class="alert alert-danger text-center">
+  Incorrect email or password
+</div>
+
 <div class="d-flex justify-content-center align-items-stretch">
   <div class="col-lg-6 d-none d-lg-block form-info">
     <div class="text-center">
@@ -10,9 +14,6 @@
       <img src="../../../assets/img/white-logo.png" class="img-logo img-fluid">
       <p>Your meeting manager</p>
       <hr>
-    </div>
-    <div *ngIf="showError == true">
-      <p class="text-error">Incorrect email or password</p>
     </div>
     <div class="form-group">
       <label for="inputEmail">Email address</label>

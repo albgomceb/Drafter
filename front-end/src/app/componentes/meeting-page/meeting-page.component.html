@@ -1,5 +1,5 @@
 <h1 class="title-page text-center">
-  <span class="capital-letter">S</span>tart meeting
+  <span class="capital-letter">S</span>tart <span class="capital-letter">M</span>eeting
 </h1>
 
 <form (ngSubmit)="onSubmit(meeting)" class="general-form">
@@ -29,7 +29,12 @@
       <img src="../../../assets/img/warning_turq.png" width=100px class="img-fluid">
       <p>Try again later</p>
     </div>
-    <div class="d-flex justify-content-center flex-wrap">
+    <div *ngIf="errorListUsers==false && users!=null" class="row justify-content-center">
+      <div class="search-users col-lg-5 col-md-10 input-group">
+          <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control">
+      </div>
+    </div>
+    <div class="d-flex justify-content-center flex-wrap mt-5">
       <div *ngFor="let us of users; let i=index" class="card">
         <img class="card-img-top" src="{{us.photo}}" alt="Avatar">
         <div class="card-body">
