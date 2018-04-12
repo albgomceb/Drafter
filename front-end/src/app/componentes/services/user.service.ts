@@ -30,7 +30,7 @@ export class UserService {
 
   getParticipant(meetingId:number):Observable<Participant>{
     
-    return this.http.get<Participant>(this.staticUrl+'/participants/'+meetingId);
+    return this.http.get<Participant>(this.staticUrl+'/participants/'+meetingId,{});
   }
 
 }

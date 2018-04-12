@@ -31,7 +31,6 @@ export class IdeaVotePageComponent implements OnInit {
 
   ngOnInit() {
     this.ideas = new Array<Idea>();
-    this.meetingId = this.activeRoute.snapshot.params['id'];
     this.userService.getParticipant(this.meetingId).subscribe(participant => {
       this.participantId = participant.id;
     });
@@ -52,7 +51,6 @@ export class IdeaVotePageComponent implements OnInit {
 
   save(event) {
     this.voteService.saveVote(this.votes).subscribe(res => {
-      this.router.navigate(["/meeting/" + this.meetingId]);
     });
   }
   finish() {
