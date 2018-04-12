@@ -6,13 +6,13 @@
     </div>
     <div class="ideas-body">
         <ul class="list-ideas">
-            <li *ngFor="let idea of ideas">
+            <li *ngFor="let idea of ideas; let ii = index">
                 <div class="ideas-title">
-                    {{idea.number}}. {{idea.text}}                    
+                    {{ii+1}}. {{idea.text}}                    
                 </div>
                 <div class="d-flex justify-content-between flex-wrap">
                     <div>
-                        <button class="btn" (click)="addPro($event)" attr.data-index="{{idea.number}}">
+                        <button class="btn" (click)="addPro($event)">
                             Add pros
                         </button>
                         <ul class="list-pros">

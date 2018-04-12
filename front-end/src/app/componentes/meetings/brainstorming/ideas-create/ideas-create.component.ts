@@ -45,17 +45,8 @@ export class IdeasCreateComponent implements OnInit {
     });
   }
 
-  saveIdea(ideas : Idea[]){
-    // Fix temporal para que no mande ideas vacias (que las duplica)
-    var temp = new Array<Idea>();
-    for(var ide of ideas)
-      if(ide.text && ide.text.trim() != '')
-        temp.push(ide);
-
-      this.ideaService.saveIdea(temp, this.meetingId).subscribe(res =>{
-      //To Do: cambiar ruta
-      this.nextStep.emit(this.meetingId);
-    });
+  next() {
+    this.nextStep.emit(this.meetingId);
   }
 
   addIdea(){
