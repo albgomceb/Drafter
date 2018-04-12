@@ -33,6 +33,7 @@ import { BaseRequestOptions } from '@angular/http';
 import { PricingComponent } from './componentes/pricing/pricing.component';
 import { ChronometerComponent } from './componentes/meetings/chronometer/chronometer.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
+import { MinutesPageComponent } from './componentes/meetings/brainstorming/minutes-page/minutes-page.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
     BrainstormingComponent,
     PricingComponent,
     IdeasCreateComponent,
-    ChronometerComponent
+    ChronometerComponent,
+    MinutesPageComponent
   ],
   imports: [
     BrowserModule,
