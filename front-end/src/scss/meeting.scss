@@ -79,7 +79,7 @@ div.topic-container {
         margin: 1em 0;
         border: 1px solid $content_border;
         padding: 0.2em;
-        background: white;
+        background-color: white;
         font-weight: bold;
     
         span {
@@ -91,21 +91,49 @@ div.topic-container {
         margin: 0;
         border: 1px solid $content_border;
         padding: 0.5rem 0.5rem 0.5rem 2.5rem;
-        background: white;
+        background-color: white;
         word-wrap: break-word;
     }
 }
 
+/* Meeting minutes */
+div.subtitle {
+    padding: 0.75rem;
+    color: $mp_font_color;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    background-color: $mp_primary_color;
+}
+
 div.minutes-container {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     border: 1px solid $content_border;
     padding: 0.5rem;
     word-wrap: break-word;
+    background-color: $content_background_color_2;
+
+    div.summary-item {
+        width: 45%;
+        margin-bottom: 1rem;
+
+        span.summary-item-title {
+            font-weight: bolder;
+        }
+
+        @include media-breakpoint-down(md) {
+            width: 100%;
+        }
+    }
 
     div.point-container {
         margin: 0.5rem;
         border: 1px solid $content_border;
         padding: 0.5rem;
-        background: white;
+        background-color: white;
+    }
+
+    img.card-img-top {
+        max-width: 9rem;
+        margin: auto;
     }
 }
