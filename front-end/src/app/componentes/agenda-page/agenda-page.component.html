@@ -3,38 +3,38 @@
 </h1>
 
 <div class="ideas-container">
-    <div class="ideas-title">
-      Agenda items
-    </div>
-    <div class="ideas-body">
-      <ul class="list-ideas">
-          <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
-            <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  
-                   *ngIf="entrada.isInput" (keyup.enter)="convert(entrada);" 
-                   placeholder="Type your topic here..." required class="idea">
-            <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
-              {{entradas.indexOf(entrada)+1}}. {{entrada.description}}
-            </div>
-            <div class="options-ideas text-right">
-              <button *ngIf="entrada.isInput" (click)="convert(entrada);" class="btn">
-                <i class="fas fa-check"></i>
-              </button>
-              <button *ngIf="!entrada.isInput" (click)="convert(entrada);" class="btn">
-                <i class="fas fa-pencil-alt"></i>
-              </button>          
-              <button (click)="removeAgenda(entrada, i)" class="btn">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </li>
-      </ul>
-      <div class="text-center">
-        <button (click)="addAgenda()" class="btn">
-            <i class="fas fa-lightbulb"></i> New item
-        </button>
-      </div>
+  <div class="ideas-title">
+    Agenda items
+  </div>
+  <div class="ideas-body">
+    <ul class="list-ideas">
+        <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
+          <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  
+                  *ngIf="entrada.isInput" (keyup.enter)="convert(entrada);" 
+                  placeholder="Type your topic here..." required class="idea">
+          <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
+            {{entradas.indexOf(entrada)+1}}. {{entrada.description}}
+          </div>
+          <div class="options-ideas text-right">
+            <button *ngIf="entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-check"></i>
+            </button>
+            <button *ngIf="!entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-pencil-alt"></i>
+            </button>          
+            <button (click)="removeAgenda(entrada, i)" class="btn">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </li>
+    </ul>
+    <div class="text-center">
+      <button (click)="addAgenda()" class="btn">
+          <i class="fas fa-lightbulb"></i> New item
+      </button>
     </div>
   </div>
+</div>
 
 <div class="text-center button-group"> 
   <button (click)="saveAgenda(entradas)" class="btn">Create the meeting</button>

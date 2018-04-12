@@ -1,23 +1,25 @@
-<div class="agenda">
-    <h3>Agenda</h3>
-    <div *ngFor="let a of agendas" class="point-container">
-        <div class="points d-flex justify-content-between">
-            <span>{{a.number}}. {{a.description}}</span>
-            <button class="btn" (click)="addConclusion($event)" attr.data-index="{{a.number}}">+</button>
-        </div>
+<h2>Meeting agenda</h2>
 
-        <ul class="input-container">
-            <li
-            *ngFor="let c of a.conclusions; let i = index" 
-            attr.contenteditable="{{hasEdit}}"
-            attr.data-iagenda="{{a.number}}" 
-            attr.data-iconclusion="{{i}}" 
-            (focusout)="edit($event)"
-            (keydown)="enter($event)"
-            class="conclusion">
-                {{c.conclusion}}
-            </li>
-        </ul>
+<div *ngFor="let a of agendas" class="conclusion-container">
+    <div class="d-flex justify-content-between conclusion-title">
+        <span>{{a.number}}. {{a.description}}</span>            
+    </div>
+    <ul class="conclusion-container">
+        <li
+        *ngFor="let c of a.conclusions; let i = index" 
+        attr.contenteditable="{{hasEdit}}"
+        attr.data-iagenda="{{a.number}}" 
+        attr.data-iconclusion="{{i}}" 
+        (focusout)="edit($event)"
+        (keydown)="enter($event)"
+        class="conclusion">
+            {{c.conclusion}}
+        </li>
+    </ul>
+    <div class="text-center">
+        <button class="btn" (click)="addConclusion($event)" attr.data-index="{{a.number}}">
+            <i class="fas fa-lightbulb"></i> Add conclusion
+        </button>
     </div>
 </div>
 

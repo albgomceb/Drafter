@@ -9,6 +9,12 @@ import { Option } from '../models/option.model';
 import { Router } from '@angular/router';
 import { Organization } from '../models/organization.model';
 import { DynamicMeetingService } from '../services/dynamic-meeting.service';
+import { Observable } from 'rxjs/Observable';
+import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'meeting-page',
@@ -18,10 +24,13 @@ import { DynamicMeetingService } from '../services/dynamic-meeting.service';
 export class MeetingPageComponent implements OnInit {
 
   hideme=[]
+  searchField: FormControl;
+  loading: boolean = false;
 
   users: Array<User>;
   attendants: Array<Option>;
   organizations: Array<Organization>
+  results: Observable<Array<User>>;
 
   errorListUsers:boolean = false;
   meeting: Meeting;
@@ -34,11 +43,12 @@ export class MeetingPageComponent implements OnInit {
 
     this.meeting = new Meeting();
     this.attendants = new Array<Option>();
-     this.meetingService.getMeetingTypes().subscribe(list => 
+    this.meetingService.getMeetingTypes().subscribe(list => 
     {
       this.kinds = list;
       this.selectedKind = this.kinds[0];
     });
+
     this.userService.getUsers().subscribe(
       data => 
       {
@@ -58,6 +68,12 @@ export class MeetingPageComponent implements OnInit {
         this.errorListUsers = true;
       }
     );
+    this.searchField = new FormControl();
+    this.results = this.searchField.valueChanges
+    .debounceTime(400)
+    .distinctUntilChanged()
+    .filter(keyword => keyword)
+    .switchMap( keyword => this.userService.filterUsers(keyword))
 
   } 
 
