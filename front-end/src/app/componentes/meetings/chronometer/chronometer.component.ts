@@ -3,7 +3,6 @@ import { timer } from 'rxjs/observable/timer';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { window } from 'rxjs/operators/window';
 import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
-import { setTimeout } from 'timers';
 
 @Component({
   selector: 'chronometer',

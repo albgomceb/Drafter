@@ -28,6 +28,10 @@ public class UserSerializer {
 				.map(au -> au.getAuthority())
 				.collect(Collectors.toList()));
 		
+		if(res.getPhoto() == null || res.getPhoto().isEmpty()) {
+			res.setPhoto("/assets/img/none.png");
+		}
+		
 		return res;
 	}
 	

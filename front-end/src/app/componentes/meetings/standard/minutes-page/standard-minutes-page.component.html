@@ -1,14 +1,41 @@
 <h1 class="title-page text-center">
-    <span class="capital-letter">M</span>inutes
+    <span class="capital-letter">M</span>eeting <span class="capital-letter">M</span>inutes
 </h1>
 
-<div class="summary-container p-5">
-    <div class="summary">
-        <h2 class="text-center">
-            <span style="font-weight: 400;color: #00a98f">{{meeting.type}}</span> Meeting Summary
-        </h2>
-        <div class="topic">
-        <span class="principal mt-2 ">Topic:</span> <span class="principal" style="color: black;">{{meeting.title}}</span>
+<div class="subtitle">
+    Summary
+</div>
+<div class="minutes-container">
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Title</span> {{meeting.title}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Type</span> {{meeting.type}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Date</span> {{meeting.date | date:"EEEE, dd LLL yyyy HH:mm"}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Length</span> {{meeting.timer | date:"hh:mm:ss"}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Session leader</span>
+    </div>
+    <div class="summary-item d-block">
+        <span class="summary-item-title">Description</span> {{meeting.description}}
+    </div>
+</div>
+
+<div class="subtitle">
+    Participants
+</div>
+<div class="minutes-container">
+    <div class="d-flex justify-content-start flex-wrap">
+        <div *ngFor="let at of meeting.attendants" class="card">
+            <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
+            <div class="card-body">
+                <h4 class="card-title">{{at.name}}</h4>
+            </div>
         </div>
         <span class="secundary mt-5"><i class="fas fa-gavel fa-lg"></i> Session leader</span> <span>(LIDER)</span>
         <span class="secundary mt-2"><i class="fas fa-user fa-lg"></i> {{meeting.attendants.length}} participants</span> 
@@ -33,10 +60,12 @@
     </div>
 </div>
 
+<div class="subtitle">
+    Conclusions
+</div>
 <div class="minutes-container">
   <div *ngFor="let agenda of agendas" class="point-container">
-      <h3>{{agenda.description}}</h3>
-      <span>Conclusion:</span>
+      <h3>Topic: {{agenda.description}}</h3>
       <div *ngFor="let co of agenda.conclusions">
         <p>{{co.conclusion}}</p> 
       </div>

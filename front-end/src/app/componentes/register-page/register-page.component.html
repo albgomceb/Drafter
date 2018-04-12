@@ -1,3 +1,7 @@
+<div *ngIf="missingFields == true" class="alert alert-danger text-center">
+    All fields are required
+</div>
+
 <div class="d-flex justify-content-center align-items-stretch">
   <div class="col-lg-6 d-none d-lg-block form-info">
     <div class="text-center">
@@ -74,9 +78,6 @@
                     type="password" class="form-control error" id="inputPassword">
             <p class="text-error">Password must contains at least 5 characters.</p>
         </div>
-    </div>
-    <div *ngIf="missingFields == true"  >
-        <p class="text-error">All fields are required</p>            
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-2">Sign up</button>

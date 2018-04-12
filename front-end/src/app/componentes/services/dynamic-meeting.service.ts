@@ -1,10 +1,9 @@
-import { Meeting } from './../models/meeting.model';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
-import { Meeting2 } from '../models/meeting.model2';
+import { Meeting } from '../models/meeting.model';
 import { Agenda2 } from '../models/agenda.model2';
 import { Conclusion } from '../../models/conclusion';
 import { User } from '../models/user.model';
