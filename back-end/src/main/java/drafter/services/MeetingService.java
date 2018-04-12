@@ -8,8 +8,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//import org.springframework.util.Assert;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import drafter.domain.Agenda;
 import drafter.domain.Meeting;
@@ -41,7 +42,6 @@ public class MeetingService {
     		meeting.setParticipants( new ArrayList<Participant>());
     		
     	meeting.setDate(date);
-    	meeting.setTimer(date);
     	meeting.setSteps(new ArrayList<Step>());
     	meeting.setAgendas(new ArrayList<Agenda>());
         return meetingRepository.save(meeting);
@@ -79,6 +79,13 @@ public class MeetingService {
     	//Revisar la construccion de steps
 //    	Assert.isTrue(size >= m.getStatus(), "The meeting hasn't more steps, you must finish it!");
     	m.setStatus(m.getStatus()+1);
+    	
+    	return save(m);
+    }
+    
+    public Meeting setTimer(int id, int timer) {
+    	Meeting m = findById(id);
+    	m.setTimer(timer);
     	
     	return save(m);
     }

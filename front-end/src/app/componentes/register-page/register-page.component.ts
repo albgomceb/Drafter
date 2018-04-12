@@ -55,11 +55,11 @@ export class RegisterPageComponent implements OnInit {
   onSubmit(registerForm){
     this.user = new User();
     
-    this.user.setName(this.registerForm.value.name);
-    this.user.setSurname(this.registerForm.value.surname);
-    this.user.setUsername(this.registerForm.value.username);
-    this.user.setEmail(this.registerForm.value.email);
-    this.user.setPassword(this.registerForm.value.password);
+    this.user.name = this.registerForm.value.name;
+    this.user.surname = this.registerForm.value.surname;
+    this.user.username = this.registerForm.value.username;
+    this.user.email = this.registerForm.value.email;
+    this.user.password = this.registerForm.value.password;
    
     this.registerService.saveUser(this.user).subscribe((res:any) =>{
       this.router.navigate(['/home/'])

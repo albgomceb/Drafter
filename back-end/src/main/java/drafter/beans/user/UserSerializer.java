@@ -22,6 +22,12 @@ public class UserSerializer {
 		res.setPhoto(user.getPhoto());
 		res.setSurname(user.getSurname());
 		res.setId(new Integer(user.getId()).toString());
+		res.setUsername(user.getUserAccount().getUsername());
+		res.setAuthorities(user.getUserAccount().getAuthorities()
+				.stream()
+				.map(au -> au.getAuthority())
+				.collect(Collectors.toList()));
+		
 		return res;
 	}
 	
