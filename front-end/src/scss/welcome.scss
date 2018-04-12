@@ -1,7 +1,6 @@
 /* Welcome */
 div.home-container {
     div.welcome-info {
-        margin: 0 3rem;
         border-radius: 5px;
         padding: 1.5rem 2.5rem;
         background-color: $mp_primary_color; 
@@ -18,22 +17,23 @@ div.home-container {
 
         blockquote.blockquote {
             margin-top: 2rem;
-
-            div.blockquote-footer {
-                color: #d4d4d4;
-            }
         }
     }
     div.quote-container {
-        margin: 3rem;
         border: 1px solid $content_border;
+        border-radius: 5px;
         padding: 1.5rem 2.5rem;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         div.welcome-info,
         div.quote-container {
-            margin: 0;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+        }
+
+        div.quote-container {
+            margin-top: 3rem;
         }
     }
 }

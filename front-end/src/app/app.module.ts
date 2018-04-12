@@ -31,8 +31,8 @@ import { LoginService } from './componentes/services/login.service';
 import { RegisterService } from './componentes/services/register.service';
 import { BaseRequestOptions } from '@angular/http';
 import { PricingComponent } from './componentes/pricing/pricing.component';
+import { ChronometerComponent } from './componentes/meetings/chronometer/chronometer.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
-
 
 @NgModule({
   declarations: [
@@ -58,7 +58,8 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
     IdeasProsConsComponent,
     BrainstormingComponent,
     PricingComponent,
-    IdeasCreateComponent
+    IdeasCreateComponent,
+    ChronometerComponent
   ],
   imports: [
     BrowserModule,

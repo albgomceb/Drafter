@@ -1,46 +1,35 @@
+<h1 class="title-page text-center">
+  <span class="capital-letter">P</span>ricing
+</h1>
+<h2 class="subtitle text-center">
+  Get your license now and have access to all the content we offer!
+</h2>
 
-
-  <div class="row mt-3">
-        <div class="card col-lg-10 col-md-10 mx-auto pt-4 pb-5">
-            <h1 class="title-page text-center">
-                <span class="capital-letter">P</span>ricing
-              </h1>
-            <div class="paypal-transaction">
-                <h4 class="">Get your license now...</h4>
-                <h6 class="mt-3 mb-4">...and have access to all the content we offer!</h6>
-              
-                  <div class="row justify-content-center">
-
-                    <div class="col-sm-6 col-md-4">
-                      <div class="thumbnail card pt-4 pb-4">
-                        <h2>{{licenses[0].name}}</h2>
-                        <div class="mt-3 list-group">
-                          <span class="item">Pro 1</span>
-                          <span class="mt-3 item">Pro 2</span>
-                          <span class="mt-3 mb-3 item">Pro 3</span>
-                        </div>
-                        <h3 class="mt-3 price">{{licenses[0].price}}€</h3>
-                        <div class="mt-2" id="paypal-checkout-btn"></div>
-                        <h6 class="mt-2" style="font-size:16px;color:white!important" *ngIf="paypalLoad">Paypal is loading...</h6>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4">
-                      <div class="thumbnail card pt-4 pb-4">
-                        <h2><b>Standalone</b></h2>
-                        <div class="mt-3 list-group">
-                          <span class="item">Pro 1</span>
-                          <span class="mt-3 item">Pro 2</span>
-                          <span class="mt-3 item">Pro 3</span>
-                          <span class="mt-3 mb-3 item">Pro 4</span>
-                        </div>
-                        <h3 class="mt-3 price"><a href="#">Contact us</a></h3>
-                      </div>
-                    </div>
-
-                  </div>
-
-            </div>
-        </div>
+<div class="pricing-container d-flex justify-content-center flex-wrap">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="card-title">{{licenses[0].name}}</h4>
+    </div>
+    <div class="card-body text-center">
+      <p class="card-text">Standard meeting</p>
+      <p class="card-text">Brainstorming meeting</p>
+      <p class="card-text">Six Thinking Hats meeting</p>
+      <p class="card-text">Space for organizations</p>
+      <p class="card-text">Service & Support</p>
+      <p class="card-price">€ {{licenses[0].price}} <small>per month</small></p>
+      <div id="paypal-checkout-btn"></div>
+      <p style="font-size:16px;color:white!important" *ngIf="paypalLoad">Paypal is loading...</p>                
+    </div>
   </div>
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="card-title">Standalone</h4>
+    </div>
+    <div class="card-body text-center">
+      <p class="card-text">All enterprise services</p>
+      <p class="card-text">Personalized service</p>
+      <button href="mailto:drafter.ispp.app@gmail.com" target="_top" class="btn">Contact us</button>
+    </div>
+  </div>
+</div>
 

@@ -36,7 +36,7 @@ public class MeetingSerializer {
 		res.setTitle(meeting.getTitle());
 		res.setDescription(meeting.getDescription());
 		res.setNumberOfMeeting(meeting.getNumberOfMeeting());
-		res.setTimer(meeting.getTimer().getTime());
+		res.setTimer(meeting.getTimer());
 		res.setImage(meeting.getImage());
 		res.setDate(meeting.getDate().getTime());
 		res.setType(meeting.getType() == null ? "standard" : meeting.getType());
@@ -44,7 +44,7 @@ public class MeetingSerializer {
 		res.setStatus(meeting.getStatus());
 		
 		List<Option> attendants = meeting.getParticipants().stream()
-				.map(us -> new Option(new Integer(us.getId()).toString(), us.getUser().getName()))
+				.map(us -> new Option(new Integer(us.getId()).toString(), us.getUser().getName(),null, us.getUser().getPhoto()))
 				.collect(Collectors.toList());
 		res.setAttendants(attendants);
 		

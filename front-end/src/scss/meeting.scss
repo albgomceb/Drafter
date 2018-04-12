@@ -1,8 +1,80 @@
 /* MEETING */
-div.point-container {
+
+/* BRAINSTORMING */
+div.ideas-container {
+    div.ideas-title {
+        padding: 0.75rem;
+        color: $mp_font_color;
+        font-size: 1.2rem;
+        font-weight: bolder;
+        background-color: $mp_primary_color;
+    }
+
+    div.ideas-body {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid $content_border;
+
+        div.ideas-title {
+            margin-bottom: 1rem;
+            color: black;
+            background-color: $content_background_color_2;
+        }
+    }
+
+    div.ideas-body ul.list-ideas {
+        list-style-type: none;
+        border-collapse: collapse;
+        padding: 0;
+
+        li {
+            border-bottom: 1px solid $content_border;
+            padding: 0.75rem;
+
+            .idea {
+                width: 80%;
+            }
+
+            input.idea {
+                padding: 0.3rem;
+            }
+
+            div.idea {
+                padding: 0.5rem;
+                word-wrap: break-word;
+            }
+    
+            div.options-ideas {
+                padding: 0.3rem 0;
+
+                button {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+
+            ul.list-pros,
+            ul.list-cons {
+                min-width: 20rem;
+                list-style-type: none;
+                border-collapse: collapse;
+                padding: 0;
+
+                li {
+                    margin: 1rem 0;
+                    padding: 0.75rem;
+                    word-wrap: break-word;
+                }
+            }
+        }
+    }
+}
+
+/* STANDARD */
+div.topic-container {
     margin-bottom: 2rem;
 
-    div.points {
+    div.topic {
         width: 100%;
         margin: 1em 0;
         border: 1px solid $content_border;
