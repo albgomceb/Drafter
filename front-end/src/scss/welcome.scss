@@ -1,21 +1,39 @@
 /* Welcome */
-div.welcome-info {
-    max-width: 450px;
-    padding: 0;
-    color: $mp_font_color;
-}
+div.home-container {
+    div.welcome-info {
+        border-radius: 5px;
+        padding: 1.5rem 2.5rem;
+        background-color: $mp_primary_color; 
+        color: $mp_font_color;
 
-div.welcome-info {
-    margin-top: 1rem;
+        img.img-logo {
+            max-width: 9.375rem;
+        }
+        
+        hr {
+            margin-bottom: 1.875rem;
+            background-color: $content_border;
+        }
 
-    div {
-        border-top-left-radius: 5px;
-        padding: 15px;
-        font-size: 2em;
-        background-color: $mp_secondary_color;
+        blockquote.blockquote {
+            margin-top: 2rem;
+        }
+    }
+    div.quote-container {
+        border: 1px solid $content_border;
+        border-radius: 5px;
+        padding: 1.5rem 2.5rem;
     }
 
-    img {
-        border-bottom-left-radius: 5px;
+    @include media-breakpoint-down(md) {
+        div.welcome-info,
+        div.quote-container {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+        }
+
+        div.quote-container {
+            margin-top: 3rem;
+        }
     }
 }

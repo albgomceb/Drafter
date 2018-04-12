@@ -1,3 +1,4 @@
+import { Meeting } from './../models/meeting.model';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -22,13 +23,8 @@ export class DynamicMeetingService {
   staticUrl:String = environment.baseApi;
   
   
-  getMeetingInfo(meetingId: number){
-    //llamar a un endpoint que obtenga los datos de una reunión, los datos deben mantener el formato falseado
-   return this.http.get(this.staticUrl + '/meeting/standard/'+meetingId);
-    // if(meetingId < this.reunionesFalsas.length)
-    //  { return this.reunionesFalsas[meetingId];}
-    // else 
-    //   {return null; }
+  getMeetingInfo(meetingId: number): Observable<any> {
+    return this.http.get(this.staticUrl + '/meeting/'+meetingId);
   }
 
   finish(meetingId: number): Observable<any> {
@@ -41,51 +37,19 @@ export class DynamicMeetingService {
       res.users.push(user);
     });
   }
-  getMeetingTypes():Array<Option>{
+
+  getMeetingTypes():Observable<Array<Option>>{
     //un endoint que devuelva la lista de tipos de reuniones existentes en una lista de Option.java con id =
     // un string que identifique a la reunión y name = nombre más descriptivo
-    let op1:Option = new Option();
-    op1.id = 'standard';
-    op1.name = 'Standard meeting';
-
-    let op2:Option = new Option();
-    op2.id = 'six-hats';
-    op2.name = '6-hats meeting';
+    return this.http.get<Array<Option>>(this.staticUrl+'/meeting/types/');
     
-    let op3:Option = new Option();
-    op3.id = 'brainstorming';
-    op3.name = 'Brainstorming meeting';
-
-    return [ 
-     op1,
-      op2,
-      op3
-    ]
   }
 
- 
-  public reunionesFalsas:Array<any>=[
-    {
-      id:0,
-      tipo: 'standard',
-      ultimoPaso: 1,
-      isFinished: false,
-      users:[]
-    },
-    {
-      id:2,
-      tipo: 'six-hats',
-      ultimoPaso: 0,
-      isFinished: false,
-      users:[]
-    },
-    {
-      id:0,
-      tipo: 'standard',
-      ultimoPaso: 1,
-      isFinished: false,
-      users:[]
-    }
+  nextStep(meetingId: number): Observable<string>{
+    return this.http.get<string>(this.staticUrl+'/meeting/nextStep/'+meetingId);
+  }
 
-  ];
+  setTimer(meetingId: number, timer: number): Observable<any> {
+    return this.http.get(this.staticUrl+'/meeting/setTimer/'+meetingId+'/'+timer);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, EventEmitter, Renderer, ViewChildren, Directive, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Option } from '../models/option.model';
 import { Agenda } from '../models/agenda.model';
 import { AgendaService } from '../services/agenda.service'; 
@@ -7,17 +7,23 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'agenda-page',
   templateUrl: './agenda-page.component.html',
-  styleUrls: ['./agenda-page.component.scss']
+  styleUrls: ['./agenda-page.component.scss'],
 })
+
 export class AgendaPageComponent implements OnInit {
 
+  @ViewChildren('input') vc;
   public entradas: Array<Agenda>;
   public counter: number;
-  public meetingId: number;
+  public meetingId: number; 
 
   constructor(private agendaService: AgendaService, 
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private renderer : Renderer,
+    private renderer2 : Renderer2,
+    private elRef: ElementRef,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -50,6 +56,7 @@ export class AgendaPageComponent implements OnInit {
     this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].description = "";
+    this.lastFocus();
   } 
 
   removeAgenda(entrada : Agenda, entradasIndex : number){    
@@ -58,12 +65,17 @@ export class AgendaPageComponent implements OnInit {
 
   convert(entrada : Agenda){
     //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
-    if(this.checkNotBlank(entrada.description) && entrada.isInput)
+    if(this.checkNotBlank(entrada.description) && entrada.isInput) {
       entrada.isInput = false;
+      if(this.counter == (entrada.id+1))
+        this.addAgenda();
+    }
 
     //Si la entrada es un texto, se convierte en input
     else if(!entrada.isInput)
-      entrada.isInput = true;
+      entrada.isInput = true; 
+      
+    this.ref.markForCheck();
   }
 
   checkNotBlank(string : String) : boolean{
@@ -75,4 +87,11 @@ export class AgendaPageComponent implements OnInit {
 
     return res;
   }
+
+  lastFocus(){
+    this.vc.changes.subscribe(elements => {
+      elements.last.nativeElement.focus();
+    });
+  }
+  
 }

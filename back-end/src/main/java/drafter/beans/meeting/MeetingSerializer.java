@@ -36,7 +36,7 @@ public class MeetingSerializer {
 		res.setTitle(meeting.getTitle());
 		res.setDescription(meeting.getDescription());
 		res.setNumberOfMeeting(meeting.getNumberOfMeeting());
-		res.setTimer(meeting.getTimer().getTime());
+		res.setTimer(meeting.getTimer());
 		res.setImage(meeting.getImage());
 		res.setDate(meeting.getDate().getTime());
 		res.setType(meeting.getType() == null ? "standard" : meeting.getType());
