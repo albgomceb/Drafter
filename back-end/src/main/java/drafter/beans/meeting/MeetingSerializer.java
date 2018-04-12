@@ -40,7 +40,7 @@ public class MeetingSerializer {
 		res.setImage(meeting.getImage());
 		res.setDate(meeting.getDate().getTime());
 		res.setType(meeting.getType() == null ? "standard" : meeting.getType());
-		res.setFinished(meeting.isHasfinished());
+		res.setHasFinished(meeting.getHasfinished());
 
 		res.setStatus(meeting.getStatus());
 

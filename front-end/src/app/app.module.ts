@@ -64,6 +64,7 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
     BrainstormingComponent,
     PricingComponent,
     IdeasCreateComponent,
+    ListMeetingPageComponent,
     ChronometerComponent
   ],
   imports: [

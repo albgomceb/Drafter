@@ -22,7 +22,7 @@ export class ListMeetingPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.userId = 11;
+    this.userId = 10;
     this.today = new Date().getTime();
     // Cogemos las meeting que el usuario tenga
     this.meetingService.getMeetingsByUser(this.userId).subscribe(

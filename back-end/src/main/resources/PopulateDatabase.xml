@@ -338,8 +338,8 @@
 		<property name="numberOfMeeting" value="10" />
 		<property name="image"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
-		<property name="timer" value="0" />
-		<property name="hasfinished" value="false" />
+		<property name="timer" value="360" />
+		<property name="hasfinished" value="true" />
 		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1"/> -->
 		<property name="agendas">

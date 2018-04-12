@@ -7,7 +7,7 @@ export class Meeting {
     date: Date;
     image: string;
     timer: Date;
-    hasfinished: boolean;
+    hasFinished: boolean;
     numberOfMeeting: number;
     attendants: Array<Option>;
     type : string;

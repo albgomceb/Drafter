@@ -4,13 +4,12 @@
     <label class="mt-4" ><strong>Meeting:</strong> {{meeting.title}} 
       <strong>Date:</strong> {{meeting.date | date : "fullDate"}} 
       <strong>Type:</strong> {{meeting.type}} 
-      <strong>Finished:</strong><span *ngIf="meeting.hasfinished"> Yes</span><span *ngIf="!meeting.hasfinished"> No</span>
+      <strong>Finished:</strong><span *ngIf="meeting.hasFinished"> Yes</span><span *ngIf="!meeting.hasFinished"> No</span>
     </label>
-    <button *ngIf="meeting.hasfinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">See Minutes</button>
-    <button *ngIf="!meeting.hasfinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">Go to meeting!</button>
-    <h4 *ngIf="!meeting.hasfinished">The meeting is not ready yet</h4>
+    <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">See Minutes</button>
+    <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">Go to meeting!</button>
+    <h4 *ngIf="!meeting.hasFinished && meeting.date < today">The meeting have not minutes</h4>
   </div>
-  <span>Prueba fecha actual en entero: {{today}}</span>
 
   <!-- TODO si es necesario una vista donde se vean las organizaciones y sus departamentos -->
   <!-- <div *ngFor="let organization of organizations; let i=index">
