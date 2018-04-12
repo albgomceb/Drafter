@@ -73,6 +73,9 @@ public class MeetingController extends AbstractController {
 		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = meetingService.findById(meetingId);
 		
+		if(!meetingService.isParticipant(meetingId))
+			throw new IllegalStateException();
+		
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		return res;
@@ -99,6 +102,18 @@ public class MeetingController extends AbstractController {
 	public String nextStep(@PathVariable int meetingId) {
 		Meeting meeting = meetingService.nextStep(meetingId);
 		return meeting.getStatus() +"";
+	}
+	
+	@GetMapping("/isParticipant/{meetingId}")
+	public String isParticipant(@PathVariable int meetingId) {
+		boolean res;
+		try {
+			res = meetingService.isParticipant(meetingId);
+		} catch(Throwable e) {
+			res = false;
+		}
+		
+		return ""+res;
 	}
 	
 	@GetMapping("/setTimer/{meetingId}/{timer}")

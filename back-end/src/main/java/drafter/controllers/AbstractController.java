@@ -27,4 +27,11 @@ public class AbstractController {
 		response.setStatus(422);
 		return oops.getLocalizedMessage();
 	}
+	
+	@ExceptionHandler(IllegalStateException.class)
+	public String forbidden(HttpServletResponse response, IllegalStateException oops) {
+		response.setStatus(403);
+		return oops.getLocalizedMessage();
+	}
+	
 }

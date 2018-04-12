@@ -45,6 +45,11 @@ export class LoginService {
         });
     }
 
+
+    public getPrincipal(): User {
+        return this.user;
+    }
+
     public isAuthenticated(): boolean {
         return this.user != undefined || this.user != null;
     }

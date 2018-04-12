@@ -7,7 +7,7 @@ export class User {
   username: string;
   password: string;
   phone: string;
-  picture: string;
+  photo: string;
   departments: Array<Option>;
   authorities: Array<String>;
 }

@@ -20,7 +20,7 @@
 
 	<bean id="userAccount2" class="drafter.security.UserAccount">
 		<property name="username" value="user1" />
-		<property name="password" value="32f0b34812a18cb1bf497a3e672cc80d" />
+		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -32,7 +32,7 @@
 
 	<bean id="userAccount3" class="drafter.security.UserAccount">
 		<property name="username" value="user2" />
-		<property name="password" value="3daa859a294cdefb20a84840240a76f5" />
+		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -44,7 +44,7 @@
 
 	<bean id="userAccount4" class="drafter.security.UserAccount">
 		<property name="username" value="user3" />
-		<property name="password" value="0c8746de81268518ff83490301db8652" />
+		<property name="password" value="92877af70a45fd6a2ed7fe81e1236b78" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -56,7 +56,7 @@
 
 	<bean id="userAccount5" class="drafter.security.UserAccount">
 		<property name="username" value="user4" />
-		<property name="password" value="a2da05a88eead7e64593826cafc6a7a7" />
+		<property name="password" value="3f02ebe3d7929b091e3d8ccfde2f3bc6" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -68,7 +68,7 @@
 
 	<bean id="userAccount6" class="drafter.security.UserAccount">
 		<property name="username" value="user5" />
-		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="password" value="0a791842f52a0acfbb3a783378c066b8" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -81,7 +81,7 @@
 
 	<bean id="userAccount7" class="drafter.security.UserAccount">
 		<property name="username" value="user6" />
-		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="password" value="affec3b64cf90492377a8114c86fc093" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -93,7 +93,7 @@
 
 	<bean id="userAccount8" class="drafter.security.UserAccount">
 		<property name="username" value="user7" />
-		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="password" value="3e0469fb134991f8f75a2760e409c6ed" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">

@@ -1,3 +1,4 @@
+import { LoginService } from './../componentes/services/login.service';
 import { Injectable } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
@@ -16,9 +17,10 @@ export class RealTimeService {
   private users: { [key:string]:any; };
   private usersCount: number;
   private subscribed: boolean = false;
+  private timeout;
 
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   public getUserUUID(): string {
     return this.userUUID;
@@ -37,6 +39,13 @@ export class RealTimeService {
   }
 
 
+  private heartbeat() {
+    var that = this;
+    this.timeout = setInterval(function() {
+      that.send('/chat/send/', WSResponseType.HEARTBEAT, '', {}, {});
+    }, 30000);
+  }
+
   public connect(meeting: number, callback: Function) {
     if(!this.callbacks)
       this.callbacks = new Array<Function>();
@@ -49,12 +58,15 @@ export class RealTimeService {
     this.users = {};
     this.usersCount = 0;
     this.meeting = meeting;
-    this.user= this.user ? this.user : 'Unnamed';
+    this.user= this.loginService.getPrincipal().username;
     this.models = new Array<any>();
 
     var ws = new SockJS(environment.baseWS);
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({}, frame => {
+      // Heartbeat
+      this.heartbeat();
+
       // Callbacks
       for(var c of this.callbacks)
         c();
@@ -90,6 +102,11 @@ export class RealTimeService {
         }
 
         switch(obj.type) {
+          case WSResponseType.HEARTBEAT:
+            clearInterval(this.timeout);
+            this.heartbeat();
+            break;
+
           case WSResponseType.PUSH:
             if(obj.data['id'] && obj.data['id'] != 0) {
               var i = 0;
@@ -189,6 +206,8 @@ export enum WSResponseType {
 
     REQUEST_USERS = '*request_users',
     RESPONSE_USERS = '*reponse_users',
+
+    HEARTBEAT = '*heartbeat',
 
     RUN = 'run'
 }
