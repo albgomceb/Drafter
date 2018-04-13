@@ -29,6 +29,7 @@ export class MeetingPageComponent implements OnInit {
 
   users: Array<User>;
   attendants: Array<Option>;
+  thumbnail: Array<Option>;
   organizations: Array<Organization>
   results: Observable<Array<User>>;
 
@@ -43,6 +44,7 @@ export class MeetingPageComponent implements OnInit {
 
     this.meeting = new Meeting();
     this.attendants = new Array<Option>();
+    this.thumbnail = new Array<Option>();
     this.meetingService.getMeetingTypes().subscribe(list => 
     {
       this.kinds = list;
@@ -78,7 +80,12 @@ export class MeetingPageComponent implements OnInit {
   } 
 
   addAttendant(attendant:Option){
-    this.attendants.push(attendant);
+    //if(!(this.attendants.indexOf(attendant) !== -1))
+      this.attendants.push(attendant);
+
+    //if(!(this.thumbnail.indexOf(attendant) !== -1))
+      this.thumbnail.push(attendant);
+
   }
 
   onSubmit(meeting){
