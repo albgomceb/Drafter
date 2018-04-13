@@ -5,6 +5,9 @@ public class ConsBean {
 	private String cons;
 	private int ideaId;
 	private int id;
+	private int numberCons;
+	private int version;
+	
 	
 	public String getCons() {
 		return cons;
@@ -24,8 +27,16 @@ public class ConsBean {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
-	
-
+	public int getNumberCons() {
+		return numberCons;
+	}
+	public void setNumberCons(int numberCons) {
+		this.numberCons = numberCons;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

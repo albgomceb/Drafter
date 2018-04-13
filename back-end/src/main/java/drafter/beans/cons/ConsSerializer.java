@@ -11,6 +11,8 @@ public class ConsSerializer {
 		res.setId(c.getId());
 		res.setIdeaId(c.getIdea().getId());
 		res.setCons(c.getCons());
+		res.setNumberCons(c.getNumberCons());
+		res.setVersion(c.getVersion());
 
 		return res;
 	}
@@ -24,6 +26,8 @@ public class ConsSerializer {
 
 		res.setIdea(ideaService.findById(bean.getIdeaId()));
 		res.setCons(bean.getCons());
+		res.setNumberCons(bean.getNumberCons());
+		res.setVersion(bean.getVersion());
 
 		return res;
 	}
