@@ -30,7 +30,7 @@ public class ProsController {
 	private SimpMessagingTemplate template;
 
 
-	@MessageMapping("/pros/savePro/{brainId}")
+	@MessageMapping("/pros/savePro/{meetingId}")
 	public void save(@DestinationVariable int meetingId, ModelBean<ProsBean> bean) {
 		Pros pros = new ProsSerializer().fromBean(bean.getModel(), ideaService, prosService);
 		pros = prosService.save(pros);
@@ -39,10 +39,9 @@ public class ProsController {
 		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
-	@MessageMapping("/pros/delete/{prosId}/{brainId}")
+	@MessageMapping("/pros/delete/{prosId}/{meetingId}")
 	public void delete(@DestinationVariable int prosId, @DestinationVariable int meetingId, String json) {
-		if(prosId != 0)
-			prosService.delete(prosId);
+		prosService.delete(prosId);
 		template.convertAndSend("/meeting/" + meetingId, json);
 	}
 }

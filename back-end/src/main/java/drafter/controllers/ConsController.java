@@ -30,20 +30,18 @@ public class ConsController {
 	private SimpMessagingTemplate template;
 
 
-	@MessageMapping("/cons/saveCon/{brainId}")
+	@MessageMapping("/cons/saveCon/{meetingId}")
 	public void save(@DestinationVariable int meetingId, ModelBean<ConsBean> bean) {
-		Cons cons = new ConsSerializer().fromBean(bean.getModel(), ideaService, consService);
-		cons = consService.save(cons);
+		Cons cons = consService.saveBean(bean.getModel());
 		
 		bean.setModel(new ConsSerializer().fromCons(cons));
 		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
 	
-	@MessageMapping("/cons/delete/{consId}/{brainId}")
+	@MessageMapping("/cons/delete/{consId}/{meetingId}")
 	public void delete(@DestinationVariable int consId, @DestinationVariable int meetingId, String json) {
-		if(consId != 0)
-			consService.delete(consId);
+		consService.delete(consId);
 		template.convertAndSend("/meeting/" + meetingId, json);
 	}
 }
