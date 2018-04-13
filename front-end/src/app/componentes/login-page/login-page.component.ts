@@ -34,10 +34,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit(loginForm){
-    this.login = new Login();
-
-    this.login.setEmail(this.loginForm.value.email);
-    this.login.setPassword(this.loginForm.value.password);
+    this.login = new Login(this.loginForm.value.email, this.loginForm.value.password);
     
     this.loginService.login(this.login).subscribe((res:any) =>{
       this.loginService.init();
@@ -46,8 +43,6 @@ export class LoginPageComponent implements OnInit {
       if(error.status == 424){
         this.showError=true;
       }
-  });
-  console.log(this.login);
-  
+    });
   }
 }

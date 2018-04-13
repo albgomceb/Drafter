@@ -1,39 +1,41 @@
 <h1 class="title-page text-center">
-  <span class="capital-letter">A</span>genda
+  <span class="capital-letter">M</span>eeting <span class="capital-letter">A</span>genda
 </h1>
 
-<p>Introduce your agenda using the inputs below.</p>
-<p>You can add as many points as you want by clicking the button (or pressing enter key).</p>
-
-<table class="table table-bordered table-agenda">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Point</th>
-    </tr>
-  </thead>
-  <tr *ngFor="let entrada of entradas; let i=index">
-    <td>
-      {{entradas.indexOf(entrada)+1}}
-    </td>
-    <td>
-      <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  *ngIf="entrada.isInput"  
-      (focusout)="convert(entrada)" (keyup.enter)="convert(entrada); addAgenda();" placeholder="Point to deal with" required class="point">
-      <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)">
-        {{entrada.description}}
-      </div>
-      <span *ngIf="!checkNotBlank(entrada.description)" class="required">
-        Required
-      </span>
-      <button *ngIf="i!=0" (click)="removeAgenda(entrada, i)" class="btn">
-        Remove
+<div class="ideas-container">
+  <div class="ideas-title">
+    Agenda items
+  </div>
+  <div class="ideas-body">
+    <ul class="list-ideas">
+        <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
+          <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  
+                  *ngIf="entrada.isInput" (keyup.enter)="convert(entrada);" 
+                  placeholder="Type your topic here..." required class="idea">
+          <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
+            {{entradas.indexOf(entrada)+1}}. {{entrada.description}}
+          </div>
+          <div class="options-ideas text-right">
+            <button *ngIf="entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-check"></i>
+            </button>
+            <button *ngIf="!entrada.isInput" (click)="convert(entrada);" class="btn">
+              <i class="fas fa-pencil-alt"></i>
+            </button>          
+            <button (click)="removeAgenda(entrada, i)" class="btn">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </li>
+    </ul>
+    <div class="text-center">
+      <button (click)="addAgenda()" class="btn">
+          <i class="fas fa-lightbulb"></i> New item
       </button>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>
 
-<div class="text-center button-group">
-  <button (click)="addAgenda()" class="btn">New point</button>
-  <!-- <button type="button" >Skip this step</button> -->
-  <button (click)="saveAgenda(entradas)" class="btn">Save & create the meeting</button>
+<div class="text-center button-group"> 
+  <button (click)="saveAgenda(entradas)" class="btn">Create the meeting</button>
 </div>

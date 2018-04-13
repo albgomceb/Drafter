@@ -1,47 +1,47 @@
-<br>
-<h2 class="text-center"><span class="letter">B</span>rainstorming</h2>
-<br>
-<div class="row">
-    <div class="col-md-8 idea">
-        <h3>Now, add pros and cons to the ideas</h3>
-        <div *ngFor="let idea of ideas">
-            <div class="points">
-                <span>{{idea.number}}. {{idea.text}}</span>
-                <div class="clear"></div>
-                <div>
-                    <button class="btn btn-success addPro" (click)="addPro($event)" attr.data-index="{{idea.number}}">+</button>
-                    <button class="btn btn-success addCon" (click)="addCon($event)" attr.data-index="{{idea.number}}">+</button>
-                </div>   
-            </div>
-            <i class="fa fa-check" aria-hidden="true"></i>
-            <div class="row">
-            <ul class="col-6">
-                <li 
-                *ngFor="let p of idea.pros; let i = index" 
-                attr.contenteditable="{{hasEdit}}"
-                attr.data-iidea="{{idea.number}}" 
-                attr.data-ipro="{{i}}" 
-                (focusout)="editPro($event)"
-                (keydown)="enter($event)"
-                class="pro">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                <span>{{p.pros}}</span>
-                </li>
-            </ul>
-            <ul class="col-6">
-                <li
-                *ngFor="let c of idea.cons; let i = index" 
-                attr.contenteditable="{{hasEdit}}"
-                attr.data-iidea="{{idea.number}}" 
-                attr.data-icon="{{i}}" 
-                (focusout)="editCon($event)"
-                (keydown)="enter($event)"
-                class="con">
-                    {{c.cons}}
-                </li>
-            </ul>
-            </div>
+<h2>Pros and cons to the ideas</h2>
+
+<div class="ideas-container">
+    <div class="ideas-title">
+        Ideas
+    </div>
+    <div class="ideas-body">
+        <ul class="list-ideas">
+            <li *ngFor="let idea of ideas; let ii = index">
+                <div class="ideas-title">
+                    {{ii+1}}. {{idea.text}}                    
+                </div>
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div>
+                        <button class="btn" (click)="addPro($event)" attr.data-index="{{ii}}">
+                            Add pros
+                        </button>
+                        <ul class="list-pros">
+                            <li *ngFor="let p of idea.pros; let i = index" class="alert alert-success">
+                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                    <div style="display:inline-block" contenteditable="true" (focusout)="editPro($event, p, ii, i)" (keydown)="enter($event)">
+                                        {{ p.pros }}
+                                    </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="btn" (click)="addCon($event)" attr.data-index="{{ii}}">
+                            Add cons
+                        </button>
+                        <ul class="list-cons">
+                            <li *ngFor="let c of idea.cons; let i = index" class="alert alert-danger">
+                                    <i class="fas fa-times" aria-hidden="true"></i> 
+                                    <div style="display:inline-block" contenteditable="true" (focusout)="editCon($event, c, ii, i)" (keydown)="enter($event)">
+                                        {{ c.cons }}
+                                    </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="text-center">
+            <button (click) = "next()" class="btn">Next step</button>
         </div>
-    </div>  
-</div>     
-<button (click) = "next()" class="btn bt-lg">Next</button>
+    </div>
+</div>

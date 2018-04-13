@@ -1,11 +1,15 @@
 package drafter.beans;
 
+import java.util.List;
+
 public class Option {
 	public String id;
 	public String name;
 	public String photo;
 	public String organization;
+	public List<Option> users;
 	
+
 	public Option(String id, String name) {
 		super();
 		this.id = id;
@@ -55,6 +59,14 @@ public class Option {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	
+	public List<Option> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<Option> users) {
+		this.users = users;
 	}
 	
 }

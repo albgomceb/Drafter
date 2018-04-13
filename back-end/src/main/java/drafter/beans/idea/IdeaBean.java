@@ -9,6 +9,7 @@ import drafter.beans.vote.VoteBean;
 public class IdeaBean {
 	
 	private int id;
+	private int version;
 	private int number;
 	private String text;
 	private int brainId;
@@ -57,6 +58,12 @@ public class IdeaBean {
 	}
 	public void setVotes(List<VoteBean> votes) {
 		this.votes = votes;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 	

@@ -1,10 +1,12 @@
+import { Cons } from './../../../models/cons.model';
+import { Pros } from './../../../models/pros.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Idea } from '../../../models/idea.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
-import { Pros } from '../../../../models/pros';
+import { ProsService } from '../../../../services/pros.service';
+import { ConsService } from '../../../../services/cons.service';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
-import { Cons } from '../../../../models/cons';
 
 
 @Component({
@@ -27,21 +29,21 @@ export class IdeasProsConsComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingId = this.activeRoute.snapshot.params['id'];
 
-    this.ideaService.getIdeas().subscribe(
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(
       data => 
       {
         this.ideas = data;
         this.realTimeService.connect(this.meetingId, () => {
-          var i = 1;
+          var i = 0;
           for(var idea of this.ideas) {
             this.realTimeService.register('p'+i, idea.pros);
             this.realTimeService.register('c'+i, idea.cons);
             i++;
           }
           this.realTimeService.subscribe();
-          });
+        });
 
       },
       error => {
@@ -52,53 +54,33 @@ export class IdeasProsConsComponent implements OnInit {
 
   }
 
-  editPro(event) {
-    if(this.hasEdit) {
-        var iidea = event.target.dataset.iidea;
-        var ipro = event.target.dataset.ipro;
-        var content = event.target.textContent.trim();
-        var pro: Pros = this.ideas[iidea-1].pros[ipro];
-        pro.pro = content;
+  editPro(event, p: Pros, ii: number, i: number) {
+    var text = event.target.textContent.trim();
+    if(text.length == 0) {
+      this.realTimeService.send('/pros/delete/' + p.id + '/', WSResponseType.POP, 'p'+ii, {}, {id: p.id});
+    } else {
+      p.pros = text;
+      p.numberPros = 1;
+      p.ideaId = this.ideas[ii].id;
+      this.realTimeService.send('/pros/savePro/', WSResponseType.PUSH, 'p'+ii, p, {id: p.id});
 
-        // Delete if blank and else update
-        if(!content || content.length==0 || /^\s*$/.test(content)) {
-          this.realTimeService.send('/pro/delete/' + pro.id + "/", 
-                                  WSResponseType.POP, 
-                                  'p'+iidea,  
-                                  {}, 
-                                  {index: iidea});
-        } else {
-          this.realTimeService.send('/pro/save/', 
-                                  WSResponseType.SET, 
-                                  'p'+iidea,  
-                                  this.ideas[iidea-1].pros[ipro], 
-                                  {index: ipro});
-        }
+      if(!p.id || p.id == 0)
+        this.ideas[ii].pros.splice(i, 1);
     }
   }
 
-  editCon(event) {
-    if(this.hasEdit) {
-        var iidea = event.target.dataset.iidea;
-        var icon = event.target.dataset.icon;
-        var content = event.target.textContent.trim();
-        var con: Cons = this.ideas[iidea-1].cons[icon];
-        con.con = content;
+  editCon(event, c: Cons, ii: number, i: number) {
+    var text = event.target.textContent.trim();
+    if(text.length == 0) {
+      this.realTimeService.send('/cons/delete/' + c.id + '/', WSResponseType.POP, 'c'+ii, {}, {id: c.id});
+    } else {
+      c.cons = text;
+      c.numberCons = 1;
+      c.ideaId = this.ideas[ii].id;
+      this.realTimeService.send('/cons/saveCon/', WSResponseType.PUSH, 'c'+ii, c, {id: c.id});
 
-        // Delete if blank and else update
-        if(!content || content.length==0 || /^\s*$/.test(content)) {
-          this.realTimeService.send('/con/delete/' + con.id + "/", 
-                                  WSResponseType.POP, 
-                                  'c'+iidea,  
-                                  {}, 
-                                  {index: iidea});
-        } else {
-          this.realTimeService.send('/con/save/', 
-                                  WSResponseType.SET, 
-                                  'c'+iidea,  
-                                  this.ideas[iidea-1].cons[icon], 
-                                  {index: icon});
-        }
+      if(!c.id || c.id == 0)
+        this.ideas[ii].cons.splice(i, 1);
     }
   }
 
@@ -114,32 +96,21 @@ export class IdeasProsConsComponent implements OnInit {
 
   addPro(event) {
     var index = event.target.dataset.index;
-    var idea = this.ideas[index-1];
+    console.log(this.ideas[index].pros)
+    for(var e of this.ideas[index].pros)
+      if(!e.pros || e.pros.trim().length == 0)
+        return;
 
-    // Only one empty
-    var i = 0;
-    for(var p of idea.pros) {
-      if(!p.pro || p.pro.length==0 || /^\s*$/.test(p.pro))
-        idea.pros.splice(i, 1);
-      i++;
-    }
-
-    idea.pros.push({id: 0, ideaId: idea.id, pro: ""});
+    this.ideas[index].pros.push(new Pros());
   }
 
   addCon(event) {
     var index = event.target.dataset.index;
-    var idea = this.ideas[index-1];
-
-    // Only one empty
-    var i = 0;
-    for(var c of idea.cons) {
-      if(!c.con || c.con.length==0 || /^\s*$/.test(c.con))
-        idea.cons.splice(i, 1);
-      i++;
-    }
-
-    idea.cons.push({id: 0, ideaId: idea.id, con: ""});
+    for(var e of this.ideas[index].cons)
+      if(!e.cons || e.cons.trim().length == 0)
+        return;
+        
+    this.ideas[index].cons.push(new Cons());
   }
 
   next(){
