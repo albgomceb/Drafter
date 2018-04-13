@@ -1,5 +1,5 @@
-import { Pros } from "../../models/pros";
-import { Cons } from "../../models/cons";
+import { Cons } from './cons.model';
+import { Pros } from './pros.model';
 import { Vote } from "./vote.model";
 
 export class Idea {

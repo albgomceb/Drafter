@@ -4,6 +4,7 @@ import { IdeaService } from '../../../services/idea.service';
 import { Idea } from '../../../models/idea.model';
 import { DynamicMeetingService } from '../../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
+import { MeetingService } from '../../../services/meeting.service';
 
 
 @Component({
@@ -27,35 +28,36 @@ export class IdeasCreateComponent implements OnInit {
     private dynamicMeetingService: DynamicMeetingService, 
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private realTimeService: RealTimeService) { }
+    private realTimeService: RealTimeService,
+    private meetingService: MeetingService,
+    private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
-      this.entradas = res;
-      
-      var idea = new Idea();
-      idea.isInput = true;
-      idea.text = "";
-      this.entradas.push(idea);
+    var meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingService.isParticipant(meetingId).subscribe(res => {
+      if(!res) {
+        this.router.navigate(['home']);
+        return;
+      }
 
-      this.realTimeService.connect(this.meetingId, () => {
-        this.realTimeService.register('entradas', this.entradas);
-        this.realTimeService.subscribe();
+      this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
+        this.entradas = res;
+        
+        var idea = new Idea();
+        idea.isInput = true;
+        idea.text = "";
+        this.entradas.push(idea);
+
+        this.realTimeService.connect(this.meetingId, () => {
+          this.realTimeService.register('entradas', this.entradas);
+          this.realTimeService.subscribe();
+        });
       });
     });
   }
 
-  saveIdea(ideas : Idea[]){
-    // Fix temporal para que no mande ideas vacias (que las duplica)
-    var temp = new Array<Idea>();
-    for(var ide of ideas)
-      if(ide.text && ide.text.trim() != '')
-        temp.push(ide);
-
-      this.ideaService.saveIdea(temp, this.meetingId).subscribe(res =>{
-      //To Do: cambiar ruta
-      this.nextStep.emit(this.meetingId);
-    });
+  next() {
+    this.nextStep.emit(this.meetingId);
   }
 
   addIdea(){

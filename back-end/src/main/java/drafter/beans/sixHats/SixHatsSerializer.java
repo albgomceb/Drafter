@@ -36,7 +36,7 @@ public class SixHatsSerializer {
 		sixHats.setNumberOfMeeting(meeting.getNumberOfMeeting());
 		sixHats.setTimer(meeting.getTimer());
 		sixHats.setImage(meeting.getImage());
-		sixHats.setHasfinished(meeting.isHasfinished());
+		sixHats.setHasfinished(meeting.getHasfinished());
 		sixHats.setSteps(meeting.getSteps());
 		sixHats.setAgendas(meeting.getAgendas());
 		sixHats.setParticipants(meeting.getParticipants());

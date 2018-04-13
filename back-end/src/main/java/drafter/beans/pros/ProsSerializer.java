@@ -11,6 +11,8 @@ public class ProsSerializer {
 		res.setId(p.getId());
 		res.setIdeaId(p.getIdea().getId());
 		res.setPros(p.getPros());
+		res.setNumberPros(p.getNumberPros());
+		res.setVersion(p.getVersion());
 
 		return res;
 	}
@@ -24,6 +26,8 @@ public class ProsSerializer {
 
 		res.setIdea(ideaService.findById(bean.getIdeaId()));
 		res.setPros(bean.getPros());
+		res.setNumberPros(bean.getNumberPros());
+		res.setVersion(bean.getVersion());
 
 		return res;
 	}

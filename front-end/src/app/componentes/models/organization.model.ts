@@ -1,4 +1,4 @@
-import { Departament } from './department.model';
+import { Department } from './department.model';
 import { User } from './user.model';
 
 export class Organization {
@@ -10,5 +10,5 @@ export class Organization {
   email:String;
   logo:String;
   userId:number;
-  departaments:Array<Departament>;
+  departments:Array<Department>;
 }
