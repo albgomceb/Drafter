@@ -27,12 +27,9 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
-      console.log("Antes de entrar en get ideas");
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
-        console.log("Dentro de get ideas", this.ideas);
       });
-      console.log("Fuera de get ideas");
     });
   };
 

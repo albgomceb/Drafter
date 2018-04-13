@@ -65,7 +65,7 @@ export class IdeasProsConsComponent implements OnInit {
       this.realTimeService.send('/pros/savePro/', WSResponseType.PUSH, 'p'+ii, p, {id: p.id});
 
       if(!p.id || p.id == 0)
-        this.ideas[ii].cons.splice(i, 1);
+        this.ideas[ii].pros.splice(i, 1);
     }
   }
 

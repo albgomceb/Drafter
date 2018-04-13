@@ -4,6 +4,7 @@ import { IdeaService } from '../../../services/idea.service';
 import { Idea } from '../../../models/idea.model';
 import { DynamicMeetingService } from '../../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
+import { MeetingService } from '../../../services/meeting.service';
 
 
 @Component({
@@ -27,20 +28,30 @@ export class IdeasCreateComponent implements OnInit {
     private dynamicMeetingService: DynamicMeetingService, 
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private realTimeService: RealTimeService) { }
+    private realTimeService: RealTimeService,
+    private meetingService: MeetingService,
+    private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
-      this.entradas = res;
-      
-      var idea = new Idea();
-      idea.isInput = true;
-      idea.text = "";
-      this.entradas.push(idea);
+    var meetingId = this.activeRoute.snapshot.params['id'];
+    this.meetingService.isParticipant(meetingId).subscribe(res => {
+      if(!res) {
+        this.router.navigate(['home']);
+        return;
+      }
 
-      this.realTimeService.connect(this.meetingId, () => {
-        this.realTimeService.register('entradas', this.entradas);
-        this.realTimeService.subscribe();
+      this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
+        this.entradas = res;
+        
+        var idea = new Idea();
+        idea.isInput = true;
+        idea.text = "";
+        this.entradas.push(idea);
+
+        this.realTimeService.connect(this.meetingId, () => {
+          this.realTimeService.register('entradas', this.entradas);
+          this.realTimeService.subscribe();
+        });
       });
     });
   }
