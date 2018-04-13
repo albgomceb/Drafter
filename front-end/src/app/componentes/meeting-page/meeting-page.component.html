@@ -24,19 +24,27 @@
   </div>
   <div class="form-group">
     <label>Participants</label>
+
+    <div class="row">
+      <div *ngFor="let us of thumbnail" class="card addParticipants">
+          <div class="img-profile"><img  attr.src="{{us.photo}}"></div>
+      </div>
+    </div>
+
     <p *ngIf="errorListUsers==false && users==null" class="errorList text-center">Loading...</p>
     <div *ngIf="errorListUsers" class="text-center">
       <img src="../../../assets/img/warning_turq.png" width=100px class="img-fluid">
       <p>Try again later</p>
     </div>
-    <div *ngIf="errorListUsers==false && users!=null" class="row justify-content-center">
+
+    <div *ngIf="errorListUsers==false && users!=null" class="row justify-content-center mt-5">
       <form class="form-inline">
         <div class="search-users form-group col-lg-5 col-md-10">
             <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" [formControl]="searchField">
         </div>
       </form>
-     
     </div>
+
     <div class="d-flex justify-content-center flex-wrap mt-5">
       <div *ngFor="let us of results | async; let i=index" class="card">
         <img class="card-img-top" src="{{us.photo}}" alt="Avatar">
@@ -45,7 +53,7 @@
           <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
           <div class="push"></div>
           <div class="btn-card">
-            <button type="button" [hidden]="hideme[i]" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
+            <button type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
                 Add
             </button>
             <button type="button" class="btn">
@@ -57,7 +65,7 @@
     </div>
   </div>
   <div class="text-center">
-    <button [disabled]="!(attendants.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
+    <button [disabled]="!(thumbnail.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
             type="submit" class="btn">Next</button>
     <button routerLink=".." class="btn">Cancel</button>
   </div>
