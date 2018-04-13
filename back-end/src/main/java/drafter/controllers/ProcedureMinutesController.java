@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import drafter.beans.conclusion.ConclusionBean;
 import drafter.beans.agenda.AgendaBean;
 import drafter.beans.agenda.AgendaSerializer;
+import drafter.beans.conclusion.ConclusionBean;
 import drafter.beans.conclusion.ConclusionSerializer;
+import drafter.beans.idea.IdeaBean;
+import drafter.beans.idea.IdeaSerializer;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
+import drafter.domain.BrainStorming;
 import drafter.domain.Conclusion;
 import drafter.domain.Meeting;
+import drafter.services.BrainStormingService;
 import drafter.services.MeetingService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -31,6 +35,9 @@ public class ProcedureMinutesController {
 	//Services------------------------------------------------
 	@Autowired
 	private MeetingService meetingService;
+	
+	@Autowired
+	private BrainStormingService brainStormingService;
 	
 	/*@Autowired
 	private AgendaService agendaService;
@@ -94,6 +101,19 @@ public class ProcedureMinutesController {
 			
 		}
 		
+		return result; 
+		
+	}
+	
+//	@RequestMapping(value="/ideas", produces  = {"aplication/json"}, method = RequestMethod.GET)
+	@GetMapping("/meeting/{id}/ideas")
+	public List<IdeaBean> findIdeas(@PathVariable("id")int idM){
+		
+		BrainStorming bs = brainStormingService.findById(idM); 
+		IdeaSerializer serializer = new IdeaSerializer(); 
+		List<IdeaBean> result = bs.getIdeas().stream()
+				.map(a -> serializer.fromIdea(a))
+				.collect(Collectors.toList()); 
 		return result; 
 		
 	}

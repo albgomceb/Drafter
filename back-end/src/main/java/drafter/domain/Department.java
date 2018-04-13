@@ -1,6 +1,5 @@
 package drafter.domain;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -12,7 +11,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
@@ -29,8 +27,6 @@ public class Department extends DomainEntity{
 	public Department() {
 		
 	}
-
-
 
 	//Methods--------------------------------------------
 	
@@ -66,7 +62,6 @@ public class Department extends DomainEntity{
 
 
 
-	@NotEmpty
 	@Valid
 	@ManyToMany
 	public List<User> getUsers() {

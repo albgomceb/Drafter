@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.util.Assert;
 import org.springframework.stereotype.Service;
 
+import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
@@ -112,5 +113,8 @@ public class MeetingService {
 
 	//Other business Methods-----------------------------------------------------------------------------
 
+    public List<Meeting> findByUserId(int userId) {
+		return meetingRepository.findByUserId(userId);
+	}
 }    
 
