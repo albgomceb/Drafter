@@ -7,8 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import drafter.domain.Pros;
+import drafter.beans.pros.ProsBean;
+import drafter.beans.pros.ProsSerializer;
 import drafter.domain.Idea;
+import drafter.domain.Pros;
 import drafter.repositories.ProsRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class ProsService {
 
 	@Autowired
 	private ProsRepository prosRepository;
+	
+	@Autowired
+	private IdeaService ideaService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -36,6 +41,10 @@ public class ProsService {
     
     public Pros save(Pros pros) {
     	return prosRepository.save(pros);
+    }
+    
+    public Pros saveBean(ProsBean bean) {
+    	return prosRepository.save(new ProsSerializer().fromBean(bean, ideaService, this));
     }
 
     public void delete(int id) {

@@ -1,7 +1,9 @@
 package drafter.controllers;
 
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,16 +70,29 @@ public class MeetingController extends AbstractController {
 		return res;
 	}
 	
+
 	@GetMapping("/{meetingId}")
 	public MeetingBean getMeeting(@PathVariable int meetingId) {
 		MeetingSerializer serializer = new MeetingSerializer(); 
 		Meeting result = meetingService.findById(meetingId);
+		
+		if(!meetingService.isParticipant(meetingId))
+			throw new IllegalStateException();
 		
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		return res;
 	}
 	
+	@GetMapping("/list/{userId}")
+	public List<MeetingBean> getByUserId(@PathVariable("userId") int userId) {
+		List<Meeting> res = meetingService.findByUserId(userId);
+		List<MeetingBean> result = res.stream().map(meeting -> new MeetingSerializer().fromMeeting(meeting)).collect(Collectors.toList());
+		
+		return result;
+	}
+	
+
 	@GetMapping("/types")
 	public List<Option> getTypes() {
 		return Arrays.asList(new Option("brainstorming", "Brainstorming meeting"),
@@ -99,6 +114,18 @@ public class MeetingController extends AbstractController {
 	public String nextStep(@PathVariable int meetingId) {
 		Meeting meeting = meetingService.nextStep(meetingId);
 		return meeting.getStatus() +"";
+	}
+	
+	@GetMapping("/isParticipant/{meetingId}")
+	public String isParticipant(@PathVariable int meetingId) {
+		boolean res;
+		try {
+			res = meetingService.isParticipant(meetingId);
+		} catch(Throwable e) {
+			res = false;
+		}
+		
+		return ""+res;
 	}
 	
 	@GetMapping("/setTimer/{meetingId}/{timer}")

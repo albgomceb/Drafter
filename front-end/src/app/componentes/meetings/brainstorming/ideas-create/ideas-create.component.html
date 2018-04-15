@@ -3,7 +3,7 @@
 <div class="ideas-container">
   <div class="ideas-title">
     Ideas
-  </div>
+  </div> 
   <div class="ideas-body">
     <ul class="list-ideas">
         <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
@@ -36,5 +36,5 @@
 
 <div class="text-center">
   <!-- <button type="button" >Skip this step</button> -->
-  <button  (click)="saveIdea(entradas)" class="btn">Next step</button>
+  <button  (click)="next()" class="btn">Next step</button>
 </div>

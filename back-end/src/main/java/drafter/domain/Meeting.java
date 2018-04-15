@@ -109,7 +109,7 @@ public abstract class Meeting extends DomainEntity{
 	}
 
 
-	public boolean isHasfinished() {
+	public boolean getHasfinished() {
 		return hasfinished;
 	}
 

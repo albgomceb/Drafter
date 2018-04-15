@@ -2,7 +2,6 @@
 package drafter.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -76,6 +75,9 @@ public class ParticipantService {
 			});
 
 		
+	}
+	public Participant findByMeetingAndUser(int meetingId){
+		return this.participantRepository.findByMeetingAndUser(meetingId,userService.findByPrincipal().getId());
 	}
 
 	//Other business Methods-----------------------------------------------------------------------------

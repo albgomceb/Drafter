@@ -12,7 +12,6 @@ import drafter.beans.model.ModelBean;
 import drafter.beans.pros.ProsBean;
 import drafter.beans.pros.ProsSerializer;
 import drafter.domain.Pros;
-import drafter.services.IdeaService;
 import drafter.services.ProsService;
 
 @CrossOrigin
@@ -24,25 +23,20 @@ public class ProsController {
 	private ProsService prosService;
 	
 	@Autowired
-	private IdeaService ideaService;
-	
-	@Autowired
 	private SimpMessagingTemplate template;
 
 
-	@MessageMapping("/savePros/{brainId}")
+	@MessageMapping("/pros/savePro/{meetingId}")
 	public void save(@DestinationVariable int meetingId, ModelBean<ProsBean> bean) {
-		Pros pros = new ProsSerializer().fromBean(bean.getModel(), ideaService, prosService);
-		pros = prosService.save(pros);
+		Pros pros = prosService.saveBean(bean.getModel());
 		
 		bean.setModel(new ProsSerializer().fromPros(pros));
 		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
-	@MessageMapping("/delete/{prosId}/{brainId}")
+	@MessageMapping("/pros/delete/{prosId}/{meetingId}")
 	public void delete(@DestinationVariable int prosId, @DestinationVariable int meetingId, String json) {
-		if(prosId != 0)
-			prosService.delete(prosId);
+		prosService.delete(prosId);
 		template.convertAndSend("/meeting/" + meetingId, json);
 	}
 }

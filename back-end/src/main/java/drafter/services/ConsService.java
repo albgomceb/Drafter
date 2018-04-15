@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import drafter.beans.cons.ConsBean;
+import drafter.beans.cons.ConsSerializer;
 import drafter.domain.Cons;
 import drafter.domain.Idea;
 import drafter.repositories.ConsRepository;
@@ -19,6 +21,9 @@ public class ConsService {
 
 	@Autowired
 	private ConsRepository consRepository;
+	
+	@Autowired
+	private IdeaService ideaService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -36,6 +41,10 @@ public class ConsService {
     
     public Cons save(Cons cons) {
     	return consRepository.save(cons);
+    }
+    
+    public Cons saveBean(ConsBean cons) {
+    	return consRepository.save(new ConsSerializer().fromBean(cons, ideaService, this));
     }
 
     public void delete(int id) {

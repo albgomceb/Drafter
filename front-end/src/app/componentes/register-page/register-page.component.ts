@@ -1,3 +1,4 @@
+import { Login } from './../models/login.model';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule,
   FormsModule,
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { T } from '@angular/core/src/render3';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'register-page',
@@ -34,9 +36,12 @@ export class RegisterPageComponent implements OnInit {
   email:FormControl;
   password:FormControl;
 
-  constructor(private registerService: RegisterService, private router:Router) { }
+  constructor(private registerService: RegisterService, private router:Router, private loginService: LoginService) { }
 
   ngOnInit() {
+    if(this.loginService.isAuthenticated())
+      this.router.navigate(['/home/']);
+
     this.
       registerForm = new FormGroup({
         name: new FormControl('',Validators.required),
@@ -62,7 +67,10 @@ export class RegisterPageComponent implements OnInit {
     this.user.password = this.registerForm.value.password;
    
     this.registerService.saveUser(this.user).subscribe((res:any) =>{
-      this.router.navigate(['/home/'])
+      this.loginService.login(new Login(this.user.email, this.user.password)).subscribe(res => {
+        this.loginService.init();
+        this.router.navigate(['/home/']);
+      });
     }, error => {
 
       switch (error.status) {
@@ -114,7 +122,6 @@ export class RegisterPageComponent implements OnInit {
       
 
     });
-    console.log(this.user);
     
   }  
 }
