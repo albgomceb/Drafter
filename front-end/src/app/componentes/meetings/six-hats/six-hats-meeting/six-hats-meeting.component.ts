@@ -8,6 +8,7 @@ import { SixHats } from '../../../models/sixHats.model';
 import { Hat } from '../../../models/hat.model';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
 import { Option } from '../../../models/option.model';
+import { SixHatsConclusion } from '../../../models/conclusion.model';
 
 
 @Component({
@@ -29,7 +30,6 @@ export class SixHatsMeetingComponent implements OnInit {
   public actualUser : User = new User();
   public sixHats : SixHats = new SixHats();
   public currentHat : Hat = new Hat();
-  public currentConclusion : String ="";
 
    constructor(private sixHatsService: SixHatsService,
     private router: Router,
@@ -37,14 +37,14 @@ export class SixHatsMeetingComponent implements OnInit {
   }   
 
   ngOnInit() {
-    this.actualUser = this.attendants[0];
     console.log("AAA ", this.actualUser);
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;
+      this.addFirstConclusion(); 
+      this.sortAttendants();
+      this.actualUser = this.attendants[0];
       this.getHatColor('88');
-      this.addFirstConclusion();   
     });
-    this.sortAttendants();
     this.countDown = timer(0,1000).pipe(
       take(this.count),
       map(()=> --this.count)); 
@@ -61,7 +61,7 @@ export class SixHatsMeetingComponent implements OnInit {
   }
 
   edit(event, hatIndex) {
-    this.realTimeService.send('/sixHats/save/', 
+    this.realTimeService.send('/sixHats/save/'+this.meetingId, 
                             WSResponseType.SET, 
                             'h'+hatIndex,  
                             this.sixHats.hats[hatIndex].conclusions[this.sixHats.hats.length-1], 
@@ -99,9 +99,7 @@ export class SixHatsMeetingComponent implements OnInit {
     }
     
     for(let hat of this.sixHats.hats){
-      if(hat.order === attIndex){
-        console.log("FUNCIONA ", hat);
-        
+      if(hat.order === attIndex){        
         this.currentHat = hat;
       }
     }
@@ -110,19 +108,69 @@ export class SixHatsMeetingComponent implements OnInit {
   addFirstConclusion(){
     for(let hat of this.sixHats.hats){
       if(hat.conclusions.length == 0){
-        hat.conclusions[0] = "aa"
+        hat.conclusions[0] = new SixHatsConclusion();
       }
     }
   }
 
-  addConclusion(hat : Hat, i){
-    
-    for(let ht of this.sixHats.hats){
-      if(ht.color === this.currentHat.color){
-        ht.conclusions.push("ass");
-      }
+  addConclusion(){
+    var i=0;                            
+    for(var con of this.currentHat.conclusions) {
+      if(!con.text || con.text.trim().length == 0)
+        this.currentHat.conclusions.splice(i, 1);
+      
+      i++;
     }
+
+    var length = this.currentHat.conclusions.length;
+    this.currentHat.conclusions.push(new SixHatsConclusion());
+    this.currentHat.conclusions[length].isInput = true;
+    this.currentHat.conclusions[length].text = "";
   } 
+
+  removeConclusion(conclusion : SixHatsConclusion, conclusionIndex : number){ 
+    if(!conclusion.id || conclusion.id == 0)
+      this.currentHat.conclusions.splice(conclusionIndex, 1);
+    else
+      this.deleteConclusion(conclusion.id);
+  }
+
+  private deleteConclusion(id: number) {
+    this.realTimeService.send('/conclusion/delete/' + id + '/', 
+                                    WSResponseType.POP, 
+                                    'conclusions',  
+                                    {}, 
+                                    {id: id});
+  }
+
+  convert(conclusion){
+    conclusion.number = 1;
+
+    //Si la actual conclusion tiene longitud > 0 y además la conclusion es un input, se convierte en texto
+    if(this.checkNotBlank(conclusion.text) && conclusion.isInput) {
+      conclusion.isInput = false;
+      this.realTimeService.send('/conclusion/save/', 
+                                  WSResponseType.PUSH, 
+                                  'conclusions',  
+                                  conclusion, 
+                                  {id: conclusion.id});
+        
+      var i=0;                 
+      for(var con of this.currentHat.conclusions) {
+        if(!con.text || con.text.trim().length == 0 || !con.id || con.id == 0)
+          this.currentHat.conclusions.splice(i, 1);
+        
+        i++;
+      } 
+
+    //Si la conclusion es un texto, se convierte en input
+    } else if(!conclusion.isInput) {
+      conclusion.isInput = true;
+      if(conclusion.text.trim() == 0)
+        this.deleteConclusion(conclusion.id);
+        
+    }
+  }
 
   checkNotBlank(string : String) : boolean{
     var res = true;

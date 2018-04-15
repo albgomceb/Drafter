@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import drafter.beans.sixHatsConclusion.SixHatsConclusionSerializer;
 import drafter.domain.Hat;
 import drafter.domain.SixHats;
 
@@ -15,7 +16,8 @@ public class HatSerializer {
 		
 		res.setId(hat.getId());
 		res.setColor(hat.getColor());
-		res.setConclussions(hat.getConclusions());
+		
+		res.setConclusions(new SixHatsConclusionSerializer().fromConclusion(hat));
 		res.setOrder(hat.getOrden());
 		
 		return res;
@@ -28,7 +30,7 @@ public class HatSerializer {
 			hat.setId(hb.getId());
 			hat.setColor(hb.getColor());
 			hat.setOrden(hb.getOrder());
-			hat.setConclusions(hb.getConclusions());
+			hat.setConclusions(new SixHatsConclusionSerializer().fromBean(hb));
 			hat.setSixHats(sixHats);
 			hats.add(hat);
 		}

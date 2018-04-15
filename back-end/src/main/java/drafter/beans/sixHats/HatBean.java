@@ -1,17 +1,18 @@
 package drafter.beans.sixHats;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.List;
+
+import drafter.beans.sixHatsConclusion.SixHatsConclusionBean;
 
 public class HatBean {
 
 	private int id;
 	private String color;
 	private int order;
-	private @List(@SafeHtml) Collection<String> conclusions;
+	private @List(@SafeHtml) Collection<SixHatsConclusionBean> conclusions;
 	
 	public int getId() {
 		return id;
@@ -32,10 +33,10 @@ public class HatBean {
 	public void setOrder(int order) {
 		this.order = order;
 	}
-	public @List(@SafeHtml) Collection<String> getConclusions() {
+	public @List(@SafeHtml) Collection<SixHatsConclusionBean> getConclusions() {
 		return conclusions;
 	}
-	public void setConclussions(@List(@SafeHtml) Collection<String> collection) {
+	public void setConclusions(@List(@SafeHtml) Collection<SixHatsConclusionBean> collection) {
 		this.conclusions = collection;
 	}
 
