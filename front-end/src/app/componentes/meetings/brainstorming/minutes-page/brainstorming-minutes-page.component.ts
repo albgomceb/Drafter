@@ -9,8 +9,8 @@ import { BrainStormingService } from '../../../services/brainstorming.service';
 
 @Component({
   selector: 'brainstorming-minutes-page',
-  templateUrl: './minutes-page.component.html',
-  styleUrls: ['./minutes-page.component.scss']
+  templateUrl: './brainstorming-minutes-page.component.html',
+  styleUrls: ['./brainstorming-minutes-page.component.scss']
 })
 export class BrainStormingMinutesPageComponent implements OnInit {
 

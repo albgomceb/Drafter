@@ -1,20 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrainStormingMinutesPageComponent } from './brainstorming-minutes-page.component';
 
-import { MinutesPageComponent } from './minutes-page.component';
+
 
 describe('MinutesPageComponent', () => {
-  let component: MinutesPageComponent;
-  let fixture: ComponentFixture<MinutesPageComponent>;
+  let component: BrainStormingMinutesPageComponent;
+  let fixture: ComponentFixture<BrainStormingMinutesPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MinutesPageComponent ]
+      declarations: [ BrainStormingMinutesPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MinutesPageComponent);
+    fixture = TestBed.createComponent(BrainStormingMinutesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

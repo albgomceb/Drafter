@@ -38,7 +38,8 @@ import { PricingComponent } from './componentes/pricing/pricing.component';
 import { ChronometerComponent } from './componentes/meetings/chronometer/chronometer.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
 import { BrainStormingService } from './componentes/services/brainstorming.service';
-import { BrainStormingMinutesPageComponent } from './componentes/meetings/brainstorming/minutes-page/minutes-page.component';
+import { BrainStormingMinutesPageComponent } from './componentes/meetings/brainstorming/minutes-page/brainstorming-minutes-page.component';
+
 
 @NgModule({
   declarations: [
