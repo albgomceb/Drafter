@@ -81,7 +81,7 @@ public class HatService {
 //	}
 //	
 	public Collection<Hat> reassignHats(SixHats sixHats){
-		List<Hat> hatsBD = new ArrayList<Hat>(getHatsOfSixHats(sixHats.getId()));
+//		List<Hat> hatsBD = new ArrayList<Hat>(getHatsOfSixHats(sixHats.getId()));
 		List<Hat> res = new ArrayList<Hat>(sixHats.getHats());
 		
 		if(res.isEmpty() || res == null) {
@@ -97,10 +97,10 @@ public class HatService {
 				hat.setOrden(0);	
 				//res.add(res.indexOf(hat), hat);
 			}
-			for(Hat hatBD : hatsBD) {
-				if(hatBD.getId() == hat.getId())
-					hat.setVersion(hatBD.getVersion());
-			}
+//			for(Hat hatBD : hatsBD) {
+//				if(hatBD.getId() == hat.getId())
+//					hat.setVersion(hatBD.getVersion());
+//			}
 			
 			this.save(hat);
 		}

@@ -8,8 +8,9 @@ import { SixHats } from '../../../models/sixHats.model';
 import { Hat } from '../../../models/hat.model';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
 import { Option } from '../../../models/option.model';
-import { SixHatsConclusion } from '../../../models/conclusion.model';
 import { UserService } from '../../../services/user.service';
+import { SixHatsConclusion } from '../../../models/sixHatsConclusion.model';
+import { LoginService } from '../../../services/login.service';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class SixHatsMeetingComponent implements OnInit {
   @Input()
   public meetingId:number;
   @Input()
+  public meetingInfo;
+  @Input()
   public attendants:Array<any>;
   @Output()
   public finishMeeting = new EventEmitter<number>();
@@ -31,24 +34,25 @@ export class SixHatsMeetingComponent implements OnInit {
   public actualUser : User = new User();
   public sixHats : SixHats = new SixHats();
   public currentHat : Hat = new Hat();
-  public userId = '95';
+  public userId = 0;
 
    constructor(private sixHatsService: SixHatsService,
     private router: Router,
     private realTimeService: RealTimeService,
-    private userService: UserService) {
+    private loginService: LoginService) {
   }   
 
-  ngOnInit() {
-    
+  ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;      
       this.addFirstConclusion(); 
       this.sortAttendants();
-      this.actualUser = this.attendants[0];
-      // this.userService.getLoginUser().subscribe(currentUser => this.actualUser = currentUser);
-      console.log("actualUser ", this.actualUser);
-      // this.getHatColor(this.actualUser.id);
+      //this.actualUser = this.attendants[0];
+      //this.loginService.getLoginUser().subscribe(currentUser => this.actualUser = currentUser);
+      // console.log("actualUser ", this.actualUser);
+      console.log(this.loginService.getPrincipal());
+      this.userId = this.loginService.getPrincipal().id;
+      console.log(this.attendants);
       this.getHatColor(this.userId);
     });
     this.countDown = timer(0,1000).pipe(
@@ -57,20 +61,16 @@ export class SixHatsMeetingComponent implements OnInit {
 
     //Parte del WebSocket
     this.realTimeService.connect(this.meetingId, () => {
-      var i = 1;
-      for(var ht of this.sixHats.hats) {
-        this.realTimeService.register('h'+i, ht.conclusions);
-        i++;
-      }
+      this.realTimeService.register('h', this.sixHats.hats);
       this.realTimeService.subscribe();
     });
   }
 
   edit(event, hatIndex) {
-    this.realTimeService.send('/sixHats/save/'+this.meetingId, 
+    this.realTimeService.send('/sixHats/save/', 
                             WSResponseType.SET, 
-                            'h'+hatIndex,  
-                            this.sixHats.hats[hatIndex].conclusions[this.sixHats.hats.length-1], 
+                            'h',  
+                            this.sixHats.hats[hatIndex], 
                             {index: hatIndex});
   }
 
@@ -99,7 +99,7 @@ export class SixHatsMeetingComponent implements OnInit {
     let attIndex;
     
     for(let i=0; i<this.attendants.length;i++){
-      if(this.attendants[i].id === userId){
+      if(this.attendants[i].userId === userId){
         attIndex = i;
       }
     }
@@ -153,20 +153,15 @@ export class SixHatsMeetingComponent implements OnInit {
                                     {id: id});
   }
 
-  convert(conclusion, hatIndex){
+  convert(conclusion, hatIndex, hat){
 
     //Si la actual conclusion tiene longitud > 0 y además la conclusion es un input, se convierte en texto
     if(this.checkNotBlank(conclusion.text) && conclusion.isInput) {
       conclusion.isInput = false;
-      // this.realTimeService.send('/sixHats/save/'+this.meetingId, 
-      //                             WSResponseType.PUSH, 
-      //                             'conclusions',  
-      //                             conclusion, 
-      //                             {id: conclusion.id});
-      this.realTimeService.send('/sixHats/save/'+this.meetingId, 
+      this.realTimeService.send('/sixHats/save/', 
                             WSResponseType.SET, 
-                            'h'+hatIndex,  
-                            this.sixHats.hats[hatIndex].conclusions[this.sixHats.hats.length-1], 
+                            'h',  
+                            this.sixHats.hats[hatIndex], 
                             {index: hatIndex});
         
       // var i=0;                 

@@ -48,18 +48,18 @@
             <span>Your conclusions: </span>
             <li *ngFor="let conclusion of hat.conclusions; let i=index" class="d-flex justify-content-between">
               <input type="text" [(ngModel)]="conclusion.text" 
-                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, hatIndex);" 
+                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, hatIndex, hat);" 
                     placeholder="Type your conclusion here..." required class="idea">
-              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex)" class="idea">
+              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex, hat)" class="idea">
                   <ul>
                       <li>{{conclusion.text}}</li>
                   </ul>
               </div>
               <div class="options-ideas text-right">
-                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
+                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, hatIndex, hat);" class="btn">
                   <i class="fas fa-check"></i>
                 </button>
-                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
+                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex, hat);" class="btn">
                   <i class="fas fa-pencil-alt"></i>
                 </button>          
                 <button (click)="removeConclusion(conclusion, i)" class="btn">

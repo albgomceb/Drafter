@@ -10,6 +10,7 @@ import drafter.beans.sixHatsConclusion.SixHatsConclusionBean;
 public class HatBean {
 
 	private int id;
+	private int version;
 	private String color;
 	private int order;
 	private @List(@SafeHtml) Collection<SixHatsConclusionBean> conclusions;
@@ -21,6 +22,15 @@ public class HatBean {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public String getColor() {
 		return color;
 	}

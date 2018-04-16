@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.model.ModelBean;
+import drafter.beans.sixHats.HatBean;
+import drafter.beans.sixHats.HatSerializer;
 import drafter.beans.sixHats.SixHatsBean;
 import drafter.beans.sixHats.SixHatsSerializer;
+import drafter.domain.Hat;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
 import drafter.services.HatService;
@@ -65,12 +68,13 @@ public class SixHatsController {
 	}
 	
 	@MessageMapping("/sixHats/save/{meetingId}")
-	public void save(@DestinationVariable int meetingId, ModelBean<SixHatsBean> bean) {
-		Meeting meeting = sixHatsService.findById(meetingId);
-		SixHats sixHats = new SixHatsSerializer().fromBean(bean.getModel(), meeting);
-		sixHats = sixHatsService.save(sixHats);
+	public void save(@DestinationVariable int meetingId, ModelBean<HatBean> bean) {
+		SixHats meeting = sixHatsService.findById(meetingId);
 		
-		bean.setModel(new SixHatsSerializer().fromSixHats(sixHats));
+		Hat hat = new HatSerializer().fromBean(bean.getModel(), meeting);
+		hat = hatService.save(hat);
+		
+		bean.setModel(new HatSerializer().fromHat(hat));
 		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
