@@ -22,6 +22,10 @@ export class SixHatsService {
     return this.http.get<SixHats>(this.staticUrl+'/sixHats/' + meetingId);
   }
 
+  getActualUser(meetingId: number) : Observable<SixHats>{
+    return this.http.get<SixHats>(this.staticUrl+'/sixHats/user/' + meetingId);
+  }
+
   saveSixHats(sixHats:SixHats, id:number): Observable<SixHats> {
     return this.http.post<SixHats>(this.staticUrl+'/sixHats/'+id,sixHats,{});
   }

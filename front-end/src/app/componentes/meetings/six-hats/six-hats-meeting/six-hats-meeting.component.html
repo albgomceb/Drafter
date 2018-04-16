@@ -1,11 +1,4 @@
-<div [ngClass]="currentHat.color">You have the {{currentHat.color}} hat.
-  <div *ngIf="currentHat.color==='RED'">Get intuitive or instinctive gut reactions or statements of emotional feeling (but not any justification).</div>
-  <div *ngIf="currentHat.color==='BLACK'">Apply logic to identify reasons to be cautious and conservative. Be practical and realistic.</div>
-  <div *ngIf="currentHat.color==='BLUE'">You're the moderator. Answer the next questions: what is the subject? what are we thinking about? Are we reaching the goal?</div>
-  <div *ngIf="currentHat.color==='WHITE'">Consider purely what information is available. What are the facts?</div>
-  <div *ngIf="currentHat.color==='YELLOW'">Apply logic to identify benefits, seeking harmony. See the brighter, sunny side of situations.</div>
-  <div *ngIf="currentHat.color==='GREEN'">Think statements of provocation and investigation, seeing where a thought goes. Think creatively, outside the box.</div>
-</div>
+
 
 <!-- <div *ngFor="let hat of sixHats.hats; let hatIndex=index">
   <div [ngClass]="hat.color" *ngIf="hat.color === currentColor">
@@ -33,42 +26,60 @@
 
 <div class="ideas-body">
     <ul class="list-ideas">
+      <div [ngClass]="currentHat.color">You have the {{currentHat.color}} hat.
+          <div *ngIf="currentHat.color==='RED'">Get intuitive or instinctive gut reactions or statements of emotional feeling (but not any justification).</div>
+          <div *ngIf="currentHat.color==='BLACK'">Apply logic to identify reasons to be cautious and conservative. Be practical and realistic.</div>
+          <div *ngIf="currentHat.color==='BLUE'">You're the moderator. Answer the next questions: what is the subject? what are we thinking about? Are we reaching the goal?</div>
+          <div *ngIf="currentHat.color==='WHITE'">Consider purely what information is available. What are the facts?</div>
+          <div *ngIf="currentHat.color==='YELLOW'">Apply logic to identify benefits, seeking harmony. See the brighter, sunny side of situations.</div>
+          <div *ngIf="currentHat.color==='GREEN'">Think statements of provocation and investigation, seeing where a thought goes. Think creatively, outside the box.</div>
+        </div>
       <div *ngFor="let hat of sixHats.hats; let hatIndex=index">
         <div [ngClass]="hat.color">
             <span><h5>{{hat.color}}</h5></span>
         
-        <div  *ngIf="hat.color === currentColor">
-          <div *ngIf="hat.conclusions.length > 0">
-              Conclusions deduced by your coworkers: 
-              <span>{{hat.conclusions}}</span>
+          <div  *ngIf="hat.color === currentHat.color">
+            <div>
+                <span>Conclusions deduced by your coworkers: </span>
+                <ul>
+                  <li *ngFor="let conclusion of hat.conclusions">{{conclusion.text}}</li>
+                </ul>
+            </div>
+            <span>Your conclusions: </span>
+            <li *ngFor="let conclusion of hat.conclusions; let i=index" class="d-flex justify-content-between">
+              <input type="text" [(ngModel)]="conclusion.text" 
+                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, hatIndex);" 
+                    placeholder="Type your conclusion here..." required class="idea">
+              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex)" class="idea">
+                  <ul>
+                      <li>{{conclusion.text}}</li>
+                  </ul>
+              </div>
+              <div class="options-ideas text-right">
+                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
+                  <i class="fas fa-check"></i>
+                </button>
+                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>          
+                <button (click)="removeConclusion(conclusion, i)" class="btn">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div> 
+            </li>
+            <div class="text-center">
+              <button type="button" (click)="addConclusion(hat)" class="btn">
+                <i class="fas fa-lightbulb"></i> New conclusion
+              </button>
+            </div>
           </div>
-          <span>Your conclusions: </span>
-          <li *ngFor="let conclusion of hat.conclusions; let i=index" class="d-flex justify-content-between">
-            <input type="text" [(ngModel)]="conclusion.text" 
-                  *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion);" 
-                  placeholder="Type your conclusion here..." required class="idea">
-            <div *ngIf="!conclusion.isInput" (click)="convert(conclusion)" class="idea">
-              {{entrada.text}}
-            </div>
-            <div class="options-ideas text-right">
-              <button *ngIf="conclusion.isInput" (click)="convert(conclusion);" class="btn">
-                <i class="fas fa-check"></i>
-              </button>
-              <button *ngIf="!conclusion.isInput" (click)="convert(conclusion);" class="btn">
-                <i class="fas fa-pencil-alt"></i>
-              </button>          
-              <button (click)="removeConclusion(conclusion, i)" class="btn">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </li>
+          <div *ngIf="hat.color != currentHat.color">
+            <span>Conclusions deduced:</span>
+            <ul>
+              <li *ngFor="let conclusion of hat.conclusions">{{conclusion.text}}</li>
+            </ul>
+          </div>
         </div>
-        <div class="text-center">
-            <button type="button" (click)="addConclusion(hat)" class="btn">
-              <i class="fas fa-lightbulb"></i> New conclusion
-            </button>
-          </div>
-          </div>
       </div>
     </ul>
 

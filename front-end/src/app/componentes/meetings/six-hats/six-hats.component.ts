@@ -13,7 +13,6 @@ export class SixHatsComponent implements OnInit {
     @Input()
     public meetingId:number;
     
-    public hats:Array<Hat>;
     
     @Input()
     public attendants:Array<any>;
@@ -23,14 +22,8 @@ export class SixHatsComponent implements OnInit {
     public finishMeeting(meetingId:number){
         this.finish.emit(meetingId);
     };
-
-    getSixHats(){
-        this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
-        this.hats = sixHats.hats;
-        });
-    }
     
-    constructor(private sixHatsService: SixHatsService) {}
+    constructor() {}
     
     ngOnInit(){
         //Here should be the code that determines which step of a six-hat meeting should be loaded.
