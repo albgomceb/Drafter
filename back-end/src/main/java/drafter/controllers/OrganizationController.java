@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,5 +57,25 @@ public class OrganizationController {
 		
 		return res;
 	}
+	
+	@GetMapping("/{organizationId}")
+	public OrganizationBean getOrganization(@PathVariable("organizationId") int organizationId) {
+		Organization organization = this.organizationService.findById(organizationId);
+		User user = userService.findByPrincipal();
+		if(!user.getOrganizations().contains(organization)) {
+			return null;
+		}
+		OrganizationBean result = new OrganizationSerializer().fromOrganization(organization);
+
+		return result;
+	}
+	
+//	@PutMapping("/{organizationId}")
+//	public OrganizationBean edit(@PathVariable("organizationId") int organizationId, @RequestBody OrganizationBean organizationBean) {
+//		Organization organization = organizationService.findById(organizationId);
+//		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService);
+//		
+//		return result;
+//	}
 	
 }

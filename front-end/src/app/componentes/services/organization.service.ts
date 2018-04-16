@@ -16,20 +16,20 @@ export class OrganizationService {
     constructor(private http:HttpClient) {}
 
     staticUrl:String = environment.baseApi;
-
-    getOrganization(): Observable<Organization> {
-        return this.http.get<Organization>(this.staticUrl+'/organization');
-    }
     
-    getOrganizationsByUser(user: number): Observable<Array<Organization>> {
-        return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list/' + user);
+    getOrganization(organizationId: number): Observable<Organization> {
+        return this.http.get<Organization>(this.staticUrl+'/organization/' + organizationId);
     }
 
-    getOrganizations(): Observable<Array<Organization>> {
-        return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list');
+    getOrganizationsByUser(userId: number): Observable<Array<Organization>> {
+        return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list/' + userId);
     }
     
     saveOrganization(organization:Organization, id:number): Observable<Organization> {
-        return this.http.post<Organization>(this.staticUrl+'/organization/'+id,organization,{});
+        return this.http.post<Organization>(this.staticUrl+'/organization/' + id,organization, {});
+    }
+
+    editOrganization(organization:Organization): Observable<Organization> {
+        return this.http.put<Organization>(this.staticUrl+'/organization/' + organization.id, {});
     }
 }

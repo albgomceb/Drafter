@@ -1,0 +1,21 @@
+<div class="card-body">
+  <h2 class="text-center"><span class="letter">O</span>rganizations</h2>
+
+  <div *ngFor="let organization of organizations; let i=index">
+
+    <div class="btn-group">
+      <button type="button" (click)="show[i] = !show[i]" class="btn mb-2">Show {{organization.enterprise}} - {{organization.address}}</button>
+      <button type="button" (click)="editOrganization(organization.id)" class="btn mb-2">Edit</button>
+    </div>
+
+    <div [hidden]="!show[i]">
+      <img src="{{organization.logo}}" width="30%" alt="Error to load logo"/>
+      <label class="mt-4" ><strong>Organization:</strong> {{organization.enterprise}}</label>
+      <label class="mt-4" ><strong>Description:</strong> {{organization.description}}</label>
+      <label class="mt-4" ><strong>Address:</strong> {{organization.address}}</label>
+      <label class="mt-4" ><strong>Phone number:</strong> {{organization.phone}}</label>
+      <label class="mt-4" ><strong>Email:</strong> {{organization.email}}</label>
+    </div>
+
+  </div>
+</div>

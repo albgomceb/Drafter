@@ -6,6 +6,7 @@ import { OrganizationService } from '../services/organization.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'organization-department-page',
@@ -26,15 +27,13 @@ export class OrganizationDepartmentPageComponent implements OnInit {
 
   errorListUsers:boolean = false;
 
-  constructor(private userService: UserService, private organizationService: OrganizationService, 
+  constructor(private loginService: LoginService, 
+    private userService: UserService, 
+    private organizationService: OrganizationService, 
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.userId = params['userId'];
-      console.log(this.userId);
-    });
     this.organization = new Organization();
     this.usersDepartment = new Array<User>();
     this.departments=[];
@@ -43,7 +42,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     this.departments[0].isInput = true;
     this.departments[0].name = "";
     this.counter = 1;
-    console.log(this.departments);
+    this.userId = this.loginService.getPrincipal().id;
 
     // Cogemos los usuarios de la base de datos
     this.userService.getUsers().subscribe(
@@ -92,11 +91,9 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       }
     }
     organization.departments = temp;
-    // TODO Sacar el usuario logueado que hace la organización
-    this.userId = 10;
 
     this.organizationService.saveOrganization(organization, this.userId).subscribe(res =>{
-      this.router.navigate(["/organization-department/list/"+this.userId]);
+      this.router.navigate(["/organization-department/list/" + this.userId]);
     });
   }
 
@@ -107,7 +104,6 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     this.counter++;
     this.departments[length].isInput = true;
     this.departments[length].name = "";
-    console.log(this.departments);
   } 
 
   removeDepartment(department : Department, departmenstIndex : number){    
