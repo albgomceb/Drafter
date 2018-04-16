@@ -2,7 +2,7 @@ package drafter.beans.sixHatsConclusion;
 
 public class SixHatsConclusionBean {
 	
-	private String conclusion;
+	private String text;
 	private int id;
 	
 	
@@ -11,12 +11,12 @@ public class SixHatsConclusionBean {
 	}
 
 
-	public String getConclusion() {
-		return conclusion;
+	public String getText() {
+		return text;
 	}
 
-	public void setConclusion(String conclusion) {
-		this.conclusion = conclusion;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public int getId() {

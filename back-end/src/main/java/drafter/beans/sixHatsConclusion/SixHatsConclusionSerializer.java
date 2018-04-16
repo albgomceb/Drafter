@@ -13,11 +13,11 @@ public class SixHatsConclusionSerializer {
 	public Collection<SixHatsConclusionBean> fromConclusion(Hat hat) {
 		List<SixHatsConclusionBean> res = new ArrayList<SixHatsConclusionBean>();
 		List<String> conclusions = new ArrayList<String>(hat.getConclusions());
-		SixHatsConclusionBean conclusion = new SixHatsConclusionBean();
 		conclusions.stream()
 					.forEach(con -> {
+						SixHatsConclusionBean conclusion = new SixHatsConclusionBean();
 						conclusion.setId(conclusions.indexOf(con));
-						conclusion.setConclusion(con);
+						conclusion.setText(con);
 						res.add(conclusion);
 					});
 //		for(String con : conclusions) {
@@ -35,7 +35,7 @@ public class SixHatsConclusionSerializer {
 		List<SixHatsConclusionBean> conclusions = new ArrayList<SixHatsConclusionBean>(hatBean.getConclusions());
 		
 		conclusions.stream()
-					.forEach(con -> res.set(con.getId(), con.getConclusion()));
+					.forEach(con -> res.add(con.getText()));
 
 		return res;
 	}

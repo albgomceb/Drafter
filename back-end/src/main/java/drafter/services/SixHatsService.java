@@ -104,8 +104,8 @@ public class SixHatsService {
     			throw new IllegalArgumentException("A meeting can have no hats with the same color.");
     		else 
     			colors.add(hat.getColor());
-    			hat.setSixHats(sixHats);
-    			hatService.save(hat);
+    			if(hat.getConclusions() == null || hat.getConclusions().isEmpty())
+    				hat.setConclusions(new ArrayList<String>());
     	}
 		return sixHatsRepository.save(sixHats);
 	}

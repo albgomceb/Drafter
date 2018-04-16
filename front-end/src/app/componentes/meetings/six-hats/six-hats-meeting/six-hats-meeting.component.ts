@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, NgModule } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
 import { take, map } from 'rxjs/operators';
 import { User } from '../../../models/user.model';
@@ -45,11 +45,11 @@ export class SixHatsMeetingComponent implements OnInit {
       this.sixHats = sixHats;      
       this.addFirstConclusion(); 
       this.sortAttendants();
-      // this.actualUser = this.attendants[0];
-      this.userService.getLoginUser().subscribe(currentUser => this.actualUser = currentUser);
+      this.actualUser = this.attendants[0];
+      // this.userService.getLoginUser().subscribe(currentUser => this.actualUser = currentUser);
       console.log("actualUser ", this.actualUser);
-      this.getHatColor(this.actualUser.id);
-      
+      // this.getHatColor(this.actualUser.id);
+      this.getHatColor(this.userId);
     });
     this.countDown = timer(0,1000).pipe(
       take(this.count),
@@ -135,6 +135,7 @@ export class SixHatsMeetingComponent implements OnInit {
     this.currentHat.conclusions.push(new SixHatsConclusion());
     this.currentHat.conclusions[length].isInput = true;
     this.currentHat.conclusions[length].text = "";
+    this.currentHat.conclusions[length].id = i;
   } 
 
   removeConclusion(conclusion : SixHatsConclusion, conclusionIndex : number){ 
