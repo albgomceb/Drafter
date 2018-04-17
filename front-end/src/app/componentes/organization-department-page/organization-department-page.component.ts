@@ -19,11 +19,11 @@ export class OrganizationDepartmentPageComponent implements OnInit {
   removeButton=[]
   
   public users: Array<User>;
-  public usersDepartment: Array<User>
   public organization: Organization;
   public departments: Array<Department>;
   public userId: number;
   public counter: number;
+  public organizationId: number;
 
   errorListUsers:boolean = false;
 
@@ -34,14 +34,32 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.organization = new Organization();
-    this.usersDepartment = new Array<User>();
-    this.departments=[];
-    this.departments.push(new Department());
-    this.departments[0].id = 0;
-    this.departments[0].isInput = true;
-    this.departments[0].name = "";
-    this.counter = 1;
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.organizationId = params['organizationId'];
+    });
+    if(this.organizationId == 0){
+      this.organization = new Organization();
+      this.departments=[];
+      this.departments.push(new Department());
+      this.departments[0].id = 0;
+      this.departments[0].isInput = true;
+      this.departments[0].name = "";
+      this.counter = 1;
+    }else{
+      // Cogemos la organization a editar
+      this.organizationService.getOrganization(this.organizationId).subscribe(
+        data => 
+        {
+          this.organization = data;
+          this.departments = this.organization.departments;
+          this.counter = this.departments.length + 1;
+        },
+        error => {
+          this.errorListUsers = true;
+        }
+      );
+    }
+    
     this.userId = this.loginService.getPrincipal().id;
 
     // Cogemos los usuarios de la base de datos
@@ -94,6 +112,21 @@ export class OrganizationDepartmentPageComponent implements OnInit {
 
     this.organizationService.saveOrganization(organization, this.userId).subscribe(res =>{
       this.router.navigate(["/organization-department/list/" + this.userId]);
+    });
+  }
+
+  editOrganization(departments: Department[], organization: Organization){
+    // TODO
+    var temp = new Array<Department>();
+    for(var a of departments){
+      if(a.name && a.name.trim() != ''){
+        temp.push(a);
+      }
+    }
+    organization.departments = temp;
+
+    this.organizationService.editOrganization(organization).subscribe(res =>{
+      this.router.navigate(["/organization/list/" + this.userId]);
     });
   }
 

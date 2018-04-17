@@ -4,7 +4,7 @@
   <div *ngFor="let organization of organizations; let i=index">
 
     <div class="btn-group">
-      <button type="button" (click)="show[i] = !show[i]" class="btn mb-2">Show {{organization.enterprise}} - {{organization.address}}</button>
+      <button type="button" (click)="show[i] = !show[i]" class="btn mb-2">{{organization.enterprise}} - {{organization.address}}</button>
       <button type="button" (click)="editOrganization(organization.id)" class="btn mb-2">Edit</button>
     </div>
 
@@ -15,6 +15,17 @@
       <label class="mt-4" ><strong>Address:</strong> {{organization.address}}</label>
       <label class="mt-4" ><strong>Phone number:</strong> {{organization.phone}}</label>
       <label class="mt-4" ><strong>Email:</strong> {{organization.email}}</label>
+
+      <h3 class="text-center"><span class="letter">D</span>epartments</h3>
+      <div *ngFor="let department of organization.departments; let j=index">
+        <label class="mt-4" ><strong>Department {{j+1}}:</strong> {{department.name}}</label>
+        <div *ngFor="let us of department.users; let z=index">
+          <a class="list-group-item list-group-item-action">
+            <img src="{{us.photo}}" width="5%" /><span class="employed"> {{us.name}}</span>
+          </a>
+        </div>
+      </div>
+
     </div>
 
   </div>

@@ -21,6 +21,10 @@ export class OrganizationService {
         return this.http.get<Organization>(this.staticUrl+'/organization/' + organizationId);
     }
 
+    getOrganizations(): Observable<Array<Organization>> {
+        return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list/');
+    }
+
     getOrganizationsByUser(userId: number): Observable<Array<Organization>> {
         return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list/' + userId);
     }

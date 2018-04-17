@@ -17,8 +17,8 @@ public class OrganizationSerializer {
 		OrganizationBean res = new OrganizationBean();
 		List<Option> depar = organization.getDepartments()
 			.stream()
-			.map(or -> new Option(new Integer(or.getId()).toString(),or.getName()))
-			.collect(Collectors.toList()); 
+			.map(or -> new Option(new Integer(or.getId()).toString(),or.getName(),or.getUsers()))
+			.collect(Collectors.toList());
 		res.setDepartments(depar);
 		res.setEnterprise(organization.getEnterprise());
 		res.setDescription(organization.getDescription());

@@ -60,7 +60,8 @@
       
     </div>
     <div style="margin:2%;text-align:center">
-      <button (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
+      <button *ngIf="organizationId == 0" (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
+      <button *ngIf="organizationId > 0" (click)="saveOrganization(departments, organization)" class="btn bt-lg">Save</button>
       <button routerLink=".." class="btn bt-lg">Cancel</button>
     </div>
   </form>
