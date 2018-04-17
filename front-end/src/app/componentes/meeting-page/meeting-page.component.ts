@@ -28,10 +28,10 @@ export class MeetingPageComponent implements OnInit {
   loading: boolean = false;
 
   users: Array<User>;
-  attendants: Array<Option>;
   thumbnail: Array<Option>;
   organizations: Array<Organization>
   results: Observable<Array<User>>;
+  atts = [];
 
   errorListUsers:boolean = false;
   meeting: Meeting;
@@ -43,7 +43,6 @@ export class MeetingPageComponent implements OnInit {
   ngOnInit() {
 
     this.meeting = new Meeting();
-    this.attendants = new Array<Option>();
     this.thumbnail = new Array<Option>();
     this.meetingService.getMeetingTypes().subscribe(list => 
     {
@@ -71,26 +70,55 @@ export class MeetingPageComponent implements OnInit {
       }
     );
     this.searchField = new FormControl();
-    this.results = this.searchField.valueChanges
+    this.searchField.valueChanges
     .debounceTime(400)
     .distinctUntilChanged()
     .filter(keyword => keyword)
     .switchMap( keyword => this.userService.filterUsers(keyword))
+    .subscribe(value => {
+      for(var i=0;value.length;i++){
+        console.log(value[i]);
+        console.log("HOLA");
+        this.atts.push(value[i]);
+      }
+      this.results = value;
+    }
+    );
 
   } 
 
-  addAttendant(attendant:Option){
-    //if(!(this.attendants.indexOf(attendant) !== -1))
-      this.attendants.push(attendant);
+  addAttendant(attendant:User){
 
-    //if(!(this.thumbnail.indexOf(attendant) !== -1))
-      this.thumbnail.push(attendant);
+    let idAttendant:number = attendant.id;
+    
+    this.results.subscribe(value => {
+      for(var i=0;value.length;i++){
+        console.log(value[i]);
+        console.log("HOLA");
+        this.atts.push(value[i]);
+      }
+    }
+    );
+
+    for (var i=0;i<this.atts.length;i++){
+
+      console.log("ACTUAL: "+this.atts[i].id);
+      console.log("ATT: "+idAttendant);
+
+
+      if(idAttendant.toString()!=this.thumbnail[i].id){
+        let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
+        this.thumbnail.push(att);
+      }
+
+    }
+      
 
   }
 
   onSubmit(meeting){
       meeting.type = this.selectedKind.id;
-      this.meeting.setAttendants(this.attendants);
+      this.meeting.setAttendants(this.thumbnail);
       this.userService.saveMeeting(meeting).subscribe((res:any) =>{
         if(meeting.type === 'standard'){
           this.router.navigate(['/agenda/'+res.id])

@@ -27,7 +27,7 @@
 
     <div class="row">
       <div *ngFor="let us of thumbnail" class="card addParticipants">
-          <div class="img-profile"><img  attr.src="{{us.photo}}"></div>
+          <div class="tooltip-img img-profile"><span class="tooltiptext">{{us.name}}</span><img  attr.src="{{us.photo}}"></div>
       </div>
     </div>
 
