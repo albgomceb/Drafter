@@ -14,11 +14,8 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./organization-department-page.component.scss']
 })
 export class OrganizationDepartmentPageComponent implements OnInit {
-
-  addButton=[]
-  removeButton=[]
   
-  public users: Array<User>;
+  public notAddedUsers: Array<User>;
   public organization: Organization;
   public departments: Array<Department>;
   public userId: number;
@@ -26,6 +23,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
   public organizationId: number;
 
   errorListUsers:boolean = false;
+  errorListOrganizations = false;
 
   constructor(private loginService: LoginService, 
     private userService: UserService, 
@@ -39,12 +37,25 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     });
     if(this.organizationId == 0){
       this.organization = new Organization();
+      this.notAddedUsers = new Array<User>();
       this.departments=[];
       this.departments.push(new Department());
       this.departments[0].id = 0;
       this.departments[0].isInput = true;
       this.departments[0].name = "";
       this.counter = 1;
+      // Cogemos todos los usuarios de la base de datos
+      this.userService.getUsers().subscribe(
+        data => 
+        { 
+          this.notAddedUsers = data;
+          this.departments[0].notAddedUsers = this.notAddedUsers;
+          console.log(this.departments);
+        },
+        error => {
+          this.errorListUsers = true;
+        }
+      );
     }else{
       // Cogemos la organization a editar
       this.organizationService.getOrganization(this.organizationId).subscribe(
@@ -53,52 +64,81 @@ export class OrganizationDepartmentPageComponent implements OnInit {
           this.organization = data;
           this.departments = this.organization.departments;
           this.counter = this.departments.length + 1;
+          // Meto los usuarios de cada departamento
+          //for(var d of this.departments){
+            //var ind = 0;
+            //for(var u of d.users){
+              //this.addUser(u, d, ind);
+            //}
+            //ind += 1;
+          //}
         },
         error => {
-          this.errorListUsers = true;
+          this.errorListOrganizations = true;
         }
       );
     }
     
     this.userId = this.loginService.getPrincipal().id;
-
-    // Cogemos los usuarios de la base de datos
-    this.userService.getUsers().subscribe(
-      data => 
-      {
-        this.users = data;
-      },
-      error => {
-        this.errorListUsers = true;
-      }
-    );
-
   }
 
   addUser(user:User, department: Department, index: number){
-    var temp = new Array<User>();
-    if(department.users != null){
-      for(var u of department.users){
-        temp.push(u);
+    var notAddedU = new Array<User>();
+    // Cojo los usuario no metidos en el departamento
+    for(var u of department.notAddedUsers){
+      if(u != user){
+        // No meto el que va a entrar en el departamento
+        notAddedU.push(u);
       }
     }
-    temp.push(user);
-    this.departments.splice(index, 1);
-    department.users = temp;
-    this.departments.push(department);
+    // Actualizo la lista
+    department.notAddedUsers = notAddedU;
+
+    var addedU = new Array<User>();
+    // Cojo los usuario metidos en el departamento
+    if(department.users != null){
+      for(var u of department.users){
+        addedU.push(u);
+      }
+    }
+    // Meto el nuevo usuario en la lista de los usuarios del departamento
+    addedU.push(user);
+    // Actualizo la lista
+    department.users = addedU;
+
+    // Actualizo el departamento completo para verlo en la vista
+    let itemIndex = this.departments.findIndex(item => item.id == department.id);
+    this.departments[itemIndex] = department;
   }
 
   deleteUser(user: User, department: Department, index: number){
-    var temp = new Array<User>();
-    // Meto todos los usuarios menos el que se quiere eliminar
-    for(var u of department.users){
+    var addedU = new Array<User>();
+    // Meto todos los usarios que había en el departamento menos el que se ha removido
+     for(var u of department.users){
       if(u != user){
-        temp.push(u);
+        addedU.push(u);
       }
     }
-    this.departments.splice(index, 1);
-    department.users = temp;
-    this.departments.push(department);
+    // Actualizo la lista
+    department.users = addedU;
+
+    var notAddedU = new Array<User>();
+    // Cojo los usuario no añadidos en el departamento
+    if(department.notAddedUsers != null){
+      for(var u of department.notAddedUsers){
+        notAddedU.push(u);
+      }
+    }
+    // En la lista de no añadidos, meto el usuario que se acaba de remover del departamento
+    notAddedU.push(user);
+    // Los ordeno por el id
+    notAddedU.sort((a: User, b: User) => a.id < b.id ? -1 : 1) 
+    // Actualizo la lista
+    department.notAddedUsers = notAddedU;
+
+    // Actualizo el departamento completo para verlo en la vista
+    let itemIndex = this.departments.findIndex(item => item.id == department.id);
+    this.departments[itemIndex] = department;
   }
 
   saveOrganization(departments: Department[], organization: Organization){
@@ -137,6 +177,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     this.counter++;
     this.departments[length].isInput = true;
     this.departments[length].name = "";
+    this.departments[length].notAddedUsers = this.notAddedUsers;
   } 
 
   removeDepartment(department : Department, departmenstIndex : number){    

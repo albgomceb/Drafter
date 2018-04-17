@@ -8,4 +8,5 @@ export class Department {
   isInput: Boolean;
   organizationId:number;
   users:Array<User>;
+  notAddedUsers:Array<User>;
 }
