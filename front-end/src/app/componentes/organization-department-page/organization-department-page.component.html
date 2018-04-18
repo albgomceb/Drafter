@@ -1,21 +1,52 @@
-<!-- <div class="col-md-6 mx-auto mt-3">
-<div class="card text-white bg-dark mb-3"> -->
 <div class="card-body">
   <h2 class="text-center"><span class="letter">O</span>rganization</h2>
-  <form>
+  <form [formGroup]="frmRegistro">
     <div class="form-group">
-      <label for="enterprise" >Enterprise:</label>
-      <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" class="form-control"/>
+      <label class="mt-4" for="enterprise" >Enterprise:</label>
+      <div *ngIf="frmRegistro.get('enterprise').errors" class="alert alert-danger">
+        Required
+      </div>
+      <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" formControlName="enterprise" class="form-control"/>
+      
       <label class="mt-4" for="description" >Description:</label>
-      <input [(ngModel)]="organization.description" type="text" name="description" id="description" class="form-control"/>
+      <div *ngIf="frmRegistro.get('description').errors" class="alert alert-danger">
+        Required
+      </div>
+      <input [(ngModel)]="organization.description" type="text" name="description" id="description" formControlName="description" class="form-control"/>
+      
       <label class="mt-4" for="address" >Address:</label>
-      <input [(ngModel)]="organization.address" type="text" name="address" id="address" class="form-control"/>
+      <div *ngIf="frmRegistro.get('address').errors" class="alert alert-danger">
+        Required
+      </div>
+      <input [(ngModel)]="organization.address" type="text" name="address" id="address" formControlName="address" class="form-control"/>
+      
       <label class="mt-4" for="phone" >Phone number:</label>
-      <input [(ngModel)]="organization.phone" type="text" name="phone" id="phone" class="form-control"/>
+      <div *ngIf="frmRegistro.get('phone').errors">
+        <div *ngIf="frmRegistro.get('phone').errors['required']" class="alert alert-danger">
+          Required
+        </div>
+        <div *ngIf="frmRegistro.get('phone').errors['pattern']" class="alert alert-danger">
+          Must be numeric
+        </div>
+      </div>
+      <input [(ngModel)]="organization.phone" type="text" name="phone" id="phone" formControlName="phone" class="form-control"/>
+      
       <label class="mt-4" for="email" >Email:</label>
-      <input [(ngModel)]="organization.email" type="email" name="email" id="email" class="form-control"/>
+      <div *ngIf="frmRegistro.get('email').errors" class="alert alert-danger">
+        Must be a correct email format
+      </div>
+      <input [(ngModel)]="organization.email" type="email" name="email" id="email" formControlName="email" class="form-control"/>
+
       <label class="mt-4" for="logo" >Logo (URL):</label>
-      <input [(ngModel)]="organization.logo" type="text" name="logo" id="logo" class="form-control"/>
+      <div *ngIf="frmRegistro.get('logo').errors">
+        <div *ngIf="frmRegistro.get('logo').errors['required']" class="alert alert-danger">
+          Required
+        </div>
+        <div *ngIf="frmRegistro.get('logo').errors['pattern']" class="alert alert-danger">
+          Must be a correct URL (http:// or https://)
+        </div>
+      </div>
+      <input [(ngModel)]="organization.logo" type="text" name="logo" id="logo" formControlName="logo" class="form-control"/>
 
       <h2 class="text-center m-4"><span class="letter">D</span>epartments</h2>
       <table class="table table-hover">
@@ -31,27 +62,34 @@
           </tr>
 
           <tr>
-          <div class="container">
-          <div class="form-users">
             <label>Select the department participants:</label>
               <div class="list-group">
-                <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+                <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
                 <div *ngIf="errorListUsers" class="errorList">
                   <img src="../../../assets/img/warning_turq.png" width="20%" />
                   <h4>505 Internal Server Error</h4>
                   <h6>Try again later</h6>
                 </div>
 
-                <div *ngFor="let us of users; let j = index">
+                <div *ngFor="let us of department.notAddedUsers; let j = index">
                     <a class="list-group-item list-group-item-action">
-                      <button *ngIf="!removeButton[j]" [hidden]="addButton[j]" type="button" (click)="addUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Add</button>
-                      <button *ngIf="addButton[j]" [hidden]="removeButton[j]" type="button" (click)="deleteUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Remove</button>
+                      <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
                       <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
                     </a>
                 </div>
               </div>
-          </div>
-          </div>
+
+          <td>
+            <div class="list-group">
+              <h4 *ngIf="department.users == null">Add user...</h4>
+              <div *ngFor="let us of department.users; let j = index">
+                <a class="list-group-item list-group-item-action">
+                  <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
+                  <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                </a>
+              </div>
+            </div>
+          </td>
           </tr>
 
         </div>
@@ -62,10 +100,8 @@
       
     </div>
     <div style="margin:2%;text-align:center">
-      <button (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
+      <button (click)="saveOrganization(departments, organization)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
       <button routerLink=".." class="btn bt-lg">Cancel</button>
     </div>
   </form>
 </div>
-<!-- </div>
-</div> -->

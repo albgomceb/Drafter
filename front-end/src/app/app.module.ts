@@ -39,6 +39,7 @@ import { ChronometerComponent } from './componentes/meetings/chronometer/chronom
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
 import { BrainStormingService } from './componentes/services/brainstorming.service';
 import { BrainStormingMinutesPageComponent } from './componentes/meetings/brainstorming/minutes-page/minutes-page.component';
+import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { BrainStormingMinutesPageComponent } from './componentes/meetings/brains
     ChronometerComponent,
     BrainStormingMinutesPageComponent,
     ListMeetingPageComponent,
-    ChronometerComponent
+    ChronometerComponent,
+    ListOrganizationDepartmentPageComponent
   ],
   imports: [
     BrowserModule,
