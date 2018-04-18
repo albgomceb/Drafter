@@ -37,7 +37,6 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     });
     if(this.organizationId == 0){
       this.organization = new Organization();
-      this.notAddedUsers = new Array<User>();
       this.departments=[];
       this.departments.push(new Department());
       this.departments[0].id = 0;
@@ -50,7 +49,6 @@ export class OrganizationDepartmentPageComponent implements OnInit {
         { 
           this.notAddedUsers = data;
           this.departments[0].notAddedUsers = this.notAddedUsers;
-          console.log(this.departments);
         },
         error => {
           this.errorListUsers = true;
@@ -64,14 +62,31 @@ export class OrganizationDepartmentPageComponent implements OnInit {
           this.organization = data;
           this.departments = this.organization.departments;
           this.counter = this.departments.length + 1;
-          // Meto los usuarios de cada departamento
-          //for(var d of this.departments){
-            //var ind = 0;
-            //for(var u of d.users){
-              //this.addUser(u, d, ind);
-            //}
-            //ind += 1;
-          //}
+          // Cogemos todos los usuarios que no están metidos para cada departamento
+          this.userService.getUsers().subscribe(
+            data => 
+            { 
+              this.notAddedUsers = data;
+              var a = 0;
+              for(var d of this.departments){
+                var notAddedU = new Array<User>();
+                for(u of this.notAddedUsers){
+                  notAddedU.push(u);
+                }
+                
+                var addedU = d.users;
+                for(var u of addedU){
+                  let itemIndex = notAddedU.findIndex(item => item.id == u.id);
+                  notAddedU.splice(itemIndex, 1);
+                }
+                this.departments[a].notAddedUsers = notAddedU;
+                a += 1;
+              }
+            },
+            error => {
+              this.errorListUsers = true;
+            }
+          );
         },
         error => {
           this.errorListOrganizations = true;
@@ -151,21 +166,6 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     organization.departments = temp;
 
     this.organizationService.saveOrganization(organization, this.userId).subscribe(res =>{
-      this.router.navigate(["/organization-department/list/" + this.userId]);
-    });
-  }
-
-  editOrganization(departments: Department[], organization: Organization){
-    // TODO
-    var temp = new Array<Department>();
-    for(var a of departments){
-      if(a.name && a.name.trim() != ''){
-        temp.push(a);
-      }
-    }
-    organization.departments = temp;
-
-    this.organizationService.editOrganization(organization).subscribe(res =>{
       this.router.navigate(["/organization/list/" + this.userId]);
     });
   }

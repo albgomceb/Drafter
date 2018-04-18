@@ -29,11 +29,7 @@ export class OrganizationService {
         return this.http.get<Array<Organization>>(this.staticUrl+'/organization/list/' + userId);
     }
     
-    saveOrganization(organization:Organization, id:number): Observable<Organization> {
-        return this.http.post<Organization>(this.staticUrl+'/organization/' + id,organization, {});
-    }
-
-    editOrganization(organization:Organization): Observable<Organization> {
-        return this.http.put<Organization>(this.staticUrl+'/organization/' + organization.id, {});
+    saveOrganization(organization:Organization, userId:number): Observable<Organization> {
+        return this.http.post<Organization>(this.staticUrl+'/organization/' + userId, organization, {});
     }
 }

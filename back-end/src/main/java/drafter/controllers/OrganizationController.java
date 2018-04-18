@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +40,11 @@ public class OrganizationController {
 	
 	@GetMapping("/list/{userId}")
 	public List<OrganizationBean> findByUser(@PathVariable("userId") int userId) {
+		User user = userService.findById(new Integer(userId));
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
 		List<Organization> res = this.organizationService.findByUserId(userId);
 		List<OrganizationBean> result = res.stream().map(organization -> new OrganizationSerializer().fromOrganization(organization)).collect(Collectors.toList());
 
@@ -50,7 +54,11 @@ public class OrganizationController {
 	@PostMapping("/{userId}")
 	public OrganizationBean save(@PathVariable("userId") int userId, @RequestBody OrganizationBean organizationBean){
 		User user = userService.findById(new Integer(userId));
-		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService);
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
+		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService, organizationService);
 		
 		organizationService.save(result);
 		OrganizationBean res = new OrganizationSerializer().fromOrganization(result);
@@ -69,13 +77,5 @@ public class OrganizationController {
 
 		return result;
 	}
-	
-//	@PutMapping("/{organizationId}")
-//	public OrganizationBean edit(@PathVariable("organizationId") int organizationId, @RequestBody OrganizationBean organizationBean) {
-//		Organization organization = organizationService.findById(organizationId);
-//		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService);
-//		
-//		return result;
-//	}
 	
 }

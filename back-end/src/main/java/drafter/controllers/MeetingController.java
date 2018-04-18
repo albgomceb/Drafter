@@ -18,6 +18,7 @@ import drafter.beans.Option;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Meeting;
+import drafter.domain.User;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
 //import drafter.services.SixHatsService;
@@ -86,6 +87,11 @@ public class MeetingController extends AbstractController {
 	
 	@GetMapping("/list/{userId}")
 	public List<MeetingBean> getByUserId(@PathVariable("userId") int userId) {
+		User user = userService.findById(new Integer(userId));
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
 		List<Meeting> res = meetingService.findByUserId(userId);
 		List<MeetingBean> result = res.stream().map(meeting -> new MeetingSerializer().fromMeeting(meeting)).collect(Collectors.toList());
 		

@@ -2,7 +2,7 @@
   <h2 class="text-center"><span class="letter">O</span>rganization</h2>
   <form>
     <div class="form-group">
-      <label for="enterprise" >Enterprise:</label>
+      <label class="mt-4" for="enterprise" >Enterprise:</label>
       <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" class="form-control"/>
       <label class="mt-4" for="description" >Description:</label>
       <input [(ngModel)]="organization.description" type="text" name="description" id="description" class="form-control"/>
@@ -48,7 +48,7 @@
 
           <td>
             <div class="list-group">
-                <!-- TODO poner mensajito -->
+              <h4 *ngIf="department.users == null">Add user...</h4>
               <div *ngFor="let us of department.users; let j = index">
                 <a class="list-group-item list-group-item-action">
                   <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
@@ -67,8 +67,8 @@
       
     </div>
     <div style="margin:2%;text-align:center">
-      <button *ngIf="organizationId == 0" (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
-      <button *ngIf="organizationId > 0" (click)="saveOrganization(departments, organization)" class="btn bt-lg">Save</button>
+      <button (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
+      <!-- <button *ngIf="organizationId > 0" (click)="editOrganization(departments, organization)" class="btn bt-lg">Save</button> -->
       <button routerLink=".." class="btn bt-lg">Cancel</button>
     </div>
   </form>
