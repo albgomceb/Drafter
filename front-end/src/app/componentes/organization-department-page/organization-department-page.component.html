@@ -1,10 +1,8 @@
-<!-- <div class="col-md-6 mx-auto mt-3">
-<div class="card text-white bg-dark mb-3"> -->
 <div class="card-body">
   <h2 class="text-center"><span class="letter">O</span>rganization</h2>
   <form>
     <div class="form-group">
-      <label for="enterprise" >Enterprise:</label>
+      <label class="mt-4" for="enterprise" >Enterprise:</label>
       <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" class="form-control"/>
       <label class="mt-4" for="description" >Description:</label>
       <input [(ngModel)]="organization.description" type="text" name="description" id="description" class="form-control"/>
@@ -31,27 +29,34 @@
           </tr>
 
           <tr>
-          <div class="container">
-          <div class="form-users">
             <label>Select the department participants:</label>
               <div class="list-group">
-                <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
+                <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
                 <div *ngIf="errorListUsers" class="errorList">
                   <img src="../../../assets/img/warning_turq.png" width="20%" />
                   <h4>505 Internal Server Error</h4>
                   <h6>Try again later</h6>
                 </div>
 
-                <div *ngFor="let us of users; let j = index">
+                <div *ngFor="let us of department.notAddedUsers; let j = index">
                     <a class="list-group-item list-group-item-action">
-                      <button *ngIf="!removeButton[j]" [hidden]="addButton[j]" type="button" (click)="addUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Add</button>
-                      <button *ngIf="addButton[j]" [hidden]="removeButton[j]" type="button" (click)="deleteUser(us, department, i); addButton[j] = !addButton[j]; !removeButton[j] = removeButton[j]" class="btn bt-lg mr-1 add">Remove</button>
+                      <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
                       <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
                     </a>
                 </div>
               </div>
-          </div>
-          </div>
+
+          <td>
+            <div class="list-group">
+              <h4 *ngIf="department.users == null">Add user...</h4>
+              <div *ngFor="let us of department.users; let j = index">
+                <a class="list-group-item list-group-item-action">
+                  <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
+                  <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                </a>
+              </div>
+            </div>
+          </td>
           </tr>
 
         </div>
@@ -63,9 +68,8 @@
     </div>
     <div style="margin:2%;text-align:center">
       <button (click)="saveOrganization(departments, organization)" class="btn bt-lg">Create organization and department</button>
+      <!-- <button *ngIf="organizationId > 0" (click)="editOrganization(departments, organization)" class="btn bt-lg">Save</button> -->
       <button routerLink=".." class="btn bt-lg">Cancel</button>
     </div>
   </form>
 </div>
-<!-- </div>
-</div> -->
