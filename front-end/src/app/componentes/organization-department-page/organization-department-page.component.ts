@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { LoginService } from '../services/login.service';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'organization-department-page',
@@ -15,6 +16,8 @@ import { LoginService } from '../services/login.service';
 })
 export class OrganizationDepartmentPageComponent implements OnInit {
   
+  frmRegistro: FormGroup;
+
   public notAddedUsers: Array<User>;
   public organization: Organization;
   public departments: Array<Department>;
@@ -25,11 +28,22 @@ export class OrganizationDepartmentPageComponent implements OnInit {
   errorListUsers:boolean = false;
   errorListOrganizations = false;
 
-  constructor(private loginService: LoginService, 
+  constructor(private fb: FormBuilder,
+    private loginService: LoginService, 
     private userService: UserService, 
     private organizationService: OrganizationService, 
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+      this.frmRegistro = this.fb.group({  // Esto es la validación de los campos
+        enterprise: ['', Validators.compose([Validators.required]) ],
+        description: ['', Validators.compose([Validators.required]) ],
+        address: ['', Validators.compose([Validators.required]) ],
+        phone: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]+')]) ],
+        email: ['', Validators.compose([Validators.email]) ],
+        logo: ['', Validators.compose([Validators.required, 
+          Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')]) ]
+      })
+     }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
