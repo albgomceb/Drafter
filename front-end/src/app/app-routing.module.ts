@@ -16,6 +16,7 @@ import { PricingComponent } from './componentes/pricing/pricing.component';
 
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
+import { VideoconferencesComponent } from './componentes/videoconferences/videoconferences.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'organization-department', component: OrganizationDepartmentPageComponent},
   {path: 'meeting/list/:userId', component: ListMeetingPageComponent},
   {path: 'ideas', component: IdeasCreateComponent},
+  {path: 'callings',component: VideoconferencesComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];

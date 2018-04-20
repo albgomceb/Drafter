@@ -81,7 +81,8 @@ export class MeetingPageComponent implements OnInit {
         console.log("HOLA");
         this.atts.push(value[i]);
       }
-      this.results = value;
+      //ESTO HAY QUE ARREGLARLO: PASAR OBSERVABLE USERS[] A USERS[]
+      //this.results = value;
     }
     );
 
