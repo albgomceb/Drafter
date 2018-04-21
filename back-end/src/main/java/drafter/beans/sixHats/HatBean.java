@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.List;
 
-import drafter.beans.sixHatsConclusion.SixHatsConclusionBean;
+import drafter.beans.sixHatsConclusion.HatConclusionBean;
 
 public class HatBean {
 
@@ -13,7 +13,7 @@ public class HatBean {
 	private int version;
 	private String color;
 	private int order;
-	private @List(@SafeHtml) Collection<SixHatsConclusionBean> conclusions;
+	private @List(@SafeHtml) Collection<HatConclusionBean> conclusions;
 	
 	public int getId() {
 		return id;
@@ -43,10 +43,10 @@ public class HatBean {
 	public void setOrder(int order) {
 		this.order = order;
 	}
-	public @List(@SafeHtml) Collection<SixHatsConclusionBean> getConclusions() {
+	public @List(@SafeHtml) Collection<HatConclusionBean> getConclusions() {
 		return conclusions;
 	}
-	public void setConclusions(@List(@SafeHtml) Collection<SixHatsConclusionBean> collection) {
+	public void setConclusions(@List(@SafeHtml) Collection<HatConclusionBean> collection) {
 		this.conclusions = collection;
 	}
 

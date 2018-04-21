@@ -7,35 +7,37 @@ import java.util.List;
 
 import drafter.beans.sixHats.HatBean;
 import drafter.domain.Hat;
+import drafter.domain.HatConclusion;
 
 public class SixHatsConclusionSerializer {
 
-	public Collection<SixHatsConclusionBean> fromConclusion(Hat hat) {
-		List<SixHatsConclusionBean> res = new ArrayList<SixHatsConclusionBean>();
-		List<String> conclusions = new ArrayList<String>(hat.getConclusions());
+	public Collection<HatConclusionBean> fromConclusion(Hat hat) {
+		List<HatConclusionBean> res = new ArrayList<HatConclusionBean>();
+		List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hat.getHatConclusions());
 		conclusions.stream()
 					.forEach(con -> {
-						SixHatsConclusionBean conclusion = new SixHatsConclusionBean();
-						conclusion.setId(conclusions.indexOf(con));
-						conclusion.setText(con);
+						HatConclusionBean conclusion = new HatConclusionBean();
+						conclusion.setId(con.getId());
+						conclusion.setVersion(con.getVersion());
+						conclusion.setText(con.getText());
 						res.add(conclusion);
 					});
-//		for(String con : conclusions) {
-//			SixHatsConclusionBean conclusion = new SixHatsConclusionBean();
-//			conclusion.setId(conclusions.indexOf(con));
-//			conclusion.setConclusion(con);
-//			res.add(conclusion);
-//		}
 
 		return res;
 	}
 
-	public Collection<String> fromBean(HatBean hatBean) {
-		List<String> res = new ArrayList<String>();
-		List<SixHatsConclusionBean> conclusions = new ArrayList<SixHatsConclusionBean>(hatBean.getConclusions());
+	public Collection<HatConclusion> fromBean(HatBean hatBean) {
+		List<HatConclusion> res = new ArrayList<HatConclusion>();
+		List<HatConclusionBean> conclusions = new ArrayList<HatConclusionBean>(hatBean.getConclusions());
 		
 		conclusions.stream()
-					.forEach(con -> res.add(con.getText()));
+					.forEach(con -> {
+						HatConclusion conclusion = new HatConclusion();
+						conclusion.setId(con.getId());
+						conclusion.setVersion(con.getVersion());
+						conclusion.setText(con.getText());
+						res.add(conclusion);
+					});
 
 		return res;
 	}

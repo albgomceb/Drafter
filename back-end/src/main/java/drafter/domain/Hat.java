@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -27,7 +27,6 @@ public class Hat extends DomainEntity{
 	private static final String WHITE = "WHITE"; 
 	private int orden; 
 	private String color; 
-	private Collection<String> conclusions;
 	
 	public Hat() {
 		
@@ -54,18 +53,10 @@ public class Hat extends DomainEntity{
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-	@ElementCollection
-	public Collection<String> getConclusions() {
-		return conclusions;
-	}
-
-	public void setConclusions(Collection<String> conclusions) {
-		this.conclusions = conclusions;
-	}
 
 	// Relationships ---------------------------------------------------------------
 	private SixHats sixHats; 
+	private Collection<HatConclusion> hatConclusions;
 	
 	@NotNull
 	@Valid
@@ -76,6 +67,17 @@ public class Hat extends DomainEntity{
 	
 	public void setSixHats(SixHats sixHats) {
 		this.sixHats = sixHats;
+	}	
+	
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "hat")
+	public Collection<HatConclusion> getHatConclusions() {
+		return hatConclusions;
+	}
+	
+	public void setHatConclusions(Collection<HatConclusion> hatConclusions) {
+		this.hatConclusions = hatConclusions;
 	}	
 
 }

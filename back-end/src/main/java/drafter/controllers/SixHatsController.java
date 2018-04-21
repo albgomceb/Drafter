@@ -21,6 +21,7 @@ import drafter.beans.sixHats.SixHatsSerializer;
 import drafter.domain.Hat;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
+import drafter.services.HatConclusionService;
 import drafter.services.HatService;
 import drafter.services.MeetingService;
 import drafter.services.SixHatsService;
@@ -35,6 +36,9 @@ public class SixHatsController {
 	
 	@Autowired
 	private HatService hatService;
+	
+	@Autowired
+	private HatConclusionService hatConclusionService;
 	
 	@Autowired
 	private MeetingService	meetingService;
@@ -76,6 +80,12 @@ public class SixHatsController {
 		
 		bean.setModel(new HatSerializer().fromHat(hat));
 		template.convertAndSend("/meeting/" + meetingId, bean);
+	}
+	
+	@MessageMapping("/sixHats/delete/{hatId}/{conclusionId}/{meetingId}")
+	public void delete(@DestinationVariable int conclusionId, @DestinationVariable int meetingId, String json) {
+		hatConclusionService.delete(conclusionId);
+		template.convertAndSend("/meeting/" + meetingId, json);
 	}
 	
 }

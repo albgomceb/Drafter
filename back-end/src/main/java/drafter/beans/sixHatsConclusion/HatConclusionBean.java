@@ -1,12 +1,13 @@
 package drafter.beans.sixHatsConclusion;
 
-public class SixHatsConclusionBean {
+public class HatConclusionBean {
 	
 	private String text;
 	private int id;
+	private int version;
 	
 	
-	public SixHatsConclusionBean() {
+	public HatConclusionBean() {
 		super();
 	}
 
@@ -26,6 +27,14 @@ public class SixHatsConclusionBean {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+	public int getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 	
 }

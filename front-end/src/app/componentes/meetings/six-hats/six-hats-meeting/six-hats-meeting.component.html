@@ -42,33 +42,33 @@
             <div>
                 <span>Conclusions deduced by your coworkers: </span>
                 <ul>
-                  <li *ngFor="let conclusion of hat.conclusions">{{conclusion.text}}</li>
+                  <li *ngFor="let conclusion of hat.hatConclusions">{{conclusion.text}}</li>
                 </ul>
             </div>
             <span>Your conclusions: </span>
-            <li *ngFor="let conclusion of hat.conclusions; let i=index" class="d-flex justify-content-between">
+            <li *ngFor="let conclusion of currentHat.hatConclusions; let i=index" class="d-flex justify-content-between">
               <input type="text" [(ngModel)]="conclusion.text" 
-                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, hatIndex, hat);" 
+                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, hatIndex);" 
                     placeholder="Type your conclusion here..." required class="idea">
-              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex, hat)" class="idea">
+              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex)" class="idea">
                   <ul>
                       <li>{{conclusion.text}}</li>
                   </ul>
               </div>
               <div class="options-ideas text-right">
-                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, hatIndex, hat);" class="btn">
+                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
                   <i class="fas fa-check"></i>
                 </button>
-                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex, hat);" class="btn">
+                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
                   <i class="fas fa-pencil-alt"></i>
                 </button>          
-                <button (click)="removeConclusion(conclusion, i)" class="btn">
+                <button (click)="removeConclusion(i)" class="btn">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </div> 
             </li>
             <div class="text-center">
-              <button type="button" (click)="addConclusion(hat)" class="btn">
+              <button type="button" (click)="addConclusion()" class="btn">
                 <i class="fas fa-lightbulb"></i> New conclusion
               </button>
             </div>
@@ -76,7 +76,7 @@
           <div *ngIf="hat.color != currentHat.color">
             <span>Conclusions deduced:</span>
             <ul>
-              <li *ngFor="let conclusion of hat.conclusions">{{conclusion.text}}</li>
+              <li *ngFor="let conclusion of hat.hatConclusions">{{conclusion.text}}</li>
             </ul>
           </div>
         </div>

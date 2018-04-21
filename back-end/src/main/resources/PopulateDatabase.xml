@@ -1053,7 +1053,7 @@
 	<bean id="hat1" class="drafter.domain.Hat">
 		<property name="orden" value="0"/>
 		<property name="color" value="BLUE"/>
-		<property name="conclusions">
+		<property name="hatConclusions">
 			<list>
 			</list>
 		</property>
@@ -1065,8 +1065,10 @@
 		<property name="orden" value="1"/>
 		<property name="color" value="WHITE"/>
 		<property name="sixHats" ref="sixhats1" />
-		<property name="conclusions">
+		<property name="hatConclusions">
 			<list>
+				<ref bean="hatConclusion1" />
+				<ref bean="hatConclusion2" />
 			</list>
 		</property>
 	</bean>
@@ -1076,8 +1078,9 @@
 		<property name="orden" value="2"/>
 		<property name="color" value="BLACK"/>
 		<property name="sixHats" ref="sixhats1" />
-		<property name="conclusions">
+		<property name="hatConclusions">
 			<list>
+				<ref bean="hatConclusion4"/>
 			</list>
 		</property>
 	</bean>
@@ -1088,8 +1091,9 @@
 		<property name="orden" value="3"/>
 		<property name="color" value="RED"/>
 		<property name="sixHats" ref="sixhats1" />
-		<property name="conclusions">
+		<property name="hatConclusions">
 		<list>
+			<ref bean="hatConclusion3"/>
 		</list>
 		</property>
 	</bean>
@@ -1100,21 +1104,41 @@
 		<property name="orden" value="4"/>
 		<property name="color" value="YELLOW"/>
 		<property name="sixHats" ref="sixhats1" />
-		<property name="conclusions">
+		<property name="hatConclusions">
 		<list>
 		</list>
 		</property>
 	</bean>
 	
-	
-	
 	<bean id="hat6" class="drafter.domain.Hat">
 		<property name="orden" value="5"/>
 		<property name="color" value="GREEN"/>
 		<property name="sixHats" ref="sixhats1" />
-		<property name="conclusions">
+		<property name="hatConclusions">
 		<list>
 		</list>
 		</property>
+	</bean>
+	
+		<!-- SixHatsConclusions -->
+	
+	<bean id="hatConclusion1" class="drafter.domain.HatConclusion">
+		<property name="text" value="Las estadísticas muestran un aumento de inversiones." />
+		<property name="hat" ref="hat2" />
+	</bean>
+
+	<bean id="hatConclusion2" class="drafter.domain.HatConclusion">
+		<property name="text" value="Nuestros proveedores han firmado un acuerdo de renovación de 3 años." />
+		<property name="hat" ref="hat2" />
+	</bean>
+
+	<bean id="hatConclusion3" class="drafter.domain.HatConclusion">
+		<property name="text" value="¡Me encanta el estilo actual de la aplicación!" />
+		<property name="hat" ref="hat4" />
+	</bean>
+
+	<bean id="hatConclusion4" class="drafter.domain.HatConclusion">
+		<property name="text" value="Debemos tener cuidado al invertir en mejorar nuestras infraestructuras porque no está contemplado en el plan de riesgos." />
+		<property name="hat" ref="hat3" />
 	</bean>
 </beans>

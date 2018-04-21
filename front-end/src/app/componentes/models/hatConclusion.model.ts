@@ -1,7 +1,8 @@
 import { Option } from "./option.model";
 
-export class SixHatsConclusion {
+export class HatConclusion {
     id: number;
+    version: number;
     text: string;
     isInput: Boolean;
 }

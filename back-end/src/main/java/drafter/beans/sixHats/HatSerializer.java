@@ -32,7 +32,7 @@ public class HatSerializer {
 			hat.setVersion(hb.getVersion());
 			hat.setColor(hb.getColor());
 			hat.setOrden(hb.getOrder());
-			hat.setConclusions(new SixHatsConclusionSerializer().fromBean(hb));
+			hat.setHatConclusions(new SixHatsConclusionSerializer().fromBean(hb));
 			hat.setSixHats(sixHats);
 			hats.add(hat);
 		}
@@ -46,7 +46,7 @@ public class HatSerializer {
 		hat.setVersion(hatBean.getVersion());
 		hat.setColor(hatBean.getColor());
 		hat.setOrden(hatBean.getOrder());
-		hat.setConclusions(new SixHatsConclusionSerializer().fromBean(hatBean));
+		hat.setHatConclusions(new SixHatsConclusionSerializer().fromBean(hatBean));
 		hat.setSixHats(sixHats);
 		
 		

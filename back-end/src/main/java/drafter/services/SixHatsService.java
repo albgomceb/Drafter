@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import drafter.domain.Agenda;
 import drafter.domain.Hat;
 import drafter.domain.SixHats;
+import drafter.domain.HatConclusion;
 import drafter.repositories.SixHatsRepository;
 
 
@@ -41,12 +42,12 @@ public class SixHatsService {
     public SixHats create(SixHats meeting) { 
     	SixHats res = new SixHats();
     	List<Hat> hats = new ArrayList<Hat>();
-    	hats.add(create("RED", 0, res));
-    	hats.add(create("BLUE", 1, res));
-    	hats.add(create("BLACK", 2, res));
-    	hats.add(create("WHITE", 3, res));
-    	hats.add(create("YELLOW", 4, res));
-    	hats.add(create("GREEN", 5, res));
+    	hats.add(hatService.create("RED", 0, res));
+    	hats.add(hatService.create("BLUE", 1, res));
+    	hats.add(hatService.create("BLACK", 2, res));
+    	hats.add(hatService.create("WHITE", 3, res));
+    	hats.add(hatService.create("YELLOW", 4, res));
+    	hats.add(hatService.create("GREEN", 5, res));
     	
     	res.setParticipants(meeting.getParticipants());
     	res.setDate(meeting.getDate());
@@ -65,16 +66,6 @@ public class SixHatsService {
     	
     	return res;
     	
-    }
-    
-    public Hat create(String color, int orden, SixHats sixHats) {
-    	Hat res = new Hat();
-    	res.setColor(color);
-    	res.setOrden(orden);
-    	res.setConclusions(new ArrayList<String>());
-    	res.setSixHats(sixHats);
-    	
-    	return res;
     }
 
     public SixHats delete(int id) {
@@ -104,8 +95,8 @@ public class SixHatsService {
     			throw new IllegalArgumentException("A meeting can have no hats with the same color.");
     		else 
     			colors.add(hat.getColor());
-    			if(hat.getConclusions() == null || hat.getConclusions().isEmpty())
-    				hat.setConclusions(new ArrayList<String>());
+    			if(hat.getHatConclusions() == null || hat.getHatConclusions().isEmpty())
+    				hat.setHatConclusions(new ArrayList<HatConclusion>());
     	}
 		return sixHatsRepository.save(sixHats);
 	}

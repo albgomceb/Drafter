@@ -1,10 +1,10 @@
 import { Conclusion } from "../../models/conclusion";
-import { SixHatsConclusion } from "./sixHatsConclusion.model";
+import { HatConclusion } from "./HatConclusion.model";
 
 export class Hat {
   id: number;
   version: number;
   color: String;
   order: number;
-  conclusions: Array<SixHatsConclusion>;
+  hatConclusions: Array<HatConclusion>;
 }
