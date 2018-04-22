@@ -19,11 +19,12 @@
           <a class="nav-link" routerLink="meeting">Meeting</a>
         </li>
         <li *ngIf="getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="organization-department">New organization</a>
+          <a class="nav-link" routerLink="organization-department/0">New organization</a>
+          <a class="nav-link" routerLink="organization/list/{{getLoginService().getPrincipal().id}}">My organizations</a>	
         </li>
         <li *ngIf="getLoginService().isAuthenticated()">
             <a class="nav-link" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}">My meetings</a>
-          </li>
+        </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="pricing">Pricing</a>
         </li>

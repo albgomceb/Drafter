@@ -1,6 +1,9 @@
 package drafter.beans;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import drafter.domain.User;
 
 public class Option {
 	public String id;
@@ -14,6 +17,21 @@ public class Option {
 		super();
 		this.id = id;
 		this.name = name;
+	}
+	
+	public Option(String id, String name, List<User> users) {
+		super();
+		this.id = id;
+		this.name = name;
+		List<Option> optionalUsers = new ArrayList<Option>();
+		for(User u: users) {
+			Option o = new Option();
+			o.id = new Integer(u.getId()).toString();
+			o.name = u.getName();
+			o.photo = u.getPhoto();
+			optionalUsers.add(o);
+		}
+		this.users = optionalUsers;
 	}
 	
 	public Option(String id, String name, String organization) {

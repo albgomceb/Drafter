@@ -9,7 +9,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Lanzar Chrome contra localhost",
-            "url": "http://localhost:4200",
+            "url": "http://localhost:9000",
             "webRoot": "${workspaceFolder}"
         }
     ]
