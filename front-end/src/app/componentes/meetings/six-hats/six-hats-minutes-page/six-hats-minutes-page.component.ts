@@ -14,8 +14,10 @@ export class SixHatsMinutesPageComponent implements OnInit {
 
   meeting: Meeting = new Meeting();
   sixHats: SixHats = new SixHats();
-  @Input() meetingId: number;
-  @Input() meetingInfo: any;
+  @Input() 
+  public meetingId: number;
+  @Input() 
+  public meetingInfo: any;
 
   constructor(private meetingService: MeetingService, 
     private sixHatsService: SixHatsService,

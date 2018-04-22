@@ -1,4 +1,4 @@
-package drafter.beans.sixHatsConclusion;
+package drafter.beans.hatConclusion;
 
 public class HatConclusionBean {
 	

@@ -3,7 +3,6 @@ package drafter.services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -11,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import drafter.domain.Hat;
-import drafter.domain.SixHats;
 import drafter.domain.HatConclusion;
+import drafter.domain.SixHats;
 import drafter.repositories.HatRepository;
 
 
@@ -49,29 +48,24 @@ public class HatService {
     }
 
     public Hat delete(int id) {
-    	Optional<Hat> hat = findById(id);
-    	Hat res = getOne(id);
+    	Hat hat = findById(id);
 //        if(hat.isPresent()){
 //        	hat = ;
 //        	hatRepository.delete(hat);
 //        }
-        hat.ifPresent(ht -> hatRepository.delete(ht));
-        if(hat.isPresent())
-        	res = null;
+        if(hat != null) {
+        	hatRepository.deleteById(hat.getId());
+        }
         
-        return res;
+        return hat;
     }
 
 	public List<Hat> findAll() {
         return hatRepository.findAll();
     }
 
-    public Hat getOne(int id) {
+    public Hat findById(int id) {
         return hatRepository.getOne(id);
-    }
-    
-    public Optional<Hat> findById(int id) {
-        return hatRepository.findById(id);
     }
 
     public Hat update(Hat hat) {

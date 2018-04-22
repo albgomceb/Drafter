@@ -48,23 +48,24 @@
             <span>Your conclusions: </span>
             <li *ngFor="let conclusion of currentHat.hatConclusions; let i=index" class="d-flex justify-content-between">
               <input type="text" [(ngModel)]="conclusion.text" 
-                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, hatIndex);" 
+                    *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, i);" 
                     placeholder="Type your conclusion here..." required class="idea">
-              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex)" class="idea">
+              <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, i)" class="idea">
                   <ul>
                       <li>{{conclusion.text}}</li>
                   </ul>
               </div>
               <div class="options-ideas text-right">
-                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
+                <button *ngIf="conclusion.isInput" (click)="convert(conclusion, i);" class="btn">
                   <i class="fas fa-check"></i>
                 </button>
-                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, hatIndex);" class="btn">
+                <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, i);" class="btn">
                   <i class="fas fa-pencil-alt"></i>
                 </button>          
-                <button (click)="removeConclusion(i)" class="btn">
+                <button (click)="deleteConclusion(conclusion.id, i)" class="btn">
                   <i class="fas fa-trash-alt"></i>
                 </button>
+                {{conclusion | json}}
               </div> 
             </li>
             <div class="text-center">

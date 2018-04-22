@@ -9,8 +9,8 @@ import { Hat } from '../../../models/hat.model';
 import { RealTimeService, WSResponseType } from '../../../../services/real-time.service';
 import { Option } from '../../../models/option.model';
 import { UserService } from '../../../services/user.service';
-import { HatConclusion } from '../../../models/hatConclusion.model';
 import { LoginService } from '../../../services/login.service';
+import { HatConclusion } from '../../../models/HatConclusion.model';
 
 
 @Component({
@@ -45,7 +45,6 @@ export class SixHatsMeetingComponent implements OnInit {
   ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;      
-      this.addFirstConclusion(); 
       this.sortAttendants();
       //this.actualUser = this.attendants[0];
       //this.loginService.getLoginUser().subscribe(currentUser => this.actualUser = currentUser);
@@ -55,6 +54,7 @@ export class SixHatsMeetingComponent implements OnInit {
       this.userId = this.attendants[0].id;
       console.log(this.attendants[0]);
       this.getHatColor();
+      this.addFirstConclusion(); 
     });
     this.countDown = timer(0,1000).pipe(
       take(this.count),
@@ -62,17 +62,21 @@ export class SixHatsMeetingComponent implements OnInit {
 
     //Parte del WebSocket
     this.realTimeService.connect(this.meetingId, () => {
-      this.realTimeService.register('h', this.sixHats.hats);
+      this.realTimeService.register('hats', this.sixHats.hats, conclusion => {
+        console.log("AAA",conclusion.data.index);
+          // this.currentHat.hatConclusions[conclusion.data.index] = conclusion.model;
+
+        if (conclusion.data.action === "pop"){
+          this.currentHat.hatConclusions.splice(conclusion.data.index, 1);
+        }
+        else{
+          // this.currentHat.hatConclusions.splice(conclusion.data.index, 1, conclusion.model);
+          this.currentHat.hatConclusions[conclusion.data.index] = conclusion.model;
+        }
+        
+      });
       this.realTimeService.subscribe();
     });
-  }
-
-  edit(event, hatIndex) {
-    this.realTimeService.send('/sixHats/save/', 
-                            WSResponseType.SET, 
-                            'h',  
-                            this.sixHats.hats[hatIndex], 
-                            {index: hatIndex});
   }
 
   enter(event) {
@@ -113,14 +117,13 @@ export class SixHatsMeetingComponent implements OnInit {
   }
 
   addFirstConclusion(){
-    for(let hat of this.sixHats.hats){
-      if(hat.hatConclusions.length == 0){
-        hat.hatConclusions[0] = new HatConclusion();
-        hat.hatConclusions[0].id = 0;
-        hat.hatConclusions[0].version = 0;
-        hat.hatConclusions[0].text = "";
-        hat.hatConclusions[0].isInput = true;
-      }
+    
+      if(this.currentHat.hatConclusions.length === 0){
+        this.currentHat.hatConclusions[0] = new HatConclusion();
+        this.currentHat.hatConclusions[0].id = 0;
+        this.currentHat.hatConclusions[0].version = 0;
+        this.currentHat.hatConclusions[0].text = "";
+        this.currentHat.hatConclusions[0].isInput = true;
     }
   }
 
@@ -141,48 +144,33 @@ export class SixHatsMeetingComponent implements OnInit {
     this.currentHat.hatConclusions[length].version = 0;
   } 
 
-  removeConclusion(conclusionIndex : number){ 
-    // if(!conclusion.id)
-    //   this.currentHat.conclusions.splice(conclusionIndex, 1);
-    // else
-    console.log("index ", conclusionIndex);
-    
-    this.currentHat.hatConclusions.splice(conclusionIndex, 1);
-    this.deleteConclusion(this.currentHat.id, conclusionIndex);
-  }
-
-  private deleteConclusion(id: number, index : number) {
-    this.realTimeService.send('/sixHats/delete/' + id + '/' + index + '/', 
+  deleteConclusion(conclusionId : number, conclusionIndex : number) {
+    console.log(conclusionId);
+    this.realTimeService.send('/sixHats/delete/' + conclusionId + '/', 
                                     WSResponseType.POP, 
-                                    'h',  
+                                    'hats',
                                     {}, 
-                                    {id: id});
+                                    {id: conclusionId,
+                                      index: conclusionIndex,
+                                      action: "pop"});
   }
 
-  convert(conclusion, hatIndex,hat){
+  convert(conclusion, conclusionIndex){
 
     //Si la actual conclusion tiene longitud > 0 y además la conclusion es un input, se convierte en texto
     if(this.checkNotBlank(conclusion.text) && conclusion.isInput) {
       conclusion.isInput = false;
-      this.realTimeService.send('/sixHats/save/', 
+      this.realTimeService.send('/sixHats/save/'+this.currentHat.id+'/', 
                             WSResponseType.SET, 
-                            'h',  
-                            this.sixHats.hats[hatIndex], 
-                            {index: hatIndex});
-        
-      // var i=0;                 
-      // for(var con of this.currentHat.conclusions) {
-      //   if(!con.text || con.text.trim().length == 0 || !con.id || con.id == 0)
-      //     this.currentHat.conclusions.splice(i, 1);
-        
-      //   i++;
-      // } 
+                            'hats',  
+                            this.currentHat.hatConclusions[conclusionIndex], 
+                            {index: conclusionIndex});
 
     //Si la conclusion es un texto, se convierte en input
     } else if(!conclusion.isInput) {
       conclusion.isInput = true;
       if(conclusion.text.trim() == 0)
-        this.deleteConclusion(this.currentHat.id,conclusion.id);
+        this.deleteConclusion(conclusion.id, conclusionIndex);
         
     }
   }

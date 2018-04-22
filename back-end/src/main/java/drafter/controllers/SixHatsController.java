@@ -1,6 +1,10 @@
 
 package drafter.controllers;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import org.assertj.core.internal.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -13,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import drafter.beans.hatConclusion.HatConclusionBean;
+import drafter.beans.hatConclusion.HatConclusionSerializer;
 import drafter.beans.model.ModelBean;
-import drafter.beans.sixHats.HatBean;
-import drafter.beans.sixHats.HatSerializer;
 import drafter.beans.sixHats.SixHatsBean;
 import drafter.beans.sixHats.SixHatsSerializer;
 import drafter.domain.Hat;
+import drafter.domain.HatConclusion;
 import drafter.domain.Meeting;
 import drafter.domain.SixHats;
 import drafter.services.HatConclusionService;
@@ -55,6 +60,7 @@ public class SixHatsController {
 			res = sixHatsService.create(res);
 
 		}
+		//TODO sort de ID
 		SixHatsBean result = new SixHatsSerializer().fromSixHats(res);
 
 		return result;
@@ -71,18 +77,19 @@ public class SixHatsController {
 		return res;
 	}
 	
-	@MessageMapping("/sixHats/save/{meetingId}")
-	public void save(@DestinationVariable int meetingId, ModelBean<HatBean> bean) {
-		SixHats meeting = sixHatsService.findById(meetingId);
+	@MessageMapping("/sixHats/save/{hatId}/{meetingId}")
+	public void save(@DestinationVariable int hatId, @DestinationVariable int meetingId, ModelBean<HatConclusionBean> bean) {
+		Hat hat = hatService.findById(hatId);
 		
-		Hat hat = new HatSerializer().fromBean(bean.getModel(), meeting);
-		hat = hatService.save(hat);
+		HatConclusion hatConclusion = new HatConclusionSerializer().fromBean(hat, bean.getModel());
+		hatService.save(hat);
+		hatConclusion = hatConclusionService.save(hatConclusion);
 		
-		bean.setModel(new HatSerializer().fromHat(hat));
+		bean.setModel(new HatConclusionSerializer().fromConclusion(hatConclusion));
 		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
-	@MessageMapping("/sixHats/delete/{hatId}/{conclusionId}/{meetingId}")
+	@MessageMapping("/sixHats/delete/{conclusionId}/{meetingId}")
 	public void delete(@DestinationVariable int conclusionId, @DestinationVariable int meetingId, String json) {
 		hatConclusionService.delete(conclusionId);
 		template.convertAndSend("/meeting/" + meetingId, json);

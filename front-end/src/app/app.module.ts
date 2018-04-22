@@ -40,6 +40,7 @@ import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea
 import { BrainStormingService } from './componentes/services/brainstorming.service';
 import { BrainStormingMinutesPageComponent } from './componentes/meetings/brainstorming/minutes-page/minutes-page.component';
 import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
+import { SixHatsMinutesPageComponent } from './componentes/meetings/six-hats/six-hats-minutes-page/six-hats-minutes-page.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ListOrganizationDepartmentPageComponent } from './componentes/list-orga
     BrainStormingMinutesPageComponent,
     ListMeetingPageComponent,
     ChronometerComponent,
-    ListOrganizationDepartmentPageComponent
+    ListOrganizationDepartmentPageComponent,
+    SixHatsMinutesPageComponent
   ],
   imports: [
     BrowserModule,
