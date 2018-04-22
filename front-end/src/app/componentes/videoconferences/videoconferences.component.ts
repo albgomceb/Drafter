@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as SimpleWebRTC from 'simplewebrtc';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'videoconferences',
@@ -10,7 +11,7 @@ export class VideoconferencesComponent implements OnInit {
 
   
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
   
 
   ngOnInit() {
@@ -28,8 +29,10 @@ export class VideoconferencesComponent implements OnInit {
       localVideoEl: 'localVideo',
       // the id/element dom element that will hold remote videos
       remoteVideosEl: 'remotesVideo',
-      // immediately ask for camera access
+      // nickname of logged user
+      //nick: this.getLoginService().getPrincipal().username,
       nick: 'PabloGitu',
+      // immediately ask for camera access
       autoRequestMedia: true,
       debug: false,
       detectSpeakingEvents: true
@@ -77,6 +80,7 @@ export class VideoconferencesComponent implements OnInit {
             case 'connected':
             case 'completed': // on caller side
                 connstate.innerText = peer.nick;
+                console.log("NICK:" + peer.nick)
                 break;
             case 'disconnected':
                 connstate.innerText = 'Disconnected.';
@@ -147,6 +151,10 @@ export class VideoconferencesComponent implements OnInit {
         });
     }
 
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
 }
