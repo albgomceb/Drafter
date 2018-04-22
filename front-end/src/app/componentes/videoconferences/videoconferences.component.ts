@@ -29,6 +29,7 @@ export class VideoconferencesComponent implements OnInit {
       // the id/element dom element that will hold remote videos
       remoteVideosEl: 'remotesVideo',
       // immediately ask for camera access
+      nick: 'PabloGitu',
       autoRequestMedia: true,
       debug: false,
       detectSpeakingEvents: true
@@ -42,11 +43,14 @@ export class VideoconferencesComponent implements OnInit {
     function showVolume(el, volume) {
       if (!el) return;
       if (volume < -45) { // vary between -45 and -20
-          el.style.height = '0px';
+          //el.style.height = '0px';
+          $("#localVolume").css('height','0px');
       } else if (volume > -20) {
-          el.style.height = '100%';
+          //el.style.height = '100%';
+          $("#localVolume").css('height','100%');
       } else {
-          el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
+          //el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
+          $("#localVolume").css('height','' + Math.floor((volume + 100) * 100 / 25 - 220) + '%');
       }
     }
 
@@ -60,6 +64,32 @@ export class VideoconferencesComponent implements OnInit {
       console.log('video added', peer);
       var remotes = document.getElementById('remotesVideo');
       console.log(webrtc.getDomId(peer));
+
+      if (peer && peer.pc) {
+        var connstate = document.createElement('div');
+        connstate.className = 'connectionstate';
+        remotes.appendChild(connstate);
+        peer.pc.on('iceConnectionStateChange', function (event) {
+            switch (peer.pc.iceConnectionState) {
+            case 'checking':
+                connstate.innerText = 'Connecting to peer...';
+                break;
+            case 'connected':
+            case 'completed': // on caller side
+                connstate.innerText = peer.nick;
+                break;
+            case 'disconnected':
+                connstate.innerText = 'Disconnected.';
+                break;
+            case 'failed':
+                break;
+            case 'closed':
+                connstate.innerText = 'Connection closed.';
+                break;
+            }
+        });
+      }   
+      
       if (remotes) {
           var d = document.createElement('div');
           d.className = 'videoContainer';
@@ -103,12 +133,8 @@ export class VideoconferencesComponent implements OnInit {
       setRoom(room.toLowerCase().replace('=','').replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, ''));
     } else {
         $('form').submit(function () {
-            var val = $('#sessionInput').val().toString().toLowerCase().replace('=','').replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
-            webrtc.createRoom(val, function (err, name) {
+            webrtc.createRoom('34', function (err, name) {
                 console.log(' create room cb', arguments);
-                console.log('room', name);
-                name = name.toLowerCase().replace('=','').replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
-                console.log('room', name);
                 var newUrl = location.pathname + '?' + name;
                 if (!err) {
                     history.replaceState({foo: 'bar'}, null, newUrl);
