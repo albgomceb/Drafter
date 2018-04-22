@@ -76,7 +76,9 @@ public class IdeaController {
 		List<Idea> result = new IdeaSerializer().fromBean(ideas, brainstorming);
 		result.stream().forEach(a -> {
 			
-			ideaService.save(a);	
+			ideaService.save(a);
+			brainstorming.addIdea(a);
+			brainStormingService.create(brainstorming);
 		});
 		List<IdeaBean> res = result.stream().map(idea -> new IdeaSerializer().fromIdea(idea)).collect(Collectors.toList());
 		
