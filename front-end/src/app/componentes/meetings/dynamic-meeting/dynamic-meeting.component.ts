@@ -17,6 +17,7 @@ export class DynamicMeetingComponent implements OnInit {
   public meetingInfo:any={};
   public users:Array<any>;
   public isFinished:boolean;
+  public showChat:boolean = true;
 
   constructor(private userService: UserService, private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService) {}
 
@@ -33,8 +34,6 @@ export class DynamicMeetingComponent implements OnInit {
         }
       });
     }
-    
-
   } 
 
   finishMeeting(meetingId:number){
@@ -42,12 +41,17 @@ export class DynamicMeetingComponent implements OnInit {
       this.router.navigate(['/minutes/'+meetingId]);
     })
   }
+
   nextStep(meetingId:number){
     
     this.meetingService.nextStep(meetingId).subscribe(res =>{
       this.meetingInfo.status = res;
       this.router.navigate(['/meeting/'+this.meetingId])
     })
+  }
+
+  toggleChat() {
+    this.showChat = !this.showChat;
   }
 
 }
