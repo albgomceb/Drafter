@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'meeting-page',
@@ -26,6 +27,7 @@ export class MeetingPageComponent implements OnInit {
   hideme=[]
   searchField: FormControl;
   loading: boolean = false;
+  exist:boolean = false;
 
   users: Array<User>;
   thumbnail: Array<Option>;
@@ -41,6 +43,11 @@ export class MeetingPageComponent implements OnInit {
   constructor(private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
   
   ngOnInit() {
+
+    this.userService.getUsers().subscribe(users => {
+      this.atts = users;
+    }
+    );
 
     this.meeting = new Meeting();
     this.thumbnail = new Array<Option>();
@@ -70,51 +77,51 @@ export class MeetingPageComponent implements OnInit {
       }
     );
     this.searchField = new FormControl();
-    this.searchField.valueChanges
+
+    //PASAR OBSERVABLE USERS[] A USERS[]???
+    this.results = this.searchField.valueChanges
     .debounceTime(400)
     .distinctUntilChanged()
     .filter(keyword => keyword)
     .switchMap( keyword => this.userService.filterUsers(keyword))
-    .subscribe(value => {
-      for(var i=0;value.length;i++){
-        console.log(value[i]);
-        console.log("HOLA");
-        this.atts.push(value[i]);
-      }
-      //ESTO HAY QUE ARREGLARLO: PASAR OBSERVABLE USERS[] A USERS[]
-      //this.results = value;
-    }
-    );
 
   } 
 
   addAttendant(attendant:User){
 
-    let idAttendant:number = attendant.id;
-    
-    this.results.subscribe(value => {
-      for(var i=0;value.length;i++){
-        console.log(value[i]);
-        console.log("HOLA");
-        this.atts.push(value[i]);
-      }
-    }
-    );
+      let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
 
-    for (var i=0;i<this.atts.length;i++){
+      console.log(att);
+      console.log(this.thumbnail[0]);
 
-      console.log("ACTUAL: "+this.atts[i].id);
-      console.log("ATT: "+idAttendant);
-
-
-      if(idAttendant.toString()!=this.thumbnail[i].id){
-        let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
+      if(this.thumbnail.indexOf(att) === -1){
         this.thumbnail.push(att);
       }
 
-    }
+      /*this.thumbnail.forEach(u => {
+        console.log("ID:"+u.id);
+        if(u.id!=att.id){
+          this.exist=false;
+          //console.log("NO EXISTE!!!");
+
+        }else{
+          this.exist=true;
+          //console.log("EXISTE");
+        }
+      });
+
+      if(!this.exist){
+        this.thumbnail.push(att);
+      }*/
       
 
+     /* if(this.thumbnail.indexOf(att) <= -1){
+        console.log("NO EXISTEEEEEE");
+        this.thumbnail.push(att);
+      }else{
+        console.log("EXISTE");
+      }*/
+      
   }
 
   onSubmit(meeting){
