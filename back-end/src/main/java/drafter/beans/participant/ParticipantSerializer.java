@@ -1,14 +1,19 @@
 package drafter.beans.participant;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import drafter.beans.Option;
+import drafter.domain.Department;
+import drafter.domain.Meeting;
 import drafter.domain.Participant;
+import drafter.domain.User;
+import drafter.services.DepartmentService;
+import drafter.services.MeetingService;
+import drafter.services.UserService;
 
 public class ParticipantSerializer {
 
-	public static ParticipantBean fromParticipant(Participant participant) {
+	public ParticipantBean fromParticipant(Participant participant) {
 
 		ParticipantBean res = new ParticipantBean();
 
@@ -17,15 +22,32 @@ public class ParticipantSerializer {
 		res.setRole(participant.getRole());
 		res.setUserId(participant.getUser().getId());
 		res.setMeetingId(participant.getMeeting().getId());
-
-		List<Option> depar = participant.getUser().getDepartments().stream()
-				.map(us -> new Option(new Integer(us.getId()).toString(), us.getName(),
-						us.getOrganization().getEnterprise()))
-				.collect(Collectors.toList());
-
-		res.setDepartments(depar);
+		res.setDepartmentId(participant.getDepartment().getId());
 
 		return res;
+	}
+	
+	public List<Participant> fromBean(List<ParticipantBean> participantsBean,MeetingService meetingService,DepartmentService departmentService,UserService userService) {
+		List<Participant> participants = new ArrayList<Participant>();
+		for (ParticipantBean ib : participantsBean) {
+			Participant participant = new Participant();
+			Meeting meeting= meetingService.findById(ib.getMeetingId());
+			Department department = departmentService.findById(ib.getDepartmentId());
+			User user= userService.findById(ib.getUserId());
+			participant.setId(ib.getId());
+			participant.setRole(ib.getRole());
+			participant.setHasAttended(ib.isHasAttended());
+			participant.setUser(user);
+			participant.setDepartment(department);
+			participant.setMeeting(meeting);
+			meeting.addParticipant(participant);
+			
+			participant.setRole(ib.getRole());
+			
+			participants.add(participant);
+		}
+
+		return participants;
 	}
 
 }

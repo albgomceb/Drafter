@@ -6,7 +6,7 @@ export class Participant {
   id: number;
   role:String;
   hasAttedend:Boolean;
-  departamentId:number;
+  departmentId:number;
   userId:number;
   meetingId:number;
 }

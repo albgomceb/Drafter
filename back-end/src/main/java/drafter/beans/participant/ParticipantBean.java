@@ -1,9 +1,5 @@
 package drafter.beans.participant;
 
-import java.util.List;
-
-import drafter.beans.Option;
-
 public class ParticipantBean {
 
 	public int id;
@@ -11,7 +7,7 @@ public class ParticipantBean {
 	public boolean hasAttended; 
 	public int userId;
 	public int meetingId;
-	public List<Option> departments;
+	public int departmentId;
 	
 	
 	public int getId() {
@@ -44,15 +40,12 @@ public class ParticipantBean {
 	public void setHasAttended(boolean hasAttended) {
 		this.hasAttended = hasAttended;
 	}
-	
-	public List<Option> getDepartments() {
-		return departments;
+	public int getDepartmentId() {
+		return departmentId;
 	}
-	public void setDepartments(List<Option> departments) {
-		this.departments = departments;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
-	
-	
 	
 	
 }
