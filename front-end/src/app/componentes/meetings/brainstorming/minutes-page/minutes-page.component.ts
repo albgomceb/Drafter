@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { element } from 'protractor';
+import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { MeetingService } from '../../../services/meeting.service';
 import { ActivatedRoute } from '@angular/router';
 import { Idea } from '../../../models/idea.model';
@@ -6,6 +7,7 @@ import { Pros } from '../../../models/pros.model';
 import { Cons } from '../../../models/cons.model';
 import { Meeting } from '../../../models/meeting.model';
 import { BrainStormingService } from '../../../services/brainstorming.service';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'brainstorming-minutes-page',
@@ -18,13 +20,14 @@ export class BrainStormingMinutesPageComponent implements OnInit {
   ideas: Array<Idea> = [];
   @Input() meetingId: number;
   @Input() meetingInfo: any;
+  @ViewChild('content') content: ElementRef
 
-  constructor(private meetingService: MeetingService, 
+  constructor(private meetingService: MeetingService,
     private brainstormingService: BrainStormingService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    
+
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
@@ -33,7 +36,27 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     });
   };
 
-  getAverage(idea : Idea){    
-      return Math.round((idea.votes.map((vote)=> vote.value).reduce((v1,v2) => v1 + v2)/idea.votes.length) * 100)  / 100;
+  getAverage(idea: Idea) {
+    return Math.round((idea.votes.map((vote) => vote.value).reduce((v1, v2) => v1 + v2) / idea.votes.length) * 100) / 100;
+  }
+
+  downloadPDF() {
+
+    let doc = new jsPDF();
+
+    let specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    }
+    let content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15,
+      {
+        'width': 100,
+        'elementHandlers': specialElementHandlers
+      },function(){doc.save('MeetingPDF');});
+
+      
   }
 }
