@@ -2,9 +2,9 @@
 package drafter.controllers;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.List;
 
-import org.assertj.core.internal.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -60,7 +60,19 @@ public class SixHatsController {
 			res = sixHatsService.create(res);
 
 		}
-		//TODO sort de ID
+		for(Hat hat : res.getHats()) {
+			List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hat.getHatConclusions());
+			conclusions.sort(new Comparator<HatConclusion>() {
+
+				@Override
+				public int compare(HatConclusion o1, HatConclusion o2) {
+					return new Integer(o1.getId()).compareTo(new Integer(o2.getId()));
+				}
+				
+			});
+			hat.setHatConclusions(conclusions);
+			
+		}
 		SixHatsBean result = new SixHatsSerializer().fromSixHats(res);
 
 		return result;
@@ -72,6 +84,8 @@ public class SixHatsController {
 		SixHats result = new SixHatsSerializer().fromBean(sixHats, meeting);
 		result.setHats(hatService.reassignHats(result));
 		sixHatsService.save(result);
+		result.getHats().stream()
+						.forEach(hat -> hatService.save(hat));
 		SixHatsBean res =new SixHatsSerializer().fromSixHats(result);
 		
 		return res;
@@ -82,8 +96,30 @@ public class SixHatsController {
 		Hat hat = hatService.findById(hatId);
 		
 		HatConclusion hatConclusion = new HatConclusionSerializer().fromBean(hat, bean.getModel());
-		hatService.save(hat);
-		hatConclusion = hatConclusionService.save(hatConclusion);
+		List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hatConclusionService.findByHat(hatId));
+		hat.setHatConclusions(new ArrayList<HatConclusion>());
+		if(hatConclusion.getId() <= 0) {
+			conclusions.add(hatConclusion);
+			hat.setHatConclusions(conclusions);
+			hatService.save(hat);
+			hatConclusion = hatConclusionService.save(hatConclusion);
+		}
+		else {
+			Integer index = null;
+			for(HatConclusion conclusion : conclusions) {
+				if(conclusion.getId() == hatConclusion.getId()) {
+					index = conclusions.indexOf(conclusion);
+					break;
+				}
+			}
+			
+			if(index != null) {
+				conclusions.add(index, hatConclusion);
+				hat.setHatConclusions(conclusions);
+				hatService.save(hat);
+				hatConclusion = hatConclusionService.save(hatConclusion);
+			}
+		}
 		
 		bean.setModel(new HatConclusionSerializer().fromConclusion(hatConclusion));
 		template.convertAndSend("/meeting/" + meetingId, bean);
