@@ -91,36 +91,9 @@ export class MeetingPageComponent implements OnInit {
 
       let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
 
-      console.log(att);
-      console.log(this.thumbnail[0]);
-
-      if(this.thumbnail.indexOf(att) === -1){
+      if(!this.thumbnail.find(x => x.id === att.id)){
         this.thumbnail.push(att);
       }
-
-      /*this.thumbnail.forEach(u => {
-        console.log("ID:"+u.id);
-        if(u.id!=att.id){
-          this.exist=false;
-          //console.log("NO EXISTE!!!");
-
-        }else{
-          this.exist=true;
-          //console.log("EXISTE");
-        }
-      });
-
-      if(!this.exist){
-        this.thumbnail.push(att);
-      }*/
-      
-
-     /* if(this.thumbnail.indexOf(att) <= -1){
-        console.log("NO EXISTEEEEEE");
-        this.thumbnail.push(att);
-      }else{
-        console.log("EXISTE");
-      }*/
       
   }
 
