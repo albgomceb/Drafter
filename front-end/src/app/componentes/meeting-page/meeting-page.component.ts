@@ -32,9 +32,9 @@ export class MeetingPageComponent implements OnInit {
 
   users: Array<User>;
 
-  //Participantes (Visible en front-end: solo participantes)
+  //Participantes (Visibles: solo aparecen participantes)
   thumbnail: Array<Option>;
-  //Participantes (No visible en front-end: participantes + el lider)
+  //Participantes (No visibles, los participantes + el lider)
   attendants: Array<Option> = [];
 
   organizations: Array<Organization>
