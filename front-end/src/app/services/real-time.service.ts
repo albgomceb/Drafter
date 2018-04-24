@@ -85,7 +85,6 @@ export class RealTimeService {
 
   public disconnect() {
     this.stompClient.disconnect(() => {
-      alert('')
       this.models = new Array<any>();
       this.callbacks = new Array<Function>();
       this.users = {};
@@ -134,10 +133,10 @@ export class RealTimeService {
             break;
 
           case WSResponseType.PUSH:
-            if (obj.data['id'] && obj.data['id'] != 0) {
+            if (obj.data['id'] != undefined && obj.data['id'] != 0 && obj.model.id != undefined && obj.model.id != 0) {
               var i = 0;
               for (var o of model) {
-                if (o.id && o.id == obj.data['id']) {
+                if (o.id && o.id == obj.model.id) {
                   model[i] = obj.model;
                   break;
                 }
@@ -146,12 +145,10 @@ export class RealTimeService {
               }
 
               break;
-            } else if (obj.data['isnew']) {
+            } else if (obj.data['replace'] && obj.data['userUUID'] == this.getUserUUID()) {
               var i = 0;
               for (var o of model) {
-                console.log(i);
-                if (!o.id || o.id == 0) {
-                  console.log(i);
+                if (!o.id || o.id == 0 || o.id == obj.model.id) {
                   model[i] = obj.model;
                   break;
                 }
@@ -230,7 +227,7 @@ export class RealTimeService {
     data.userUUID = this.userUUID;
 
     if(data.id != undefined && data.id == 0)
-      data.isnew = true;
+      data.replace = true;
 
     var a = new Model(type, name, model, data);
     var json = JSON.stringify(a);

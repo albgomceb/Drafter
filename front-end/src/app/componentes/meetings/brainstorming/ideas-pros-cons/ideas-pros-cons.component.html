@@ -18,7 +18,7 @@
                         <ul class="list-pros">
                             <li *ngFor="let p of idea.pros; let i = index" class="alert alert-success" (click)="convert(p)">
                                 <i class="fas fa-check" aria-hidden="true"></i>
-                                <input *ngIf="p.isInput" [(ngModel)]="p.pros" class="none" (focusout)="killfocusPros(p, ii)" (keyup.enter)="enter($event)">
+                                <input *ngIf="p.isInput" [(ngModel)]="p.pros" class="none" (focusout)="killfocusPros(p, ii, i)" (keyup.enter)="enter($event)">
                                 <span *ngIf="!p.isInput">{{ p.pros }}</span>
                             </li>
                         </ul>
@@ -30,7 +30,7 @@
                         <ul class="list-cons">
                             <li *ngFor="let c of idea.cons; let i = index" class="alert alert-danger" (click)="convert(c)">
                                 <i class="fas fa-check" aria-hidden="true"></i>
-                                <input *ngIf="c.isInput" [(ngModel)]="c.cons" class="none" (focusout)="killfocusCons(c, ii)" (keyup.enter)="enter($event)">
+                                <input *ngIf="c.isInput" [(ngModel)]="c.cons" class="none" (focusout)="killfocusCons(c, ii, i)" (keyup.enter)="enter($event)">
                                 <span *ngIf="!c.isInput">{{ c.cons }}</span>
                             </li>
                         </ul>
