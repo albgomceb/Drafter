@@ -7,6 +7,7 @@ public class DataModelBean {
 	private int index;
 	private boolean noself;
 	private int id;
+	private boolean isnew;
 	
 	
 	public String getUser() {
@@ -39,7 +40,11 @@ public class DataModelBean {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public boolean isIsnew() {
+		return isnew;
+	}
+	public void setIsnew(boolean isnew) {
+		this.isnew = isnew;
+	}
 
-	
-	
 }

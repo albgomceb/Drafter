@@ -8,7 +8,7 @@
         <ul class="list-ideas">
             <li *ngFor="let idea of ideas; let ii = index">
                 <div class="ideas-title">
-                    {{ii+1}}. {{idea.text}}                    
+                    {{ii+1}}. {{idea.text}}
                 </div>
                 <div class="d-flex justify-content-between flex-wrap">
                     <div>
@@ -16,11 +16,10 @@
                             Add pros
                         </button>
                         <ul class="list-pros">
-                            <li *ngFor="let p of idea.pros; let i = index" class="alert alert-success">
-                                    <i class="fas fa-check" aria-hidden="true"></i>
-                                    <div style="display:inline-block" contenteditable="true" (focusout)="editPro($event, p, ii, i)" (keydown)="enter($event)">
-                                        {{ p.pros }}
-                                    </div>
+                            <li *ngFor="let p of idea.pros; let i = index" class="alert alert-success" (click)="convert(p)">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <input *ngIf="p.isInput" [(ngModel)]="p.pros" class="none" (focusout)="killfocusPros(p, ii)" (keyup.enter)="enter($event)">
+                                <span *ngIf="!p.isInput">{{ p.pros }}</span>
                             </li>
                         </ul>
                     </div>
@@ -29,11 +28,10 @@
                             Add cons
                         </button>
                         <ul class="list-cons">
-                            <li *ngFor="let c of idea.cons; let i = index" class="alert alert-danger">
-                                    <i class="fas fa-times" aria-hidden="true"></i> 
-                                    <div style="display:inline-block" contenteditable="true" (focusout)="editCon($event, c, ii, i)" (keydown)="enter($event)">
-                                        {{ c.cons }}
-                                    </div>
+                            <li *ngFor="let c of idea.cons; let i = index" class="alert alert-danger" (click)="convert(c)">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <input *ngIf="c.isInput" [(ngModel)]="c.cons" class="none" (focusout)="killfocusCons(c, ii)" (keyup.enter)="enter($event)">
+                                <span *ngIf="!c.isInput">{{ c.cons }}</span>
                             </li>
                         </ul>
                     </div>
@@ -41,7 +39,7 @@
             </li>
         </ul>
         <div class="text-center">
-            <button (click) = "next()" class="btn">Next step</button>
+            <button (click)="next()" class="btn">Next step</button>
         </div>
     </div>
 </div>

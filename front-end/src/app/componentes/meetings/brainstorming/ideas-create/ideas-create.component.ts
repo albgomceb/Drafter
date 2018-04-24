@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
 import { Idea } from '../../../models/idea.model';
@@ -13,7 +13,7 @@ import { MeetingService } from '../../../services/meeting.service';
   styleUrls: ['./ideas-create.component.scss']
 })
 
-export class IdeasCreateComponent implements OnInit {
+export class IdeasCreateComponent implements OnInit, OnDestroy {
 
   public entradas: Array<Idea>;
   @Input()
@@ -54,6 +54,10 @@ export class IdeasCreateComponent implements OnInit {
         });
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.realTimeService.unregister('entradas');
   }
 
   next() {
@@ -100,15 +104,15 @@ export class IdeasCreateComponent implements OnInit {
                                   WSResponseType.PUSH, 
                                   'entradas',  
                                   entrada, 
-                                  {id: entrada.id});
+                                  {id: entrada.id|0});
         
-      var i=0;                 
-      for(var en of this.entradas) {
-        if(!en.text || en.text.trim().length == 0 || !en.id || en.id == 0)
-          this.entradas.splice(i, 1);
+      // var i=0;                 
+      // for(var en of this.entradas) {
+      //   if(!en.text || en.text.trim().length == 0 || !en.id || en.id == 0)
+      //     this.entradas.splice(i, 1);
         
-        i++;
-      } 
+      //   i++;
+      // } 
 
     //Si la entrada es un texto, se convierte en input
     } else if(!entrada.isInput) {
