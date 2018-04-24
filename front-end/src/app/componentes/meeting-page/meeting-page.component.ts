@@ -131,8 +131,11 @@ export class MeetingPageComponent implements OnInit {
 
     if( index != -1){
       this.thumbnail.splice(index, 1);
+
       var index2 = this.attendants.findIndex( x => x.id === att.id);
-      this.attendants.splice(index2, 1);
+      if( index2 != -1)
+        this.attendants.splice(index2, 1);
+      
     }
     
   }
