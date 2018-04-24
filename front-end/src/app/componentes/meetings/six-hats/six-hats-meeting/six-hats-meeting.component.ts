@@ -11,6 +11,7 @@ import { Option } from '../../../models/option.model';
 import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
 import { HatConclusion } from '../../../models/HatConclusion.model';
+import { Participant } from '../../../models/participant.model';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class SixHatsMeetingComponent implements OnInit {
 
   public countDown;
   public count = 6;
-  public actualUser : User = new User();
+  public currentParticipant : Participant = new Participant();
   public sixHats : SixHats = new SixHats();
   public currentHat : Hat = new Hat();
   public userId = '';
@@ -39,24 +40,24 @@ export class SixHatsMeetingComponent implements OnInit {
    constructor(private sixHatsService: SixHatsService,
     private router: Router,
     private realTimeService: RealTimeService,
-    private loginService: LoginService) {
+    private loginService: LoginService,
+    private userService: UserService) {
   }   
 
   ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
-      this.sixHats = sixHats;      
-      console.log("six hats", this.sixHats);
+      this.sixHats = sixHats;     
       
-      this.sortAttendants();
-      //this.actualUser = this.attendants[0];
-      //this.loginService.getLoginUser().subscribe(currentUser => this.actualUser = currentUser);
-      // console.log("actualUser ", this.actualUser);
-      // this.userId = this.loginService.getPrincipal().id;
-      this.userId = this.attendants[0].id;
-      this.getHatColor();
-      console.log("current hat ",this.currentHat);
+      this.userService.getParticipant(this.meetingId).subscribe(participant => {
+        this.currentParticipant = participant;
+        console.log("current participant",this.currentParticipant);
+        this.sortAttendants();
+        this.getCurrentHat();
+        console.log("current hat ",this.currentHat);
+        this.addFirstConclusion(); 
+      });
+      // this.userId = this.attendants[0].id;
       
-      this.addFirstConclusion(); 
     });
     this.countDown = timer(0,1000).pipe(
       take(this.count),
@@ -98,7 +99,7 @@ export class SixHatsMeetingComponent implements OnInit {
     this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
       this.sixHats = res;
-      this.getHatColor();
+      this.getCurrentHat();
     });
   }
 
@@ -106,18 +107,20 @@ export class SixHatsMeetingComponent implements OnInit {
     this.attendants = this.attendants.sort();
   }
 
-  getHatColor(){
-    let attIndex;
+  getCurrentHat(){
+    let attIndex : number = -1;
     
-    for(let i=0; i<this.attendants.length;i++){
-      if(this.attendants[i].id === this.userId){
+    for(let i=0; i<this.attendants.length;i++){ 
+      if(this.attendants[i].id === this.currentParticipant.id+""){
         attIndex = i;
+        break;
       }
     }
     
-    for(let hat of this.sixHats.hats){
+    for(let hat of this.sixHats.hats){            
       if(hat.order === attIndex){        
         this.currentHat = hat;
+        
       }
     }
   }

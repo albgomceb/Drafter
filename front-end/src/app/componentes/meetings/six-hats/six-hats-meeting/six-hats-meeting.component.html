@@ -1,29 +1,3 @@
-
-
-<!-- <div *ngFor="let hat of sixHats.hats; let hatIndex=index">
-  <div [ngClass]="hat.color" *ngIf="hat.color === currentColor">
-      <span><h5>{{hat.color}}</h5></span>
-      <div *ngIf="hat.conclusions.length > 0">
-          Conclusions deduced by your coworkers: 
-          <span>{{hat.conclusions}}</span>
-      </div>
-      <span>Your conclusions: </span>
-      <div>
-        <input id="con-'{{i}}'" type="text" [(ngModel)]="currentConclusion" (focusout)="edit($event, i, hatIndex)"
-        (keyup.enter)="enter($event)" placeholder="Conclusion" required class="point"/>
-        <span *ngIf="!checkNotBlank(conclusion)" class="required">
-            Required
-        </span>
-        <button (click)="addConclusion(hat)" class="btn">New conclusion</button>
-      </div>
-  </div>
-  <div [ngClass]="hat.color" *ngIf="hat.color != currentColor">
-      <span><h5>{{hat.color}}</h5></span>
-      <span>Conclusions deduced:</span>
-      <span>{{hat.conclusions}}</span>
-  </div>
-</div> -->
-
 <div class="ideas-body">
     <ul class="list-ideas">
       <div [ngClass]="currentHat.color">You have the {{currentHat.color}} hat.
@@ -39,13 +13,7 @@
             <span><h5>{{hat.color}}</h5></span>
         
           <div  *ngIf="hat.color === currentHat.color">
-            <div>
-                <span>Conclusions deduced by your coworkers: </span>
-                <ul>
-                  <li *ngFor="let conclusion of hat.hatConclusions">{{conclusion.text}}</li>
-                </ul>
-            </div>
-            <span>Your conclusions: </span>
+            <span>Conclusions: </span>
             <li *ngFor="let conclusion of currentHat.hatConclusions; let i=index" class="d-flex justify-content-between">
               <input type="text" [(ngModel)]="conclusion.text" 
                     *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, i);" 
