@@ -78,21 +78,21 @@ export class MeetingPageComponent implements OnInit {
     );
     this.searchField = new FormControl();
 
-    //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR A PAGIN, PARA QUE NO PETE
+    //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR A PAGINA, PARA QUE NO PETE
     //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
-    this.results = this.userService.getUsers();
+
+    this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
   } 
 
   search(){
 
-    if(this.searchField.value!=null || this.searchField.value!=""){
-      this.results = this.searchField.valueChanges
-      .debounceTime(400)
-      .distinctUntilChanged()
-      .filter(keyword => keyword)
-      .switchMap( keyword => this.userService.filterUsers(keyword))
+    //A ESTE METODO SEARCH QUE FILTRA USERS ASINCRONAMENTE, HAY QUE AÑADIRLE UN DELAY DE ALGUNA FORMA. QUEDA FEO SIN DELAY
+    if(this.searchField.value.length>0){
+      this.results = this.userService.filterUsers(this.searchField.value); //FILTRAR USUARIOS
     }else{
-      this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
+      //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR LA PAGINA, PARA QUE NO PETE
+      //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
+      this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
     }
 
   }
@@ -106,7 +106,6 @@ export class MeetingPageComponent implements OnInit {
       var index = this.attendants.findIndex( x => x.id === principalOption.id);
       if(index == -1){
         this.attendants.push(principalOption);
-        console.log(principalOption.name)
       }
 
       //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
@@ -143,7 +142,6 @@ export class MeetingPageComponent implements OnInit {
   onSubmit(meeting){
       meeting.type = this.selectedKind.id;
       this.meeting.setAttendants(this.attendants);
-      console.log(this.attendants);
       this.userService.saveMeeting(meeting).subscribe((res:any) =>{
         if(meeting.type === 'standard'){
           this.router.navigate(['/agenda/'+res.id])

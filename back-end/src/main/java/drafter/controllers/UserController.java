@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.login.LoginBean;
@@ -62,8 +63,8 @@ public class UserController extends AbstractController {
 		return result;
 	}
 	
-	@GetMapping("/filterUsers/{keyword}")
-	public List<UserBean> filterUsers(@PathVariable String keyword) {	
+	@GetMapping("/filterUsers")
+	public List<UserBean> filterUsers(@RequestParam("search") String keyword) {	
 		List<User> res;
 		if(keyword==null || keyword=="" || keyword.length()==0) {
 			res = this.userService.findAll();
