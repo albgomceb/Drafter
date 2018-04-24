@@ -1,23 +1,26 @@
-<div class="card-body">
-  <h2 class="text-center"><span class="letter">M</span>eetings</h2>
-  <div *ngFor="let meeting of meetings; let i=index">
-    <label class="mt-4" ><strong>Meeting:</strong> {{meeting.title}} 
-      <strong>Date:</strong> {{meeting.date | date : "fullDate"}} 
-      <strong>Type:</strong> {{meeting.type}} 
-      <strong>Finished:</strong><span *ngIf="meeting.hasFinished"> Yes</span><span *ngIf="!meeting.hasFinished"> No</span>
-    </label>
-    <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">See Minutes</button>
-    <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn btn-success btn-circle btn-lg">Go to meeting!</button>
-    <h4 *ngIf="!meeting.hasFinished && meeting.date < today">The meeting have not minutes</h4>
+<h1 class="title-page text-center">
+  <span class="capital-letter">M</span>y <span class="capital-letter">M</span>eetings
+</h1>
+
+<div *ngFor="let meeting of meetings; let i=index">
+  <div class="subtitle">
+      Summary
   </div>
-
-  <!-- TODO si es necesario una vista donde se vean las organizaciones y sus departamentos -->
-  <!-- <div *ngFor="let organization of organizations; let i=index">
-    <label class="mt-4" >Organization: {{organization.enterprise}}</label>
-
-    <div *ngFor="let department of organization.departments; let i=index">
-        <label class="mt-4" >Department: {{organization.enterprise}}</label>
-        <button type="button" (click)="seeMeeting(meeting)" class="btn btn-success btn-circle btn-lg">See Meeting</button>
-    </div>
-  </div> -->
+  <div class="minutes-container">
+      <div class="summary-item d-inline-block">
+          <span class="summary-item-title">Title</span> {{meeting.title}}
+      </div>
+      <div class="summary-item d-inline-block">
+          <span class="summary-item-title">Type</span> {{meeting.type}}
+      </div>
+      <div class="summary-item d-inline-block">
+          <span class="summary-item-title">Date</span> {{meeting.date | date : "fullDate"}} 
+      </div>
+      <div class="summary-item d-inline-block">
+          <span class="summary-item-title">Finished</span> <span *ngIf="meeting.hasFinished"> Yes</span><span *ngIf="!meeting.hasFinished"> No</span>
+      </div>
+      <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">See Minutes</button>
+      <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn">Go to meeting!</button>
+      <p *ngIf="!meeting.hasFinished && meeting.date < today">The meeting have not minutes</p>
+  </div> 
 </div>
