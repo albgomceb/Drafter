@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -71,7 +72,7 @@ public class Hat extends DomainEntity{
 	
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "hat")
+	@OneToMany(mappedBy = "hat", fetch=FetchType.EAGER)
 	public Collection<HatConclusion> getHatConclusions() {
 		return hatConclusions;
 	}

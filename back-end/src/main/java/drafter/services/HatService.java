@@ -27,8 +27,6 @@ public class HatService {
 	@Autowired
 	private SixHatsService		sixHatsService;
 	
-	private String string;
-
 	//Constructor------------------------------------------------------------------------------
 
 	public HatService() {
@@ -48,7 +46,7 @@ public class HatService {
     }
 
     public Hat delete(int id) {
-    	Hat hat = findById(id);
+    	Hat hat = getOne(id);
 //        if(hat.isPresent()){
 //        	hat = ;
 //        	hatRepository.delete(hat);
@@ -64,8 +62,17 @@ public class HatService {
         return hatRepository.findAll();
     }
 
-    public Hat findById(int id) {
+    public Hat getOne(int id) {
         return hatRepository.getOne(id);
+    }
+    
+    public Hat findById(int id) {
+    	Hat res = null;
+    	if(hatRepository.findById(id).isPresent()){
+    		res = hatRepository.findById(id).get();
+    	}
+
+        return res;
     }
 
     public Hat update(Hat hat) {
@@ -73,19 +80,12 @@ public class HatService {
     }
 
 	public Hat save(Hat hat) {
-//		hat.getConclusions().stream()
-//			.forEach(str -> {string = str; checkSafeHtml();});
 		
 		return hatRepository.save(hat);
 	}
 	
 	// Other business methods -----------------------------------------------------------------
-	
-//	@SafeHtml
-//	public String checkSafeHtml() {
-//		return string;
-//	}
-//	
+
 	public Collection<Hat> reassignHats(SixHats sixHats){
 		List<Hat> res = new ArrayList<Hat>(sixHats.getHats());
 		

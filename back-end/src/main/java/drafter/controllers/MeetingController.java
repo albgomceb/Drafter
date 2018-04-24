@@ -18,17 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.Option;
-import drafter.beans.conclusion.ConclusionBean;
-import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.beans.model.ModelBean;
-import drafter.domain.Conclusion;
 import drafter.domain.Meeting;
+import drafter.domain.SixHats;
 import drafter.domain.User;
+import drafter.services.HatService;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
-//import drafter.services.SixHatsService;
+import drafter.services.SixHatsService;
 import drafter.services.StandardService;
 import drafter.services.UserService;
 
@@ -43,8 +42,11 @@ public class MeetingController extends AbstractController {
 	@Autowired
 	private StandardService standardService;
 	
-	//@Autowired
-	//private SixHatsService sixHatsService;
+	@Autowired
+	private SixHatsService sixHatsService;
+	
+	@Autowired
+	private HatService hatService;
 	
 	@Autowired
 	private UserService userService;
@@ -65,6 +67,12 @@ public class MeetingController extends AbstractController {
 		
 		result = meetingService.save(result);
 		participantService.relateWithParticipants(result, meeting.getAttendants());
+		if(meeting.getType().equals("six-hats")) {
+			SixHats sixHats = sixHatsService.create(result);
+			sixHatsService.save(sixHats);
+			sixHats.getHats().stream()
+								.forEach(hat -> hatService.save(hat));
+		}
 		MeetingBean res = serializer.fromMeeting(result);
 		
 		

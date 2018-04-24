@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import drafter.domain.Agenda;
 import drafter.domain.Hat;
-import drafter.domain.SixHats;
 import drafter.domain.HatConclusion;
+import drafter.domain.Meeting;
+import drafter.domain.SixHats;
 import drafter.repositories.SixHatsRepository;
 
 
@@ -39,7 +40,7 @@ public class SixHatsService {
 
 	//CRUD Methods------------------------------------------------------------------------------
 
-    public SixHats create(SixHats meeting) { 
+    public SixHats create(Meeting meeting) { 
     	SixHats res = new SixHats();
     	List<Hat> hats = new ArrayList<Hat>();
     	hats.add(hatService.create("RED", 0, res));
@@ -51,7 +52,7 @@ public class SixHatsService {
     	
     	res.setParticipants(meeting.getParticipants());
     	res.setDate(meeting.getDate());
-    	res.setSteps(meeting.getSteps());
+    	res.setSteps(new ArrayList<>());
     	res.setAgendas(new ArrayList<Agenda>());
     	res.setHats(hats);
     	res.setDescription(meeting.getDescription());

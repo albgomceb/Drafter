@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -93,36 +95,47 @@ public class SixHatsController {
 	
 	@MessageMapping("/sixHats/save/{hatId}/{meetingId}")
 	public void save(@DestinationVariable int hatId, @DestinationVariable int meetingId, ModelBean<HatConclusionBean> bean) {
-		Hat hat = hatService.findById(hatId);
-		
-		HatConclusion hatConclusion = new HatConclusionSerializer().fromBean(hat, bean.getModel());
-		List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hatConclusionService.findByHat(hatId));
-		hat.setHatConclusions(new ArrayList<HatConclusion>());
-		if(hatConclusion.getId() <= 0) {
-			conclusions.add(hatConclusion);
-			hat.setHatConclusions(conclusions);
-			hatService.save(hat);
-			hatConclusion = hatConclusionService.save(hatConclusion);
-		}
-		else {
-			Integer index = null;
-			for(HatConclusion conclusion : conclusions) {
-				if(conclusion.getId() == hatConclusion.getId()) {
-					index = conclusions.indexOf(conclusion);
-					break;
-				}
+		try{
+			Hat hat = hatService.findById(hatId);
+			
+			if(hat == null) {
+				throw new NullPointerException("Non existing hat at BD or . SixHats creation error.");
 			}
 			
-			if(index != null) {
-				conclusions.add(index, hatConclusion);
+			HatConclusion hatConclusion = new HatConclusionSerializer().fromBean(hat, bean.getModel());
+			List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hat.getHatConclusions());
+			if(hatConclusion.getId() <= 0) {
+				conclusions.add(hatConclusion);
 				hat.setHatConclusions(conclusions);
 				hatService.save(hat);
 				hatConclusion = hatConclusionService.save(hatConclusion);
 			}
+			else {
+				Integer index = null;
+				for(HatConclusion conclusion : conclusions) {
+					if(conclusion.getId() == hatConclusion.getId()) {
+						index = conclusions.indexOf(conclusion);
+						break;
+					}
+				}
+				
+				if(index != null) {
+					conclusions.add(index, hatConclusion);
+					hat.setHatConclusions(conclusions);
+					hatService.save(hat);
+					hatConclusion = hatConclusionService.save(hatConclusion);
+				}
+				else {
+					throw new IllegalArgumentException("Non belonging conclusion to the hat with ID="+hat.getId()+".");
+				}
+			}
+			
+			bean.setModel(new HatConclusionSerializer().fromConclusion(hatConclusion));
+			template.convertAndSend("/meeting/" + meetingId, bean);
+			
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		
-		bean.setModel(new HatConclusionSerializer().fromConclusion(hatConclusion));
-		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
 	@MessageMapping("/sixHats/delete/{conclusionId}/{meetingId}")
