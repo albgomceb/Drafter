@@ -19,7 +19,9 @@ public class OrganizationService {
 	@Autowired
 	private OrganizationRepository	organizationRepository;
 
+	//Service---------------------------------------------------------------------------------
 
+	
 	//Constructor------------------------------------------------------------------------------
 
 	public OrganizationService() {

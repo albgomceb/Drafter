@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
+import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
 
 
 @Component({
@@ -19,7 +20,9 @@ export class DynamicMeetingComponent implements OnInit {
   public isFinished:boolean;
   public showChat:boolean = true;
 
-  constructor(private userService: UserService, private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService) {}
+  constructor(private userService: UserService,
+     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
+    private realtimeService:RealTimeService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
@@ -30,6 +33,19 @@ export class DynamicMeetingComponent implements OnInit {
         if(this.meetingInfo.isFinished){
           this.router.navigate(['/minutes/'+this.meetingId]);
         }else{
+          this.realtimeService.connect(this.meetingId, () => {
+    
+            this.realtimeService.register('step', [], step =>{
+              this.meetingInfo.status = step.model.id;
+              this.router.navigate(['/meeting/'+this.meetingId]);
+            } );
+
+            this.realtimeService.register('finish', [], finish =>{
+              this.meetingInfo.isFinished = finish.model.id;
+              this.router.navigate(['/minutes/'+this.meetingId]);
+            } );
+            this.realtimeService.subscribe();
+          });
           this.users = res.attendants;
         }
       });
@@ -37,17 +53,11 @@ export class DynamicMeetingComponent implements OnInit {
   } 
 
   finishMeeting(meetingId:number){
-    this.meetingService.finish(meetingId).subscribe(res =>{
-      this.router.navigate(['/minutes/'+meetingId]);
-    })
+    this.realtimeService.send('/meeting/finish/',WSResponseType.PUSH,'finish',{id:"",name:""});    
   }
 
   nextStep(meetingId:number){
-    
-    this.meetingService.nextStep(meetingId).subscribe(res =>{
-      this.meetingInfo.status = res;
-      this.router.navigate(['/meeting/'+this.meetingId])
-    })
+    this.realtimeService.send('/meeting/nextStep/',WSResponseType.PUSH,'step',{id:"",name:""});    
   }
 
   toggleChat() {
