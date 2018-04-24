@@ -16,6 +16,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 import { forEach } from '@angular/router/src/utils/collection';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'meeting-page',
@@ -30,7 +31,12 @@ export class MeetingPageComponent implements OnInit {
   exist:boolean = false;
 
   users: Array<User>;
+
+  //Participantes (Visible en front-end: solo participantes)
   thumbnail: Array<Option>;
+  //Participantes (No visible en front-end: participantes + el lider)
+  attendants: Array<Option> = [];
+
   organizations: Array<Organization>
   results: Observable<Array<User>>;
 
@@ -39,7 +45,7 @@ export class MeetingPageComponent implements OnInit {
   kinds: Array<Option>;
   selectedKind: Option;
 
-  constructor(private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
+  constructor(private loginService: LoginService, private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
   
   ngOnInit() {
 
@@ -72,8 +78,9 @@ export class MeetingPageComponent implements OnInit {
     );
     this.searchField = new FormControl();
 
+    //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR A PAGIN, PARA QUE NO PETE
+    //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
     this.results = this.userService.getUsers();
-
   } 
 
   search(){
@@ -85,25 +92,41 @@ export class MeetingPageComponent implements OnInit {
       .filter(keyword => keyword)
       .switchMap( keyword => this.userService.filterUsers(keyword))
     }else{
-      this.results = this.userService.getUsers();
+      this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
     }
 
   }
 
   addAttendant(attendant:User){
 
+      //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
+      let principal:User = this.getLoginService().getPrincipal();
+      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null);
+
+      var index = this.attendants.findIndex( x => x.id === principalOption.id);
+      if(index == -1){
+        this.attendants.push(principalOption);
+      }
+
+      //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
       let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
 
+      //SI EL USUARIO NO ESTA AÑADIDO YA COMO PARTICIPANTE
       if(!this.thumbnail.find(x => x.id === att.id)){
-        this.thumbnail.push(att);
+
+        //SI NO ES USUARIO PRINCIPAL
+        if(att.id !== principal.id.toString()){
+          this.thumbnail.push(att);
+          this.attendants.push(att);
+        }
+
       }
-      
   }
 
   removeAttendant(attendant:User){
 
     let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
-    var index = this.thumbnail.findIndex( x =>x.id === att.id);
+    var index = this.thumbnail.findIndex( x => x.id === att.id);
 
     if( index != -1){
       this.thumbnail.splice(index, 1);
@@ -113,7 +136,7 @@ export class MeetingPageComponent implements OnInit {
 
   onSubmit(meeting){
       meeting.type = this.selectedKind.id;
-      this.meeting.setAttendants(this.thumbnail);
+      this.meeting.setAttendants(this.attendants);
       this.userService.saveMeeting(meeting).subscribe((res:any) =>{
         if(meeting.type === 'standard'){
           this.router.navigate(['/agenda/'+res.id])
@@ -123,6 +146,10 @@ export class MeetingPageComponent implements OnInit {
         }
       });
 
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
 
