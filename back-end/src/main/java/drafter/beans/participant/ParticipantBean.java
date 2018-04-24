@@ -7,7 +7,7 @@ public class ParticipantBean {
 	public boolean hasAttended; 
 	public int userId;
 	public int meetingId;
-	public int departmentId;
+	public Integer departmentId;
 	
 	
 	public int getId() {
@@ -40,10 +40,10 @@ public class ParticipantBean {
 	public void setHasAttended(boolean hasAttended) {
 		this.hasAttended = hasAttended;
 	}
-	public int getDepartmentId() {
+	public Integer getDepartmentId() {
 		return departmentId;
 	}
-	public void setDepartmentId(int departmentId) {
+	public void setDepartmentId(Integer departmentId) {
 		this.departmentId = departmentId;
 	}
 	

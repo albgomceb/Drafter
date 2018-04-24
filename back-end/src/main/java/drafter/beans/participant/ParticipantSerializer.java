@@ -22,7 +22,10 @@ public class ParticipantSerializer {
 		res.setRole(participant.getRole());
 		res.setUserId(participant.getUser().getId());
 		res.setMeetingId(participant.getMeeting().getId());
-		res.setDepartmentId(participant.getDepartment().getId());
+		if(participant.getDepartment()!=null) {
+			res.setDepartmentId(participant.getDepartment().getId());
+		}
+		
 
 		return res;
 	}

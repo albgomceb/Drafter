@@ -8,6 +8,7 @@ import { Cons } from '../../../models/cons.model';
 import { Meeting } from '../../../models/meeting.model';
 import { BrainStormingService } from '../../../services/brainstorming.service';
 import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas'
 
 @Component({
   selector: 'brainstorming-minutes-page',
@@ -42,21 +43,29 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
   downloadPDF() {
 
-    let doc = new jsPDF();
-
-    let specialElementHandlers = {
-      '#editor': function (element, renderer) {
-        return true;
-      }
-    }
+    /*    let doc = new jsPDF();
+    
+        let specialElementHandlers = {
+          '#editor': function (element, renderer) {
+            return true;
+          }
+        }
+    */
     let content = this.content.nativeElement;
 
-    doc.fromHTML(content.innerHTML, 15, 15,
-      {
-        'width': 100,
-        'elementHandlers': specialElementHandlers
-      },function(){doc.save('MeetingPDF');});
+    /*    doc.fromHTML(content.innerHTML, 15, 15,
+          {
+            'width': 100,
+            'elementHandlers': specialElementHandlers
+          },function(){doc.save('MeetingPDF');});
+    */
+    html2canvas(content).then(function (canvas) {
 
-      
+      var img = canvas.toDataURL("image/png");
+      var doc = new jsPDF();
+      doc.addImage(img, 'JPEG',10,10,190,200);
+      doc.save('Minutes.pdf');
+    });
+
   }
 }
