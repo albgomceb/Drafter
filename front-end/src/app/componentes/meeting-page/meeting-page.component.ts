@@ -106,6 +106,7 @@ export class MeetingPageComponent implements OnInit {
       var index = this.attendants.findIndex( x => x.id === principalOption.id);
       if(index == -1){
         this.attendants.push(principalOption);
+        console.log(principalOption.name)
       }
 
       //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
@@ -130,6 +131,8 @@ export class MeetingPageComponent implements OnInit {
 
     if( index != -1){
       this.thumbnail.splice(index, 1);
+      var index2 = this.attendants.findIndex( x => x.id === att.id);
+      this.attendants.splice(index2, 1);
     }
     
   }
@@ -137,6 +140,7 @@ export class MeetingPageComponent implements OnInit {
   onSubmit(meeting){
       meeting.type = this.selectedKind.id;
       this.meeting.setAttendants(this.attendants);
+      console.log(this.attendants);
       this.userService.saveMeeting(meeting).subscribe((res:any) =>{
         if(meeting.type === 'standard'){
           this.router.navigate(['/agenda/'+res.id])
