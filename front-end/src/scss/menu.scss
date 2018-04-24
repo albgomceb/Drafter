@@ -28,4 +28,15 @@ nav.navbar {
     a.nav-link:hover {
         background-color: $mp_secondary_color;
     }
+
+    div.dropdown-menu {
+        background-color: $content_background_color;
+
+        a.dropdown-item:hover,
+        a.dropdown-item:focus,
+        a.dropdown-item:active {
+            color: inherit;
+            background-color: $content_background_color_2;
+        }
+    }
 }
