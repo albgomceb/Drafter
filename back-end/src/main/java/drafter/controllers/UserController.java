@@ -56,7 +56,13 @@ public class UserController extends AbstractController {
 	
 	@GetMapping("/filterUsers/{keyword}")
 	public List<UserBean> filterUsers(@PathVariable String keyword) {	
-		List<User> res = this.userService.filterUsers(keyword);	
+		List<User> res;
+		if(keyword==null || keyword=="" || keyword.length()==0) {
+			res = this.userService.findAll();
+		}else {
+			res = this.userService.filterUsers(keyword);	
+		}
+		
 		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
 		
 		return result;

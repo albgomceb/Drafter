@@ -72,13 +72,23 @@ export class MeetingPageComponent implements OnInit {
     );
     this.searchField = new FormControl();
 
-    this.results = this.searchField.valueChanges
-    .debounceTime(400)
-    .distinctUntilChanged()
-    .filter(keyword => keyword)
-    .switchMap( keyword => this.userService.filterUsers(keyword))
+    this.results = this.userService.getUsers();
 
   } 
+
+  search(){
+
+    if(this.searchField.value!=null || this.searchField.value!=""){
+      this.results = this.searchField.valueChanges
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .filter(keyword => keyword)
+      .switchMap( keyword => this.userService.filterUsers(keyword))
+    }else{
+      this.results = this.userService.getUsers();
+    }
+
+  }
 
   addAttendant(attendant:User){
 
