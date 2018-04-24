@@ -1,24 +1,22 @@
-<div class="chat-parent">
-  <ul class="chat-msg-list">
-    <li *ngFor="let msg of messages">
-      <div class="msg-container">
-        <span>
-          <b [style.color]="getUserColor(msg.userUUID)">{{getUser(msg.userUUID)}}</b>
-        </span>
-        <br>
-        <span class="msg">
-          {{msg.message}}
-        </span>
-        <span class="text-muted">
-          {{msg.time}}
-        </span>
-      </div>
-    </li>
-  </ul>
-  <form class="content form-chat form-control d-flex align-self-end" (ngSubmit)="onSubmit()" (click)="foco()">
-    <div #editable contenteditable="true" (keydown)="lineBreak($event)" class="edit chat-input"></div>
-    <button type="submit" class="send btn">
-      Send
-    </button>
-  </form>
-</div>
+<ul class="msg-list-chat">
+  <li *ngFor="let msg of messages">
+    <div class="msg-container">
+      <span>
+        <b [style.color]="getUserColor(msg.userUUID)">{{getUser(msg.userUUID)}}</b>
+      </span>
+      <br>
+      <span>
+        {{msg.message}}
+      </span>
+      <span class="text-muted">
+        {{msg.time}}
+      </span>
+    </div>
+  </li>
+</ul>
+<form class="form-chat d-flex" (ngSubmit)="onSubmit()" (click)="foco()">
+  <div #editable contenteditable="true" (keydown)="lineBreak($event)" class="chat-input"></div>
+  <button type="submit" class="send btn">
+    <i class="fas fa-angle-double-right"></i>
+  </button>
+</form>

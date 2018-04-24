@@ -2,6 +2,7 @@
 nav.navbar {
     padding: 0;
     background-color: $mp_primary_color !important;
+    z-index: 101;
 
     a.navbar-brand img {
         height: 1.875rem;
