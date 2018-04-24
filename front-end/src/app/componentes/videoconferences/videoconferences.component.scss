@@ -23,3 +23,19 @@
     text-align: center;
     color: #fff
 }
+.muted, .paused {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    color: #12acef;
+}
+.muted {
+    left: 0px;
+    bottom: 10%;
+    width: 100%;
+}
+.paused {
+    left: 0px;
+    top: 40%;
+    width: 100%;
+}

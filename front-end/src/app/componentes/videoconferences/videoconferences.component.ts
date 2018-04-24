@@ -147,6 +147,41 @@ export class VideoconferencesComponent implements OnInit {
         });
     }
 
+    // listen for mute and unmute events
+    webrtc.on('mute', function (data) { // show muted symbol
+        webrtc.getPeers(data.id).forEach(function (peer) {
+            if (data.name == 'audio') {
+                $('#videocontainer_' + webrtc.getDomId(peer) + ' .muted').show();
+            } else if (data.name == 'video') {
+                $('#videocontainer_' + webrtc.getDomId(peer) + ' .paused').show();
+                $('#videocontainer_' + webrtc.getDomId(peer) + ' video').hide();
+            }
+        });
+    });
+    webrtc.on('unmute', function (data) { // hide muted symbol
+        webrtc.getPeers(data.id).forEach(function (peer) {
+            if (data.name == 'audio') {
+                $('#videocontainer_' + webrtc.getDomId(peer) + ' .muted').hide();
+            } else if (data.name == 'video') {
+                $('#videocontainer_' + webrtc.getDomId(peer) + ' video').show();
+                $('#videocontainer_' + webrtc.getDomId(peer) + ' .paused').hide();
+            }
+        });
+    });
+
+    //botones para mutear y desmutear, hay que hacer que al principio el botón de desmutear no se muestre.
+    $('#btn1').click(function() {
+        webrtc.mute();
+        $("#btn2").show();
+        $("#btn1").hide();
+      });
+
+    $('#btn2').click(function() {
+        webrtc.unmute();
+        $("#btn2").hide();
+        $("#btn1").show();
+    });
+
   }
 
 }
