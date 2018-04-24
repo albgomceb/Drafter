@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as SimpleWebRTC from 'simplewebrtc';
+import { LoginService } from '../services/login.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'videoconferences',
@@ -10,7 +12,7 @@ export class VideoconferencesComponent implements OnInit {
 
   
 
-  constructor() { }
+  constructor(private activatedRoute:ActivatedRoute, private loginService: LoginService) { }
   
 
   ngOnInit() {
@@ -21,15 +23,25 @@ export class VideoconferencesComponent implements OnInit {
 
   callInit(){
 
-    var room = location.search && location.search.split('?')[1];
+    //var room = location.search && location.search.split('?')[1];
+
+    var room;
+
+    this.activatedRoute.params.subscribe(params => {
+        room = params['id']; // (+) converts string 'id' to a number
+     });
+
+    
 
     var webrtc = new SimpleWebRTC({
       // the id/element dom element that will hold "our" video
       localVideoEl: 'localVideo',
       // the id/element dom element that will hold remote videos
       remoteVideosEl: 'remotesVideo',
-      // immediately ask for camera access
+      // nickname of logged user
+      //nick: this.getLoginService().getPrincipal().username,
       nick: 'PabloGitu',
+      // immediately ask for camera access
       autoRequestMedia: true,
       debug: false,
       detectSpeakingEvents: true
@@ -77,6 +89,7 @@ export class VideoconferencesComponent implements OnInit {
             case 'connected':
             case 'completed': // on caller side
                 connstate.innerText = peer.nick;
+                console.log("NICK:" + peer.nick)
                 break;
             case 'disconnected':
                 connstate.innerText = 'Disconnected.';
@@ -133,7 +146,7 @@ export class VideoconferencesComponent implements OnInit {
       setRoom(room.toLowerCase().replace('=','').replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, ''));
     } else {
         $('form').submit(function () {
-            webrtc.createRoom('34', function (err, name) {
+            webrtc.createRoom(room, function (err, name) {
                 console.log(' create room cb', arguments);
                 var newUrl = location.pathname + '?' + name;
                 if (!err) {
@@ -182,6 +195,10 @@ export class VideoconferencesComponent implements OnInit {
         $("#btn1").show();
     });
 
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
 }

@@ -15,6 +15,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
+import { forEach } from '@angular/router/src/utils/collection';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'meeting-page',
@@ -26,19 +28,24 @@ export class MeetingPageComponent implements OnInit {
   hideme=[]
   searchField: FormControl;
   loading: boolean = false;
+  exist:boolean = false;
 
   users: Array<User>;
+
+  //Participantes (Visibles: solo aparecen participantes)
   thumbnail: Array<Option>;
+  //Participantes (No visibles, los participantes + el lider)
+  attendants: Array<Option> = [];
+
   organizations: Array<Organization>
   results: Observable<Array<User>>;
-  atts = [];
 
   errorListUsers:boolean = false;
   meeting: Meeting;
   kinds: Array<Option>;
   selectedKind: Option;
 
-  constructor(private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
+  constructor(private loginService: LoginService, private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
   
   ngOnInit() {
 
@@ -70,56 +77,66 @@ export class MeetingPageComponent implements OnInit {
       }
     );
     this.searchField = new FormControl();
-    this.searchField.valueChanges
-    .debounceTime(400)
-    .distinctUntilChanged()
-    .filter(keyword => keyword)
-    .switchMap( keyword => this.userService.filterUsers(keyword))
-    .subscribe(value => {
-      for(var i=0;value.length;i++){
-        console.log(value[i]);
-        console.log("HOLA");
-        this.atts.push(value[i]);
-      }
-      //ESTO HAY QUE ARREGLARLO: PASAR OBSERVABLE USERS[] A USERS[]
-      //this.results = value;
-    }
-    );
 
+    //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR A PAGIN, PARA QUE NO PETE
+    //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
+    this.results = this.userService.getUsers();
   } 
+
+  search(){
+
+    if(this.searchField.value!=null || this.searchField.value!=""){
+      this.results = this.searchField.valueChanges
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .filter(keyword => keyword)
+      .switchMap( keyword => this.userService.filterUsers(keyword))
+    }else{
+      this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
+    }
+
+  }
 
   addAttendant(attendant:User){
 
-    let idAttendant:number = attendant.id;
+      //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
+      let principal:User = this.getLoginService().getPrincipal();
+      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null);
+
+      var index = this.attendants.findIndex( x => x.id === principalOption.id);
+      if(index == -1){
+        this.attendants.push(principalOption);
+      }
+
+      //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
+      let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
+
+      //SI EL USUARIO NO ESTA AÑADIDO YA COMO PARTICIPANTE
+      if(!this.thumbnail.find(x => x.id === att.id)){
+
+        //SI NO ES USUARIO PRINCIPAL
+        if(att.id !== principal.id.toString()){
+          this.thumbnail.push(att);
+          this.attendants.push(att);
+        }
+
+      }
+  }
+
+  removeAttendant(attendant:User){
+
+    let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
+    var index = this.thumbnail.findIndex( x => x.id === att.id);
+
+    if( index != -1){
+      this.thumbnail.splice(index, 1);
+    }
     
-    this.results.subscribe(value => {
-      for(var i=0;value.length;i++){
-        console.log(value[i]);
-        console.log("HOLA");
-        this.atts.push(value[i]);
-      }
-    }
-    );
-
-    for (var i=0;i<this.atts.length;i++){
-
-      console.log("ACTUAL: "+this.atts[i].id);
-      console.log("ATT: "+idAttendant);
-
-
-      if(idAttendant.toString()!=this.thumbnail[i].id){
-        let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
-        this.thumbnail.push(att);
-      }
-
-    }
-      
-
   }
 
   onSubmit(meeting){
       meeting.type = this.selectedKind.id;
-      this.meeting.setAttendants(this.thumbnail);
+      this.meeting.setAttendants(this.attendants);
       this.userService.saveMeeting(meeting).subscribe((res:any) =>{
         if(meeting.type === 'standard'){
           this.router.navigate(['/agenda/'+res.id])
@@ -129,6 +146,10 @@ export class MeetingPageComponent implements OnInit {
         }
       });
 
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
 

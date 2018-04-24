@@ -40,7 +40,7 @@
     <div *ngIf="errorListUsers==false && users!=null" class="row justify-content-center mt-5">
       <form class="form-inline">
         <div class="search-users form-group col-lg-5 col-md-10">
-            <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" [formControl]="searchField">
+            <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (change)="search();" [formControl]="searchField">
         </div>
       </form>
     </div>
@@ -56,7 +56,7 @@
             <button type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
                 Add
             </button>
-            <button type="button" class="btn">
+            <button type="button" (click)="removeAttendant(us);" class="btn">
                 Remove
             </button>
           </div>

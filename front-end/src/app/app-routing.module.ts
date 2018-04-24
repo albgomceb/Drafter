@@ -33,7 +33,7 @@ const routes: Routes = [
   {path: 'meeting/list/:userId', component: ListMeetingPageComponent},
   {path: 'organization/list/:userId', component: ListOrganizationDepartmentPageComponent},
   {path: 'ideas', component: IdeasCreateComponent},
-  {path: 'callings',component: VideoconferencesComponent},
+  {path: 'callings/:id',component: VideoconferencesComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];
