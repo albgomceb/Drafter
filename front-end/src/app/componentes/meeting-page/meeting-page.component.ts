@@ -33,7 +33,6 @@ export class MeetingPageComponent implements OnInit {
   thumbnail: Array<Option>;
   organizations: Array<Organization>
   results: Observable<Array<User>>;
-  atts = [];
 
   errorListUsers:boolean = false;
   meeting: Meeting;
@@ -43,11 +42,6 @@ export class MeetingPageComponent implements OnInit {
   constructor(private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
   
   ngOnInit() {
-
-    this.userService.getUsers().subscribe(users => {
-      this.atts = users;
-    }
-    );
 
     this.meeting = new Meeting();
     this.thumbnail = new Array<Option>();
@@ -78,7 +72,6 @@ export class MeetingPageComponent implements OnInit {
     );
     this.searchField = new FormControl();
 
-    //PASAR OBSERVABLE USERS[] A USERS[]???
     this.results = this.searchField.valueChanges
     .debounceTime(400)
     .distinctUntilChanged()
@@ -95,6 +88,17 @@ export class MeetingPageComponent implements OnInit {
         this.thumbnail.push(att);
       }
       
+  }
+
+  removeAttendant(attendant:User){
+
+    let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null);
+    var index = this.thumbnail.findIndex( x =>x.id === att.id);
+
+    if( index != -1){
+      this.thumbnail.splice(index, 1);
+    }
+    
   }
 
   onSubmit(meeting){

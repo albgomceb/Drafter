@@ -29,8 +29,6 @@ export class VideoconferencesComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
         room = params['id']; // (+) converts string 'id' to a number
- 
-        // In a real app: dispatch action to load the details here.
      });
 
     
