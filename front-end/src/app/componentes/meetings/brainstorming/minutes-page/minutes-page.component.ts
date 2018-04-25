@@ -27,13 +27,15 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+
+    //OBTENER SESSION LEADER
+    this.attendants = this.meetingInfo.attendants;
+    this.attendants.forEach(at => {
+      if(at.role=="LEADER"){this.leader = at;} 
+    });
     
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
-      //OBTENER SESSION LEADER
-      this.attendants.forEach(at => {
-        if(at.role=="LEADER"){this.leader = at;} 
-      });
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
       });
