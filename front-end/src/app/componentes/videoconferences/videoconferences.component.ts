@@ -111,9 +111,11 @@ export class VideoconferencesComponent implements OnInit {
           var vol = document.createElement('div');
           vol.id = 'volume_' + peer.id;
           vol.className = 'volume_bar';
+          video.style.width = '200px'
+          video.style.height = '150px'
           video.onclick = function () {
-              video.style.width = video.videoWidth + 'px';
-              video.style.height = video.videoHeight + 'px';
+              video.style.width = '100px';
+              video.style.height = '100px';
           };
           d.appendChild(vol);
           remotes.appendChild(d);
