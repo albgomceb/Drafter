@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: 'organization-department/:organizationId', component: OrganizationDepartmentPageComponent},
-  {path: 'meeting/list/:userId', component: ListMeetingPageComponent},
+  {path: 'meeting/list/:userId/page/:p', component: ListMeetingPageComponent},
   {path: 'organization/list/:userId', component: ListOrganizationDepartmentPageComponent},
   {path: 'ideas', component: IdeasCreateComponent},
   {path: '**', component: NotFoundPageComponent}

@@ -1,7 +1,7 @@
 <!-- Info meeting bar -->
 <div class="info-meeting-bar d-flex justify-content-between shadow">
     <!-- Timer -->
-    <span class="timer"><i class="far fa-clock"></i> 00:00:00</span>
+    <span class="timer"><i class="far fa-clock"></i> <chronometer></chronometer></span>
     <!-- Chat button -->
     <button *ngIf="showChat" type="button" (click)="toggleChat();" class="btn">
         <i class="fas fa-times"></i>&nbsp; Chat

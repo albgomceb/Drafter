@@ -18,7 +18,7 @@ export class DynamicMeetingComponent implements OnInit {
   public meetingInfo:any={};
   public users:Array<any>;
   public isFinished:boolean;
-  public showChat:boolean = true;
+  public showChat:boolean = false;
 
   constructor(private userService: UserService,
      private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
