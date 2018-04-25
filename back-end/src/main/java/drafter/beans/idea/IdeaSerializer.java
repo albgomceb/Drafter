@@ -60,7 +60,7 @@ public class IdeaSerializer {
 	      idea.setCons(new ArrayList<Cons>());
 	      idea.setVotes(new ArrayList<Vote>());
 	      idea.setBrain(brainstorming);
-	      brainstorming.addIdea(idea);
+	      brainstorming.getIdeas().add(idea);
 	      ideas.add(idea);
 	      i++;
 	    }

@@ -13,9 +13,7 @@ export class ChatComponent implements OnInit {
   @ViewChild('editable') editable: ElementRef;
   messages: Array<ChatMessage>;
 
-
   constructor(private realTimeService: RealTimeService, private activeRoute: ActivatedRoute) { }
-
 
   ngOnInit() {
     this.messages = new Array<ChatMessage>();

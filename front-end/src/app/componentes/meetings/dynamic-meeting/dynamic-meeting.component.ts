@@ -18,12 +18,15 @@ export class DynamicMeetingComponent implements OnInit {
   public meetingInfo:any={};
   public users:Array<any>;
   public isFinished:boolean;
+  public showChat:boolean = true;
+  public loaded;
 
   constructor(private userService: UserService,
      private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     private realtimeService:RealTimeService) {}
 
   ngOnInit() {
+    this.loaded = false;
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
     if(this.meetingId){
       this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
@@ -33,7 +36,8 @@ export class DynamicMeetingComponent implements OnInit {
           this.router.navigate(['/minutes/'+this.meetingId]);
         }else{
           this.realtimeService.connect(this.meetingId, () => {
-    
+            this.loaded = true;
+
             this.realtimeService.register('step', [], step =>{
               this.meetingInfo.status = step.model.id;
               this.router.navigate(['/meeting/'+this.meetingId]);
@@ -49,18 +53,18 @@ export class DynamicMeetingComponent implements OnInit {
         }
       });
     }
-    
-    
-
   } 
 
   finishMeeting(meetingId:number){
-    this.realtimeService.send('/meeting/finish/',WSResponseType.PUSH,'finish',{id:"",name:""});
-    
+    this.realtimeService.send('/meeting/finish/',WSResponseType.PUSH,'finish',{id:"",name:""});    
   }
+
   nextStep(meetingId:number){
-    this.realtimeService.send('/meeting/nextStep/',WSResponseType.PUSH,'step',{id:"",name:""});
-    
+    this.realtimeService.send('/meeting/nextStep/',WSResponseType.PUSH,'step',{id:"",name:""});    
+  }
+
+  toggleChat() {
+    this.showChat = !this.showChat;
   }
 
 }

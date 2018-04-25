@@ -10,7 +10,7 @@
     <ul class="list-ideas">
         <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
           <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  
-                  *ngIf="entrada.isInput" (keyup.enter)="convert(entrada);" 
+                  *ngIf="entrada.isInput" (keyup.enter)="killFocus($event)" (focusout)="convert(entrada);"
                   placeholder="Type your topic here..." required class="idea">
           <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
             {{entradas.indexOf(entrada)+1}}. {{entrada.description}}
