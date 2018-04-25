@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.Option;
+import drafter.beans.conclusion.ConclusionBean;
+import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
+import drafter.beans.model.ModelBean;
+import drafter.domain.Conclusion;
 import drafter.domain.Meeting;
+import drafter.domain.User;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
 //import drafter.services.SixHatsService;
@@ -43,6 +51,9 @@ public class MeetingController extends AbstractController {
 	
 	@Autowired
 	private ParticipantService participantService;
+	
+	@Autowired
+	private SimpMessagingTemplate template;
 	
 
 	@PostMapping("/standard")
@@ -86,6 +97,11 @@ public class MeetingController extends AbstractController {
 	
 	@GetMapping("/list/{userId}")
 	public List<MeetingBean> getByUserId(@PathVariable("userId") int userId) {
+		User user = userService.findById(new Integer(userId));
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
 		List<Meeting> res = meetingService.findByUserId(userId);
 		List<MeetingBean> result = res.stream().map(meeting -> new MeetingSerializer().fromMeeting(meeting)).collect(Collectors.toList());
 		
@@ -103,17 +119,20 @@ public class MeetingController extends AbstractController {
 				new Option("six-hats", "6-hats meeting"));
 	}
 	
-	@GetMapping("/finish/{meetingId}")
-	public MeetingBean finish(@PathVariable int meetingId) {
-		Meeting result = meetingService.finish(meetingId);
-		MeetingBean res = new MeetingSerializer().fromMeeting(result);
-		return res;
-	}
 	
-	@GetMapping("/nextStep/{meetingId}")
-	public String nextStep(@PathVariable int meetingId) {
+	@MessageMapping("/meeting/finish/{meetingId}")
+	public void finish(@DestinationVariable int meetingId, ModelBean<Option> data) {
+		Meeting meeting = meetingService.finish(meetingId);
+		data.setModel(new Option(meeting.getHasfinished()?"true":"false",""));
+		
+		template.convertAndSend("/meeting/" + meetingId, data);
+	}
+	@MessageMapping("/meeting/nextStep/{meetingId}")
+	public void nextStep(@DestinationVariable int meetingId, ModelBean<Option> data) {
 		Meeting meeting = meetingService.nextStep(meetingId);
-		return meeting.getStatus() +"";
+		data.setModel(new Option(meeting.getStatus()+"",""));
+		
+		template.convertAndSend("/meeting/" + meetingId, data);
 	}
 	
 	@GetMapping("/isParticipant/{meetingId}")

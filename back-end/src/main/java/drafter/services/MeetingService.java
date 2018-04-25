@@ -69,8 +69,8 @@ public class MeetingService {
     }
 
     public Meeting finish(int id) {
-    	if(!isParticipant(id))
-			throw new IllegalStateException();
+//    	if(!isParticipant(id))
+//			throw new IllegalStateException();
     	
     	Meeting m = findById(id);
     	int size = m.getSteps().size();
@@ -82,8 +82,8 @@ public class MeetingService {
     }
     
     public Meeting nextStep(int id) {
-    	if(!isParticipant(id))
-			throw new IllegalStateException();
+//    	if(!isParticipant(id))
+//			throw new IllegalStateException();
     	
     	Meeting m = findById(id);
     	int size = m.getSteps().size();
