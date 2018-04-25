@@ -1,32 +1,55 @@
-<div class="card-body">
-  <h2 class="text-center"><span class="letter">O</span>rganizations</h2>
+<h1 class="title-page text-center">
+  <span class="capital-letter">M</span>y <span class="capital-letter">O</span>rganizations
+</h1>
 
-  <div *ngFor="let organization of organizations; let i=index">
-
-    <div class="btn-group">
-      <button type="button" (click)="show[i] = !show[i]" class="btn mb-2">{{organization.enterprise}} - {{organization.address}}</button>
-      <button type="button" (click)="editOrganization(organization.id)" class="btn mb-2">Edit</button>
+<div *ngFor="let organization of organizations; let i=index">
+  <div class="item-wrapper mx-auto">
+    <div class="header-wrapper">
+      {{organization.enterprise}}
     </div>
+    <div class="content-wrapper">
+        <button type="button" (click)="show[i] = !show[i]" class="btn">
+          Toggle
+        </button>
+        <button type="button" (click)="editOrganization(organization.id)" class="btn">
+          Edit
+        </button>
 
-    <div [hidden]="!show[i]">
-      <img src="{{organization.logo}}" width="30%" alt="Error to load logo"/>
-      <label class="mt-4" ><strong>Organization:</strong> {{organization.enterprise}}</label>
-      <label class="mt-4" ><strong>Description:</strong> {{organization.description}}</label>
-      <label class="mt-4" ><strong>Address:</strong> {{organization.address}}</label>
-      <label class="mt-4" ><strong>Phone number:</strong> {{organization.phone}}</label>
-      <label class="mt-4" ><strong>Email:</strong> {{organization.email}}</label>
-
-      <h3 class="text-center"><span class="letter">D</span>epartments</h3>
-      <div *ngFor="let department of organization.departments; let j=index">
-        <label class="mt-4" ><strong>Department {{j+1}}:</strong> {{department.name}}</label>
-        <div *ngFor="let us of department.users; let z=index">
-          <a class="list-group-item list-group-item-action">
-            <img src="{{us.photo}}" width="5%" /><span class="employed"> {{us.name}}</span>
-          </a>
+        <div [hidden]="!show[i]">
+          <div>
+            <img src="{{organization.logo}}" alt="Error to load logo" class="img-fluid logo">
+          </div>
+          <label><strong>Description:</strong></label> 
+          <p>{{organization.description}}</p>
+          <label><strong>Address:</strong></label> 
+          <p>{{organization.address}}</p>
+          <label><strong>Phone number:</strong></label> 
+          <p>{{organization.phone}}</p>
+          <label><strong>Email:</strong></label> 
+          <p>{{organization.email}}</p>
+          <h3 class="text-center">
+            Departments
+          </h3>
+          <div *ngFor="let department of organization.departments; let j=index" class="table">
+            <label><strong>{{j+1}}. {{department.name}}</strong></label>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Photo</th>
+                  <th scope="col">Name</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let us of department.users; let z=index">
+                <tr>
+                  <th scope="row">{{z+1}}</th>
+                  <td><img src="{{us.photo}}" class="img-fluid avatar"></td>
+                  <td>{{us.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-
     </div>
-
   </div>
 </div>

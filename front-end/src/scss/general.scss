@@ -53,6 +53,32 @@ button.btn:hover:not([disabled=""]) {
 	box-shadow: 0px 1px 5px 0px #4a4a4a;
 }
 
+/* Item wrapper */
+div.item-wrapper {
+    margin: 1rem 0;
+    max-width: 60rem;
+
+    div.header-wrapper {
+        padding: 0.75rem;
+        color: $mp_font_color;
+        font-weight: bolder;
+        background-color: $header_wrapper_color;
+    }
+
+    div.content-wrapper {
+        padding: 1rem;
+        background-color: $content_wrapper_color;
+    }
+}
+
+img.logo {
+    max-width: 7.5rem;
+}
+
+img.avatar {
+    max-width: 3.75rem;
+}
+
 div.card {
     margin: 1.5rem 2rem;
 
