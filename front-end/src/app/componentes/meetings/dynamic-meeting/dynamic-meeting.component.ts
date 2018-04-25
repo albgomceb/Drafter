@@ -19,12 +19,14 @@ export class DynamicMeetingComponent implements OnInit {
   public users:Array<any>;
   public isFinished:boolean;
   public showChat:boolean = true;
+  public loaded;
 
   constructor(private userService: UserService,
      private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     private realtimeService:RealTimeService) {}
 
   ngOnInit() {
+    this.loaded = false;
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
     if(this.meetingId){
       this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
@@ -34,7 +36,8 @@ export class DynamicMeetingComponent implements OnInit {
           this.router.navigate(['/minutes/'+this.meetingId]);
         }else{
           this.realtimeService.connect(this.meetingId, () => {
-    
+            this.loaded = true;
+
             this.realtimeService.register('step', [], step =>{
               this.meetingInfo.status = step.model.id;
               this.router.navigate(['/meeting/'+this.meetingId]);
