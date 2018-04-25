@@ -37,7 +37,9 @@ export class LoginPageComponent implements OnInit {
     this.login = new Login(this.loginForm.value.email, this.loginForm.value.password);
     
     this.loginService.login(this.login).subscribe((res:any) =>{
-      this.router.navigate(['meeting/']);
+      this.loginService.init(() => {
+        this.router.navigate(['meeting/']);
+      });
     }, error => {
       if(error.status == 424){
         this.showError=true;
