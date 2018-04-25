@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -56,7 +55,7 @@ public class BrainStorming extends Meeting{
 	
 	@Valid 
 	@NotNull
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "brain")
 	public Collection<Idea> getIdeas() {
 		return ideas;
 	}
@@ -65,10 +64,5 @@ public class BrainStorming extends Meeting{
 		this.ideas = ideas;
 	}
 	
-	public void addIdea(Idea idea) {
-		this.ideas.add(idea);
-		idea.setBrain(this);
-		
-	}
 	
 }

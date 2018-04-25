@@ -99,7 +99,37 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       entrada.number = 1;
 
-      //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
+      // //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
+      // if(entrada.isInput) {
+      //   entrada.isInput = false;
+      //   if(this.checkNotBlank(entrada.text)) {
+      //     this.realTimeService.send('/idea/save/', 
+      //                                 WSResponseType.PUSH, 
+      //                                 'entradas',  
+      //                                 entrada, 
+      //                                 {id: entrada.id|0});
+      //   } else if(entrada.id == undefined && entrada.id != 0) {
+      //     this.deleteIdea(entrada.id);
+      //   }
+
+      // //Si la entrada es un texto, se convierte en input
+      // } else {
+      //   var i=0;
+      //   for(var en of this.entradas) {
+      //     if(en.isInput)
+      //       en.isInput = false;
+      //     if(en.text.trim().length == 0)
+      //       this.entradas.splice(i, 1);
+
+      //     i++
+      //   }
+        
+      //   entrada.isInput = true;
+      //   this.setFocus();
+      //   if(entrada.text.trim() == 0)
+      //     this.deleteIdea(entrada.id);
+          
+      // }
       if(entrada.isInput) {
         if(this.checkNotBlank(entrada.text)) {
           entrada.isInput = false;
@@ -108,11 +138,13 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
                                       'entradas',  
                                       entrada, 
                                       {id: entrada.id|0});
-        } else {
+
+          if(entrada.id == undefined || entrada.id == 0) {
+            this.addIdea();
+          }
+        } else if(entrada.id != undefined && entrada.id != 0) {
           this.deleteIdea(entrada.id);
         }
-
-      //Si la entrada es un texto, se convierte en input
       } else {
         var i=0;
         for(var en of this.entradas) {
@@ -123,14 +155,16 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
 
           i++
         }
-        
+
         entrada.isInput = true;
         this.setFocus();
-        if(entrada.text.trim() == 0)
-          this.deleteIdea(entrada.id);
-          
       }
+
     }, 0);  // This fix a Angular bug
+  }
+
+  killFocus(event) {
+    event.target.blur();
   }
 
   setFocus() {

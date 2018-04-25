@@ -76,7 +76,7 @@ public class Idea extends DomainEntity{
 	
 	@NotNull
 	@Valid
-	@ManyToOne(optional= true)
+	@ManyToOne
 	public BrainStorming getBrain() {
 		return brain;
 	}
