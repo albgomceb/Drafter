@@ -78,21 +78,22 @@ export class MeetingPageComponent implements OnInit {
     );
     this.searchField = new FormControl();
 
-    //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR A PAGIN, PARA QUE NO PETE
-    //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
-    this.results = this.userService.getUsers();
+    this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
   } 
 
   search(){
 
-    if(this.searchField.value!=null || this.searchField.value!=""){
-      this.results = this.searchField.valueChanges
-      .debounceTime(400)
-      .distinctUntilChanged()
-      .filter(keyword => keyword)
-      .switchMap( keyword => this.userService.filterUsers(keyword))
+    var scope = this;
+
+    if(this.searchField.value.length>0){
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(scope.searchField.value); //FILTRAR USUARIOS
+      },400);
+
     }else{
-      this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(''); //TODOS LOS USUARIOS
+      },400);
     }
 
   }
@@ -130,6 +131,11 @@ export class MeetingPageComponent implements OnInit {
 
     if( index != -1){
       this.thumbnail.splice(index, 1);
+
+      var index2 = this.attendants.findIndex( x => x.id === att.id);
+      if( index2 != -1)
+        this.attendants.splice(index2, 1);
+      
     }
     
   }
