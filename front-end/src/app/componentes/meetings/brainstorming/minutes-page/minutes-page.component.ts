@@ -6,6 +6,7 @@ import { Pros } from '../../../models/pros.model';
 import { Cons } from '../../../models/cons.model';
 import { Meeting } from '../../../models/meeting.model';
 import { BrainStormingService } from '../../../services/brainstorming.service';
+import { Option } from '../../../models/option.model';
 
 @Component({
   selector: 'brainstorming-minutes-page',
@@ -16,6 +17,8 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
   meeting: Meeting = new Meeting();
   ideas: Array<Idea> = [];
+  leader:Option;
+  attendants:Array<Option>;
   @Input() meetingId: number;
   @Input() meetingInfo: any;
 
@@ -27,6 +30,10 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
+      //OBTENER SESSION LEADER
+      this.attendants.forEach(at => {
+        if(at.role=="LEADER"){this.leader = at;} 
+      });
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
       });
