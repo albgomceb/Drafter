@@ -46,21 +46,23 @@
     </div>
 
     <div class="d-flex justify-content-center flex-wrap mt-5">
-      <div *ngFor="let us of results | async; let i=index" class="card">
-        <img class="card-img-top" src="{{us.photo}}" alt="Avatar">
-        <div class="card-body">
-          <h4 class="card-title">{{us.name}}</h4>
-          <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
-          <div class="push"></div>
-          <div class="btn-card">
-            <button type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
-                Add
-            </button>
-            <button type="button" (click)="removeAttendant(us);" class="btn">
-                Remove
-            </button>
-          </div>
-        </div>          
+      <div *ngFor="let us of results | async; let i=index" [hidden]="us.id==getLoginService().getPrincipal().id" class="card">
+
+          <img class="card-img-top" src="{{us.photo}}" alt="Avatar">
+          <div class="card-body">
+            <h4 class="card-title">{{us.name}}</h4>
+            <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
+            <div class="push"></div>
+            <div class="btn-card">
+              <button type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
+                  Add
+              </button>
+              <button type="button" (click)="removeAttendant(us);" class="btn">
+                  Remove
+              </button>
+            </div>
+          </div>   
+
       </div>
     </div>
   </div>

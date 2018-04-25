@@ -24,10 +24,6 @@ export class UserService {
     return this.http.get<Array<User>>(this.staticUrl + '/users');
   }
 
-  getUsersWithoutPrincipal(principal:User): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.staticUrl + '/users/withoutPrincipal/'+ principal);
-  }
-
   filterUsers(keyword: string): Observable<Array<User>> {
     return this.http.get<Array<User>>(this.staticUrl + '/users/filterUsers?search=' + keyword)
   }

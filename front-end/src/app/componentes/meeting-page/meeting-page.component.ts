@@ -78,21 +78,22 @@ export class MeetingPageComponent implements OnInit {
     );
     this.searchField = new FormControl();
 
-    //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR A PAGINA, PARA QUE NO PETE
-    //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
-
     this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
   } 
 
   search(){
 
-    //A ESTE METODO SEARCH QUE FILTRA USERS ASINCRONAMENTE, HAY QUE AÑADIRLE UN DELAY DE ALGUNA FORMA. QUEDA FEO SIN DELAY
+    var scope = this;
+
     if(this.searchField.value.length>0){
-      this.results = this.userService.filterUsers(this.searchField.value); //FILTRAR USUARIOS
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(scope.searchField.value); //FILTRAR USUARIOS
+      },400);
+
     }else{
-      //SE USARA ESTO CUANDO LA LLAMADA AL SERVIDOR SE HAGA ANTES DE CARGAR LA PAGINA, PARA QUE NO PETE
-      //this.results = this.userService.getUsersWithoutPrincipal(this.getLoginService().getPrincipal());
-      this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(''); //TODOS LOS USUARIOS
+      },400);
     }
 
   }
