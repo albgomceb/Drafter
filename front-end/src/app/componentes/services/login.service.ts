@@ -36,13 +36,16 @@ export class LoginService {
     }
 
 
-    public init() {
-        if(this.user)
+    public init(callback: Function) {
+        if(this.user) {
+            callback();
             return;
+        }
 
         this.http.get<User>(this.staticUrl+"/users/me", {}).subscribe(res => {
             this.user = res;
-        });
+            callback();
+        }, error => callback());
     }
 
 

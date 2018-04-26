@@ -85,9 +85,8 @@ public class IdeaController {
 	
 	@MessageMapping("/idea/save/{brainId}")
 	public void saveOne(@DestinationVariable int brainId, ModelBean<IdeaBean> bean) {
-		BrainStorming brainstorming = brainStormingService.findById(new Integer(brainId));
-		Idea idea = new IdeaSerializer().fromBean(bean.getModel(), brainstorming, ideaService, 
-				prosService, consService, participantService);
+		BrainStorming brainstorming = brainStormingService.findById(brainId);
+		Idea idea = new IdeaSerializer().fromBean(bean.getModel(), brainstorming, ideaService, prosService, consService, participantService);
 		bean.setModel(ideaService.saveBean(idea));
 		
 		template.convertAndSend("/meeting/" + brainId, bean);
