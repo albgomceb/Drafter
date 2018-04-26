@@ -90,7 +90,9 @@ jobs:
        - provider: heroku
          api-key: 
            secure: $HEROKU_API_KEY
-         app: $HEROKU_APP_NAME
+         app: 
+            master: $HEROKU_APP_NAME
+            dev: drafter-dev
          strategy: git
        - provider: releases
          api_key:
@@ -100,5 +102,12 @@ jobs:
          name: $APP_VERSION
          body: "[CHANGELOG](https://$GIT_USER.github.io/$GIT_REPO/changelogs/CHANGELOG-$APP_VERSION)"
          on:
+           branch: master
            condition: -z $DO_RELEASE
+       - provider: heroku
+         api-key: 
+           secure: $HEROKU_API_KEY
+         app: $HEROKU_APP_NAME
+         strategy: git
+
    
