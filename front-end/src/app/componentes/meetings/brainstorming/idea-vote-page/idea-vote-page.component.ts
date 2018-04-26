@@ -18,8 +18,8 @@ import { IdeaService } from '../../../services/idea.service';
 export class IdeaVotePageComponent implements OnInit {
 
   public ideas: Array<Idea>;
-  public hasEdit: boolean = true;
-  public participantId: number;
+  public hasVoted: boolean = false;
+  public participant: Participant;
   @Input()
   public meetingId: number;
   @Output()
@@ -32,7 +32,7 @@ export class IdeaVotePageComponent implements OnInit {
   ngOnInit() {
     this.ideas = new Array<Idea>();
     this.userService.getParticipant(this.meetingId).subscribe(participant => {
-      this.participantId = participant.id;
+      this.participant = participant;
     });
     this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(idea => {
       this.ideas = idea;
@@ -42,16 +42,17 @@ export class IdeaVotePageComponent implements OnInit {
       var i = 1;
       for (var ide of this.ideas) {
         this.realTimeService.register('votes' + i, ide.votes);
-        this.votes.push({ id: 0, ideaId: ide.id, participantId: this.participantId, value: 1 });
+        this.votes.push({ id: 0, ideaId: ide.id, participantId: this.participant.id, value: 1 });
         i++;
       }
       this.realTimeService.subscribe();
     });
   }
 
-  save(event) {
+  save() {
     this.voteService.saveVote(this.votes).subscribe(res => {
     });
+    this.hasVoted=true;
   }
   finish() {
     this.finishMeeting.emit(this.meetingId);
