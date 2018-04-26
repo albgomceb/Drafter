@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as SimpleWebRTC from 'simplewebrtc';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,37 +10,26 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class VideoconferencesComponent implements OnInit {
 
-  
+    @Input() idRoomMeeting: string;
+    room:string;
 
   constructor(private activatedRoute:ActivatedRoute, private loginService: LoginService) { }
   
 
   ngOnInit() {
-
+    this.room = this.idRoomMeeting;
     this.callInit();
-
   }
 
   callInit(){
-
-    //var room = location.search && location.search.split('?')[1];
-
-    var room;
-
-    this.activatedRoute.params.subscribe(params => {
-        room = params['id']; // (+) converts string 'id' to a number
-     });
-
-    
-
     var webrtc = new SimpleWebRTC({
       // the id/element dom element that will hold "our" video
       localVideoEl: 'localVideo',
       // the id/element dom element that will hold remote videos
       remoteVideosEl: 'remotesVideo',
       // nickname of logged user
-      //nick: this.getLoginService().getPrincipal().username,
-      nick: 'PabloGitu',
+      nick: this.getLoginService().getPrincipal().username,
+      //nick: 'PabloGitu',
       // immediately ask for camera access
       autoRequestMedia: true,
       debug: false,
@@ -49,7 +38,7 @@ export class VideoconferencesComponent implements OnInit {
 
     webrtc.on('readyToCall', function () {
       // you can name it anything
-      if (room) webrtc.joinRoom(room);
+      if (this.room) webrtc.joinRoom(this.room);
     });
 
     function showVolume(el, volume) {
@@ -137,31 +126,6 @@ export class VideoconferencesComponent implements OnInit {
       showVolume(document.getElementById('localVolume'), volume);
     });
 
-    function setRoom(name) {
-        $('form').remove();
-        $('h1').text(name);
-        $('#subTitle').text('Link to join: ' + location.href);
-        $('body').addClass('active');
-    }
-
-    if (room) {
-      setRoom(room.toLowerCase().replace('=','').replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, ''));
-    } else {
-        $('form').submit(function () {
-            webrtc.createRoom(room, function (err, name) {
-                console.log(' create room cb', arguments);
-                var newUrl = location.pathname + '?' + name;
-                if (!err) {
-                    history.replaceState({foo: 'bar'}, null, newUrl);
-                    setRoom(name);
-                } else {
-                    console.log(err);
-                }
-            });
-            return false;
-        });
-    }
-
     // listen for mute and unmute events
     webrtc.on('mute', function (data) { // show muted symbol
         webrtc.getPeers(data.id).forEach(function (peer) {
@@ -187,14 +151,10 @@ export class VideoconferencesComponent implements OnInit {
     //botones para mutear y desmutear, hay que hacer que al principio el botón de desmutear no se muestre.
     $('#btn1').click(function() {
         webrtc.mute();
-        $("#btn2").show();
-        $("#btn1").hide();
       });
 
     $('#btn2').click(function() {
         webrtc.unmute();
-        $("#btn2").hide();
-        $("#btn1").show();
     });
 
   }

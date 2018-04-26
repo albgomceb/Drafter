@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
+import { Option } from '../../models/option.model';
 
 
 @Component({
@@ -16,9 +17,11 @@ export class DynamicMeetingComponent implements OnInit {
 
   public meetingId :number;
   public meetingInfo:any={};
+  public thumbnail: Array<Option>;
   public users:Array<any>;
   public isFinished:boolean;
   public showChat:boolean = true;
+  public showVideo:boolean = false;
   public loaded;
 
   constructor(private userService: UserService,
@@ -32,6 +35,9 @@ export class DynamicMeetingComponent implements OnInit {
       this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
         this.meetingInfo = res;
         this.meetingInfo.isFinished = res.finished;
+        //Lista de participantes a mostrar
+        this.thumbnail = this.meetingInfo.attendants;
+
         if(this.meetingInfo.isFinished){
           this.router.navigate(['/minutes/'+this.meetingId]);
         }else{
@@ -65,6 +71,10 @@ export class DynamicMeetingComponent implements OnInit {
 
   toggleChat() {
     this.showChat = !this.showChat;
+  }
+
+  toggleVideo() {
+    this.showVideo = !this.showVideo;
   }
 
 }

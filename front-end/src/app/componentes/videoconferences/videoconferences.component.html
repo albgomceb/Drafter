@@ -1,14 +1,12 @@
-<h1 id="title">Start a room</h1>
-<p id="subTitle"></p>
-<form id="createRoom">
-  <button type="submit">Create it!</button>
-</form>
-<div class="videoContainer">
+<h2 class="title-page text-center mt-2">
+  <span style="color: #00a98f;">V</span>ideoconference
+</h2>
+<div class="videoContainer mx-auto justify-content-center text-center">
   <video id="localVideo" style="height: 150px;" oncontextmenu="return false;"></video>
   <div id="localVolume" class="volume_bar"></div>
 </div>
-<div class="buttonContainer">
-<button id="btn1" class="btn">Mute</button>
-<button id="btn2" class="btn">UnMute</button>
+<div class="buttonContainer mx-auto justify-content-center text-center">
+  <button title="Mute" id="btn1" class="btn"><i class="fas fa-microphone-slash"></i></button>
+  <button title="Unmute" id="btn2" class="btn"><i class="fas fa-microphone"></i></button>
 </div>
 <div id="remotesVideo" class="mt-5"></div>

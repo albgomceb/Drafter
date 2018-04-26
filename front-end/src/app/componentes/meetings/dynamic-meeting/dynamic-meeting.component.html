@@ -11,6 +11,13 @@
         <button *ngIf="!showChat" type="button" (click)="toggleChat();" class="btn">
             <i class="far fa-comments"></i>&nbsp; Chat
         </button>
+        <!-- Video button -->
+        <button *ngIf="showVideo" type="button" (click)="toggleVideo();" class="btn">
+            <i class="fas fa-times"></i>&nbsp; Video
+        </button>
+        <button *ngIf="!showVideo" type="button" (click)="toggleVideo();" class="btn">
+            <i class="fas fa-video"></i>&nbsp; Video
+        </button>
     </div>
 
     <!-- Meeting content -->
@@ -24,6 +31,23 @@
         <h1 class="title-page text-center" *ngIf="meetingInfo.type === 'brainstorming'">
             <span class="capital-letter">B</span>rainstorming <span class="capital-letter">M</span>eeting
         </h1>
+
+        <h4>
+            <span style="color: #00a98f;">T</span>opic: <h5 style="display:inline">{{meetingInfo.title}}</h5>
+        </h4>
+        <h4 class="mt-3">
+            <span style="color: #00a98f;">D</span>escription: <h5 style="display:inline">{{meetingInfo.description}}</h5>
+        </h4>
+        <h4 class="mt-3">
+            <span style="color: #00a98f;">P</span>articipants in this meeting
+        </h4>
+        <!-- Participants -->
+        <div class="row d-inline-block">
+            <div *ngFor="let us of thumbnail" class="card addParticipants mb-5">
+                <div class="tooltip-img img-profile"><span class="tooltiptext">{{us.name}}</span><img  attr.src="{{us.photo}}"></div>
+            </div>
+        </div>
+        <br/>
         <standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard'" 
                     [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
                     (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
@@ -41,5 +65,9 @@
     <!-- Chat -->
     <div class="chat-wrapper" [ngClass]="showChat ? 'shadow' : 'd-none'">
         <chat></chat>
+    </div>
+    <!-- Video -->
+    <div class="chat-wrapper p-3" [ngClass]="showVideo ? 'shadow' : 'd-none'">
+        <videoconferences *ngIf="showVideo" [idRoomMeeting]="meetingId"></videoconferences>
     </div>
 </div>
