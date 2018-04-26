@@ -40,6 +40,11 @@ public class OrganizationController {
 	
 	@GetMapping("/list/{userId}")
 	public List<OrganizationBean> findByUser(@PathVariable("userId") int userId) {
+		User user = userService.findById(new Integer(userId));
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
 		List<Organization> res = this.organizationService.findByUserId(userId);
 		List<OrganizationBean> result = res.stream().map(organization -> new OrganizationSerializer().fromOrganization(organization)).collect(Collectors.toList());
 
@@ -49,12 +54,28 @@ public class OrganizationController {
 	@PostMapping("/{userId}")
 	public OrganizationBean save(@PathVariable("userId") int userId, @RequestBody OrganizationBean organizationBean){
 		User user = userService.findById(new Integer(userId));
-		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService);
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
+		Organization result = new OrganizationSerializer().fromBean(organizationBean, user, userService, organizationService);
 		
 		organizationService.save(result);
 		OrganizationBean res = new OrganizationSerializer().fromOrganization(result);
 		
 		return res;
+	}
+	
+	@GetMapping("/{organizationId}")
+	public OrganizationBean getOrganization(@PathVariable("organizationId") int organizationId) {
+		Organization organization = this.organizationService.findById(organizationId);
+		User user = userService.findByPrincipal();
+		if(!user.getOrganizations().contains(organization)) {
+			return null;
+		}
+		OrganizationBean result = new OrganizationSerializer().fromOrganization(organization);
+
+		return result;
 	}
 	
 }

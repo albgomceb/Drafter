@@ -15,15 +15,24 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="home">Home</a>
         </li>
-        <li class="nav-item" *ngIf="getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="meeting">Meeting</a>
+        <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
+          <a data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
+            <span>Meeting</span>
+          </a>
+          <div class="dropdown-menu shadow">
+              <a class="dropdown-item" routerLink="meeting">New meeting</a>
+              <a class="dropdown-item" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}">My meetings</a>
+          </div>          
         </li>
-        <li *ngIf="getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="organization-department">New organization</a>
+        <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
+          <a data-toggle="dropdown" id="navbarDropdownOrganizationLink" class="nav-link dropdown-toggle position-relative">
+            <span>Organization</span>
+          </a>
+          <div class="dropdown-menu shadow">
+            <a class="dropdown-item" routerLink="organization-department/0">New organization</a>
+            <a class="dropdown-item" routerLink="organization/list/{{getLoginService().getPrincipal().id}}">My organizations</a>	
+          </div>          
         </li>
-        <li *ngIf="getLoginService().isAuthenticated()">
-            <a class="nav-link" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}">My meetings</a>
-          </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="pricing">Pricing</a>
         </li>

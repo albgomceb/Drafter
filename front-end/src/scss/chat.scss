@@ -1,11 +1,23 @@
 /* CHAT */
-div.chat-parent {
-    ul.chat-msg-list {
-        height: 60vh;
+div.chat-wrapper {
+    position: fixed;
+    top: 6.375rem;
+    right: 0;
+    width: 25rem;
+    height: calc(100% - 6.375rem);
+    background-color: $content_background_color;
+    z-index: 100;
+
+    @include media-breakpoint-down(md) {
+        top: 6.75rem;
+        width: 100%;
+        height: calc(100% - 6.75rem);
+    }
+
+    ul.msg-list-chat {
+        height: calc(100% - 3.5rem);
         margin: 0;
-        border: 1px solid $content_border;
         padding: 0rem 0 0.75rem;
-        background-color: white;
         list-style-type: none;
         overflow-y: auto;
         word-wrap: break-word;
@@ -21,23 +33,21 @@ div.chat-parent {
     }
 
     form.form-chat {
-        max-height: 4rem;
+        height: 3.5rem;
         padding: 0;
-        border: 0;
-        background: transparent;
+        border: 1px solid $content_border;
     
         div.chat-input {
-            width: 80%;
-            border: 1px solid $content_border;
-            border-top: 0;
+            width: 90%;
             padding: 0.4rem 0.75rem;
-            background: white;
-            overflow-y: scroll;
+            font-size: 0.8rem;
+            background: $content_background_color;
+            overflow-y: auto;
             word-wrap: break-word;
         }
     
         button.send {
-            width: 20%;
+            width: 10%;
         }
     }
 }

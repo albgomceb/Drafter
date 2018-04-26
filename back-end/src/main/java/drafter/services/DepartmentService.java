@@ -53,6 +53,10 @@ public class DepartmentService {
         return null;
     }
 
+	public Department save(Department department) {
+		return departmentRepository.save(department);
+	}
+
 	//Other business Methods-----------------------------------------------------------------------------
 
     
