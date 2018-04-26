@@ -1,6 +1,8 @@
-<h1 class="title-page text-center">
-  <span class="capital-letter">M</span>eeting <span class="capital-letter">M</span>inutes
-</h1>
+<div id="content" #content>
+    <h1 class="title-page text-center">
+        <span class="capital-letter">M</span>eeting
+        <span class="capital-letter">M</span>inutes
+    </h1>
 
 <div class="subtitle">
   Summary
@@ -26,41 +28,48 @@
   </div>
 </div>
 
-<div class="subtitle">
-  Participants
-</div>
-<div class="minutes-container">
-  <div class="d-flex justify-content-start flex-wrap">
-      <div *ngFor="let at of meeting.attendants" class="card">
-          <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
-          <div class="card-body">
-              <h4 class="card-title">{{at.name}}</h4>
-          </div>
-      </div>
-  </div>
-</div>
+    <div class="subtitle">
+        Participants
+    </div>
+    <div class="minutes-container">
+        <div class="d-flex justify-content-start flex-wrap">
+            <div *ngFor="let at of meeting.attendants" class="card">
+                <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
+                <div class="card-body">
+                    <h4 class="card-title">{{at.name}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="subtitle">
-  Ideas
-</div>
+    <div class="subtitle">
+        Ideas
+    </div>
 
 
-<div class="minutes-container">
-<div *ngFor="let idea of ideas" class="point-container">
-    <h3>{{idea.text}}</h3><h6 style="color: grey">Rating: {{getAverage(idea)}}</h6>
-    <span><h5>Pros:</h5></span>
-    <ul>
-      <li *ngFor="let pro of idea.pros">{{pro.pros}}</li>
-    </ul>
-    <span><h5>Cons:</h5></span>
-    <ul>
-      <li *ngFor="let con of idea.cons">{{con.cons}}</li>
-    </ul>
+    <div class="minutes-container">
+        <div *ngFor="let idea of ideas" class="point-container">
+            <h3>{{idea.text}}</h3>
+            <h6 style="color: grey">Rating: {{getAverage(idea)}}</h6>
+            <span>
+                <h5>Pros:</h5>
+            </span>
+            <ul>
+                <li *ngFor="let pro of idea.pros">{{pro.pros}}</li>
+            </ul>
+            <span>
+                <h5>Cons:</h5>
+            </span>
+            <ul>
+                <li *ngFor="let con of idea.cons">{{con.cons}}</li>
+            </ul>
+        </div>
+    </div>
 </div>
-</div>
-
 <div class="text-center">
-  <button routerLink="../../meeting" class="btn">New meeting</button>
-  <button routerLink="../../" class="btn">Finish</button>
+    <button (click)="downloadPDF()" class="btn">Export to PDF</button>
 </div>
-
+<div class="text-center">
+    <button routerLink="../../meeting" class="btn">New meeting</button>
+    <button routerLink="../../" class="btn">Finish</button>
+</div>
