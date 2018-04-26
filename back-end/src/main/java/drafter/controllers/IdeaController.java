@@ -81,22 +81,6 @@ public class IdeaController {
 
 		return res;
 	}
-	
-	@MessageMapping("/idea/save/{brainId}")
-	public void saveOne(@DestinationVariable int brainId, ModelBean<IdeaBean> bean) {
-		BrainStorming brainstorming = brainStormingService.findById(brainId);
-		Idea idea = new IdeaSerializer().fromBean(bean.getModel(), brainstorming, ideaService, prosService, consService, participantService);
-		bean.setModel(ideaService.saveBean(idea));
-		
-		template.convertAndSend("/meeting/" + brainId, bean);
-	}
-	
-	@MessageMapping("/idea/delete/{ideaId}/{brainId}")
-	public void delete(@DestinationVariable int ideaId, @DestinationVariable int brainId, String json) {
-		if(ideaId != 0)
-			ideaService.delete(ideaId);
-		template.convertAndSend("/meeting/" + brainId, json);
-	}
 
 	@MessageMapping("/idea/save/{brainId}")
 	public void saveOne(@DestinationVariable int brainId, ModelBean<IdeaBean> bean) {
