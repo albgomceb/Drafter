@@ -1,0 +1,42 @@
+/* M E N U */
+nav.navbar {
+    padding: 0;
+    background-color: $mp_primary_color !important;
+    z-index: 101;
+
+    a.navbar-brand img {
+        height: 1.875rem;
+        width: auto;
+    }
+
+    @media only screen and (max-width: 991px) {
+        a.navbar-brand img {
+            margin: 0 1.2rem;
+        }
+    }
+
+    button.navbar-toggler {
+        margin: 0.625rem 1.2rem;
+    }
+
+    a.nav-link {
+        padding: 0.9375rem 1.5em !important;
+        color: $mp_font_color !important;
+        transition: all .2s ease-in;
+    }
+
+    a.nav-link:hover {
+        background-color: $mp_secondary_color;
+    }
+
+    div.dropdown-menu {
+        background-color: $content_background_color;
+
+        a.dropdown-item:hover,
+        a.dropdown-item:focus,
+        a.dropdown-item:active {
+            color: inherit;
+            background-color: $content_background_color_2;
+        }
+    }
+}

@@ -1,0 +1,118 @@
+/* F O R M */
+.error {
+    border: solid 2px red;
+}
+
+.text-error {
+    color: red;
+}
+
+form.general-form {
+    border: 1px solid $content_border;
+    border-radius: 5px;
+    padding: 1.25rem 2.5rem;
+
+    div.card {
+        max-width: 10rem;
+        margin: 0 1.5rem 1.5rem 0.5rem;
+
+        div.card-body {
+            padding: 0.75rem;
+
+            p.card-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        div.push {
+            height: 7rem;
+
+            @media only screen and (max-width: 350px) {
+                height: 8rem;
+            }
+        }
+
+        div.btn-card {
+            position: absolute;
+            bottom: 0;
+
+            button {
+                width: 95%;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}
+
+/* Form login and register */
+div.form-info {
+    max-width: 450px;
+    padding: 0;
+    color: $mp_font_color;
+}
+
+div.form-info {
+    margin-top: 1rem;
+
+    div {
+        border-top-left-radius: 5px;
+        padding: 15px;
+        font-size: 2em;
+        background-color: $mp_secondary_color;
+    }
+
+    img {
+        border-bottom-left-radius: 5px;
+    }
+}
+
+form.form-2 {
+    max-width: 450px;
+    margin-top: 1rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 1.25rem 2.5rem;
+    color: $mp_font_color;
+    background-color: $mp_primary_color;
+
+    img.img-logo {
+        max-width: 9.375rem;
+    }
+
+    hr {
+        margin-bottom: 1.875rem;
+        background-color: $content_border;
+    }
+
+    button.btn-2 {
+        border: none;
+        border-radius: 0;
+        color: $button_font_color_2;
+        font-weight: bold;
+        background-color: $button_2;
+        transition: all .2s ease-in; 
+    }
+    
+    button.btn-2:hover {
+        color: $button_font_color;
+        background-color: $button_hover;
+    }
+
+    @media only screen and (max-width: 991px) {
+        border-radius: 5px;
+    }
+}
+
+/* Table agenda */
+table.table-agenda {
+    width: 100%;
+
+    input.point {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    span.required {
+        color: red;
+    }
+}

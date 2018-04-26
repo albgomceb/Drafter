@@ -1,0 +1,73 @@
+<h1 class="title-page text-center">
+  <span class="capital-letter">M</span>y <span class="capital-letter">O</span>rganizations
+</h1>
+
+<div *ngFor="let organization of organizations; let i=index">
+  <div class="item-wrapper mx-auto">
+    <div class="content-wrapper">
+        <!-- Name of the organization and buttons -->
+        <div class="d-flex justify-content-between flex-wrap">
+          <h3 class="text-uppercase mb-2">
+            {{organization.enterprise}}
+          </h3>
+          <div>
+            <button type="button" (click)="show[i] = !show[i]" class="btn">
+              Toggle
+            </button>
+            <button type="button" (click)="editOrganization(organization.id)" class="btn">
+              Edit
+            </button>
+          </div>
+        </div>        
+        <!-- Information about the organization -->
+        <div [hidden]="!show[i]">
+          <hr>
+          <div class="d-flex flex-wrap">
+            <div class="d-inline-block m-2">
+              <img src="{{organization.logo}}" alt="Error to load logo" class="img-fluid logo">
+            </div>
+            <div class="d-inline-block mx-2 mx-sm-3 mx-md-4">
+              <label><strong>Description</strong></label> 
+              <p>{{organization.description}}</p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between flex-wrap my-2">
+            <div class="mx-2 mx-sm-3 mx-md-4">
+              <label><strong>Address</strong></label> 
+              <p>{{organization.address}}</p>
+            </div>
+            <div class="mx-2 mx-sm-3 mx-md-4">
+              <label><strong>Phone number</strong></label> 
+              <p>{{organization.phone}}</p>
+            </div>
+            <div class="mx-2 mx-sm-3 mx-md-4">
+              <label><strong>Email</strong></label> 
+              <p>{{organization.email}}</p>
+            </div>
+          </div>
+          <h4 class="mb-3">
+            Departments
+          </h4>
+          <div *ngFor="let department of organization.departments; let j=index" class="table">
+            <span class="text-uppercase"><strong>{{j+1}}. {{department.name}}</strong></span>
+            <table class="table mt-2 mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Photo</th>
+                  <th scope="col">Name</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let us of department.users; let z=index">
+                <tr>
+                  <th scope="row">{{z+1}}</th>
+                  <td><img src="{{us.photo}}" class="img-fluid avatar"></td>
+                  <td>{{us.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

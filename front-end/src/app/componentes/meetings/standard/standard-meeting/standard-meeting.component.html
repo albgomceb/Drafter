@@ -1,0 +1,28 @@
+<h3>Meeting agenda</h3>
+
+<div *ngFor="let a of agendas" class="conclusion-container">
+    <div class="d-flex justify-content-between conclusion-title">
+        <span>{{a.number}}. {{a.description}}</span>            
+    </div>
+    <ul class="conclusions">
+        <li
+        *ngFor="let c of a.conclusions; let i = index" 
+        attr.contenteditable="{{hasEdit}}"
+        attr.data-iagenda="{{a.number}}" 
+        attr.data-iconclusion="{{i}}" 
+        (focusout)="edit($event)"
+        (keydown)="enter($event)"
+        class="conclusion">
+            {{c.conclusion}}
+        </li>
+    </ul>
+    <div class="text-center">
+        <button class="btn" (click)="addConclusion($event)" attr.data-index="{{a.number}}">
+            <i class="fas fa-lightbulb"></i> Add conclusion
+        </button>
+    </div>
+</div>
+
+<div class="buttons text-center">
+    <button (click) = "finish()" class="btn">Finish</button>
+</div>

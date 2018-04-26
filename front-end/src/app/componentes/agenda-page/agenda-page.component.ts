@@ -1,28 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, EventEmitter, Renderer, ViewChildren, Directive, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Option } from '../models/option.model';
 import { Agenda } from '../models/agenda.model';
 import { AgendaService } from '../services/agenda.service'; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'agenda-page',
   templateUrl: './agenda-page.component.html',
-  styleUrls: ['./agenda-page.component.scss']
+  styleUrls: ['./agenda-page.component.scss'],
 })
+
 export class AgendaPageComponent implements OnInit {
 
+  @ViewChildren('input') vc;
   public entradas: Array<Agenda>;
   public counter: number;
-  public meetingId: number;
+  public meetingId: number; 
 
   constructor(private agendaService: AgendaService, 
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private renderer : Renderer,
+    private renderer2 : Renderer2,
+    private elRef: ElementRef,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['meetingId'];
-      console.log(this.meetingId);
     });
     this.entradas=[];
     this.entradas.push(new Agenda());
@@ -33,7 +39,13 @@ export class AgendaPageComponent implements OnInit {
   }
 
   saveAgenda(agendas : Agenda[]){
-    this.agendaService.saveAgenda(agendas, this.meetingId).subscribe(res =>{
+    // Fix temporal para que no mande agendas vacias (que las duplica)
+    var temp = new Array<Agenda>();
+    for(var a of agendas)
+      if(a.description && a.description.trim() != '')
+        temp.push(a);
+
+    this.agendaService.saveAgenda(temp, this.meetingId).subscribe(res =>{
       this.router.navigate(["/meeting/"+this.meetingId]);
     });
   }
@@ -45,6 +57,7 @@ export class AgendaPageComponent implements OnInit {
     this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].description = "";
+    this.lastFocus();
   } 
 
   removeAgenda(entrada : Agenda, entradasIndex : number){    
@@ -53,12 +66,41 @@ export class AgendaPageComponent implements OnInit {
 
   convert(entrada : Agenda){
     //Si la actual entrada tiene longitud > 0 y además la entrada es un input, se convierte en texto
-    if(this.checkNotBlank(entrada.description) && entrada.isInput)
+    if(this.checkNotBlank(entrada.description) && entrada.isInput) {
       entrada.isInput = false;
+      if(this.counter == (entrada.id+1))
+        this.addAgenda();
+    }
 
     //Si la entrada es un texto, se convierte en input
-    else if(!entrada.isInput)
-      entrada.isInput = true;
+    else if(!entrada.isInput) {
+      var i=0;
+      for(var en of this.entradas) {
+        if(en.isInput)
+          en.isInput = false;
+        if(en.description.trim().length == 0)
+          this.entradas.splice(i, 1);
+
+        i++
+      }
+
+      entrada.isInput = true; 
+      this.setFocus();
+    }
+      
+    this.ref.markForCheck();
+  }
+
+  killFocus(event) {
+    event.target.blur();
+  }
+
+  setFocus() {
+    setTimeout(() => {
+      var e = $('input')[0];
+      if(e)
+        e.focus();
+    }, 0);
   }
 
   checkNotBlank(string : String) : boolean{
@@ -70,4 +112,11 @@ export class AgendaPageComponent implements OnInit {
 
     return res;
   }
+
+  lastFocus(){
+    this.vc.changes.subscribe(elements => {
+      elements.last.nativeElement.focus();
+    });
+  }
+  
 }

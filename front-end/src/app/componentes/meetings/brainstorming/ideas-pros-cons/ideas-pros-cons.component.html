@@ -1,0 +1,45 @@
+<h2>Pros and cons to the ideas</h2>
+
+<div class="ideas-container">
+    <div class="ideas-title">
+        Ideas
+    </div>
+    <div class="ideas-body">
+        <ul class="list-ideas">
+            <li *ngFor="let idea of ideas; let ii = index">
+                <div class="ideas-title">
+                    {{ii+1}}. {{idea.text}}
+                </div>
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div>
+                        <button class="btn" (click)="addPro($event)" attr.data-index="{{ii}}">
+                            Add pros
+                        </button>
+                        <ul class="list-pros">
+                            <li *ngFor="let p of idea.pros; let i = index" class="alert alert-success" (click)="convert(p)">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <input *ngIf="p.isInput" [(ngModel)]="p.pros" class="none" (focusout)="killfocusPros(p, ii, i)" (keyup.enter)="enter($event)">
+                                <span *ngIf="!p.isInput">{{ p.pros }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="btn" (click)="addCon($event)" attr.data-index="{{ii}}">
+                            Add cons
+                        </button>
+                        <ul class="list-cons">
+                            <li *ngFor="let c of idea.cons; let i = index" class="alert alert-danger" (click)="convert(c)">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <input *ngIf="c.isInput" [(ngModel)]="c.cons" class="none" (focusout)="killfocusCons(c, ii, i)" (keyup.enter)="enter($event)">
+                                <span *ngIf="!c.isInput">{{ c.cons }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="text-center">
+            <button (click)="next()" class="btn">Next step</button>
+        </div>
+    </div>
+</div>

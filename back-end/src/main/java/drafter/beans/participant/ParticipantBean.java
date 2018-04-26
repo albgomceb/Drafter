@@ -6,16 +6,37 @@ import drafter.beans.Option;
 
 public class ParticipantBean {
 
+	public int id;
 	public String role; 
 	public boolean hasAttended; 
-	public Option user;
+	public int userId;
+	public int meetingId;
 	public List<Option> departments;
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getRole() {
 		return role;
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getMeetingId() {
+		return meetingId;
+	}
+	public void setMeetingId(int meetingId) {
+		this.meetingId = meetingId;
 	}
 	public boolean isHasAttended() {
 		return hasAttended;
@@ -23,18 +44,14 @@ public class ParticipantBean {
 	public void setHasAttended(boolean hasAttended) {
 		this.hasAttended = hasAttended;
 	}
-	public Option getUser() {
-		return user;
-	}
-	public void setUser(Option user) {
-		this.user = user;
-	}
+	
 	public List<Option> getDepartments() {
 		return departments;
 	}
 	public void setDepartments(List<Option> departments) {
 		this.departments = departments;
 	}
+	
 	
 	
 	

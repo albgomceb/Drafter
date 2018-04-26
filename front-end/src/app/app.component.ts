@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { AfterViewChecked } from '@angular/core';
+import * as $ from 'jquery';
+import { LoginService } from './componentes/services/login.service';
+ 
+declare let paypal: any;
 
 @Component({
   selector: 'app-root',
@@ -6,5 +11,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
+  loaded: boolean;
+
+  constructor(private loginService: LoginService){}
+
+  ngOnInit(){
+    this.loaded = false;
+    this.loginService.init(() => this.loaded = true);
+  }
+
+
 }

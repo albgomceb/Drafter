@@ -1,9 +1,8 @@
-<div class="page">
+<div class="page page-wrapper" *ngIf="loaded">
     <navbar></navbar>
-    <div class="container">
+    <div class="container content">
         <router-outlet></router-outlet>
     </div>
-    <footer class = "page-footer footer text-center">
-        <span>© 2018 - Drafter, Inc. All rights reserved</span>
-    </footer>
-</div>
+    <footer class="main-footer"></footer>
+</div>   
+    

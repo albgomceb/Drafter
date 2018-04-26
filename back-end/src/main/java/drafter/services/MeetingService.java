@@ -8,8 +8,13 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+//import org.springframework.stereotype.Service;
+//import org.springframework.util.Assert;
 import org.springframework.stereotype.Service;
 
+import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
@@ -25,6 +30,9 @@ public class MeetingService {
 
 	@Autowired
 	private MeetingRepository	meetingRepository;
+	
+	@Autowired
+	private UserService    	    userService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -35,7 +43,7 @@ public class MeetingService {
 
 	//CRUD Methods------------------------------------------------------------------------------
 
-    public Meeting create(Meeting meeting) {
+    public Meeting save(Meeting meeting) {
     	Date date = new Date(System.currentTimeMillis()-1);
     	if(meeting.getParticipants() == null)
     		meeting.setParticipants( new ArrayList<Participant>());
@@ -62,11 +70,53 @@ public class MeetingService {
         return meetingRepository.getOne(id);
     }
 
-    public User update(User user) {
-        return null;
+    public Meeting finish(int id) {
+//    	if(!isParticipant(id))
+//			throw new IllegalStateException();
+    	
+    	Meeting m = findById(id);
+    	int size = m.getSteps().size();
+    	
+    	m.setStatus(size == 0 ? 1 : size);
+    	m.setHasfinished(true);
+    	
+    	return save(m);
+    }
+    
+    public Meeting nextStep(int id) {
+//    	if(!isParticipant(id))
+//			throw new IllegalStateException();
+    	
+    	Meeting m = findById(id);
+    	int size = m.getSteps().size();
+    	//Revisar la construccion de steps
+//    	Assert.isTrue(size >= m.getStatus(), "The meeting hasn't more steps, you must finish it!");
+    	m.setStatus(m.getStatus()+1);
+    	
+    	return save(m);
+    }
+    
+    public boolean isParticipant(int id) {
+    	Meeting m = findById(id);
+    	User principal = userService.findByPrincipal();
+    	for(Participant p : m.getParticipants())
+    		if(p.getUser().equals(principal))
+    			return true;
+    	
+    	return false;
+    }
+    
+    public Meeting setTimer(int id, int timer) {
+    	Meeting m = findById(id);
+    	m.setTimer(timer);
+    	
+    	return save(m);
     }
 
 	//Other business Methods-----------------------------------------------------------------------------
 
+    public Page<Meeting> findByUserId(int userId, Pageable pageable) {
+		return meetingRepository.findByUserId(userId, pageable);
+	}
 }    
 

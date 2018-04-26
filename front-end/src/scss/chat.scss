@@ -1,0 +1,65 @@
+/* CHAT */
+div.chat-wrapper {
+    position: fixed;
+    top: 6.375rem;
+    right: 0;
+    width: 25rem;
+    height: calc(100% - 6.375rem);
+    background-color: $content_background_color;
+    z-index: 100;
+
+    @include media-breakpoint-down(md) {
+        top: 6.75rem;
+        width: 100%;
+        height: calc(100% - 6.75rem);
+    }
+
+    div.upper-chat {
+        height: 2.25rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: $mp_font_color;
+        background-color: $mp_primary_color;
+
+        span {
+            margin-left: 1rem;
+        }
+    }
+
+    ul.msg-list-chat {
+        height: calc(100% - 5.75rem);
+        margin: 0;
+        padding: 0rem 0 0.75rem;
+        list-style-type: none;
+        overflow-y: auto;
+        word-wrap: break-word;
+    
+        li {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        div.msg-container {
+            padding-top: 0.75rem;
+        }
+    }
+
+    form.form-chat {
+        height: 3.5rem;
+        padding: 0;
+        border: 1px solid $content_border;
+    
+        div.chat-input {
+            width: 90%;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+            background: $content_background_color;
+            overflow-y: auto;
+            word-wrap: break-word;
+        }
+    
+        button.send {
+            width: 10%;
+        }
+    }
+}

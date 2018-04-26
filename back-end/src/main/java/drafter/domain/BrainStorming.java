@@ -1,12 +1,13 @@
 package drafter.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -22,7 +23,8 @@ public class BrainStorming extends Meeting{
 	
 	//Constructor----------------------------------------
 	public BrainStorming() {
-		
+		this.votingMode = ONETOFIVE;
+		this.ideas = new ArrayList<Idea>();
 	}
 
 	//Methods--------------------------------------------
@@ -38,6 +40,13 @@ public class BrainStorming extends Meeting{
 		this.votingMode = votingMode;
 	}
 	
+	
+	@Override
+	@Transient
+	public String getType() {
+		return "brainstorming";
+	}
+	
 	// Relationships-------------------------------------
 	
 	
@@ -46,7 +55,7 @@ public class BrainStorming extends Meeting{
 	
 	@Valid 
 	@NotNull
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "brain")
 	public Collection<Idea> getIdeas() {
 		return ideas;
 	}
@@ -54,7 +63,6 @@ public class BrainStorming extends Meeting{
 	public void setIdeas(Collection<Idea> ideas) {
 		this.ideas = ideas;
 	}
-	
 	
 	
 }

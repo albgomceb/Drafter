@@ -1,26 +1,29 @@
-/* PRINCIPAL MENU */
-nav.navbar {
-    background:#333;
+@import '../../../scss/colors';
+
+.img-profile {
+    width: 3.5rem;
+    height: 3.5rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0.75rem;
+
+    & img {
+        width: 100%;
+        height: 100%;
+
+        border: 1px solid $mp_secondary_color;
+
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+    }
 }
 
-nav.navbar {
-    padding: 0 35px;
+.username {
+    margin-left: 2em;
 }
 
-nav.navbar a.navbar-brand img.navbar-logo {
-    height: 30px;
-    width: auto;
-}
-
-nav.navbar a.nav-link {
-    padding: 15px;
-    color: #fff;
-}
-
-nav.navbar a.nav-link:hover {
-    background-color: #00a98f;
-}
-
-nav.navbar button.navbar-toggler {
-	margin: 10px 0;
+a {
+    cursor: pointer;
 }

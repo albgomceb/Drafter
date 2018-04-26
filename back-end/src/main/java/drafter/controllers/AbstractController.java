@@ -1,36 +1,37 @@
-/* AbstractController.java
- *
- * Copyright (C) 2016 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- * 
- */
-
 package drafter.controllers;
 
-//import org.apache.commons.lang.exception.ExceptionUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.ClassUtils;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 
-@Controller
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 public class AbstractController {
 	
-	// Panic handler ----------------------------------------------------------
-	
 	@ExceptionHandler(Throwable.class)
-	public ModelAndView panic(Throwable oops) {
-		ModelAndView result;
+	public String internalError(HttpServletResponse response, Throwable oops) {
+		response.setStatus(500);
+		oops.printStackTrace();
+		return oops.getLocalizedMessage();
+	}
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public String notEntityFound(HttpServletResponse response, EntityNotFoundException oops) {
+		response.setStatus(404);
+		return "Resource not found!";
+	}
 
-		result = new ModelAndView("misc/panic");
-		result.addObject("name", ClassUtils.getShortName(oops.getClass()));
-		result.addObject("exception", oops.getMessage());
-	//	result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
-
-		return result;
-	}	
-
+	@ExceptionHandler(IllegalArgumentException.class)
+	public String notEntityFound(HttpServletResponse response, IllegalArgumentException oops) {
+		response.setStatus(422);
+		return oops.getLocalizedMessage();
+	}
+	
+	@ExceptionHandler(IllegalStateException.class)
+	public String forbidden(HttpServletResponse response, IllegalStateException oops) {
+		response.setStatus(403);
+		return oops.getLocalizedMessage();
+	}
+	
 }

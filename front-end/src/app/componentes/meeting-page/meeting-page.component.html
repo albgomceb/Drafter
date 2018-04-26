@@ -1,45 +1,74 @@
-<div class="col-md-18 mx-auto mt-3">
-  <div class="card mx-auto pt-3 pb-3">
-    <div class="mx-auto">
-      <h2 class="users"><span class="letter">S</span>tart meeting</h2>
+<h1 class="title-page text-center">
+  <span class="capital-letter">S</span>tart <span class="capital-letter">M</span>eeting
+</h1>
+
+<form (ngSubmit)="onSubmit(meeting)" class="general-form">
+  <div class="row">
+    <div class="col-lg-6 col-md-12 form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required [(ngModel)]="meeting.title" class="form-control">
     </div>
-    <!--<h6 item-width="100%" class="sub-users mx-auto">Please, select the meeting participants.</h6>-->
-    <form (ngSubmit)="onSubmit(meeting)" class="form mt-3">
-
-      <div class="container">
-        <div class="form-users">
-          <label>Select the meeting participants:</label>
-          <div class="list-group">            
-            <span *ngIf="errorListUsers==false && users==null" class="errorList">Loading...</span>
-            <div *ngIf="errorListUsers" class="errorList">
-              <img src="../../../assets/img/warning_turq.png" width="20%" />
-              <h4>505 Internal Server Error</h4>
-              <h6>Try again later</h6>
-            </div>
-            
-            <div *ngFor="let us of users; let i = index">
-              <a class="list-group-item list-group-item-action">
-                  <button [hidden]="hideme[i]" type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn bt-lg mr-1 add">Add</button>
-                  <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-meeting form-group">
-            <label for="title" class="title" >Title:</label><br/> 
-            <input required [(ngModel)]="meeting.title" class="form-control" placeholder="Enter meeting topic" type="text" id="title" name="title"><br/> <br/>
-            <label for="description" class="description" >Description:</label><br/> 
-            <textarea [(ngModel)]="meeting.description" class="form-control desc-input" rows="8" id="description" name="description"></textarea>
-        </div>
-      </div>
-
-      <div class="buttons">
-          <button [disabled]="!(attendants.length > 0) || meeting.title == null || meeting.title == ''" type="submit" class="btn bt-lg mr-1">Next</button>
-          <button routerLink=".." class="btn bt-lg">Cancel</button>
-      </div>
-
-    </form>
+    <div class="col-lg-6 col-md-12 form-group">
+      <label for="kind">Kind of meeting</label>
+      <select id="kind" name="kind" rows="8" [(ngModel)]="selectedKind" class="form-control desc-input">
+        <option *ngFor="let kind of kinds" [ngValue]="kind">
+          {{kind.name}}
+        </option>
+      </select>
+    </div>
   </div>
-</div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="4" [(ngModel)]="meeting.description" class="form-control desc-input">
+    </textarea>
+  </div>
+  <div class="form-group">
+    <label>Participants</label>
 
+    <div class="row">
+      <div *ngFor="let us of thumbnail" class="card addParticipants">
+          <div class="tooltip-img img-profile"><span class="tooltiptext">{{us.name}}</span><img  attr.src="{{us.photo}}"></div>
+      </div>
+    </div>
+
+    <p *ngIf="errorListUsers==false && users==null" class="errorList text-center">Loading...</p>
+    <div *ngIf="errorListUsers" class="text-center">
+      <img src="../../../assets/img/warning_turq.png" width=100px class="img-fluid">
+      <p>Try again later</p>
+    </div>
+
+    <div *ngIf="errorListUsers==false && users!=null" class="row justify-content-center mt-5">
+      <form class="form-inline">
+        <div class="search-users form-group col-lg-5 col-md-10">
+            <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search();" [formControl]="searchField">
+        </div>
+      </form>
+    </div>
+
+    <div class="d-flex justify-content-center flex-wrap mt-5">
+      <div *ngFor="let us of results | async; let i=index" [hidden]="us.id==getLoginService().getPrincipal().id" class="card">
+
+          <img class="card-img-top" src="{{us.photo}}" alt="Avatar">
+          <div class="card-body">
+            <h4 class="card-title">{{us.name}}</h4>
+            <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
+            <div class="push"></div>
+            <div class="btn-card">
+              <button type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
+                  Add
+              </button>
+              <button type="button" (click)="removeAttendant(us);" class="btn">
+                  Remove
+              </button>
+            </div>
+          </div>   
+
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <button [disabled]="!(thumbnail.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
+            type="submit" class="btn">Next</button>
+    <button routerLink=".." class="btn">Cancel</button>
+  </div>
+</form>

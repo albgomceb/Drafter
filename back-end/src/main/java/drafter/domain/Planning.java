@@ -7,6 +7,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +17,7 @@ public class Planning extends Meeting{
 
 	
 	public Planning() {
-		
+		super();
 	}
 	
 	private Collection<SprintBacklog> backlog;
@@ -31,6 +32,13 @@ public class Planning extends Meeting{
 
 	public void setBacklog(Collection<SprintBacklog> backlog) {
 		this.backlog = backlog;
+	}
+
+
+	@Override
+	@Transient
+	public String getType() {
+		return "planning";
 	}
 
 

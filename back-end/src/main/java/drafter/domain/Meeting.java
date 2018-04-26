@@ -32,13 +32,14 @@ public abstract class Meeting extends DomainEntity{
 	private Date date;
 	private Integer numberOfMeeting;
 	private String image;
-	private Date timer;
-	private boolean hasfinished; 
+	private int timer;
+	private boolean hasfinished;
+	private int status;
 	
 	
 	//Constructor----------------------------------------
 	public Meeting() {
-		
+		super();
 	}
 	
 	//Methods--------------------------------------------
@@ -98,18 +99,17 @@ public abstract class Meeting extends DomainEntity{
 		this.image = image;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getTimer() {
+	@Min(0)
+	public int getTimer() {
 		return timer;
 	}
 
-	public void setTimer(Date timer) {
+	public void setTimer(int timer) {
 		this.timer = timer;
 	}
 
 
-	public boolean isHasfinished() {
+	public boolean getHasfinished() {
 		return hasfinished;
 	}
 
@@ -118,12 +118,18 @@ public abstract class Meeting extends DomainEntity{
 	}
 
 	
-	@Transient
-	public int getStatus(Step step) {
-		return step.getNumber(); 
-		
+	@Min(1)
+	public int getStatus() {
+		return status;
 	}
 	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	
+	@Transient
+	public abstract String getType();
 	
 	
 	// Relationships-------------------------------------

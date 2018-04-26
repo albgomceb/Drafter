@@ -28,14 +28,14 @@ public class Pros extends DomainEntity{
 
 	//Constructor----------------------------------------
 	@Min(1)
-	public int getNumber() {
+	public int getNumberPros() {
 		return numberPros;
 	}
 
 	//Methods--------------------------------------------
 	
 	
-	public void setNumber(int number) {
+	public void setNumberPros(int number) {
 		this.numberPros = number;
 	}
 
@@ -54,18 +54,18 @@ public class Pros extends DomainEntity{
 	
 	// Relationships-------------------------------------
 	
-	private Idea ideaP; 
+	private Idea idea; 
 	
 	@Valid
 	@NotNull
 	@ManyToOne(optional = true)
 	public Idea getIdea() {
-		return ideaP;
+		return idea;
 	}
 
 
 
-	public void setIdea(Idea ideaP) {
-		this.ideaP = ideaP;
+	public void setIdea(Idea idea) {
+		this.idea = idea;
 	}
 }
