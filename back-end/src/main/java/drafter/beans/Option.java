@@ -10,6 +10,7 @@ public class Option {
 	public String name;
 	public String photo;
 	public String organization;
+	public String role;
 	public List<Option> users;
 	
 
@@ -49,10 +50,27 @@ public class Option {
 		this.photo = photo;
 	}
 	
+	public Option(String id, String name, String organization, String photo, String role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.organization = organization;
+		this.photo = photo;
+		this.role = role;
+	}
+	
 	public Option() {
 		super();
 	}
 	
+	
+	
+	public String getRole() {
+		return role;
+	}
+	public void setString(String role) {
+		this.role = role;
+	}
 	public String getId() {
 		return id;
 	}

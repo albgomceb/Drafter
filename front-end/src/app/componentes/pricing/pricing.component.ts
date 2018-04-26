@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare let paypal: any;
 
@@ -19,12 +20,13 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
   amount: number = 0;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
 
   paypalConfig = {
+    //production, sandbox
     env: 'production',
     locale: 'en_US',
     style: {
@@ -59,7 +61,7 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
     onAuthorize: (data, actions) => {
       return actions.payment.execute().then((payment) => {
-        alert("CONGRATULATIONS. Payment finished succesfully!");
+        this.router.navigate(['success']);
       })
     }
   };

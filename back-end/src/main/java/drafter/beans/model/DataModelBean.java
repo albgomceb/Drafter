@@ -7,6 +7,7 @@ public class DataModelBean {
 	private int index;
 	private boolean noself;
 	private int id;
+	private boolean replace;
 	
 	
 	public String getUser() {
@@ -39,7 +40,11 @@ public class DataModelBean {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public boolean isReplace() {
+		return replace;
+	}
+	public void setReplace(boolean replace) {
+		this.replace = replace;
+	}
 
-	
-	
 }

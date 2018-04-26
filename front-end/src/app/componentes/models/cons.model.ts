@@ -5,5 +5,6 @@ export class Cons {
     version: number;
     numberCons:number; 
     cons:String;
+    isInput:boolean;
     ideaId:number;
   }
