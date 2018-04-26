@@ -25,7 +25,7 @@ export class UserService {
   }
 
   filterUsers(keyword: string): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.staticUrl + '/users/filterUsers/' + keyword)
+    return this.http.get<Array<User>>(this.staticUrl + '/users/filterUsers?search=' + keyword)
   }
 
   saveMeeting(meeting: Meeting): Observable<Meeting> {

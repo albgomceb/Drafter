@@ -76,6 +76,10 @@ public class UserService {
 		return userRepository.filterUsers(keyword);
 	}
 
+	public List<User> findAllWithoutPrincipal(int id) {
+		return userRepository.findAllWithoutPrincipal(id);
+	}
+
 	/*public Boolean isUser() {
 		Boolean result = false;
 		try {

@@ -66,7 +66,7 @@ public class ParticipantService {
 	public void relateWithParticipants(Meeting result, List<Option> attendants) {
 		attendants.stream().forEach(op -> {
 				Participant part = new Participant();
-				part.setRole("default");
+				part.setRole(op.getRole());
 				part.setHasAttended(false);
 				User user = userService.findById(new Integer(op.getId()));
 				part.setUser(user);

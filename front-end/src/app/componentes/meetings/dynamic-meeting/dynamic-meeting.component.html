@@ -1,20 +1,24 @@
 <div *ngIf="loaded">
-
     <!-- Info meeting bar -->
-    <div class="info-meeting-bar d-flex justify-content-between shadow">
-        <!-- Timer -->
-        <span class="timer"><i class="far fa-clock"></i> 00:00:00</span>
-        <!-- Chat button -->
-        <button *ngIf="showChat" type="button" (click)="toggleChat();" class="btn">
-            <i class="fas fa-times"></i>&nbsp; Chat
-        </button>
-        <button *ngIf="!showChat" type="button" (click)="toggleChat();" class="btn">
-            <i class="far fa-comments"></i>&nbsp; Chat
-        </button>
+    <div class="info-meeting-bar shadow">
+        <div class="container d-flex justify-content-between">
+            <!-- Timer -->
+            <span class="timer"><i class="far fa-clock"></i> 00:00:00</span>
+            <div>
+                <!-- Chat button -->          
+                <button *ngIf="!showChat" type="button" (click)="toggleChat();" class="btn">
+                    <i class="far fa-comments"></i>
+                </button>
+                <!-- Video button -->
+                <button *ngIf="!showVideo" type="button" (click)="toggleVideo();" class="btn">
+                    <i class="fas fa-video"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Meeting content -->
-    <div class="meeting-wrapper" [ngClass]="showChat ? 'meeting-wrapper-chat' : ''">
+    <div class="meeting-wrapper" [ngClass]="showChat || showVideo ? 'meeting-wrapper-chat' : ''">
         <h1 class="title-page text-center" *ngIf="meetingInfo.type === 'standard'">
             <span class="capital-letter">S</span>tandard <span class="capital-letter">M</span>eeting
         </h1>
@@ -24,6 +28,27 @@
         <h1 class="title-page text-center" *ngIf="meetingInfo.type === 'brainstorming'">
             <span class="capital-letter">B</span>rainstorming <span class="capital-letter">M</span>eeting
         </h1>
+
+        <!-- Info meeting -->
+        <div class="item-wrapper mx-auto">
+            <div class="content-wrapper">
+                <div>
+                    <label><strong>Topic</strong></label> {{meetingInfo.title}}
+                </div>
+                <div>
+                    <label><strong>Description</strong></label> {{meetingInfo.description}}
+                </div>                
+                <!-- Participants -->
+                <label><strong>Participants</strong></label> 
+                <div class="d-flex flex-wrap">
+                    <div *ngFor="let us of thumbnail" class="text-center mx-2">
+                        <img attr.src="{{us.photo}}" class="img-fluid avatar">                         
+                        <span class="d-block">{{us.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard'" 
                     [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
                     (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
@@ -40,6 +65,22 @@
 
     <!-- Chat -->
     <div class="chat-wrapper" [ngClass]="showChat ? 'shadow' : 'd-none'">
+        <div class="upper-chat d-flex justify-content-between">
+            <span>Chat</span>
+            <button type="button" (click)="toggleChat();" class="btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
         <chat></chat>
+    </div>
+    <!-- Video -->
+    <div class="chat-wrapper" [ngClass]="showVideo ? 'shadow' : 'd-none'">
+        <div class="upper-chat d-flex justify-content-between">
+            <span>Video</span>
+            <button type="button" (click)="toggleVideo();" class="btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <videoconferences *ngIf="showVideo" [idRoomMeeting]="meetingId"></videoconferences>
     </div>
 </div>
