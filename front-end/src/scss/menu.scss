@@ -2,6 +2,7 @@
 nav.navbar {
     padding: 0;
     background-color: $mp_primary_color !important;
+    z-index: 101;
 
     a.navbar-brand img {
         height: 1.875rem;
@@ -26,5 +27,16 @@ nav.navbar {
 
     a.nav-link:hover {
         background-color: $mp_secondary_color;
+    }
+
+    div.dropdown-menu {
+        background-color: $content_background_color;
+
+        a.dropdown-item:hover,
+        a.dropdown-item:focus,
+        a.dropdown-item:active {
+            color: inherit;
+            background-color: $content_background_color_2;
+        }
     }
 }

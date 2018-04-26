@@ -17,10 +17,13 @@ import { PricingComponent } from './componentes/pricing/pricing.component';
 
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
+import { VideoconferencesComponent } from './componentes/videoconferences/videoconferences.component';
+import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'pricing',component: PricingComponent},
+  {path: 'success',component: PaymentSuccessPageComponent},
   {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
@@ -32,6 +35,7 @@ const routes: Routes = [
   {path: 'meeting/list/:userId', component: ListMeetingPageComponent},
   {path: 'organization/list/:userId', component: ListOrganizationDepartmentPageComponent},
   {path: 'ideas', component: IdeasCreateComponent},
+  {path: 'callings/:id',component: VideoconferencesComponent},
   {path: '**', component: NotFoundPageComponent}
 
 ];

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
 import * as $ from 'jquery';
+import { LoginService } from './componentes/services/login.service';
  
 declare let paypal: any;
 
@@ -11,9 +12,13 @@ declare let paypal: any;
 })
 export class AppComponent {
 
-  constructor(){}
+  loaded: boolean;
+
+  constructor(private loginService: LoginService){}
 
   ngOnInit(){
+    this.loaded = false;
+    this.loginService.init(() => this.loaded = true);
   }
 
 
