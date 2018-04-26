@@ -14,8 +14,20 @@ div.chat-wrapper {
         height: calc(100% - 6.75rem);
     }
 
+    div.upper-chat {
+        height: 2.25rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: $mp_font_color;
+        background-color: $mp_primary_color;
+
+        span {
+            margin-left: 1rem;
+        }
+    }
+
     ul.msg-list-chat {
-        height: calc(100% - 3.5rem);
+        height: calc(100% - 5.75rem);
         margin: 0;
         padding: 0rem 0 0.75rem;
         list-style-type: none;

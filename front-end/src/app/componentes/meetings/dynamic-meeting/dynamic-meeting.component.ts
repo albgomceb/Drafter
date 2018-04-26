@@ -20,7 +20,7 @@ export class DynamicMeetingComponent implements OnInit {
   public thumbnail: Array<Option>;
   public users:Array<any>;
   public isFinished:boolean;
-  public showChat:boolean = true;
+  public showChat:boolean = false;
   public showVideo:boolean = false;
   public loaded;
 
@@ -70,10 +70,16 @@ export class DynamicMeetingComponent implements OnInit {
   }
 
   toggleChat() {
+    if(this.showChat == false && this.showVideo) {
+      this.showVideo = false;
+    }
     this.showChat = !this.showChat;
   }
 
   toggleVideo() {
+    if(this.showVideo == false && this.showChat) {
+      this.showChat = false;
+    }
     this.showVideo = !this.showVideo;
   }
 
