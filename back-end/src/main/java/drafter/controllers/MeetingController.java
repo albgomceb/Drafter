@@ -121,11 +121,8 @@ public class MeetingController extends AbstractController {
 
 	@GetMapping("/types")
 	public List<Option> getTypes() {
-		return Arrays.asList(new Option("brainstorming", "Brainstorming meeting"),
-				new Option("standard", "Standard meeting"),
-				new Option( "planning", "Scrum: Sprint planning meeting"),
-				new Option("review", "Scrum: Sprint review meeting"),
-				new Option("retrospective", "Scrum: Sprint retrospective meeting"),
+		return Arrays.asList(new Option("standard", "Standard meeting"),
+				new Option("brainstorming", "Brainstorming meeting"),
 				new Option("six-hats", "6-hats meeting"));
 	}
 	
