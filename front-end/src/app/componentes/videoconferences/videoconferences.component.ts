@@ -17,11 +17,13 @@ export class VideoconferencesComponent implements OnInit {
   
 
   ngOnInit() {
-    this.room = this.idRoomMeeting;
+    
     this.callInit();
   }
 
   callInit(){
+    this.room = this.idRoomMeeting;
+
     var webrtc = new SimpleWebRTC({
       // the id/element dom element that will hold "our" video
       localVideoEl: 'localVideo',
