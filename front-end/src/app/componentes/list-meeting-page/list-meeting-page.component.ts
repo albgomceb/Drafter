@@ -14,10 +14,10 @@ import { User } from '../models/user.model';
 })
 export class ListMeetingPageComponent implements OnInit {
 
-  public meetingPagination : MeetingPagination;
-  public numberOfPage : number;
+  //public meetingPagination : MeetingPagination;
   public meetings: Array<Meeting>;
-  public user: User;
+  public userId: number;
+  public numberOfPage : number;
   public today: number;
 
   errorListUsers:boolean = false;
@@ -28,15 +28,9 @@ export class ListMeetingPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.userService.getLoginUser().subscribe(
-      data => 
-      {
-        this.user = data;
-      },
-      error => {
-        this.errorListUsers = true;
-      }
-    );
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.userId = params['userId'];
+    });
 
     this.activatedRoute.params.subscribe((params: Params) => {
       this.numberOfPage = params['p'];
@@ -44,12 +38,16 @@ export class ListMeetingPageComponent implements OnInit {
 
     this.today = new Date().getTime();
 
-    // Cogemos las meeting que el usuario tenga
-    this.meetingService.getMeetingsByUser(this.user.id, this.numberOfPage).subscribe(
+    this.meetingService.getMeetingsByUser(this.userId, this.numberOfPage).subscribe(
       data => 
       {
-        this.meetingPagination = data;
-        this.meetings = data.beans;
+        //this.meetingPagination = data;
+        this.meetings = data;
+
+        if(this.meetings.length > 5)
+          this.numberOfPage = Number(this.numberOfPage) + 1;
+        else
+          this.numberOfPage = (this.numberOfPage == 0 ? -1 : 0);
       },
       error => {
         this.errorListUsers = true;
@@ -57,19 +55,19 @@ export class ListMeetingPageComponent implements OnInit {
     );
   }
 
-  getMeetingsByUser(userId: number, p: number){
+  getMeetingsByUser(userId: number, p: number) {
     this.meetingService.getMeetingsByUser(userId, p).subscribe(res =>{
       this.router.navigate(['/meeting/list/' + userId + '/page/' + p]);
-    })
+    })   
   }
 
-  goToMeeting(meetingId: number){
+  goToMeeting(meetingId: number) {
     this.meetingService.getMeeting(meetingId).subscribe(res =>{
       this.router.navigate(['/meeting/' + meetingId]);
     });
   }
 
-  seeMinutesMeeting(meetingId: number){
+  seeMinutesMeeting(meetingId: number) {
     this.meetingService.getMeeting(meetingId).subscribe(res =>{
       this.router.navigate(['/minutes/' + meetingId]);
     });

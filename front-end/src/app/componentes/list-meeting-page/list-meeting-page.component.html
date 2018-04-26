@@ -2,32 +2,32 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">M</span>eetings
 </h1>
 
-<p *ngIf="meetingPagination.hasPreviousPage">Es la primera</p>
-
-<div *ngFor="let meeting of meetings; let i=index">
-  <div class="subtitle">
+<div *ngFor="let meeting of meetings; let i=index" class="item-wrapper">
+  <div class="header-wrapper" *ngIf="i < 5">
     {{meeting.title}}
   </div>
-  <div class="minutes-container">
-      <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Finished</span> <span *ngIf="meeting.hasFinished"> Yes</span><span *ngIf="!meeting.hasFinished"> No</span>
+  <div class="content-wrapper d-flex flex-wrap" *ngIf="i < 5">
+      <div class="item-content d-inline-block">
+        <span class="item-title">Finished</span> <span *ngIf="meeting.hasFinished"> Yes</span><span *ngIf="!meeting.hasFinished"> No</span>
       </div>
-      <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Type</span> {{meeting.type}}
+      <div class="item-content d-inline-block">
+        <span class="item-title">Type</span> {{meeting.type}}
       </div>
-      <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Date</span> {{meeting.date | date : "fullDate"}} 
-      </div>      
-      <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">See Minutes</button>
-      <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn">Go to meeting!</button>
-      <p *ngIf="!meeting.hasFinished && meeting.date < today">The meeting have not minutes</p>
+      <div class="item-content d-inline-block">
+        <span class="item-title">Date</span> {{meeting.date | date : "fullDate"}} 
+      </div>
+      <div class="item-content d-inline-block">
+        <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">See Minutes</button>
+        <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn">Go to meeting!</button>
+        <p *ngIf="!meeting.hasFinished && meeting.date < today">The meeting have not minutes</p>
+      </div>
   </div> 
 </div>
 
-<button *ngIf="meetingPagination.hasPreviousPage" type="button" (click)="getMeetingsByUser(user.id, meetingPagination.numberOfPage - 1)" class="btn">
+<!--<button *ngIf="meetingPagination.hasPreviousPage" type="button" (click)="getMeetingsByUser(user.id, meetingPagination.numberOfPage - 1)" class="btn">
     Previous
-</button>
+</button>-->
 
-<button *ngIf="meetingPagination.hasNextPage" type="button" (click)="getMeetingsByUser(user.id, meetingPagination.numberOfPage + 1)" class="btn">
-    Next
-</button>
+<a *ngIf="numberOfPage >= 0" href="/meeting/list/{{userId}}/page/{{numberOfPage}}">
+  <button type="button" class="btn">Next</button>
+</a>

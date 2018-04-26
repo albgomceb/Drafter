@@ -99,7 +99,8 @@ public class MeetingController extends AbstractController {
 		return res;
 	}
 	
-	@GetMapping("/list/{userId}/page/{p}")
+	// TODO
+	/*@GetMapping("/list/{userId}/page/{p}")
 	public Pagination<MeetingBean> getByUserId(@PathVariable("userId") int userId, @PathVariable("p") int p) {
 		Assert.isTrue(p >= 0, "It is not a valid page");
 		User user = userService.findById(new Integer(userId));
@@ -116,6 +117,27 @@ public class MeetingController extends AbstractController {
 											p, page.hasPrevious(), page.hasNext());
 		
 		return meetingBeanPagination;
+	}*/
+	@GetMapping("/list/{userId}/page/{p}")
+	public List<MeetingBean> getByUserId(@PathVariable("userId") int userId, @PathVariable("p") int p) {
+		Assert.isTrue(p >= 0, "It is not a valid page");
+		User user = userService.findById(new Integer(userId));
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
+		
+		Page<Meeting> page = meetingService.findByUserId(userId, PageRequest.of(p, 6));
+		
+		if(page.getContent().size() == 0)
+			page = meetingService.findByUserId(userId, PageRequest.of(0, 6));
+		
+		List<MeetingBean> meetingBeanPage = page.getContent()
+												.stream()
+												.map(meeting -> new MeetingSerializer().fromMeeting(meeting))
+												.collect(Collectors.toList());
+		
+		return meetingBeanPage;
 	}
 	
 

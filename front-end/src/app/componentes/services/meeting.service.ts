@@ -32,8 +32,8 @@ export class MeetingService {
     return this.http.get<Array<Conclusion>>(this.staticUrl+'/agendas/' + agendaId + '/conclussion');
   }
 
-  public getMeetingsByUser(userId: number, p: number): Observable<MeetingPagination> {
-    return this.http.get<MeetingPagination>(this.staticUrl+'/meeting/list/' + userId + '/page/' + p);
+  public getMeetingsByUser(userId: number, p: number): Observable<Array<Meeting>> {
+    return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/list/' + userId + '/page/' + p);
   }
 
   public isParticipant(meetingId: number): Observable<boolean> {
