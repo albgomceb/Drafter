@@ -5,6 +5,7 @@ public class ConclusionBean {
 	private String conclusion;
 	private int agendaId;
 	private int id;
+	private int version;
 	
 	
 	public ConclusionBean() {
@@ -34,6 +35,16 @@ public class ConclusionBean {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	public int getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 	

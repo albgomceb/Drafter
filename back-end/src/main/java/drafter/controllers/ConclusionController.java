@@ -50,17 +50,14 @@ public class ConclusionController {
 
 	@MessageMapping("/conclusion/save/{meetingId}")
 	public void save(@DestinationVariable int meetingId, ModelBean<ConclusionBean> bean) {
-		Conclusion conclusion = new ConclusionSerializer().fromBean(bean.getModel(), agendaService, conclusionService);
-		conclusion = conclusionService.save(conclusion);
+		bean.setModel(conclusionService.saveBean(bean.getModel()));
 		
-		bean.setModel(new ConclusionSerializer().fromConclusion(conclusion));
 		template.convertAndSend("/meeting/" + meetingId, bean);
 	}
 	
 	@MessageMapping("/conclusion/delete/{conclusionId}/{meetingId}")
 	public void delete(@DestinationVariable int conclusionId, @DestinationVariable int meetingId, String json) {
-		if(conclusionId != 0)
-			conclusionService.delete(conclusionId);
+		conclusionService.delete(conclusionId);
 		template.convertAndSend("/meeting/" + meetingId, json);
 	}
 }
