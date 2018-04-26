@@ -23,11 +23,13 @@ div.page-wrapper {
     }
 }
 
+/* Titles */
 h1.title-page {
     margin: 0 0 2rem;
+    font-weight: bold;
 
     span.capital-letter {
-        color: $content_letter_title;
+        color: $mp_secondary_color;
     }
 }
 
@@ -36,6 +38,7 @@ h2.subtitle {
     margin-bottom: 1.2rem;
 }
 
+/* Button */
 button.btn {
     border: none;
     border-radius: 0;
@@ -49,22 +52,9 @@ button.btn:hover:not([disabled=""]) {
     background-color: $button_hover;
 }
 
-.shadow {
-	box-shadow: 0px 1px 5px 0px #4a4a4a;
-}
-
-img.logo {
-    max-width: 7.5rem;
-}
-
-img.avatar {
-    max-width: 3.75rem;
-}
-
 /* Item wrapper */
 div.item-wrapper {
     margin: 1rem 0;
-    max-width: 60rem;
 
     div.header-wrapper {
         padding: 1rem;
@@ -79,6 +69,7 @@ div.item-wrapper {
     }
 }
 
+/* Card */
 div.card {
     margin: 1.5rem 2rem;
 
@@ -112,4 +103,18 @@ div.card {
     @include media-breakpoint-down(md) {
         margin: 1.5rem 0.3rem;
     }
+}
+
+/* Helper class */
+.shadow {
+	box-shadow: 0px 1px 5px 0px #4a4a4a;
+}
+
+img.logo {
+    max-width: 7.5rem;
+}
+
+img.avatar {
+    max-width: 3.75rem;
+    border-radius: 50%;
 }
