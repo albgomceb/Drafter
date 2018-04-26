@@ -1,0 +1,51 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit(registerForm)" method="post">
+  <div class="form-group">
+    
+    
+    <label class="mt-4" for="name" >Name:</label>
+    <div *ngIf="profileForm.get('name').errors" class="alert alert-danger">
+      Required
+    </div>
+    <input [(ngModel)]="user.name" type="text" name="name" id="name" formControlName="name" class="form-control"/>
+    
+    <label class="mt-4" for="surname" >Surname:</label>
+    <div *ngIf="profileForm.get('surname').errors" class="alert alert-danger">
+      Required
+    </div>
+    <input [(ngModel)]="user.surname" type="text" name="surname" id="surname" formControlName="surname" class="form-control"/>
+
+    <label class="mt-4" for="username" >Username:</label>
+    <div *ngIf="profileForm.get('username').errors" class="alert alert-danger">
+      Required | Minimum 5 characters
+    </div>
+    <input [(ngModel)]="user.username" type="text" name="username" id="username" formControlName="username" class="form-control"/>
+    
+    <label class="mt-4" for="phone" >Phone number:</label>
+    <div *ngIf="profileForm.get('phone').errors">
+      <div *ngIf="profileForm.get('phone').errors['required']" class="alert alert-danger">
+        Required
+      </div>
+      <div *ngIf="profileForm.get('phone').errors['pattern']" class="alert alert-danger">
+        Must be numeric
+      </div>
+    </div>
+    <input [(ngModel)]="user.phone" type="text" name="phone" id="phone" formControlName="phone" class="form-control"/>
+    
+    <label class="mt-4" for="email" >Email:</label>
+    <div *ngIf="profileForm.get('email').errors" class="alert alert-danger">
+      Must be a correct email format
+    </div>
+    <input [(ngModel)]="user.email" type="text" name="email" id="email" formControlName="email" class="form-control"/>
+    
+    <label class="mt-4" for="password" >New password (Put the current password to keep it):</label>
+    <div *ngIf="profileForm.get('password').errors" class="alert alert-danger">
+      Required | Minimum 5 characters
+    </div>
+    <input type="text" name="password" id="password" formControlName="password" class="form-control"/>
+  </div>
+
+  <div style="margin:2%;text-align:center">
+    <button type="onsubmit" class="btn btn-2">Send</button>
+    <button routerLink=".." class="btn bt-lg">Cancel</button>
+  </div>
+</form>

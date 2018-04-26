@@ -5,10 +5,17 @@ public class UserBean2 {
 	public String name; 
 	public String surname; 
 	public String email; 
+	public String phone;
 	public String username;
 	public String password;
 	
 	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public String getName() {
 		return name;
 	}
