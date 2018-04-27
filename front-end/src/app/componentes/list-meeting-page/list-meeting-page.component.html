@@ -14,7 +14,31 @@
         <span class="item-title">Type</span> {{meeting.type}}
       </div>
       <div class="item-content d-inline-block">
-        <span class="item-title">Date</span> {{meeting.date | date : "fullDate"}} 
+        <span class="item-title"><i class="fas fa-calendar-alt"></i> Date</span> {{meeting.date | date : "fullDate"}} 
+      </div>
+      <div class="item-content d-inline-block">
+        <span class="item-title">Topic</span> {{meeting.title}} 
+      </div>
+      <div class="item-content d-inline-block">
+        <span class="item-title">Description</span> {{meeting.description}} 
+      </div>
+      <div class="item-content d-block">
+        <span class="item-title"><i class="fas fa-star"></i> Session leader</span> 
+        <div class="d-flex flex-wrap mt-3">
+          <div class="text-center mx-2">
+            <img attr.src="{{meeting.attendants[0].photo}}" class="img-fluid avatar">                         
+            <span class="d-block">{{meeting.attendants[0].name}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="item-content d-inline-block">
+        <span class="item-title"><i class="fas fa-users"></i> Participants</span>
+        <div class="d-flex flex-wrap mt-3">
+          <div *ngFor="let us of meeting.attendants" class="text-center mx-2">
+              <img attr.src="{{us.photo}}" class="img-fluid avatar">                         
+              <span class="d-block">{{us.name}}</span>
+          </div>
+        </div> 
       </div>
       <div class="item-content d-inline-block">
         <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">See Minutes</button>
@@ -28,6 +52,6 @@
     Previous
 </button>-->
 
-<a *ngIf="numberOfPage >= 0" href="/meeting/list/{{userId}}/page/{{numberOfPage}}">
-  <button type="button" class="btn">Next</button>
+<a *ngIf="numberOfPage>0" href="/meeting/list/{{userId}}/page/{{numberOfPage}}">
+  <button  type="button" class="btn">Next</button>
 </a>
