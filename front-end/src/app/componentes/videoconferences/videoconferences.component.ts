@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as SimpleWebRTC from 'simplewebrtc';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,149 +16,227 @@ export class VideoconferencesComponent implements OnInit {
   
 
   ngOnInit() {
-    
-    this.callInit();
-  }
 
-  callInit(){
     this.room = this.idRoomMeeting;
 
-    var webrtc = new SimpleWebRTC({
-      // the id/element dom element that will hold "our" video
-      localVideoEl: 'localVideo',
-      // the id/element dom element that will hold remote videos
-      remoteVideosEl: 'remotesVideo',
-      // nickname of logged user
-      nick: this.getLoginService().getPrincipal().username,
-      //nick: 'PabloGitu',
-      // immediately ask for camera access
-      autoRequestMedia: true,
-      debug: false,
-      detectSpeakingEvents: true
-    });
+    let constraints;
 
-    webrtc.on('readyToCall', function () {
-      // you can name it anything
-      if (this.room) webrtc.joinRoom(this.room);
-    });
+    let audioTracks:Array<MediaStreamTrack>=[];
+    let videoTracks:Array<MediaStreamTrack>=[];
+    let arrayTracks:Array<MediaStreamTrack>=[];
+    let camStream:MediaStream;
+    let remoteStream:MediaStream;
+    let pc:RTCPeerConnection;
 
-    function showVolume(el, volume) {
-      if (!el) return;
-      if (volume < -45) { // vary between -45 and -20
-          //el.style.height = '0px';
-          $("#localVolume").css('height','0px');
-      } else if (volume > -20) {
-          //el.style.height = '100%';
-          $("#localVolume").css('height','100%');
-      } else {
-          //el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
-          $("#localVolume").css('height','' + Math.floor((volume + 100) * 100 / 25 - 220) + '%');
-      }
+    //VARIABLES VIDEOCONFERENCIA
+    console.log("Initializing; room = "+this.room);
+    var localVideo = document.getElementById("localVideo");
+    var miniVideo = document.getElementById("miniVideo");
+    var remoteVideo = document.getElementById("remoteVideo");
+
+    var attachMediaStream = require('attachmediastream');
+
+    var sdpConstraints = {'mandatory': {
+        'OfferToReceiveAudio':true, 
+        'OfferToReceiveVideo':true }};
+
+    constraints = {
+        'OfferToReceiveAudio':true, 
+        'OfferToReceiveVideo':true };
+
+    //EJECUCION DEL CODIGO
+    start();
+
+
+    //PEDIMOS PERMISO DE CAPTURA DE AUDIO Y VIDEO A LOS DISPOSITIVOS ACTIVOS
+    function start() {
+        console.log('Requesting local stream');
+        //alert(navigator.userAgent);
+
+        if (navigator.getUserMedia) {
+
+            if(navigator.userAgent.search("IOS")!== -1){
+                //alert("Solo disponible para Desktop(Chrome o Firefox) y Android");
+            }else if( navigator.userAgent.search("Android")!== -1){
+                //alert("Usas Android");
+                $("#buttonsAndroid").show();
+
+                $("#frontCam").click(function() {
+
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                .then(function(stream){
+                    console.log('Received local stream');
+                    if(stream.getVideoTracks.length>0)
+                        stream.getVideoTracks[0].stop();
+                        camStream = stream;
+                        stream.getAudioTracks().forEach(e => audioTracks.push(e));
+                        stream.getVideoTracks().forEach(e => videoTracks.push(e));
+                        stream.getTracks().forEach(e => arrayTracks.push(e));
+                        doGetUserMedia();
+                })
+                .catch(function(e) {
+                    console.log('getUserMedia() error: ', e);
+                    alert('getUserMedia() error: '+ e)
+                });
+
+                });
+
+                $("#backCam").click(function() {
+
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(function(stream){
+                        console.log('Received local stream');
+                        if(stream.getVideoTracks.length>0)
+                            stream.getAudioTracks[0].stop();
+                            camStream = stream;
+                            stream.getAudioTracks().forEach(e => audioTracks.push(e));
+                            stream.getVideoTracks().forEach(e => videoTracks.push(e));
+                            stream.getTracks().forEach(e => arrayTracks.push(e));
+                            doGetUserMedia();
+                    })
+                    .catch(function(e) {
+                        console.log('getUserMedia() error: ', e);
+                        alert('getUserMedia() error: '+ e)
+                    });
+
+                    });
+
+            }else{
+                //alert("Usas Chrome o Firefox");
+                $("#buttonsAndroid").hide();
+
+                navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+                .then(function(stream){
+                    console.log('Received local stream');
+                    camStream = stream;
+                    stream.getAudioTracks().forEach(e => audioTracks.push(e));
+                    stream.getVideoTracks().forEach(e => videoTracks.push(e));
+                    stream.getTracks().forEach(e => arrayTracks.push(e));
+                    doGetUserMedia();
+                })
+                .catch(function(e) {
+                    console.log('getUserMedia() error: ', e);
+                    alert('getUserMedia() error: '+ e)
+                });
+
+            }
+
+            
+
+        }else{
+            alert('Sorry, your browser does not support getUserMedia');
+        }
     }
 
-    webrtc.on('channelMessage', function (peer, label, data) {
-      if (data.type == 'volume') {
-          showVolume(document.getElementsByClassName('volume_' + peer.id), data.volume);
+
+      function doGetUserMedia(){
+        console.log("User has granted access to local media.");
+        // Call the polyfill wrapper to attach the media stream to this element.
+        attachMediaStream(camStream, localVideo);
+        localVideo.style.opacity = "1";
+        // Caller creates PeerConnection.
+        maybeStart();
       }
-    });
 
-    webrtc.on('videoAdded', function (video, peer) {
-      console.log('video added', peer);
-      var remotes = document.getElementById('remotesVideo');
-      console.log(webrtc.getDomId(peer));
-
-      if (peer && peer.pc) {
-        var connstate = document.createElement('div');
-        connstate.className = 'connectionstate';
-        remotes.appendChild(connstate);
-        peer.pc.on('iceConnectionStateChange', function (event) {
-            switch (peer.pc.iceConnectionState) {
-            case 'checking':
-                connstate.innerText = 'Connecting to peer...';
-                break;
-            case 'connected':
-            case 'completed': // on caller side
-                connstate.innerText = peer.nick;
-                console.log("NICK:" + peer.nick)
-                break;
-            case 'disconnected':
-                connstate.innerText = 'Disconnected.';
-                break;
-            case 'failed':
-                break;
-            case 'closed':
-                connstate.innerText = 'Connection closed.';
-                break;
-            }
-        });
-      }   
-      
-      if (remotes) {
-          var d = document.createElement('div');
-          d.className = 'videoContainer';
-          d.id = 'container_' + webrtc.getDomId(peer);
-          d.appendChild(video);
-          var vol = document.createElement('div');
-          vol.id = 'volume_' + peer.id;
-          vol.className = 'volume_bar';
-          video.style.width = '200px'
-          video.style.height = '150px'
-          video.onclick = function () {
-              video.style.width = '100px';
-              video.style.height = '100px';
-          };
-          d.appendChild(vol);
-          remotes.appendChild(d);
+      function maybeStart() {
+        if (camStream) {
+          // ...
+          createPeerConnection();
+          // ...
+          pc.addStream(camStream);
+          // Caller initiates offer to peer.
+          doCall();
+        }
       }
-    });
 
-    webrtc.on('videoRemoved', function (video, peer) {
-      console.log('video removed ', peer);
-      var remotes = document.getElementById('remotesVideo');
-      console.log(webrtc.getDomId(peer));
-      var el = document.getElementById('container_' + webrtc.getDomId(peer));
-      if (remotes && el) {
-          remotes.removeChild(el);
+      //LLEVAMOS A CABO LA LLAMADA
+      function createPeerConnection() {
+        try {
+            // Create an RTCPeerConnection via the polyfill.
+
+            var servers = {iceServers: [
+                {
+                    url: 'stun:23.21.150.121', // Old WebRTC API (url)
+                    urls: [                    // New WebRTC API (urls)
+                    'stun:23.21.150.121',
+                    'stun:stun.l.google.com:19302',
+                    'stun:stun.services.mozilla.com',
+                    ],
+                },
+            ]};
+            //var servers = null
+            pc = new RTCPeerConnection(servers);
+            pc.onicecandidate = iceCallback;
+            console.log('Created RTCPeerConnnection');
+            console.log("CAM-STREAM: ",camStream);
+        } catch (e) {
+            console.log("Failed to create PeerConnection, exception: " + e.message);
+            alert("Cannot create RTCPeerConnection object; WebRTC is not supported by this browser.");
+            return;
+        }
+
+        pc.onaddstream = function(event) {
+            attachMediaStream(event.stream, remoteVideo);}
+        pc.onremovestream = onRemoteStreamRemoved;
+  
       }
-    });
 
-    webrtc.on('volumeChange', function (volume, treshold) {
-      //console.log('own volume', volume);
-      showVolume(document.getElementById('localVolume'), volume);
-    });
+      function doCall() {
+        console.log("Sending offer to peer.");
+        pc.createOffer(constraints).then(setLocalAndSendMessage, null);
+      }
 
-    // listen for mute and unmute events
-    webrtc.on('mute', function (data) { // show muted symbol
-        webrtc.getPeers(data.id).forEach(function (peer) {
-            if (data.name == 'audio') {
-                $('#videocontainer_' + webrtc.getDomId(peer) + ' .muted').show();
-            } else if (data.name == 'video') {
-                $('#videocontainer_' + webrtc.getDomId(peer) + ' .paused').show();
-                $('#videocontainer_' + webrtc.getDomId(peer) + ' video').hide();
-            }
-        });
-    });
-    webrtc.on('unmute', function (data) { // hide muted symbol
-        webrtc.getPeers(data.id).forEach(function (peer) {
-            if (data.name == 'audio') {
-                $('#videocontainer_' + webrtc.getDomId(peer) + ' .muted').hide();
-            } else if (data.name == 'video') {
-                $('#videocontainer_' + webrtc.getDomId(peer) + ' video').show();
-                $('#videocontainer_' + webrtc.getDomId(peer) + ' .paused').hide();
-            }
-        });
-    });
+      function doAnswer() {
+        console.log("Sending answer to peer.");
+        pc.createAnswer(setLocalAndSendMessage, null);
+      }
 
-    //botones para mutear y desmutear, hay que hacer que al principio el botón de desmutear no se muestre.
-    $('#btn1').click(function() {
-        webrtc.mute();
-      });
+      function setLocalAndSendMessage(sessionDescription) {
+        // Set Opus as the preferred codec in SDP if Opus is present.
+        pc.setLocalDescription(sessionDescription);
+        sendMessage(sessionDescription);
+      }
 
-    $('#btn2').click(function() {
-        webrtc.unmute();
-    });
+      function onRemoteStreamAdded(event) {
+        // ...
+        console.log("HOLA");
+        attachMediaStream(event.stream, remoteVideo);
+        remoteStream = event.stream;
+      }
 
-  }
+      function onRemoteStreamRemoved(event) {
+        console.log("Remote stream removed.");
+      }
+
+      function hangup() {
+        console.log('Ending calls');
+        pc.close();
+        pc.close();
+        pc = null;
+      }
+
+      function iceCallback(event) {
+        if (event.candidate) {
+            sendMessage({type: 'candidate',
+              label: event.candidate.sdpMLineIndex,
+              id: event.candidate.sdpMid,
+              candidate: event.candidate.candidate});
+          } else {
+            console.log("End of candidates.");
+          }
+      }
+
+      function sendMessage(message) {
+        var msgString = JSON.stringify(message);
+        console.log('C->S: ' + msgString);
+        var path = location.pathname;
+        path + '/message?r=99688636' + '&u=92246248';
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', path, true);
+        xhr.send(msgString);
+      }
+
+}
 
   public getLoginService(): LoginService {
     return this.loginService;
