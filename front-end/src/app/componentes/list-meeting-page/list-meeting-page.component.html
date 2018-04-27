@@ -2,34 +2,25 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">M</span>eetings
 </h1>
 
-<div *ngFor="let meeting of meetings; let i=index" class="item-wrapper">
-  <div class="header-wrapper" *ngIf="i < 5">
-    {{meeting.title}}
+<div class="text-center">
+  <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
+      class="m-1"><button type="button" class="btn">Previous</button></a>
+  <span class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
+  <a *ngIf="meetingPagination.hasNextPage" href="/meeting/list/{{userId}}/page/{{nextNumberOfPage}}"
+     class="m-1"><button type="button" class="btn">Next</button></a>
+</div>
+
+<div *ngFor="let meeting of meetingPagination.beans; let i=index" class="item-wrapper">
+  <div class="header-wrapper text-uppercase">
+    <mark *ngIf="!meeting.hasFinished">Unfinished</mark> {{meeting.title}}
   </div>
-  <div class="content-wrapper d-flex flex-wrap" *ngIf="i < 5">
+  <div class="content-wrapper">
+    <div class="d-flex flex-wrap">
       <div class="item-content d-inline-block">
-        <span class="item-title">Finished</span> <span *ngIf="meeting.hasFinished"> Yes</span><span *ngIf="!meeting.hasFinished"> No</span>
-      </div>
-      <div class="item-content d-inline-block">
-        <span class="item-title">Type</span> {{meeting.type}}
+        <span class="item-title"><i class="fas fa-briefcase"></i> Type</span> {{meeting.type}}
       </div>
       <div class="item-content d-inline-block">
         <span class="item-title"><i class="fas fa-calendar-alt"></i> Date</span> {{meeting.date | date : "fullDate"}} 
-      </div>
-      <div class="item-content d-inline-block">
-        <span class="item-title">Topic</span> {{meeting.title}} 
-      </div>
-      <div class="item-content d-inline-block">
-        <span class="item-title">Description</span> {{meeting.description}} 
-      </div>
-      <div class="item-content d-block">
-        <span class="item-title"><i class="fas fa-star"></i> Session leader</span> 
-        <div class="d-flex flex-wrap mt-3">
-          <div class="text-center mx-2">
-            <img attr.src="{{meeting.attendants[0].photo}}" class="img-fluid avatar">                         
-            <span class="d-block">{{meeting.attendants[0].name}}</span>
-          </div>
-        </div>
       </div>
       <div class="item-content d-inline-block">
         <span class="item-title"><i class="fas fa-users"></i> Participants</span>
@@ -41,17 +32,37 @@
         </div> 
       </div>
       <div class="item-content d-inline-block">
-        <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">See Minutes</button>
-        <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn">Go to meeting!</button>
-        <p *ngIf="!meeting.hasFinished && meeting.date < today">The meeting have not minutes</p>
+        <span class="item-title"><i class="fas fa-star"></i> Session leader</span> 
+        <div class="d-flex flex-wrap mt-3">
+          <div class="text-center mx-2">
+            <img attr.src="{{meeting.attendants[0].photo}}" class="img-fluid avatar">                         
+            <span class="d-block">{{meeting.attendants[0].name}}</span>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="item-content">
+      <span class="item-title">Description</span> 
+      <p>{{meeting.description}}</p>
+    </div>
+    <div class="item-content">
+      <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">
+        <i class="far fa-file-alt"></i> Minutes
+      </button>
+      <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn">
+          <i class="fas fa-play"></i> Go to meeting!
+      </button>
+      <p *ngIf="!meeting.hasFinished && meeting.date < today">
+        The meeting have not minutes.
+      </p>
+    </div>
   </div> 
 </div>
 
-<!--<button *ngIf="meetingPagination.hasPreviousPage" type="button" (click)="getMeetingsByUser(user.id, meetingPagination.numberOfPage - 1)" class="btn">
-    Previous
-</button>-->
-
-<a *ngIf="numberOfPage>0" href="/meeting/list/{{userId}}/page/{{numberOfPage}}">
-  <button  type="button" class="btn">Next</button>
-</a>
+<div class="text-center">
+  <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
+      class="m-1"><button type="button" class="btn">Previous</button></a>
+  <span class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
+  <a *ngIf="meetingPagination.hasNextPage" href="/meeting/list/{{userId}}/page/{{nextNumberOfPage}}"
+      class="m-1"><button type="button" class="btn">Next</button></a>
+</div>

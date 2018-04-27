@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MeetingService } from '../services/meeting.service';
-import { Meeting } from '../models/meeting.model';
 import { MeetingPagination } from '../models/meetingPagination.model';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
@@ -14,10 +13,11 @@ import { User } from '../models/user.model';
 })
 export class ListMeetingPageComponent implements OnInit {
 
-  //public meetingPagination : MeetingPagination;
-  public meetings: Array<Meeting>;
+  public meetingPagination : MeetingPagination;
   public userId: number;
+  public previousNumberOfPage : number;
   public numberOfPage : number;
+  public nextNumberOfPage : number;
   public today: number;
 
   errorListUsers:boolean = false;
@@ -41,13 +41,10 @@ export class ListMeetingPageComponent implements OnInit {
     this.meetingService.getMeetingsByUser(this.userId, this.numberOfPage).subscribe(
       data => 
       {
-        //this.meetingPagination = data;
-        this.meetings = data;
-
-        if(this.meetings.length > 5)
-          this.numberOfPage = Number(this.numberOfPage) + 1;
-        else
-          this.numberOfPage = (this.numberOfPage == 0 ? -1 : 0);
+        this.meetingPagination = data;
+        this.numberOfPage = this.meetingPagination.numberOfPage;
+        this.previousNumberOfPage = Number(this.numberOfPage) - 1;
+        this.nextNumberOfPage = Number(this.numberOfPage) + 1;
       },
       error => {
         this.errorListUsers = true;
