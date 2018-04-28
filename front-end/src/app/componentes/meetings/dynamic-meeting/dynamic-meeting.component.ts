@@ -1,4 +1,4 @@
-import { NgModule, Component, OnInit } from '@angular/core';
+import { NgModule, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import { Option } from '../../models/option.model';
   templateUrl: './dynamic-meeting.component.html',
   styleUrls: ['./dynamic-meeting.component.scss']
 })
-export class DynamicMeetingComponent implements OnInit {
+export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
   public meetingId :number;
   public meetingInfo:any={};
@@ -26,8 +26,8 @@ export class DynamicMeetingComponent implements OnInit {
   public unreadedMsg: number;
 
   constructor(private userService: UserService,
-     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
-    private realtimeService:RealTimeService) {}
+    private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
+    public realtimeService:RealTimeService) {}
 
   ngOnInit() {
     this.loaded = false;
@@ -61,6 +61,10 @@ export class DynamicMeetingComponent implements OnInit {
       });
     }
   } 
+
+  ngOnDestroy() {
+    this.realtimeService.disconnect();
+  }
 
   finishMeeting(meetingId:number){
     this.realtimeService.send('/meeting/finish/',WSResponseType.PUSH,'finish',{id:"",name:""});    
