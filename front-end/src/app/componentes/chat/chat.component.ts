@@ -60,6 +60,11 @@ export class ChatComponent implements OnInit {
     this.editable.nativeElement.focus();
   }
 
+  scroll(event) {
+    if(event.target.scrollTop == (event.target.scrollHeight - event.target.clientHeight))
+      this.readMsg();
+  }
+
   public getUserColor(uuid: string): string {
     return this.realTimeService.getUserColor(uuid);
   }

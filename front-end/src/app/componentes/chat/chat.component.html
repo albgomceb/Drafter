@@ -1,4 +1,4 @@
-<ul #messagesRef class="msg-list-chat" id="messagesRef">
+<ul #messagesRef class="msg-list-chat" id="messagesRef" (scroll)="scroll($event)">
   <li *ngFor="let msg of messages; let i = index;">
     <div class="unreaded" *ngIf="showNotReaded(i)">{{ getUnreadedMsg() }} unread messages</div>
     <div class="msg-container" [ngClass]="{'msg-container-me': isPrincipal(msg.userUUID)}">

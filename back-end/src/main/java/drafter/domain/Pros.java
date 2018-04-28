@@ -3,6 +3,7 @@ package drafter.domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -41,6 +42,7 @@ public class Pros extends DomainEntity{
 
 	@SafeHtml
 	@NotBlank
+	@Lob
 	public String getPros() {
 		return pros;
 	}
