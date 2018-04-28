@@ -1,0 +1,45 @@
+<h1 class="title-page text-center">
+    <span class="capital-letter">P</span>rofile
+</h1>
+
+<div class="item-wrapper">
+    <div class="content-wrapper">
+        <!-- <label for="enterprise" >Enterprise:</label>
+        <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise"/> -->
+        <div class="item-content">
+            <span class="item-title">
+                Name 
+            </span>
+            {{user.name}}
+        </div>
+        <div class="item-content">
+            <span class="item-title">
+                Surname
+            </span>
+            {{user.surname}}
+        </div>
+        <div class="item-content">
+            <span class="item-title">
+                Username
+            </span>
+            {{user.username}}
+        </div>
+        <div class="item-content">
+            <span class="item-title">
+                Email
+            </span>
+            {{user.email}}
+        </div>
+        <div class="item-content">
+            <span class="item-title">
+                Phone number
+            </span>
+            {{user.phone}}
+        </div>  
+    </div>
+</div>
+
+<div class="text-center">
+    <button routerLink="edit" class="btn btn-2">Edit profile</button>
+    <button routerLink=".." class="btn bt-lg">Go back</button>
+</div>

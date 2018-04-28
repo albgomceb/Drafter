@@ -85,7 +85,6 @@ public class MeetingController extends AbstractController {
 		return res;
 	}
 	
-
 	@GetMapping("/{meetingId}")
 	public MeetingBean getMeeting(@PathVariable int meetingId) {
 		MeetingSerializer serializer = new MeetingSerializer(); 
@@ -100,24 +99,30 @@ public class MeetingController extends AbstractController {
 	}
 	
 	@GetMapping("/list/{userId}/page/{p}")
-	public Pagination<MeetingBean> getByUserId(@PathVariable("userId") int userId, @PathVariable("p") int p) {
-		Assert.isTrue(p >= 0, "It is not a valid page");
-		User user = userService.findById(new Integer(userId));
-		User userLogued = userService.findByPrincipal();
-		if(!userLogued.equals(user)) {
-			return null;
+	public Pagination<MeetingBean> getByUserId(@PathVariable("userId") int userId, @PathVariable("p") int p) {		
+		if(!isPrincipal(userId))
+			throw new IllegalStateException();
+		
+		// The first page is 0
+		if(p < 0)
+			p = 0;
+		
+		Page<Meeting> page = meetingService.findByUserId(userId, PageRequest.of(p, 5));
+		
+		// If the selected page does not exist, the first page is returned
+		if(page.getNumberOfElements() == 0 && p > 0) {
+			p = 0;
+			page = meetingService.findByUserId(userId, PageRequest.of(p, 5));
 		}
 		
-		Page<Meeting> page = meetingService.findByUserId(userId, PageRequest.of(p, 5));		
 		Pagination<MeetingBean> meetingBeanPagination = 
 				new Pagination<MeetingBean>(page.getContent().stream()
 															 .map(meeting -> new MeetingSerializer().fromMeeting(meeting))
 															 .collect(Collectors.toList()),
-											p, page.hasPrevious(), page.hasNext());
+											p, page.getTotalPages(), page.hasPrevious(), page.hasNext());
 		
 		return meetingBeanPagination;
-	}
-	
+	}	
 
 	@GetMapping("/types")
 	public List<Option> getTypes() {
@@ -158,5 +163,9 @@ public class MeetingController extends AbstractController {
 	public String nextStep(@PathVariable int meetingId, @PathVariable int timer) {
 		meetingService.setTimer(meetingId, timer);
 		return "";
+	}
+	
+	private boolean isPrincipal(int userId) {
+		return userService.findByPrincipal().equals(userService.findById(new Integer(userId)));	
 	}
 }

@@ -6,12 +6,14 @@ public class Pagination<T> {
 	
 	private List<T> beans;
 	private int numberOfPage;
+	private int totalPages;
 	private boolean hasPreviousPage;
 	private boolean hasNextPage;
 	
-	public Pagination(List<T> page, int numberOfPage, boolean hasPreviousPage, boolean hasNextPage) {
-		setBeans(page);
+	public Pagination(List<T> beans, int numberOfPage, int totalPages, boolean hasPreviousPage, boolean hasNextPage) {
+		setBeans(beans);
 		setNumberOfPage(numberOfPage);
+		setTotalPages(totalPages);
 		setHasPreviousPage(hasPreviousPage);
 		setHasNextPage(hasNextPage);
 	}
@@ -30,6 +32,14 @@ public class Pagination<T> {
 
 	public void setNumberOfPage(int numberOfPage) {
 		this.numberOfPage = numberOfPage;
+	}
+	
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
 	}
 
 	public boolean getHasPreviousPage() {

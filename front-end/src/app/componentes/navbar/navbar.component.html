@@ -50,7 +50,8 @@
               <span class="username">{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}</span>
             </a>
             <div class="dropdown-menu shadow">
-               <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
+              <a routerLink="me" class="dropdown-item">Profile</a>
+              <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
             </div>
         </li>
       </ul>

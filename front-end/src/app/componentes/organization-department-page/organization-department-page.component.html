@@ -1,43 +1,16 @@
-<div class="card-body">
-  <h2 class="text-center"><span class="letter">O</span>rganization</h2>
-  <form [formGroup]="frmRegistro">
-    <div class="form-group">
-      <label class="mt-4" for="enterprise" >Enterprise:</label>
-      <div *ngIf="frmRegistro.get('enterprise').errors" class="alert alert-danger">
-        Required
-      </div>
-      <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" formControlName="enterprise" class="form-control"/>
-      
-      <label class="mt-4" for="description" >Description:</label>
-      <div *ngIf="frmRegistro.get('description').errors" class="alert alert-danger">
-        Required
-      </div>
-      <input [(ngModel)]="organization.description" type="text" name="description" id="description" formControlName="description" class="form-control"/>
-      
-      <label class="mt-4" for="address" >Address:</label>
-      <div *ngIf="frmRegistro.get('address').errors" class="alert alert-danger">
-        Required
-      </div>
-      <input [(ngModel)]="organization.address" type="text" name="address" id="address" formControlName="address" class="form-control"/>
-      
-      <label class="mt-4" for="phone" >Phone number:</label>
-      <div *ngIf="frmRegistro.get('phone').errors">
-        <div *ngIf="frmRegistro.get('phone').errors['required']" class="alert alert-danger">
-          Required
-        </div>
-        <div *ngIf="frmRegistro.get('phone').errors['pattern']" class="alert alert-danger">
-          Must be numeric
-        </div>
-      </div>
-      <input [(ngModel)]="organization.phone" type="text" name="phone" id="phone" formControlName="phone" class="form-control"/>
-      
-      <label class="mt-4" for="email" >Email:</label>
-      <div *ngIf="frmRegistro.get('email').errors" class="alert alert-danger">
-        Must be a correct email format
-      </div>
-      <input [(ngModel)]="organization.email" type="email" name="email" id="email" formControlName="email" class="form-control"/>
+<h1 class="title-page text-center">
+  <span class="capital-letter">O</span>rganization
+</h1>
 
-      <label class="mt-4" for="logo" >Logo (URL):</label>
+<form [formGroup]="frmRegistro" class="general-form">
+  <div class="row">
+    <div class="col-lg-6 col-md-12 form-group">
+      <label for="enterprise">Enterprise</label>
+      <div *ngIf="frmRegistro.get('enterprise').errors" class="alert alert-danger">Required</div>
+      <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" formControlName="enterprise" class="form-control">
+    </div>
+    <div class="col-lg-6 col-md-12 form-group">
+      <label for="logo">Logo (URL)</label>
       <div *ngIf="frmRegistro.get('logo').errors">
         <div *ngIf="frmRegistro.get('logo').errors['required']" class="alert alert-danger">
           Required
@@ -46,62 +19,99 @@
           Must be a correct URL (http:// or https://)
         </div>
       </div>
-      <input [(ngModel)]="organization.logo" type="text" name="logo" id="logo" formControlName="logo" class="form-control"/>
+      <input [(ngModel)]="organization.logo" type="text" name="logo" id="logo" formControlName="logo" class="form-control">
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col-lg-6 col-md-12 form-group">
+      <label for="phone">Phone number</label>
+      <div *ngIf="frmRegistro.get('phone').errors">
+        <div *ngIf="frmRegistro.get('phone').errors['required']" class="alert alert-danger">
+          Required
+        </div>
+        <div *ngIf="frmRegistro.get('phone').errors['pattern']" class="alert alert-danger">
+          Must be numeric
+        </div>
+      </div>
+      <input [(ngModel)]="organization.phone" type="text" name="phone" id="phone" formControlName="phone" class="form-control">
+    </div>       
+    <div class="col-lg-6 col-md-12 form-group">
+      <label for="email">Email</label>
+      <div *ngIf="frmRegistro.get('email').errors" class="alert alert-danger">
+        Must be a correct email format
+      </div>
+      <input [(ngModel)]="organization.email" type="email" name="email" id="email" formControlName="email" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="address">Address</label>
+    <div *ngIf="frmRegistro.get('address').errors" class="alert alert-danger">
+      Required
+    </div>
+    <textarea id="address" name="address" rows="4" [(ngModel)]="organization.address" formControlName="address" class="form-control desc-input"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <div *ngIf="frmRegistro.get('description').errors" class="alert alert-danger">
+       Required
+    </div>
+    <textarea id="description" name="description" rows="4" [(ngModel)]="organization.description" formControlName="description" class="form-control desc-input"></textarea>
+  </div>
 
-      <h2 class="text-center m-4"><span class="letter">D</span>epartments</h2>
-      <table class="table table-hover">
-        <div *ngFor="let department of departments; let i=index">
-          <tr>
-            <td>{{departments.indexOf(department)+1}}.&nbsp;</td>
-            <td style ="width: 100%">
-              <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
-              (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
-            <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div></td>
-            <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
-            <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
-          </tr>
+  <div class="form-group">    
+    <h2 class="text-center m-4">Departments</h2>
+    <table class="table table-hover">
+      <div *ngFor="let department of departments; let i=index">
+        <tr>
+          <td>{{departments.indexOf(department)+1}}.&nbsp;</td>
+          <td style ="width: 100%">
+            <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
+            (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
+          <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div></td>
+          <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
+          <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
+        </tr>
 
-          <tr>
-            <label>Select the department participants:</label>
-              <div class="list-group">
-                <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
-                <div *ngIf="errorListUsers" class="errorList">
-                  <img src="../../../assets/img/warning_turq.png" width="20%" />
-                  <h4>505 Internal Server Error</h4>
-                  <h6>Try again later</h6>
-                </div>
-
-                <div *ngFor="let us of department.notAddedUsers; let j = index">
-                    <a class="list-group-item list-group-item-action">
-                      <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
-                      <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
-                    </a>
-                </div>
+        <tr>
+          <label>Select the department participants:</label>
+            <div class="list-group">
+              <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
+              <div *ngIf="errorListUsers" class="errorList">
+                <img src="../../../assets/img/warning_turq.png" width="20%" />
+                <h4>505 Internal Server Error</h4>
+                <h6>Try again later</h6>
               </div>
 
-          <td>
-            <div class="list-group">
-              <h4 *ngIf="department.users == null">Add user...</h4>
-              <div *ngFor="let us of department.users; let j = index">
-                <a class="list-group-item list-group-item-action">
-                  <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
-                  <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
-                </a>
+              <div *ngFor="let us of department.notAddedUsers; let j = index">
+                  <a class="list-group-item list-group-item-action">
+                    <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
+                    <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+                  </a>
               </div>
             </div>
-          </td>
-          </tr>
 
-        </div>
-      </table>
-      <div class="text-center">
-        <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
+        <td>
+          <div class="list-group">
+            <h4 *ngIf="department.users == null">Add user...</h4>
+            <div *ngFor="let us of department.users; let j = index">
+              <a class="list-group-item list-group-item-action">
+                <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
+                <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+              </a>
+            </div>
+          </div>
+        </td>
+        </tr>
+
       </div>
-      
+    </table>
+    <div class="text-center">
+      <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
     </div>
-    <div style="margin:2%;text-align:center">
-      <button (click)="saveOrganization(departments, organization)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
-      <button routerLink=".." class="btn bt-lg">Cancel</button>
-    </div>
-  </form>
-</div>
+    
+  </div>
+  <div style="margin:2%;text-align:center">
+    <button (click)="saveOrganization(departments, organization)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
+    <button routerLink=".." class="btn bt-lg">Cancel</button>
+  </div>
+</form>
