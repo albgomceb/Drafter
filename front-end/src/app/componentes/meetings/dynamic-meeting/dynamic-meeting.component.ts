@@ -23,6 +23,7 @@ export class DynamicMeetingComponent implements OnInit {
   public showChat:boolean = false;
   public showVideo:boolean = false;
   public loaded;
+  public unreadedMsg: number;
 
   constructor(private userService: UserService,
      private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
@@ -81,6 +82,10 @@ export class DynamicMeetingComponent implements OnInit {
       this.showChat = false;
     }
     this.showVideo = !this.showVideo;
+  }
+
+  receiveEventChat($event) {
+    this.unreadedMsg = $event
   }
 
 }
