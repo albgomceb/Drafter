@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.login.LoginBean;
@@ -54,9 +55,15 @@ public class UserController extends AbstractController {
 		return result;
 	}
 	
-	@GetMapping("/filterUsers/{keyword}")
-	public List<UserBean> filterUsers(@PathVariable String keyword) {	
-		List<User> res = this.userService.filterUsers(keyword);	
+	@GetMapping("/filterUsers")
+	public List<UserBean> filterUsers(@RequestParam("search") String keyword) {	
+		List<User> res;
+		if(keyword==null || keyword=="" || keyword.length()==0) {
+			res = this.userService.findAll();
+		}else {
+			res = this.userService.filterUsers(keyword);	
+		}
+		
 		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
 		
 		return result;
@@ -188,6 +195,20 @@ public class UserController extends AbstractController {
 	@GetMapping("/me")
 	public UserBean me() {
 		return UserSerializer.fromUser(userService.findByPrincipal());
+	}
+
+	@PostMapping("/me/edit")
+	public Object update(@RequestBody UserBean2 user) {
+		User principal = userService.findByPrincipal();
+		principal.setEmail(user.getEmail());
+		principal.setName(user.getName());
+		principal.setSurname(user.getSurname());
+		UserAccount userAccount = principal.getUserAccount();
+		userAccount.setUsername(user.getUsername());
+		userAccount.setPassword(encodePassword(user.getPassword()));
+		
+		userService.save(principal);
+		return null;
 	}
 
 //	private boolean existeEmail(String email) {

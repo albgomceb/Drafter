@@ -15,6 +15,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
+import { forEach } from '@angular/router/src/utils/collection';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'meeting-page',
@@ -26,10 +28,15 @@ export class MeetingPageComponent implements OnInit {
   hideme=[]
   searchField: FormControl;
   loading: boolean = false;
+  exist:boolean = false;
 
   users: Array<User>;
-  attendants: Array<Option>;
+
+  //Participantes (Visibles: solo aparecen participantes)
   thumbnail: Array<Option>;
+  //Participantes (No visibles, los participantes + el lider)
+  attendants: Array<Option> = [];
+
   organizations: Array<Organization>
   results: Observable<Array<User>>;
 
@@ -38,12 +45,11 @@ export class MeetingPageComponent implements OnInit {
   kinds: Array<Option>;
   selectedKind: Option;
 
-  constructor(private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
+  constructor(private loginService: LoginService, private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
   
   ngOnInit() {
 
     this.meeting = new Meeting();
-    this.attendants = new Array<Option>();
     this.thumbnail = new Array<Option>();
     this.meetingService.getMeetingTypes().subscribe(list => 
     {
@@ -71,21 +77,67 @@ export class MeetingPageComponent implements OnInit {
       }
     );
     this.searchField = new FormControl();
-    this.results = this.searchField.valueChanges
-    .debounceTime(400)
-    .distinctUntilChanged()
-    .filter(keyword => keyword)
-    .switchMap( keyword => this.userService.filterUsers(keyword))
 
+    this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
   } 
 
-  addAttendant(attendant:Option){
-    //if(!(this.attendants.indexOf(attendant) !== -1))
-      this.attendants.push(attendant);
+  search(){
 
-    //if(!(this.thumbnail.indexOf(attendant) !== -1))
-      this.thumbnail.push(attendant);
+    var scope = this;
 
+    if(this.searchField.value.length>0){
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(scope.searchField.value); //FILTRAR USUARIOS
+      },400);
+
+    }else{
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(''); //TODOS LOS USUARIOS
+      },400);
+    }
+
+  }
+
+  addAttendant(attendant:User){
+
+      //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
+      let principal:User = this.getLoginService().getPrincipal();
+      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER");
+
+      var index = this.attendants.findIndex( x => x.id === principalOption.id);
+      if(index == -1){
+        this.attendants.push(principalOption);
+      }
+
+      //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
+      let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER");
+
+      //SI EL USUARIO NO ESTA AÑADIDO YA COMO PARTICIPANTE
+      if(!this.thumbnail.find(x => x.id === att.id)){
+
+        //SI NO ES USUARIO PRINCIPAL
+        if(att.id !== principal.id.toString()){
+          this.thumbnail.push(att);
+          this.attendants.push(att);
+        }
+
+      }
+  }
+
+  removeAttendant(attendant:User){
+
+    let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER");
+    var index = this.thumbnail.findIndex( x => x.id === att.id);
+
+    if( index != -1){
+      this.thumbnail.splice(index, 1);
+
+      var index2 = this.attendants.findIndex( x => x.id === att.id);
+      if( index2 != -1)
+        this.attendants.splice(index2, 1);
+      
+    }
+    
   }
 
   onSubmit(meeting){
@@ -100,6 +152,10 @@ export class MeetingPageComponent implements OnInit {
         }
       });
 
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
 

@@ -3,6 +3,7 @@ import { Option } from '../models/option.model';
 import { Agenda } from '../models/agenda.model';
 import { AgendaService } from '../services/agenda.service'; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'agenda-page',
@@ -72,10 +73,34 @@ export class AgendaPageComponent implements OnInit {
     }
 
     //Si la entrada es un texto, se convierte en input
-    else if(!entrada.isInput)
+    else if(!entrada.isInput) {
+      var i=0;
+      for(var en of this.entradas) {
+        if(en.isInput)
+          en.isInput = false;
+        if(en.description.trim().length == 0)
+          this.entradas.splice(i, 1);
+
+        i++
+      }
+
       entrada.isInput = true; 
+      this.setFocus();
+    }
       
     this.ref.markForCheck();
+  }
+
+  killFocus(event) {
+    event.target.blur();
+  }
+
+  setFocus() {
+    setTimeout(() => {
+      var e = $('input')[0];
+      if(e)
+        e.focus();
+    }, 0);
   }
 
   checkNotBlank(string : String) : boolean{

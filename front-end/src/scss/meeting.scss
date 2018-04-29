@@ -1,5 +1,41 @@
 /* MEETING */
 
+/* GENERAL */
+div.info-meeting-bar {
+    position: fixed;
+    top: 3.375rem;
+    left: 0;
+    width: 100%;
+    height: 3rem;
+    padding: 0.5rem 1rem;
+    background-color: $content_background_color_2;
+    z-index: 99;
+
+    @include media-breakpoint-down(md) {
+        top: 3.75rem;
+    }
+
+    span.timer {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+div.meeting-wrapper {
+    padding-top: 1.75rem;
+}
+
+div.meeting-wrapper-chat {
+    margin-right: 25em;
+
+    @include media-breakpoint-down(md) {
+        display: none;
+    }
+}
+
 /* BRAINSTORMING */
 div.ideas-container {
     div.ideas-title {
@@ -96,19 +132,18 @@ div.topic-container {
     }
 }
 div.conclusion-container {
-    margin-bottom: 1rem;
+    margin: 1rem 0;
     border-bottom: 1px solid $content_border;
     padding-bottom: 1rem;
 
     div.conclusion-title {
         padding: 0.75rem;
         color: $mp_font_color;
-        font-size: 1.2rem;
         font-weight: bolder;
         background-color: $mp_primary_color;
     }
 
-    ul.conclusion-container {
+    ul.conclusions {
         padding-top: 1rem;
         padding-right: 1rem;
         padding-bottom: 1rem;

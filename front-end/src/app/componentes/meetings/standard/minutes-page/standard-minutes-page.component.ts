@@ -14,6 +14,8 @@ import { Option } from '../../../models/option.model';
 export class StandardMinutesPageComponent implements OnInit {
   
   meeting: Meeting = new Meeting();
+  leader:Option;
+  attendants:Array<Option>;
   model:any[];
   agendas: Array<Agenda2>;
   conclusions: Array<Conclusion> = [];
@@ -25,6 +27,12 @@ export class StandardMinutesPageComponent implements OnInit {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    //OBTENER SESSION LEADER
+    this.attendants = this.meetingInfo.attendants;
+    this.attendants.forEach(at => {
+      if(at.role=="LEADER"){this.leader = at;} 
+    });
+
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
        this.meeting = data;
        console.log(this.meeting);

@@ -59,6 +59,10 @@ public class UserService {
         return null;
     }
 
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
 	//Other business Methods-----------------------------------------------------------------------------
 
     public User findByEmail(String email) {
@@ -74,6 +78,10 @@ public class UserService {
 	
 	public List<User> filterUsers(String keyword){
 		return userRepository.filterUsers(keyword);
+	}
+
+	public List<User> findAllWithoutPrincipal(int id) {
+		return userRepository.findAllWithoutPrincipal(id);
 	}
 
 	/*public Boolean isUser() {

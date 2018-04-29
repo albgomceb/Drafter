@@ -39,8 +39,15 @@ import { ChronometerComponent } from './componentes/meetings/chronometer/chronom
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
 import { BrainStormingService } from './componentes/services/brainstorming.service';
 import { BrainStormingMinutesPageComponent } from './componentes/meetings/brainstorming/minutes-page/minutes-page.component';
+import { VideoconferencesComponent } from './componentes/videoconferences/videoconferences.component';
 import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
 import { SixHatsMinutesPageComponent } from './componentes/meetings/six-hats/six-hats-minutes-page/six-hats-minutes-page.component';
+import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
+import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-profile-page.component';
+import { AuthGuard } from './security/auth.guard';
+import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
+import { ProfileService } from './componentes/services/profile.service';
+
 
 @NgModule({
   declarations: [
@@ -72,8 +79,12 @@ import { SixHatsMinutesPageComponent } from './componentes/meetings/six-hats/six
     BrainStormingMinutesPageComponent,
     ListMeetingPageComponent,
     ChronometerComponent,
+    SixHatsMinutesPageComponent,
+    VideoconferencesComponent,
     ListOrganizationDepartmentPageComponent,
-    SixHatsMinutesPageComponent
+    PaymentSuccessPageComponent,
+    EditProfilePageComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +110,9 @@ import { SixHatsMinutesPageComponent } from './componentes/meetings/six-hats/six
     DynamicMeetingService,
     SixHatsService,
     IdeaService,
-    VoteService
+    VoteService,
+    ProfileService,
+    AuthGuard
   ],  
   bootstrap: [AppComponent]
 })

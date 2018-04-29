@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MeetingService } from '../services/meeting.service';
-import { Meeting } from '../models/meeting.model';
+import { MeetingPagination } from '../models/meetingPagination.model';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 
@@ -13,8 +13,11 @@ import { User } from '../models/user.model';
 })
 export class ListMeetingPageComponent implements OnInit {
 
-  public meetings: Array<Meeting>;
-  public user: User; 
+  public meetingPagination : MeetingPagination;
+  public userId: number;
+  public previousNumberOfPage : number;
+  public numberOfPage : number;
+  public nextNumberOfPage : number;
   public today: number;
 
   errorListUsers:boolean = false;
@@ -25,23 +28,23 @@ export class ListMeetingPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.userService.getLoginUser().subscribe(
-      data => 
-      {
-        this.user = data;
-      },
-      error => {
-        this.errorListUsers = true;
-      }
-    );
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.userId = params['userId'];
+    });
+
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.numberOfPage = params['p'];
+    });
 
     this.today = new Date().getTime();
 
-    // Cogemos las meeting que el usuario tenga
-    this.meetingService.getMeetingsByUser(10).subscribe(
+    this.meetingService.getMeetingsByUser(this.userId, this.numberOfPage).subscribe(
       data => 
       {
-        this.meetings = data;
+        this.meetingPagination = data;
+        this.numberOfPage = this.meetingPagination.numberOfPage;
+        this.previousNumberOfPage = Number(this.numberOfPage) - 1;
+        this.nextNumberOfPage = Number(this.numberOfPage) + 1;
       },
       error => {
         this.errorListUsers = true;
@@ -49,13 +52,19 @@ export class ListMeetingPageComponent implements OnInit {
     );
   }
 
-  goToMeeting(meetingId: number){
+  getMeetingsByUser(userId: number, p: number) {
+    this.meetingService.getMeetingsByUser(userId, p).subscribe(res =>{
+      this.router.navigate(['/meeting/list/' + userId + '/page/' + p]);
+    })   
+  }
+
+  goToMeeting(meetingId: number) {
     this.meetingService.getMeeting(meetingId).subscribe(res =>{
       this.router.navigate(['/meeting/' + meetingId]);
     });
   }
 
-  seeMinutesMeeting(meetingId: number){
+  seeMinutesMeeting(meetingId: number) {
     this.meetingService.getMeeting(meetingId).subscribe(res =>{
       this.router.navigate(['/minutes/' + meetingId]);
     });
