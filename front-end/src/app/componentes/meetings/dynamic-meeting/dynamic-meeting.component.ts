@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
 import { Option } from '../../models/option.model';
+import { User } from '../../models/user.model';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public showVideo:boolean = false;
   public loaded;
   public unreadedMsg: number;
+  public attendants: any[];
+  public logged: User;
 
   constructor(private userService: UserService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
@@ -65,6 +68,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
             });
             this.realtimeService.subscribe();
             this.userService.getLoginUser().subscribe(logged =>{
+              this.logged = logged;
               this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:logged.id,name:logged.username});
             })
           });
@@ -75,6 +79,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   } 
 
   ngOnDestroy() {
+    this.realtimeService.send('/meeting/quit/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
     this.realtimeService.disconnect();
   }
 

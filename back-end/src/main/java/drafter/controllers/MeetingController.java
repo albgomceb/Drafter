@@ -151,6 +151,17 @@ public class MeetingController extends AbstractController {
 		response.setName(data.getName());
 		template.convertAndSend("/meeting/" + meetingId, response);
 	}
+	@MessageMapping("/meeting/quit/{meetingId}")
+	public void quitMeeting(@DestinationVariable int meetingId, ModelBean<Option> data) {
+		User user = userService.findById(new Integer(data.getModel().getId()));
+		Participant updated = meetingService.quit(meetingId,user);
+		ModelBean<ParticipantBean> response = new ModelBean<ParticipantBean>();
+		response.setModel(new ParticipantSerializer().fromParticipant(updated));
+		response.setData(data.getData());
+		response.setType(data.getType());
+		response.setName(data.getName());
+		template.convertAndSend("/meeting/" + meetingId, response);
+	}
 	@MessageMapping("/meeting/nextStep/{meetingId}")
 	public void nextStep(@DestinationVariable int meetingId, ModelBean<Option> data) {
 		Meeting meeting = meetingService.nextStep(meetingId);

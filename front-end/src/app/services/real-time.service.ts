@@ -234,8 +234,10 @@ export class RealTimeService {
             this.disconnectUser(obj.data['userUUID']);
             break;
         }
-
-        this.users[obj.data['userUUID']].last = Date.now();
+        console.log(this.users);
+        console.log(obj.data['userUUID']);
+        
+        this.users[obj.data['userUUID']]?this.users[obj.data['userUUID']].last = Date.now():null;
         if (callback)
           callback(obj);
       }
