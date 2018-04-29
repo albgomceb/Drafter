@@ -14,13 +14,13 @@ import org.springframework.data.domain.Pageable;
 //import org.springframework.util.Assert;
 import org.springframework.stereotype.Service;
 
-import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.Step;
 import drafter.domain.User;
 import drafter.repositories.MeetingRepository;
+import drafter.security.LoginService;
 
 @Service
 @Transactional
@@ -33,6 +33,12 @@ public class MeetingService {
 	
 	@Autowired
 	private UserService    	    userService;
+	
+	@Autowired
+	private ParticipantService participantService;
+	
+	@Autowired
+	private LoginService loginService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -117,6 +123,22 @@ public class MeetingService {
 
     public Page<Meeting> findByUserId(int userId, Pageable pageable) {
 		return meetingRepository.findByUserId(userId, pageable);
+	}
+
+	public Participant attended(int meetingId, User user) {
+		Meeting m  = findById(meetingId);
+		User principal = user !=null?user:userService.findByPrincipal();
+		Participant updated = null;
+//		if(isParticipant(meetingId)) {
+			for(Participant p : m.getParticipants())
+				if(p.getUser().equals(principal)) {
+					p.setHasAttended(true);
+					updated = participantService.save(p);
+					break;
+				}
+
+//		}
+		return updated;
 	}
 }    
 

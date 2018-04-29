@@ -1,0 +1,17 @@
+<div>
+    <div>
+        <p>Already Joined</p>
+        <div class="d-flex flex-wrap">
+            <div *ngFor="let us of attendants" class="text-center mx-2">
+                <img attr.src="{{us.photo}}" class="img-fluid avatar">                         
+                <span class="d-block">{{us.name}}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div>
+    <div class="text-center" *ngIf = "principal.role == 'LEADER'">
+        <button (click)="next()" class="btn">Next step</button>
+    </div>
+</div>
