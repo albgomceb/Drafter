@@ -21,6 +21,7 @@ import { VideoconferencesComponent } from './componentes/videoconferences/videoc
 import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
 import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
 import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-profile-page.component';
+import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
+  {path: 'notifications',component: NotificationsPageComponent},
   {path: 'meeting/:id', component: DynamicMeetingComponent},
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},

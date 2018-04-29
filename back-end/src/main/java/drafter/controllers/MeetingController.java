@@ -168,4 +168,13 @@ public class MeetingController extends AbstractController {
 	private boolean isPrincipal(int userId) {
 		return userService.findByPrincipal().equals(userService.findById(new Integer(userId)));	
 	}
+	
+	@GetMapping("/notifications/")
+	public MeetingBean getNotifications() {
+		
+		User logged = userService.findByPrincipal();
+		//logged.get
+		
+		return null;
+	}
 }
