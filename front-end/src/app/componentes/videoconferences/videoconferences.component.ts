@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute } from '@angular/router';
 import * as attachMediaStream from 'attachmediastream';
+import { RealTimeService } from '../../services/real-time.service';
+import * as io from 'socket.io-adapter';
 
 @Component({
   selector: 'videoconferences',
@@ -10,15 +12,21 @@ import * as attachMediaStream from 'attachmediastream';
 })
 export class VideoconferencesComponent implements OnInit {
 
-    @Input() idRoomMeeting: string;
-    room:string;
+    @Input() idRoomMeeting: number;
+    room:number;
 
-  constructor(private activatedRoute:ActivatedRoute, private loginService: LoginService) { }
+  constructor(private activatedRoute:ActivatedRoute, private loginService: LoginService, private realTimeService: RealTimeService) { }
   
 
   ngOnInit() {
 
-    this.room = this.idRoomMeeting;
+    
+
+    //this.room = this.idRoomMeeting;
+    console.log(window.location.pathname.split("/")[2]);
+    this.room =  parseInt(window.location.pathname.split("/")[2]);
+
+    var scope = this;
 
     let constraints;
 
@@ -27,21 +35,32 @@ export class VideoconferencesComponent implements OnInit {
     let arrayTracks:Array<MediaStreamTrack>=[];
     let camStream:MediaStream;
     let remoteStream:MediaStream;
-    let pc:RTCPeerConnection;
+    let hostPC = new RTCPeerConnection(null);
+    let clientPC = new RTCPeerConnection(null);
+    let candidate:RTCIceCandidate;
+    let servers = {iceServers: [
+      {
+          urls: [ 
+          'stun:23.21.150.121',
+          'stun:stun.l.google.com:19302',
+          'stun:stun.services.mozilla.com'
+          ],
+      },
+    ]};
+    let socket:any;
 
     //VARIABLES VIDEOCONFERENCIA
     console.log("Initializing; room = "+this.room);
-    var localVideo = document.getElementById("localVideo");
-    var miniVideo = document.getElementById("miniVideo");
-    var remoteVideo = document.getElementById("remoteVideo");
+    var localVideo = $("#localVideo");
+    var remoteVideo = $("#remoteVideo");
 
     var sdpConstraints = {'mandatory': {
         'OfferToReceiveAudio':true, 
         'OfferToReceiveVideo':true }};
 
     constraints = {
-        'OfferToReceiveAudio':true, 
-        'OfferToReceiveVideo':true };
+        'OfferToReceiveAudio':1, 
+        'OfferToReceiveVideo':1 };
 
     //EJECUCION DEL CODIGO
     start();
@@ -68,9 +87,6 @@ export class VideoconferencesComponent implements OnInit {
                     if(stream.getVideoTracks.length>0)
                         stream.getVideoTracks[0].stop();
                         camStream = stream;
-                        stream.getAudioTracks().forEach(e => audioTracks.push(e));
-                        stream.getVideoTracks().forEach(e => videoTracks.push(e));
-                        stream.getTracks().forEach(e => arrayTracks.push(e));
                         doGetUserMedia();
                 })
                 .catch(function(e) {
@@ -88,9 +104,6 @@ export class VideoconferencesComponent implements OnInit {
                         if(stream.getVideoTracks.length>0)
                             stream.getAudioTracks[0].stop();
                             camStream = stream;
-                            stream.getAudioTracks().forEach(e => audioTracks.push(e));
-                            stream.getVideoTracks().forEach(e => videoTracks.push(e));
-                            stream.getTracks().forEach(e => arrayTracks.push(e));
                             doGetUserMedia();
                     })
                     .catch(function(e) {
@@ -108,9 +121,6 @@ export class VideoconferencesComponent implements OnInit {
                 .then(function(stream){
                     console.log('Received local stream');
                     camStream = stream;
-                    stream.getAudioTracks().forEach(e => audioTracks.push(e));
-                    stream.getVideoTracks().forEach(e => videoTracks.push(e));
-                    stream.getTracks().forEach(e => arrayTracks.push(e));
                     doGetUserMedia();
                 })
                 .catch(function(e) {
@@ -118,13 +128,13 @@ export class VideoconferencesComponent implements OnInit {
                     alert('getUserMedia() error: '+ e)
                 });
 
-                $("#hangUp").click(function() {
-                    hangup();
-                });
+                
 
             }
 
-            
+            $("#hangUp").click(function() {
+              hangup();
+            });
 
         }else{
             alert('Sorry, your browser does not support getUserMedia');
@@ -134,112 +144,68 @@ export class VideoconferencesComponent implements OnInit {
 
       function doGetUserMedia(){
         console.log("User has granted access to local media.");
-        // Call the polyfill wrapper to attach the media stream to this element.
         attachMediaStream(camStream, localVideo);
-        localVideo.style.opacity = "1";
         // Caller creates PeerConnection.
-        maybeStart();
-      }
-
-      function maybeStart() {
-        if (camStream) {
-          // ...
+        if (camStream)
           createPeerConnection();
-          // ...
-          pc.addStream(camStream);
-          // Caller initiates offer to peer.
-          doCall();
-        }
       }
 
       //LLEVAMOS A CABO LA LLAMADA
       function createPeerConnection() {
         try {
             // Create an RTCPeerConnection
-
-            var servers = {iceServers: [
-                {
-                    url: 'stun:23.21.150.121', // Old WebRTC API (url)
-                    urls: [                    // New WebRTC API (urls)
-                    'stun:23.21.150.121',
-                    'stun:stun.l.google.com:19302',
-                    'stun:stun.services.mozilla.com',
-                    ],
-                },
-            ]};
-            //var servers = null
-            pc = new RTCPeerConnection(servers);
-            pc.onicecandidate = iceCallback;
-            console.log('Created RTCPeerConnnection');
-            console.log("CAM-STREAM: ",camStream);
+            console.log('Creating RTCPeerConnnection');
+            hostPC = new RTCPeerConnection(servers);
+            console.log('Adding Stream object');
+            console.log("STREAM: ",camStream);
+            hostPC.addStream(camStream);
         } catch (e) {
             console.log("Failed to create PeerConnection, exception: " + e.message);
             alert("Cannot create RTCPeerConnection object; WebRTC is not supported by this browser.");
             return;
         }
 
-        pc.onaddstream = function(event) {
-            attachMediaStream(event.stream, remoteVideo);}
-        pc.onremovestream = onRemoteStreamRemoved;
-  
       }
 
-      function doCall() {
-        console.log("Sending offer to peer.");
-        pc.createOffer().then(function(offer) {
-            return pc.setLocalDescription(offer);
-          })
-          .then(function() {
-            sendToServer({
-              name: 'user' + Math.round(Math.random() * 999999999) + 999999999,
-              target: "local",
-              type: "video-offer",
-              sdp: pc.localDescription
-            });
-          })
-          .catch(function(reason) {
-            // An error occurred, so handle the failure to connect
-          });
-      }
+      hostPC.onicecandidate = function(e){clientPC.addIceCandidate(e.candidate)}
+      clientPC.onicecandidate = function(e){hostPC.addIceCandidate(e.candidate)}
 
-      function sendToServer(msg) {
-        var msgJSON = JSON.stringify(msg);
-      
-        //Esta conexion es de websocket
-        //connection.send(msgJSON);
-      }
-
-      function doAnswer() {
-        console.log("Sending answer to peer.");
-        pc.createAnswer(setLocalAndSendMessage, null);
-      }
-
-      function setLocalAndSendMessage(sessionDescription) {
-        // Set Opus as the preferred codec in SDP if Opus is present.
-        console.log("DESCRIPTION: " + JSON.stringify(sessionDescription));
-        pc.setLocalDescription(sessionDescription);
-      }
-
-      function onRemoteStreamAdded(event) {
-        // ...
-        console.log("HOLA");
+      clientPC.onaddstream = function(event){
+        console.log("STREAM REMOTO: "+event.stream);
         attachMediaStream(event.stream, remoteVideo);
-        remoteStream = event.stream;
       }
 
-      function onRemoteStreamRemoved(event) {
-        console.log("Remote stream removed.");
+      this.realTimeService.registerOnJoinUser((name,uuid) => {
+        console.log("NUEVO USUARIO: "+name+", "+uuid);
+        newClient();
+      });
+
+      // This function would be called when receiving a remote connection
+      function newClient() {
+        clientPC = new RTCPeerConnection(servers);
+        hostPC.createOffer()
+            .then(offer => hostPC.setLocalDescription(offer))
+            .then(() => clientPC.setRemoteDescription(hostPC.localDescription))
+            .then(() => clientPC.createAnswer())
+            .then(answer => clientPC.setLocalDescription(answer))
+            .then(() => hostPC.setRemoteDescription(clientPC.localDescription))
+            .catch(function(err){
+              console.log("CREATE OFFER: "+err);
+            });
+
+            console.log('Received remote stream');
+            clientPC.addStream(camStream);
       }
 
       function hangup() {
         console.log('Ending calls');
-        pc.close();
-        pc.close();
-        pc = null;
+        hostPC.close();
+        clientPC.close();
+        hostPC = clientPC = null;
         console.log('Hung calls');
       }
 
-      function iceCallback(event) {
+      /*function iceCallback(event) {
         if (event.candidate) {
             var message = {type: 'candidate',
               label: event.candidate.sdpMLineIndex,
@@ -247,10 +213,15 @@ export class VideoconferencesComponent implements OnInit {
               candidate: event.candidate.candidate};
               var msgString = JSON.stringify(message);
               console.log('C->S: ' + msgString);
+              var candidate = new RTCIceCandidate(event.candidate);
+              pc.addIceCandidate(candidate).catch(function(reason) {
+                // An error occurred, so handle the failure to connect
+                console.log("ERROR: "+reason);
+        });
           } else {
             console.log("End of candidates.");
           }
-      }
+      }*/
 
 }
 

@@ -7,6 +7,7 @@ import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
 import { Option } from '../../models/option.model';
 import { User } from '../../models/user.model';
+import { LoginService } from '../../services/login.service';
 
 
 @Component({
@@ -27,8 +28,9 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public unreadedMsg: number;
   public attendants: any[];
   public logged: User;
+  public currentAttendant:string;
 
-  constructor(private userService: UserService,
+  constructor(private loginService:LoginService, private userService: UserService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     public realtimeService:RealTimeService) {}
 
@@ -61,10 +63,17 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
             this.realtimeService.register('attendants', [], participant =>{
               
               let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
-              if(part) 
-              part.hasAttended = participant.model.hasAttended
-              else
-              this.meetingInfo.attendants.push(participant.model);
+              if(part) {
+                part.hasAttended = participant.model.hasAttended
+                var scope = this;
+                if(part.name != this.loginService.getPrincipal().name){
+                  this.currentAttendant =  part.name;
+                  setTimeout(function(){
+                    scope.currentAttendant = null;
+                  },3000);
+                }
+              }else
+                this.meetingInfo.attendants.push(participant.model);
             });
             this.realtimeService.subscribe();
             this.userService.getLoginUser().subscribe(logged =>{
