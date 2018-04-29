@@ -26,8 +26,8 @@ export class PricingComponent implements OnInit,AfterViewChecked {
   }
 
   paypalConfig = {
-    //production, sandbox
-    env: 'production',
+    //env: production or sandbox
+    env: 'sandbox',
     locale: 'en_US',
     style: {
       size: 'small',
