@@ -1,7 +1,7 @@
 
 <!-- COUNTER -->
 <div *ngIf="(($counter | async) * 1000) + 1000 < timemilis"><h3>{{message}}</h3></div>
-<div style="color: red" *ngIf="(($counter | async) * 1000) + 1000 >= timemilis"><h3>0m 0s</h3></div>
+<div style="color: red" *ngIf="(($counter | async) * 1000) + 1000 >= timemilis"><h3>00:00</h3></div>
 
 <div class="ideas-body">
     <ul class="list-ideas">
@@ -39,7 +39,6 @@
                 <button (click)="deleteConclusion(conclusion.id, i)" class="btn">
                   <i class="fas fa-trash-alt"></i>
                 </button>
-                {{conclusion | json}}
               </div> 
             </li>
             <div class="text-center">
@@ -60,7 +59,7 @@
 
   </div>
 
-  <button class="btn" (click)="saveSixHats()">Reassign</button>
+  <button *ngIf="currentParticipant.role=='LEADER'" class="btn" (click)="saveSixHats()">Reassign</button>
   <button class="btn" (click)="finish()">Finish</button>
 
 

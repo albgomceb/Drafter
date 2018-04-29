@@ -111,11 +111,27 @@ export class SixHatsMeetingComponent implements OnInit {
     minutes = Math.floor(t / 60) % 60;
     t -= minutes * 60;
     seconds = t % 60;
+    var minutesText : string = "";
+    var secondsText : string = "";
+
+    if(minutes.toString().length == 1 ){
+      minutesText = "0"+minutes;
+    }
+    else{
+      minutesText = minutes;
+    }
+
+    if(seconds.toString().length == 1 ){
+      secondsText = "0"+seconds
+    }
+    else{
+      secondsText = seconds;
+    }
 
     return [
-        minutes + 'm',
-        seconds + 's'
-    ].join(' ');
+        minutesText,
+        secondsText
+    ].join(':');
 }
 
   sortAttendants(){
@@ -179,7 +195,7 @@ export class SixHatsMeetingComponent implements OnInit {
                             WSResponseType.PUSH, 
                             'hat-'+this.currentHat.color,  
                             conclusion, 
-                            {id: conclusion.id, noself: true});
+                            {id: conclusion.id|0});
 
     //Si la conclusion es un texto, se convierte en input
     } else if(!conclusion.isInput) {
