@@ -21,7 +21,7 @@
           </a>
           <div class="dropdown-menu shadow">
               <a class="dropdown-item" routerLink="meeting">New meeting</a>
-              <a class="dropdown-item" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}">My meetings</a>
+              <a class="dropdown-item" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}/page/0">My meetings</a>
           </div>          
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
@@ -50,7 +50,8 @@
               <span class="username">{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}</span>
             </a>
             <div class="dropdown-menu shadow">
-               <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
+              <a routerLink="me" class="dropdown-item">Profile</a>
+              <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
             </div>
         </li>
       </ul>

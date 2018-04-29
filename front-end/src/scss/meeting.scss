@@ -25,7 +25,7 @@ div.info-meeting-bar {
 }
 
 div.meeting-wrapper {
-    padding-top: 1.5rem;
+    padding-top: 1.75rem;
 }
 
 div.meeting-wrapper-chat {
@@ -132,19 +132,18 @@ div.topic-container {
     }
 }
 div.conclusion-container {
-    margin-bottom: 1rem;
+    margin: 1rem 0;
     border-bottom: 1px solid $content_border;
     padding-bottom: 1rem;
 
     div.conclusion-title {
         padding: 0.75rem;
         color: $mp_font_color;
-        font-size: 1.2rem;
         font-weight: bolder;
         background-color: $mp_primary_color;
     }
 
-    ul.conclusion-container {
+    ul.conclusions {
         padding-top: 1rem;
         padding-right: 1rem;
         padding-bottom: 1rem;
