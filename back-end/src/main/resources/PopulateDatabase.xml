@@ -80,8 +80,8 @@
 
 
 	<bean id="userAccount7" class="drafter.security.UserAccount">
-		<property name="username" value="mapo" />
-		<property name="password" value="4d5e356817764b1bf3a9dcb97f37beb0" />
+		<property name="username" value="mapos" />
+		<property name="password" value="0591fe2b4a41d67dd0a9822c3c711e23" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -221,7 +221,7 @@
 		<property name="userAccount" ref="userAccount7" />
 		<property name="name" value="Max" />
 		<property name="surname" value="Powell" />
-		<property name="email" value="mapo@gmail.com" />
+		<property name="email" value="mapos@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
 			value="https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg" />

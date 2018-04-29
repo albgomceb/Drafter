@@ -54,7 +54,20 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
               this.meetingInfo.isFinished = finish.model.id;
               this.router.navigate(['/minutes/'+this.meetingId]);
             } );
+
+            this.realtimeService.register('attendants', [], participant =>{
+              console.log("PARTICIPANT REEIVED: ",participant);
+              
+              let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
+              if(part) 
+              part.hasAttended = participant.model.hasAttended
+              else
+              this.meetingInfo.attendants.push(participant.model);
+            });
             this.realtimeService.subscribe();
+            this.userService.getLoginUser().subscribe(logged =>{
+              this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:logged.id,name:logged.username});
+            })
           });
           this.users = res.attendants;
         }

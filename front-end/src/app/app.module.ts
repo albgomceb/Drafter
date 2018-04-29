@@ -47,6 +47,7 @@ import { AuthGuard } from './security/auth.guard';
 import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
 import { ProfileService } from './componentes/services/profile.service';
 import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
+import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/waiting-room/waiting-room.component';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { NotificationsPageComponent } from './componentes/notifications-page/not
     EditProfilePageComponent,
     ProfilePageComponent,
     NotificationsPageComponent
+    WaitingRoomComponent
   ],
   imports: [
     BrowserModule,
