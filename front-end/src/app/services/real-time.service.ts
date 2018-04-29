@@ -148,7 +148,7 @@ export class RealTimeService {
             return;
         }
 
-        if (obj.type.charAt(0) != '*') {
+        if (obj.type.charAt(0) != '*') {          
           model = this.models[obj.name].model;
           callback = this.models[obj.name].callback;
         }

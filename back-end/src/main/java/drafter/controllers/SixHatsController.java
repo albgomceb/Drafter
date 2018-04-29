@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import drafter.beans.Option;
 import drafter.beans.hatConclusion.HatConclusionBean;
 import drafter.beans.hatConclusion.HatConclusionSerializer;
 import drafter.beans.model.ModelBean;
@@ -142,6 +141,22 @@ public class SixHatsController {
 	public void delete(@DestinationVariable int conclusionId, @DestinationVariable int meetingId, String json) {
 		hatConclusionService.delete(conclusionId);
 		template.convertAndSend("/meeting/" + meetingId, json);
+	}
+	
+	@MessageMapping("/sixHats/reassign/{meetingId}")
+	public void reassign(@DestinationVariable int meetingId,ModelBean<Option> data) {
+		SixHats meeting = sixHatsService.findById(new Integer(meetingId));
+		meeting.setHats(hatService.reassignHats(meeting));
+		sixHatsService.save(meeting);
+		meeting.getHats().stream()
+						.forEach(hat -> hatService.save(hat));
+		SixHatsBean res =new SixHatsSerializer().fromSixHats(meeting);
+		ModelBean<SixHatsBean> result = new ModelBean<SixHatsBean>();
+		result.setModel(res);
+		result.setData(data.getData());
+		result.setName(data.getName());
+		result.setType(data.getType());
+		template.convertAndSend("/meeting/" + meetingId, result);
 	}
 	
 }

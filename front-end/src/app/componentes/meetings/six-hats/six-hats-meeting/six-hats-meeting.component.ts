@@ -58,6 +58,21 @@ export class SixHatsMeetingComponent implements OnInit {
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;     
       
+    //WEBSOCKET
+    this.realTimeService.connect(this.meetingId, () => {
+      for(let hat of this.sixHats.hats){
+        this.realTimeService.register('hat-'+hat.color, hat.hatConclusions);
+      }
+      
+      this.realTimeService.register('sixHats-'+this.meetingId, [], sixHats => {
+        
+        this.sixHats = sixHats.model;
+        this.sortAttendants();
+        this.getCurrentHat();
+      });
+
+      this.realTimeService.subscribe();
+    });
       this.userService.getParticipant(this.meetingId).subscribe(participant => {
         this.currentParticipant = participant;
         this.sortAttendants();
@@ -76,28 +91,7 @@ export class SixHatsMeetingComponent implements OnInit {
     });
 
     this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
-
-    //WEBSOCKET
-    this.realTimeService.connect(this.meetingId, () => {
-      // this.realTimeService.register('hats', this.sixHats.hats, conclusion => {
-      //   console.log("AAA",conclusion.data.index);
-      //     // this.currentHat.hatConclusions[conclusion.data.index] = conclusion.model;
-
-      //   if (conclusion.data.action === "pop"){
-      //     this.currentHat.hatConclusions.splice(conclusion.data.index, 1);
-      //   }
-      //   else{
-      //     this.currentHat.hatConclusions.splice(conclusion.data.index, 1, conclusion.model);
-      //     // this.currentHat.hatConclusions[conclusion.data.index] = conclusion.model;
-      //   }
-        
-      // });
-      for(let hat of this.sixHats.hats){
-        this.realTimeService.register('hat-'+hat.color, hat.hatConclusions);
-      }
-      
-      this.realTimeService.subscribe();
-    });
+   
   }
 
   ngOnDestroy(): void {
@@ -195,7 +189,7 @@ export class SixHatsMeetingComponent implements OnInit {
                             WSResponseType.PUSH, 
                             'hat-'+this.currentHat.color,  
                             conclusion, 
-                            {id: conclusion.id|0});
+                            {id: conclusion.id |0});
 
     //Si la conclusion es un texto, se convierte en input
     } else if(!conclusion.isInput) {
@@ -207,7 +201,6 @@ export class SixHatsMeetingComponent implements OnInit {
   }
 
   deleteConclusion(conclusionId : number, conclusionIndex : number) {
-    console.log(conclusionId);
     this.realTimeService.send('/sixHats/delete/' + conclusionId + '/', 
                                     WSResponseType.POP, 
                                     'hat-'+this.currentHat.color,
@@ -236,12 +229,20 @@ export class SixHatsMeetingComponent implements OnInit {
 
   // ----------------------- Reasignación de sombrero (guardado de SixHats) ----------------------
 
+  // saveSixHats(){
+  //   this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
+  //     this.router.navigate(["/meeting/"+this.meetingId]);
+  //     this.sixHats = res;
+  //     this.getCurrentHat();
+  //   });
+  // }
+
   saveSixHats(){
-    this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
-      this.router.navigate(["/meeting/"+this.meetingId]);
-      this.sixHats = res;
-      this.getCurrentHat();
-    });
+    this.realTimeService.send('/sixHats/reassign/', 
+                            WSResponseType.SET, 
+                            'sixHats-'+this.meetingId,  
+                            {}, 
+                            {id: this.meetingId});
   }
 
   // ----------------------- Finalización del meeting ----------------------

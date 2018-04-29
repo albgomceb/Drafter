@@ -81,10 +81,19 @@ public class SixHatsService {
         return sixHatsRepository.findAll();
     }
 
-    public SixHats findById(int id) {
+    public SixHats getOne(int id) {
         return sixHatsRepository.getOne(id);
     }
 
+    public SixHats findById(int id) {
+    	SixHats res = null;
+    	if(sixHatsRepository.findById(id).isPresent()){
+    		res = sixHatsRepository.findById(id).get();
+    	}
+
+        return res;
+    }
+    
     public SixHats update(SixHats sixHats) {
         return null;
     }

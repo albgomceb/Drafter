@@ -59,7 +59,9 @@
 
   </div>
 
-  <button *ngIf="currentParticipant.role=='LEADER'" class="btn" (click)="saveSixHats()">Reassign</button>
-  <button class="btn" (click)="finish()">Finish</button>
+  <div *ngIf="currentParticipant.role=='LEADER'">
+    <button  class="btn" (click)="saveSixHats()">Reassign</button>
+    <button class="btn" (click)="finish()">Finish</button>
+  </div>
 
 
