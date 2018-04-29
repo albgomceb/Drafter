@@ -1,3 +1,4 @@
+import { LoginService } from './../../services/login.service';
 import { NgModule, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -7,6 +8,8 @@ import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
 import { Option } from '../../models/option.model';
 import { User } from '../../models/user.model';
+
+import * as $ from 'jquery';
 
 
 @Component({
@@ -27,13 +30,15 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public unreadedMsg: number;
   public attendants: any[];
   public logged: User;
+  public stoped: boolean;
 
-  constructor(private userService: UserService,
+  constructor(private loginService: LoginService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     public realtimeService:RealTimeService) {}
 
   ngOnInit() {
     this.loaded = false;
+    this.stoped = false;
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
     if(this.meetingId){
       this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
@@ -46,7 +51,6 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
           this.router.navigate(['/minutes/'+this.meetingId]);
         }else{
           this.realtimeService.connect(this.meetingId, () => {
-            this.loaded = true;
 
             this.realtimeService.register('step', [], step =>{
               this.meetingInfo.status = step.model.id;
@@ -67,10 +71,10 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
               this.meetingInfo.attendants.push(participant.model);
             });
             this.realtimeService.subscribe();
-            this.userService.getLoginUser().subscribe(logged =>{
-              this.logged = logged;
-              this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:logged.id,name:logged.username});
-            })
+
+            this.logged = this.loginService.getPrincipal();
+            this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
+            this.loaded = true;
           });
           this.users = res.attendants;
         }
@@ -107,6 +111,14 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
   receiveEventChat($event) {
     this.unreadedMsg = $event
+  }
+
+  changeChronometer(isPlay: boolean) {
+    if(!isPlay) {
+      window.blur();
+    }
+
+    this.stoped = !isPlay;
   }
 
 }
