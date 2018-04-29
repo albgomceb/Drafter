@@ -51,8 +51,8 @@ export class VideoconferencesComponent implements OnInit {
 
     //VARIABLES VIDEOCONFERENCIA
     console.log("Initializing; room = "+this.room);
-    var localVideo = $("#localVideo");
-    var remoteVideo = $("#remoteVideo");
+    var localVideo = document.getElementById("localVideo");
+    var remoteVideo = document.getElementById("remoteVideo");
 
     var sdpConstraints = {'mandatory': {
         'OfferToReceiveAudio':true, 
