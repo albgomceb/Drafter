@@ -1,24 +1,4 @@
 @import '../../../../scss/colors';
-.card {
-    background-color: #fafafa;
-    width:100%;
-    height: 100%;
-    z-index:1;
-    border: none;
-}
-
-button {
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    font-weight: bold;
-    background-color:#333;    
-}
-
-button:hover:not([disabled=""]) {
-    background-color: #00A98F;
-}
-
 form.form {
     border: 1px solid #ced4da;
     border-radius: 5px;
@@ -166,9 +146,10 @@ button.add:hover{
 /* PARAMETROS TOOLTIP THUMBNAIL PARTICIPANTES */
 
  /* Tooltip container */
- /*.tooltip-img {
+.tooltip-img {
     position: relative;
-}*/
+    display: inline-block;
+}
 
 /* Tooltip text */
 .tooltip-img .tooltiptext {

@@ -1,4 +1,4 @@
-import { NgModule, Component, OnInit } from '@angular/core';
+import { NgModule, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 import { RealTimeService, WSResponseType } from '../../../services/real-time.service';
 import { Option } from '../../models/option.model';
+import { User } from '../../models/user.model';
 
 
 @Component({
@@ -13,20 +14,23 @@ import { Option } from '../../models/option.model';
   templateUrl: './dynamic-meeting.component.html',
   styleUrls: ['./dynamic-meeting.component.scss']
 })
-export class DynamicMeetingComponent implements OnInit {
+export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
   public meetingId :number;
   public meetingInfo:any={};
   public thumbnail: Array<Option>;
   public users:Array<any>;
   public isFinished:boolean;
-  public showChat:boolean = true;
+  public showChat:boolean = false;
   public showVideo:boolean = false;
   public loaded;
+  public unreadedMsg: number;
+  public attendants: any[];
+  public logged: User;
 
   constructor(private userService: UserService,
-     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
-    private realtimeService:RealTimeService) {}
+    private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
+    public realtimeService:RealTimeService) {}
 
   ngOnInit() {
     this.loaded = false;
@@ -53,13 +57,31 @@ export class DynamicMeetingComponent implements OnInit {
               this.meetingInfo.isFinished = finish.model.id;
               this.router.navigate(['/minutes/'+this.meetingId]);
             } );
+
+            this.realtimeService.register('attendants', [], participant =>{
+              
+              let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
+              if(part) 
+              part.hasAttended = participant.model.hasAttended
+              else
+              this.meetingInfo.attendants.push(participant.model);
+            });
             this.realtimeService.subscribe();
+            this.userService.getLoginUser().subscribe(logged =>{
+              this.logged = logged;
+              this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:logged.id,name:logged.username});
+            })
           });
           this.users = res.attendants;
         }
       });
     }
   } 
+
+  ngOnDestroy() {
+    this.realtimeService.send('/meeting/quit/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
+    this.realtimeService.disconnect();
+  }
 
   finishMeeting(meetingId:number){
     this.realtimeService.send('/meeting/finish/',WSResponseType.PUSH,'finish',{id:"",name:""});    
@@ -70,11 +92,21 @@ export class DynamicMeetingComponent implements OnInit {
   }
 
   toggleChat() {
+    if(this.showChat == false && this.showVideo) {
+      this.showVideo = false;
+    }
     this.showChat = !this.showChat;
   }
 
   toggleVideo() {
+    if(this.showVideo == false && this.showChat) {
+      this.showChat = false;
+    }
     this.showVideo = !this.showVideo;
+  }
+
+  receiveEventChat($event) {
+    this.unreadedMsg = $event
   }
 
 }

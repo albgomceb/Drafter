@@ -36,6 +36,12 @@ export class UserService {
 
     return this.http.get<Participant>(this.staticUrl + '/participants/' + meetingId, {});
   }
+
+  saveParticipant(participant:Participant): Observable<Participant> {
+
+    return this.http.post<Participant>(this.staticUrl + '/participants/',participant, {});
+  }
+  
   getLoginUser(): Observable<User> {
     return this.http.get<User>(this.staticUrl + '/users/me/');
   }

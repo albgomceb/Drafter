@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { Meeting } from '../models/meeting.model';
 import { Agenda2 } from '../models/agenda.model2';
 import { Conclusion } from '../../models/conclusion';
+import { MeetingPagination } from '../models/meetingPagination.model';
 
 
 const httpOptions = {
@@ -31,8 +32,8 @@ export class MeetingService {
     return this.http.get<Array<Conclusion>>(this.staticUrl+'/agendas/' + agendaId + '/conclussion');
   }
 
-  getMeetingsByUser(userId: number): Observable<Array<Meeting>> {
-    return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/list/' + userId);
+  public getMeetingsByUser(userId: number, p: number): Observable<MeetingPagination> {
+    return this.http.get<MeetingPagination>(this.staticUrl+'/meeting/list/' + userId + '/page/' + p);
   }
 
   public isParticipant(meetingId: number): Observable<boolean> {

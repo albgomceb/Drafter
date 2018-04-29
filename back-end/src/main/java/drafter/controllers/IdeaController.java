@@ -32,10 +32,10 @@ import drafter.services.ProsService;
 @RestController
 @RequestMapping("/data/ideas")
 public class IdeaController {
-	
+
 	@Autowired
 	private IdeaService ideaService;
-	
+
 	@Autowired
 	private BrainStormingService brainStormingService;
 	@Autowired
@@ -44,57 +44,57 @@ public class IdeaController {
 	private ConsService consService;
 	@Autowired
 	private ParticipantService participantService;
-	
+
 	@Autowired
 	private SimpMessagingTemplate template;
-	
 
 	@GetMapping("")
 	public List<IdeaBean> findAll() {
 		List<Idea> res = this.ideaService.findAll();
-		List<IdeaBean> result = res.stream().map(idea -> new IdeaSerializer().fromIdea(idea)).collect(Collectors.toList());
+		List<IdeaBean> result = res.stream().map(idea -> new IdeaSerializer().fromIdea(idea))
+				.collect(Collectors.toList());
 
 		return result;
 	}
-	
+
 	@GetMapping("/list/{brainId}")
 	public List<IdeaBean> findByMeeting(@PathVariable int brainId) {
 		List<IdeaBean> res = new LinkedList<IdeaBean>();
-		try {
-			for(Idea i : ideaService.findByMeeting(brainId))
-				res.add(new IdeaSerializer().fromIdea(i));
-		} catch(Throwable e) {
-			throw e;
-		}
+		for (Idea i : ideaService.findByMeeting(brainId))
+			res.add(new IdeaSerializer().fromIdea(i));
 
 		return res;
 	}
-	
+
 	@PostMapping("/{brainId}")
 	public List<IdeaBean> save(@PathVariable("brainId") int brainId, @RequestBody ArrayList<IdeaBean> ideas) {
 		BrainStorming brainstorming = brainStormingService.findById(new Integer(brainId));
 		List<Idea> result = new IdeaSerializer().fromBean(ideas, brainstorming);
 		result.stream().forEach(a -> {
-			
-			ideaService.save(a);	
+
+			ideaService.save(a);
+			brainstorming.addIdea(a);
+			brainStormingService.create(brainstorming);
 		});
-		List<IdeaBean> res = result.stream().map(idea -> new IdeaSerializer().fromIdea(idea)).collect(Collectors.toList());
-		
+		List<IdeaBean> res = result.stream().map(idea -> new IdeaSerializer().fromIdea(idea))
+				.collect(Collectors.toList());
+
 		return res;
 	}
-	
+
 	@MessageMapping("/idea/save/{brainId}")
 	public void saveOne(@DestinationVariable int brainId, ModelBean<IdeaBean> bean) {
-		BrainStorming brainstorming = brainStormingService.findById(brainId);
-		Idea idea = new IdeaSerializer().fromBean(bean.getModel(), brainstorming, ideaService, prosService, consService, participantService);
+		BrainStorming brainstorming = brainStormingService.findById(new Integer(brainId));
+		Idea idea = new IdeaSerializer().fromBean(bean.getModel(), brainstorming, ideaService, prosService, consService,
+				participantService);
 		bean.setModel(ideaService.saveBean(idea));
-		
+
 		template.convertAndSend("/meeting/" + brainId, bean);
 	}
-	
+
 	@MessageMapping("/idea/delete/{ideaId}/{brainId}")
 	public void delete(@DestinationVariable int ideaId, @DestinationVariable int brainId, String json) {
-		if(ideaId != 0)
+		if (ideaId != 0)
 			ideaService.delete(ideaId);
 		template.convertAndSend("/meeting/" + brainId, json);
 	}

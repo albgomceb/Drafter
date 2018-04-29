@@ -197,6 +197,20 @@ public class UserController extends AbstractController {
 		return UserSerializer.fromUser(userService.findByPrincipal());
 	}
 
+	@PostMapping("/me/edit")
+	public Object update(@RequestBody UserBean2 user) {
+		User principal = userService.findByPrincipal();
+		principal.setEmail(user.getEmail());
+		principal.setName(user.getName());
+		principal.setSurname(user.getSurname());
+		UserAccount userAccount = principal.getUserAccount();
+		userAccount.setUsername(user.getUsername());
+		userAccount.setPassword(encodePassword(user.getPassword()));
+		
+		userService.save(principal);
+		return null;
+	}
+
 //	private boolean existeEmail(String email) {
 //		Boolean res = false;
 //		User user = userService.findByEmail(email);

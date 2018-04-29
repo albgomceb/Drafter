@@ -19,6 +19,8 @@ import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
 import { VideoconferencesComponent } from './componentes/videoconferences/videoconferences.component';
 import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
+import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
+import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-profile-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -32,11 +34,39 @@ const routes: Routes = [
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},
   {path: 'organization-department/:organizationId', component: OrganizationDepartmentPageComponent},
-  {path: 'meeting/list/:userId', component: ListMeetingPageComponent},
+  {path: 'meeting/list/:userId/page/:p', component: ListMeetingPageComponent},
   {path: 'organization/list/:userId', component: ListOrganizationDepartmentPageComponent},
   {path: 'ideas', component: IdeasCreateComponent},
   {path: 'callings/:id',component: VideoconferencesComponent},
+  { path: 'me', component: ProfilePageComponent },
+  { path: 'me/edit', component: EditProfilePageComponent },
   {path: '**', component: NotFoundPageComponent}
+
+  //FALTA ACTUALIZAR ESTA PARTE - TEMA DE AUTH.GUARD
+  // { path: 'pricing', component: PricingComponent },
+  // { path: 'register', component: RegisterPageComponent },
+  // { path: 'home', component: HomePageComponent },
+  // { path: 'login', component: LoginPageComponent },
+  // {
+  //   path: '', component: HomePageComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     { path: 'meeting', component: MeetingPageComponent },
+  //     { path: 'meeting/:id', component: DynamicMeetingComponent },
+  //     { path: 'minutes/:id', component: DynamicMinutesComponent },
+  //     { path: 'agenda/:meetingId', component: AgendaPageComponent },
+  //     { path: 'organization-department', component: OrganizationDepartmentPageComponent },
+  //     { path: 'meeting/list/:userId', component: ListMeetingPageComponent },
+  //     { path: 'ideas', component: IdeasCreateComponent },
+  //     { path: 'me', component: ProfilePageComponent },
+  //     { path: 'me/edit', component: EditProfilePageComponent },
+  //     { path: '**', component: NotFoundPageComponent }
+  // ]
+  // }
+
+  
+  
+// ];
 
 ];
 

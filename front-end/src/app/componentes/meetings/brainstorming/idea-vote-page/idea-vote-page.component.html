@@ -1,6 +1,6 @@
 <h2>Ideas Polling</h2>
 
-<div class="ideas-container">
+<div class="ideas-container" *ngIf="loaded">
     <div class="ideas-title">
         Ideas
     </div>
@@ -35,8 +35,10 @@
                 </div>
             </li>
         </ul>
-        <div class="text-center">
-            <button class="btn" (click)="save($event)">Vote</button>
+        <div *ngIf="hasVoted==false" class="text-center">
+            <button class="btn" (click)="save()">Vote</button>
+        </div>
+        <div *ngIf="hasVoted==true && participant.role=='LEADER'" class="text-center">
             <button (click)="finish()" class="btn bt-lg">Finish</button>
         </div>
     </div>
