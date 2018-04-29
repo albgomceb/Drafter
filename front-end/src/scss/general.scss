@@ -66,6 +66,19 @@ div.item-wrapper {
     div.content-wrapper {
         padding: 1rem;
         background-color: $content_wrapper_color;
+
+        div.item-content {
+            width: 45%;
+            margin-bottom: 1rem;
+    
+            span.item-title {
+                font-weight: bolder;
+            }
+    
+            @include media-breakpoint-down(md) {
+                width: 100%;
+            }
+        }
     }
 }
 

@@ -59,6 +59,10 @@ public class UserService {
         return null;
     }
 
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
 	//Other business Methods-----------------------------------------------------------------------------
 
     public User findByEmail(String email) {

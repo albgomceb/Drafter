@@ -1,21 +1,25 @@
-<ul class="msg-list-chat">
-  <li *ngFor="let msg of messages">
-    <div class="msg-container">
-      <span>
-        <b [style.color]="getUserColor(msg.userUUID)">{{getUser(msg.userUUID)}}</b>
-      </span>
-      <br>
-      <span>
-        {{msg.message}}
-      </span>
-      <span class="text-muted">
-        {{msg.time}}
-      </span>
+<ul #messagesRef class="msg-list-chat" id="messagesRef" (scroll)="scroll($event)">
+  <li *ngFor="let msg of messages; let i = index;">
+    <div class="unreaded" *ngIf="showNotReaded(i)">{{ getUnreadedMsg() }} unread messages</div>
+    <div class="msg-container" [ngClass]="{'msg-container-me': isPrincipal(msg.userUUID)}">
+      <div *ngIf="!isPrincipal(msg.userUUID)">
+        <b [style.color]="getUserColor(msg.userUUID)">{{ getUser(msg.userUUID) }}</b>
+      </div>
+      <div>
+        <span>{{ msg.message }}</span>
+        <span class="text-muted">{{ msg.time }}</span>
+        <div class="clearfix"></div>
+      </div>
     </div>
   </li>
+
+  <button class="btn btn-arrow" *ngIf="hasUnreadedMsg() && hasScrollBar()" (click)="readMsg()">
+    <i class="fa fa-angle-double-down"></i>
+    <span class="badge badge-pill badge-danger badge-chat">{{ getUnreadedMsg() }}</span>
+  </button>
 </ul>
 <form class="form-chat d-flex" (ngSubmit)="onSubmit()" (click)="foco()">
-  <div #editable contenteditable="true" (keydown)="lineBreak($event)" class="chat-input"></div>
+  <div #editable contenteditable="true" (keydown)="lineBreak($event)" class="chat-input" (focus)="readMsg()"></div>
   <button type="submit" class="send btn">
     <i class="fas fa-angle-double-right"></i>
   </button>

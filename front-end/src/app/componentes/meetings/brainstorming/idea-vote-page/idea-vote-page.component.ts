@@ -26,27 +26,45 @@ export class IdeaVotePageComponent implements OnInit {
   public finishMeeting: EventEmitter<number> = new EventEmitter<number>();
 
   public votes: Array<Vote>;
+  public loaded: boolean;
 
   constructor(private voteService: VoteService, private activeRoute: ActivatedRoute, private router: Router, private realTimeService: RealTimeService, private ideaService: IdeaService, private userService: UserService, private loginService: LoginService) { }
 
   ngOnInit() {
+    var lock = 0;
+    this.loaded = false;
+
     this.ideas = new Array<Idea>();
     this.userService.getParticipant(this.meetingId).subscribe(participant => {
       this.participant = participant;
+
+      lock++;
+      realTime();
     });
     this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(idea => {
       this.ideas = idea;
+
+      lock++;
+      realTime();
     });
+
     this.votes = new Array<Vote>();
-    this.realTimeService.connect(this.meetingId, () => {
-      var i = 1;
-      for (var ide of this.ideas) {
-        this.realTimeService.register('votes' + i, ide.votes);
-        this.votes.push({ id: 0, ideaId: ide.id, participantId: this.participant.id, value: 1 });
-        i++;
-      }
-      this.realTimeService.subscribe();
-    });
+    var realTime = () => {
+      if(lock != 2)
+        return;
+
+      this.realTimeService.connect(this.meetingId, () => {
+        var i = 1;
+        for (var ide of this.ideas) {
+          this.realTimeService.register('votes' + i, ide.votes);
+          this.votes.push({ id: 0, ideaId: ide.id, participantId: this.participant.id, value: 1 });
+          i++;
+        }
+        this.realTimeService.subscribe();
+
+        this.loaded = true;
+      });
+    };
   }
 
   save() {

@@ -42,6 +42,11 @@ import { BrainStormingMinutesPageComponent } from './componentes/meetings/brains
 import { VideoconferencesComponent } from './componentes/videoconferences/videoconferences.component';
 import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
 import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
+import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-profile-page.component';
+import { AuthGuard } from './security/auth.guard';
+import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
+import { ProfileService } from './componentes/services/profile.service';
+
 
 @NgModule({
   declarations: [
@@ -75,7 +80,9 @@ import { PaymentSuccessPageComponent } from './componentes/payment-success-page/
     ChronometerComponent,
     VideoconferencesComponent,
     ListOrganizationDepartmentPageComponent,
-    PaymentSuccessPageComponent
+    PaymentSuccessPageComponent,
+    EditProfilePageComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +108,9 @@ import { PaymentSuccessPageComponent } from './componentes/payment-success-page/
     DynamicMeetingService,
     SixHatsService,
     IdeaService,
-    VoteService
+    VoteService,
+    ProfileService,
+    AuthGuard
   ],  
   bootstrap: [AppComponent]
 })
