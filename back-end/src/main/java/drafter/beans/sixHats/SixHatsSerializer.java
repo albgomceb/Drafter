@@ -27,9 +27,8 @@ public class SixHatsSerializer {
 	
 	public SixHats fromBean(SixHatsBean sixHatsBean, Meeting meeting) {
 		SixHats sixHats = new SixHats();
-		sixHats.setHats(new HatSerializer().fromBean(sixHatsBean.getHats()));
-		sixHats.setId(sixHatsBean.getMeetingId());
-		
+		sixHats.setId(sixHatsBean.getMeetingId());	
+		sixHats.setVersion(meeting.getVersion());
 		sixHats.setTitle(meeting.getTitle());
 		sixHats.setDescription(meeting.getDescription());
 		sixHats.setDate(new Date());
@@ -40,6 +39,9 @@ public class SixHatsSerializer {
 		sixHats.setSteps(meeting.getSteps());
 		sixHats.setAgendas(meeting.getAgendas());
 		sixHats.setParticipants(meeting.getParticipants());
+		sixHats.setStatus(1);
+		
+		sixHats.setHats(new HatSerializer().fromBean(sixHatsBean.getHats(), sixHats));
 		
 		return sixHats;
 	}

@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ public class SixHats extends Meeting{
 	
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "sixHats")
+	@OneToMany(mappedBy = "sixHats", fetch=FetchType.EAGER)
 	public Collection<Hat> getHats() {
 		return hats;
 	}
