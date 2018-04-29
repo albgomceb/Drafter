@@ -118,7 +118,7 @@ public abstract class Meeting extends DomainEntity{
 	}
 
 	
-	@Min(1)
+	@Min(0)
 	public int getStatus() {
 		return status;
 	}
