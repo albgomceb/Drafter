@@ -56,7 +56,6 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
             } );
 
             this.realtimeService.register('attendants', [], participant =>{
-              console.log("PARTICIPANT REEIVED: ",participant);
               
               let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
               if(part) 
