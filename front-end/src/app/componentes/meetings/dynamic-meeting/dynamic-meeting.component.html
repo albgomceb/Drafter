@@ -8,6 +8,7 @@
                 <!-- Chat button -->          
                 <button *ngIf="!showChat" type="button" (click)="toggleChat();" class="btn">
                     <i class="far fa-comments"></i>
+                    <span class="badge badge-pill badge-danger badge-chat">{{ unreadedMsg }}</span>
                 </button>
                 <!-- Video button -->
                 <button *ngIf="!showVideo" type="button" (click)="toggleVideo();" class="btn">
@@ -71,7 +72,7 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <chat></chat>
+        <chat (messageEvent)="receiveEventChat($event)"></chat>
     </div>
     <!-- Video -->
     <div class="chat-wrapper" [ngClass]="showVideo ? 'shadow' : 'd-none'">
