@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { ActivatedRoute } from '@angular/router';
+import * as attachMediaStream from 'attachmediastream';
 
 @Component({
   selector: 'videoconferences',
@@ -33,8 +34,6 @@ export class VideoconferencesComponent implements OnInit {
     var localVideo = document.getElementById("localVideo");
     var miniVideo = document.getElementById("miniVideo");
     var remoteVideo = document.getElementById("remoteVideo");
-
-    var attachMediaStream = require('attachmediastream');
 
     var sdpConstraints = {'mandatory': {
         'OfferToReceiveAudio':true, 
@@ -119,6 +118,10 @@ export class VideoconferencesComponent implements OnInit {
                     alert('getUserMedia() error: '+ e)
                 });
 
+                $("#hangUp").click(function() {
+                    hangup();
+                });
+
             }
 
             
@@ -152,7 +155,7 @@ export class VideoconferencesComponent implements OnInit {
       //LLEVAMOS A CABO LA LLAMADA
       function createPeerConnection() {
         try {
-            // Create an RTCPeerConnection via the polyfill.
+            // Create an RTCPeerConnection
 
             var servers = {iceServers: [
                 {
@@ -183,7 +186,27 @@ export class VideoconferencesComponent implements OnInit {
 
       function doCall() {
         console.log("Sending offer to peer.");
-        pc.createOffer(constraints).then(setLocalAndSendMessage, null);
+        pc.createOffer().then(function(offer) {
+            return pc.setLocalDescription(offer);
+          })
+          .then(function() {
+            sendToServer({
+              name: 'user' + Math.round(Math.random() * 999999999) + 999999999,
+              target: "local",
+              type: "video-offer",
+              sdp: pc.localDescription
+            });
+          })
+          .catch(function(reason) {
+            // An error occurred, so handle the failure to connect
+          });
+      }
+
+      function sendToServer(msg) {
+        var msgJSON = JSON.stringify(msg);
+      
+        //Esta conexion es de websocket
+        //connection.send(msgJSON);
       }
 
       function doAnswer() {
@@ -193,8 +216,8 @@ export class VideoconferencesComponent implements OnInit {
 
       function setLocalAndSendMessage(sessionDescription) {
         // Set Opus as the preferred codec in SDP if Opus is present.
+        console.log("DESCRIPTION: " + JSON.stringify(sessionDescription));
         pc.setLocalDescription(sessionDescription);
-        sendMessage(sessionDescription);
       }
 
       function onRemoteStreamAdded(event) {
@@ -213,27 +236,20 @@ export class VideoconferencesComponent implements OnInit {
         pc.close();
         pc.close();
         pc = null;
+        console.log('Hung calls');
       }
 
       function iceCallback(event) {
         if (event.candidate) {
-            sendMessage({type: 'candidate',
+            var message = {type: 'candidate',
               label: event.candidate.sdpMLineIndex,
               id: event.candidate.sdpMid,
-              candidate: event.candidate.candidate});
+              candidate: event.candidate.candidate};
+              var msgString = JSON.stringify(message);
+              console.log('C->S: ' + msgString);
           } else {
             console.log("End of candidates.");
           }
-      }
-
-      function sendMessage(message) {
-        var msgString = JSON.stringify(message);
-        console.log('C->S: ' + msgString);
-        var path = location.pathname;
-        path + '/message?r=99688636' + '&u=92246248';
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', path, true);
-        xhr.send(msgString);
       }
 
 }
