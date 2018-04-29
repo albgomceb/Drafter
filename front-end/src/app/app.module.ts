@@ -47,6 +47,7 @@ import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-p
 import { AuthGuard } from './security/auth.guard';
 import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
 import { ProfileService } from './componentes/services/profile.service';
+import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/waiting-room/waiting-room.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { ProfileService } from './componentes/services/profile.service';
     ListOrganizationDepartmentPageComponent,
     PaymentSuccessPageComponent,
     EditProfilePageComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    WaitingRoomComponent
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +23,10 @@ import drafter.beans.Option;
 import drafter.beans.meeting.MeetingBean;
 import drafter.beans.meeting.MeetingSerializer;
 import drafter.beans.model.ModelBean;
+import drafter.beans.participant.ParticipantBean;
+import drafter.beans.participant.ParticipantSerializer;
 import drafter.domain.Meeting;
+import drafter.domain.Participant;
 import drafter.domain.SixHats;
 import drafter.domain.User;
 import drafter.services.HatService;
@@ -146,6 +148,18 @@ public class MeetingController extends AbstractController {
 		data.setModel(new Option(meeting.getHasfinished()?"true":"false",""));
 		
 		template.convertAndSend("/meeting/" + meetingId, data);
+	}
+	
+	@MessageMapping("/meeting/attended/{meetingId}")
+	public void attended(@DestinationVariable int meetingId, ModelBean<Option> data) {
+		User user = userService.findById(new Integer(data.getModel().getId()));
+		Participant updated = meetingService.attended(meetingId,user);
+		ModelBean<ParticipantBean> response = new ModelBean<ParticipantBean>();
+		response.setModel(new ParticipantSerializer().fromParticipant(updated));
+		response.setData(data.getData());
+		response.setType(data.getType());
+		response.setName(data.getName());
+		template.convertAndSend("/meeting/" + meetingId, response);
 	}
 	@MessageMapping("/meeting/nextStep/{meetingId}")
 	public void nextStep(@DestinationVariable int meetingId, ModelBean<Option> data) {

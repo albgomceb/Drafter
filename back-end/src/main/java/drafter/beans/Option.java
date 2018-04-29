@@ -11,6 +11,7 @@ public class Option {
 	public String photo;
 	public String organization;
 	public String role;
+	public Boolean hasAttended;
 	public List<Option> users;
 	
 
@@ -104,5 +105,14 @@ public class Option {
 	public void setUsers(List<Option> users) {
 		this.users = users;
 	}
+
+	public Boolean getHasAttended() {
+		return hasAttended;
+	}
+
+	public void setHasAttended(Boolean hasAttended) {
+		this.hasAttended = hasAttended;
+	}
+	
 	
 }
