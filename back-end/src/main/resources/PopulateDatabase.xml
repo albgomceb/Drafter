@@ -7,8 +7,8 @@
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="drafter.security.UserAccount">
-		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="username" value="larofe" />
+		<property name="password" value="aab6e2d6c3ec7df7d0b903da177f3a7b" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -19,8 +19,8 @@
 	</bean>
 
 	<bean id="userAccount2" class="drafter.security.UserAccount">
-		<property name="username" value="user1" />
-		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="username" value="macaba" />
+		<property name="password" value="b77f5a079e5df6ca62d41ead54201365" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -31,8 +31,8 @@
 	</bean>
 
 	<bean id="userAccount3" class="drafter.security.UserAccount">
-		<property name="username" value="user2" />
-		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="username" value="macai" />
+		<property name="password" value="d35ddd3e50f212a97656712f85900737" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -43,8 +43,8 @@
 	</bean>
 
 	<bean id="userAccount4" class="drafter.security.UserAccount">
-		<property name="username" value="user3" />
-		<property name="password" value="92877af70a45fd6a2ed7fe81e1236b78" />
+		<property name="username" value="adrocru" />
+		<property name="password" value="c161a8432f357d5667ae045e92643e4c" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -55,8 +55,8 @@
 	</bean>
 
 	<bean id="userAccount5" class="drafter.security.UserAccount">
-		<property name="username" value="user4" />
-		<property name="password" value="3f02ebe3d7929b091e3d8ccfde2f3bc6" />
+		<property name="username" value="cocome" />
+		<property name="password" value="c73500f72b7ef13113e05cfdd62185ed" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -67,8 +67,8 @@
 	</bean>
 
 	<bean id="userAccount6" class="drafter.security.UserAccount">
-		<property name="username" value="user5" />
-		<property name="password" value="0a791842f52a0acfbb3a783378c066b8" />
+		<property name="username" value="querico" />
+		<property name="password" value="105ba0b9e839084931f377cb55d24408" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -80,8 +80,8 @@
 
 
 	<bean id="userAccount7" class="drafter.security.UserAccount">
-		<property name="username" value="user6" />
-		<property name="password" value="affec3b64cf90492377a8114c86fc093" />
+		<property name="username" value="mapo" />
+		<property name="password" value="4d5e356817764b1bf3a9dcb97f37beb0" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -92,8 +92,8 @@
 	</bean>
 
 	<bean id="userAccount8" class="drafter.security.UserAccount">
-		<property name="username" value="user7" />
-		<property name="password" value="3e0469fb134991f8f75a2760e409c6ed" />
+		<property name="username" value="wiscre" />
+		<property name="password" value="a18b09672944d4b449f7bb4b183a3a43" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -109,24 +109,24 @@
 
 	<bean id="admin1" class="drafter.domain.Administrator">
 		<property name="userAccount" ref="userAccount1" />
-		<property name="name" value="admin1" />
-		<property name="surname" value="admin1" />
-		<property name="email" value="admin1@gmail.com" />
+		<property name="name" value="Laura" />
+		<property name="surname" value="Rodiguez Fernandez" />
+		<property name="email" value="larofe@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg" />
 	</bean>
 
 	<!-- Users -->
 
 	<bean id="user1" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount2" />
-		<property name="name" value="user1" />
-		<property name="surname" value="MARIN CABRERA" />
-		<property name="email" value="user1@gmail.com" />
+		<property name="name" value="Mateos" />
+		<property name="surname" value="Cabrin Barrera" />
+		<property name="email" value="macaba@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars3.githubusercontent.com/u/17437427?s=60&amp;v=4" />
+			value="https://images.pexels.com/photos/428341/pexels-photo-428341.jpeg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -142,12 +142,12 @@
 
 	<bean id="user2" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount3" />
-		<property name="name" value="user2" />
-		<property name="surname" value="GOMEZ CEBALLOS" />
-		<property name="email" value="user2@gmail.com" />
+		<property name="name" value="Maria" />
+		<property name="surname" value="Candelaria Ibarra" />
+		<property name="email" value="macai@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars3.githubusercontent.com/u/26671664?s=60&amp;v=4" />
+			value="https://images.pexels.com/photos/265036/pexels-photo-265036.jpeg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -162,12 +162,12 @@
 
 	<bean id="user3" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount4" />
-		<property name="name" value="user3" />
-		<property name="surname" value="GALAN BLANCO" />
-		<property name="email" value="user3@gmail.com" />
+		<property name="name" value="Adriana" />
+		<property name="surname" value="Romero Cruz" />
+		<property name="email" value="adrocru@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars0.githubusercontent.com/u/32903920?s=460&amp;v=4" />
+			value="https://images.pexels.com/photos/440588/pexels-photo-440588.jpeg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -181,12 +181,12 @@
 
 	<bean id="user4" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount5" />
-		<property name="name" value="user4" />
-		<property name="surname" value="DE TUERO BARROSO" />
-		<property name="email" value="user4@gmail.com" />
+		<property name="name" value="Constantino" />
+		<property name="surname" value="Corballo Mendez" />
+		<property name="email" value="cocome@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars0.githubusercontent.com/u/19387789?s=60&amp;v=4" />
+			value="https://images.pexels.com/photos/450271/pexels-photo-450271.jpeg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -200,12 +200,12 @@
 
 	<bean id="user5" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount6" />
-		<property name="name" value="user5" />
-		<property name="surname" value="MARTINEZ SUAREZ" />
-		<property name="email" value="user5@gmail.com" />
+		<property name="name" value="Quevedo" />
+		<property name="surname" value="Ricardo Constancio" />
+		<property name="email" value="querico@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
+			value="https://images.pexels.com/photos/461497/pexels-photo-461497.jpeg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -219,12 +219,12 @@
 
 	<bean id="user6" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount7" />
-		<property name="name" value="user6" />
-		<property name="surname" value="user6" />
-		<property name="email" value="user6@gmail.com" />
+		<property name="name" value="Max" />
+		<property name="surname" value="Powell" />
+		<property name="email" value="mapo@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
+			value="https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg" />
 		<property name="departments">
 			<list>
 				<ref bean="department3" />
@@ -240,12 +240,12 @@
 
 	<bean id="user7" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount8" />
-		<property name="name" value="user7" />
-		<property name="surname" value="user7" />
-		<property name="email" value="user7@gmail.com" />
+		<property name="name" value="Wilhelm" />
+		<property name="surname" value="Scream" />
+		<property name="email" value="wiscre@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://avatars0.githubusercontent.com/u/32370013?s=460&amp;v=4" />
+			value="https://images.pexels.com/photos/428339/pexels-photo-428339.jpeg" />
 		<property name="departments">
 			<list>
 
@@ -261,12 +261,12 @@
 	<!-- Organization -->
 
 	<bean id="organization1" class="drafter.domain.Organization">
-		<property name="enterprise" value="organization1" />
-		<property name="description" value="organization1" />
-		<property name="address" value="organization" />
-		<property name="phone" value="900900900" />
+		<property name="enterprise" value="Boring Company" />
+		<property name="description" value="This a boring company and we dont know what to do with our time." />
+		<property name="address" value="C/ Reyes Católicos n7" />
+		<property name="phone" value="900900923" />
 		<property name="logo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="http://www.theacademygtc.co.uk/wp-content/uploads/2015/09/Boring.jpg" />
 		<property name="email" value="organization@gmail.com" />
 		<property name="user" ref="user1" />
 		<property name="departments">
@@ -278,13 +278,13 @@
 	</bean>
 
 	<bean id="organization2" class="drafter.domain.Organization">
-		<property name="enterprise" value="Organization2" />
-		<property name="description" value="organization2" />
-		<property name="address" value="organization" />
-		<property name="phone" value="900900900" />
+		<property name="enterprise" value="Cyber Rabbit" />
+		<property name="description" value="Empresa dedicada a la creación de móviles con la última tecnología en el mercado." />
+		<property name="address" value="C/ Reina Merces n1" />
+		<property name="phone" value="900900912" />
 		<property name="logo"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
-		<property name="email" value="organization@gmail.com" />
+			value="https://images.pexels.com/photos/221159/pexels-photo-221159.jpeg" />
+		<property name="email" value="crabbits@gmail.com" />
 		<property name="user" ref="user6" />
 		<property name="departments">
 			<list>
@@ -296,7 +296,7 @@
 	<!-- Department -->
 
 	<bean id="department1" class="drafter.domain.Department">
-		<property name="name" value="department1" />
+		<property name="name" value="Financial Departament" />
 		<property name="organization" ref="organization1" />
 		<property name="users">
 			<list>
@@ -308,7 +308,7 @@
 	</bean>
 
 	<bean id="department2" class="drafter.domain.Department">
-		<property name="name" value="department2" />
+		<property name="name" value="Human Resources" />
 		<property name="organization" ref="organization1" />
 		<property name="users">
 			<list>
@@ -319,7 +319,7 @@
 	</bean>
 
 	<bean id="department3" class="drafter.domain.Department">
-		<property name="name" value="department3" />
+		<property name="name" value="Departamento de Ideas" />
 		<property name="organization" ref="organization2" />
 		<property name="users">
 			<list>
@@ -332,13 +332,13 @@
 	<!-- Meetings -->
 
 	<bean id="standard1" class="drafter.domain.Standard">
-		<property name="title" value="standard1" />
-		<property name="description" value="standard1" />
-		<property name="date" value="2018/01/01 00:22" />
+		<property name="title" value="We have to do tunnels" />
+		<property name="description" value="We are meeting because our project is to create a air tunnel." />
+		<property name="date" value="2019/01/01 00:22" />
 		<property name="numberOfMeeting" value="10" />
 		<property name="image"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
-		<property name="timer" value="0" />
+			value="https://images.pexels.com/photos/117178/pexels-photo-117178.jpeg" />
+		<property name="timer" value="10" />
 		<property name="hasfinished" value="false" />
 		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1"/> -->
@@ -360,13 +360,13 @@
 	</bean>
 
 	<bean id="standard2" class="drafter.domain.Standard">
-		<property name="title" value="standard2" />
-		<property name="description" value="standard2" />
+		<property name="title" value="Several Departaments" />
+		<property name="description" value="Someone is stealing money." />
 		<property name="date" value="2018/01/01 00:22" />
 		<property name="numberOfMeeting" value="8" />
 		<property name="image"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
-		<property name="timer" value="0" />
+		<property name="timer" value="50" />
 		<property name="hasfinished" value="true" />
 		<property name="status" value="1" />
 		<property name="project" ref="project1" />
@@ -393,15 +393,15 @@
 
 
 	<bean id="standard3" class="drafter.domain.Standard">
-		<property name="title" value="standard3" />
-		<property name="description" value="standard3" />
+		<property name="title" value="Móvil Pata-4x" />
+		<property name="description" value="Esta reunión es para hablar del nuevo diseño del móvil Pata-4x" />
 		<property name="date" value="2018/02/01 00:22" />
 		<property name="numberOfMeeting" value="4" />
 		<property name="image"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
-		<property name="timer" value="0" />
+			value="https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg" />
+		<property name="timer" value="30" />
 		<property name="hasfinished" value="true" />
-		<property name="status" value="2" />
+		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="agendas">
 			<list>
@@ -425,12 +425,12 @@
 
 
 	<bean id="brainstorming1" class="drafter.domain.BrainStorming">
-		<property name="title" value="brainstorming1" />
-		<property name="description" value="brainstorming1" />
+		<property name="title" value="Tenemos que pensar una idea para la tarta" />
+		<property name="description" value="A Pepe le gusta el chocolate y el fútbol pero a Jesús no le gusta el fútbol." />
 		<property name="date" value="2018/01/01 00:22" />
 		<property name="numberOfMeeting" value="6" />
 		<property name="image"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://images.pexels.com/photos/709841/pexels-photo-709841.jpeg" />
 		<property name="timer" value="3600" />
 		<property name="hasfinished" value="true" />
 		<property name="status" value="2" />
@@ -464,12 +464,12 @@
 	
 	
 	<bean id="brainstorming2" class="drafter.domain.BrainStorming">
-		<property name="title" value="brainstorming2" />
-		<property name="description" value="brainstorming2" />
+		<property name="title" value="Idea para un proyecto" />
+		<property name="description" value="Vamos a empezar un proyecto nuevo y queremos buscar una idea por la cual empezar." />
 		<property name="date" value="2019/01/01 00:22" />
 		<property name="numberOfMeeting" value="6" />
 		<property name="image"
-			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
+			value="https://images.pexels.com/photos/212286/pexels-photo-212286.jpeg" />
 		<property name="timer" value="0" />
 		<property name="hasfinished" value="false" />
 		<property name="status" value="1" />
@@ -582,7 +582,7 @@
 
 	<bean id="idea1" class="drafter.domain.Idea">
 		<property name="number" value="1" />
-		<property name="text" value="idea1" />
+		<property name="text" value="Pues hacemos la tarta de Chocolate de coches" />
 		<property name="ratingValue" value="3.0" />
 		<property name="brain" ref="brainstorming1" />
 		<property name="pros">
@@ -608,7 +608,7 @@
 
 	<bean id="idea2" class="drafter.domain.Idea">
 		<property name="number" value="2" />
-		<property name="text" value="idea2" />
+		<property name="text" value="Podemos hacerla de fresa con una carrera de coches." />
 		<property name="ratingValue" value="0.0" />
 		<property name="brain" ref="brainstorming1" />
 		<property name="pros">
@@ -635,21 +635,21 @@
 
 	<bean id="pros1" class="drafter.domain.Pros">
 		<property name="numberPros" value="1" />
-		<property name="pros" value="pros1" />
+		<property name="pros" value="A ambos les gusta el chocolate." />
 		<property name="idea" ref="idea1" />
 
 	</bean>
 
 	<bean id="pros2" class="drafter.domain.Pros">
 		<property name="numberPros" value="2" />
-		<property name="pros" value="pros2" />
+		<property name="pros" value="A ambos les gustan los coches." />
 		<property name="idea" ref="idea1" />
 
 	</bean>
 
 	<bean id="pros3" class="drafter.domain.Pros">
 		<property name="numberPros" value="1" />
-		<property name="pros" value="pros3" />
+		<property name="pros" value="A ambos les gustan los coches." />
 		<property name="idea" ref="idea2" />
 
 	</bean>
@@ -660,21 +660,21 @@
 
 	<bean id="cons1" class="drafter.domain.Cons">
 		<property name="numberCons" value="1" />
-		<property name="cons" value="cons1" />
+		<property name="cons" value="No habrá nada de fútbol en la tarta." />
 		<property name="idea" ref="idea1" />
 
 	</bean>
 
 	<bean id="cons2" class="drafter.domain.Cons">
 		<property name="numberCons" value="1" />
-		<property name="cons" value="cons2" />
+		<property name="cons" value="A Jesús no le gustan las fresas" />
 		<property name="idea" ref="idea2" />
 
 	</bean>
 
 	<bean id="cons3" class="drafter.domain.Cons">
 		<property name="numberCons" value="2" />
-		<property name="cons" value="cons3" />
+		<property name="cons" value="No habrá nada de fútbol en la tarta." />
 		<property name="idea" ref="idea2" />
 
 	</bean>
@@ -933,7 +933,7 @@
 
 	<bean id="agenda1" class="drafter.domain.Agenda">
 		<property name="number" value="1" />
-		<property name="description" value="agenda1" />
+		<property name="description" value="I guess that Maria is a thief." />
 		<property name="meeting" ref="standard2" />
 		<property name="conclusion">
 			<list>
@@ -945,7 +945,7 @@
 
 	<bean id="agenda2" class="drafter.domain.Agenda">
 		<property name="number" value="2" />
-		<property name="description" value="agenda2" />
+		<property name="description" value="If it is true, we will call the police." />
 		<property name="meeting" ref="standard2" />
 		<property name="conclusion">
 			<list>
@@ -955,8 +955,8 @@
 	</bean>
 
 	<bean id="agenda3" class="drafter.domain.Agenda">
-		<property name="number" value="3" />
-		<property name="description" value="agenda3" />
+		<property name="number" value="1" />
+		<property name="description" value="Creo que la carcasa debería de ser de madera." />
 		<property name="meeting" ref="standard3" />
 		<property name="conclusion">
 			<list>
@@ -968,22 +968,22 @@
 	<!-- Conclusions -->
 
 	<bean id="conclusion1" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="conclusion1" />
+		<property name="conclusion" value="I saw Maria stealing 500e" />
 		<property name="agenda" ref="agenda1" />
 	</bean>
 
 	<bean id="conclusion2" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="conclusion2" />
+		<property name="conclusion" value="She is a Thief" />
 		<property name="agenda" ref="agenda1" />
 	</bean>
 
 	<bean id="conclusion3" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="conclusion3" />
+		<property name="conclusion" value="Call the police!!" />
 		<property name="agenda" ref="agenda2" />
 	</bean>
 
 	<bean id="conclusion4" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="conclusion4" />
+		<property name="conclusion" value="No creo que sea una buena idea. Piensa en los móviles cuando en Sevilla hace 40 grados en verano. No van a funcionar." />
 		<property name="agenda" ref="agenda3" />
 	</bean>
 
@@ -991,7 +991,7 @@
 	<!-- Projects -->
 
 	<bean id="project1" class="drafter.domain.Project">
-		<property name="name" value="project1" />
+		<property name="name" value="Company" />
 		<property name="description" value="project1" />
 	</bean>
 
@@ -1000,7 +1000,7 @@
 
 	<bean id="step1" class="drafter.domain.Step">
 		<property name="number" value="1" />
-		<property name="description" value="step1" />
+		<property name="description" value="Hablar sobre el diseño" />
 		<property name="picture"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="meeting" ref="standard3" />
@@ -1008,7 +1008,7 @@
 
 	<bean id="step2" class="drafter.domain.Step">
 		<property name="number" value="2" />
-		<property name="description" value="step2" />
+		<property name="description" value="Si se ha llegado a una conclusión, obtener el acta." />
 		<property name="picture"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="meeting" ref="standard3" />
@@ -1016,7 +1016,7 @@
 
 	<bean id="step3" class="drafter.domain.Step">
 		<property name="number" value="1" />
-		<property name="description" value="step1" />
+		<property name="description" value="Proponer ideas." />
 		<property name="picture"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="meeting" ref="brainstorming1" />
@@ -1024,7 +1024,7 @@
 
 	<bean id="step4" class="drafter.domain.Step">
 		<property name="number" value="2" />
-		<property name="description" value="step2" />
+		<property name="description" value="Voten las ideas." />
 		<property name="picture"
 			value="https://image.flaticon.com/icons/svg/30/30712.svg" />
 		<property name="meeting" ref="brainstorming1" />
