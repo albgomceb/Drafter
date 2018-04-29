@@ -37,7 +37,7 @@ export class RealTimeService {
   }
 
   public getUsers(): any {
-    return JSON.stringify(this.users, null, "\t");
+    return this.users;
   }
 
   public getUserColor(uuid: string): string {
