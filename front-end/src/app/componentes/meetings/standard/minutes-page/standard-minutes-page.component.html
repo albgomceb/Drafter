@@ -37,21 +37,11 @@
                 <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
                 <div class="card-body">
                     <h4 class="card-title">{{at.name}}</h4>
-                    <h5>prueba</h5>
                 </div>
             </div>
         </div>
     </div>
 
-<div class="subtitle">
-    Participants
-</div>
-<div class="minutes-container">
-    <div class="d-flex justify-content-start flex-wrap">
-        <div *ngFor="let at of meeting.attendants" class="card">
-            <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
-            <div class="card-body">
-                <h4 class="card-title">{{at.name}}</h4>
     <div class="subtitle">
         Conclusions
     </div>
@@ -65,7 +55,7 @@
     </div>
 </div>
 <div class="text-center">
-    <button (click)="downloadPDF()" class="btn">Export to PDF</button>
+    <button (click)="downloadPDF()" class="btn mb-3">Export to PDF</button>
 </div>
 <div class="text-center">
     <button routerLink="../../meeting" class="btn">New meeting</button>
