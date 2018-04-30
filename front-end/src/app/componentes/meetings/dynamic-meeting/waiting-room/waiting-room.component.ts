@@ -1,3 +1,4 @@
+import { Participant } from './../../../models/participant.model';
 import { OnInit, Component, Input, Output, EventEmitter } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DynamicMeetingService } from "../../../services/dynamic-meeting.service";
@@ -22,7 +23,7 @@ export class WaitingRoomComponent implements OnInit {
   public nextStep: EventEmitter<number> = new EventEmitter<number>();
 
   public attendants : any[];
-  public principal: User;
+  public principal: Participant;
 
   constructor(private activatedRoute: ActivatedRoute, private meetingService: DynamicMeetingService, private router: Router, private userService:UserService) { }
 

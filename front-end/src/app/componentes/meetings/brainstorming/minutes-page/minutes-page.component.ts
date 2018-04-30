@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { MeetingService } from '../../../services/meeting.service';
@@ -102,9 +103,9 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
       pdf.save('test.pdf');
 */
-    html2canvas(content).then(function (canvas) {
+    html2canvas(content,{useCORS:true}).then(function (canvas) {
 
-      var img = canvas.toDataURL("image/png");
+      var img = canvas.toDataURL();
       var doc = new jsPDF();
       doc.addImage(img, 'PNG',10,10,190,250);
       doc.save('Minutes.pdf');

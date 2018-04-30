@@ -32,8 +32,10 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public attendants: any[];
   public logged: User;
   public stoped: boolean;
+  public currentAttendant:string;
 
-  constructor(private loginService: LoginService,
+
+  constructor(private loginService:LoginService, private userService: UserService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     public realtimeService:RealTimeService, private meetingService2: MeetingService) {}
 
@@ -73,10 +75,17 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
               this.realtimeService.register('attendants', [], participant =>{
                 
                 let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
-                if(part) 
-                part.hasAttended = participant.model.hasAttended
-                else
-                this.meetingInfo.attendants.push(participant.model);
+                if(part) {
+                  part.hasAttended = participant.model.hasAttended
+                  var scope = this;
+                  if(part.name != this.loginService.getPrincipal().name){
+                    this.currentAttendant =  part.name;
+                    setTimeout(function(){
+                      scope.currentAttendant = null;
+                    },3000);
+                  }
+                }else
+                  this.meetingInfo.attendants.push(participant.model);
               });
               this.realtimeService.subscribe();
 
