@@ -39,13 +39,24 @@ export class VideoconferencesComponent implements OnInit {
     let clientPC = new RTCPeerConnection(null);
     let candidate:RTCIceCandidate;
     let servers = {iceServers: [
-      {
-          urls: [ 
-          'stun:23.21.150.121',
-          'stun:stun.l.google.com:19302',
-          'stun:stun.services.mozilla.com'
-          ],
-      },
+        {
+            'urls': 'stun:stun.l.google.com:19302'
+          },
+          {
+            'urls': 'turn:192.158.29.39:3478?transport=udp',
+            'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+            'username': '28224511:1379330808'
+          },
+          {
+            'urls': 'turn:192.158.29.39:3478?transport=tcp',
+            'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+            'username': '28224511:1379330808'
+          },
+          {
+            'urls': 'turn:turn.bistri.com:80',
+            'credential': 'homeo',
+            'username': 'homeo'
+            }
     ]};
     let socket:any;
 
@@ -102,7 +113,7 @@ export class VideoconferencesComponent implements OnInit {
                     .then(function(stream){
                         console.log('Received local stream');
                         if(stream.getVideoTracks.length>0)
-                            stream.getAudioTracks[0].stop();
+                            stream.getVideoTracks[0].stop();
                             camStream = stream;
                             doGetUserMedia();
                     })
@@ -167,22 +178,24 @@ export class VideoconferencesComponent implements OnInit {
 
       }
 
-      hostPC.onicecandidate = function(e){clientPC.addIceCandidate(e.candidate)}
-      clientPC.onicecandidate = function(e){hostPC.addIceCandidate(e.candidate)}
-
-      clientPC.onaddstream = function(event){
-        console.log("STREAM REMOTO: "+event.stream);
-        attachMediaStream(event.stream, remoteVideo);
-      }
+      
 
       this.realTimeService.registerOnJoinUser((name,uuid) => {
         console.log("NUEVO USUARIO: "+name+", "+uuid);
         newClient();
+        hostPC.onicecandidate = function(e){clientPC.addIceCandidate(e.candidate)}
+        clientPC.onicecandidate = function(e){hostPC.addIceCandidate(e.candidate)}
+
+        clientPC.onaddstream = function(event){
+            console.log("STREAM REMOTO: "+event.stream);
+            attachMediaStream(event.stream, remoteVideo);
+        }
       });
 
       // This function would be called when receiving a remote connection
       function newClient() {
         clientPC = new RTCPeerConnection(servers);
+        console.log('Creating local offer');
         hostPC.createOffer()
             .then(offer => hostPC.setLocalDescription(offer))
             .then(() => clientPC.setRemoteDescription(hostPC.localDescription))
@@ -192,9 +205,6 @@ export class VideoconferencesComponent implements OnInit {
             .catch(function(err){
               console.log("CREATE OFFER: "+err);
             });
-
-            console.log('Received remote stream');
-            clientPC.addStream(camStream);
       }
 
       function hangup() {
