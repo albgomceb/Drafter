@@ -10,6 +10,7 @@ import { Option } from '../../models/option.model';
 import { User } from '../../models/user.model';
 
 import * as $ from 'jquery';
+import { MeetingService } from '../../services/meeting.service';
 
 
 @Component({
@@ -34,52 +35,60 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
   constructor(private loginService: LoginService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
-    public realtimeService:RealTimeService) {}
+    public realtimeService:RealTimeService, private meetingService2: MeetingService) {}
 
   ngOnInit() {
     this.loaded = false;
     this.stoped = false;
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
-    if(this.meetingId){
-      this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
-        this.meetingInfo = res;
-        this.meetingInfo.isFinished = res.finished;
-        //Lista de participantes a mostrar
-        this.thumbnail = this.meetingInfo.attendants;
 
-        if(this.meetingInfo.isFinished){
-          this.router.navigate(['/minutes/'+this.meetingId]);
-        }else{
-          this.realtimeService.connect(this.meetingId, () => {
+    this.meetingService2.isParticipant(this.meetingId).subscribe(res => {
+      if(!res) {
+        this.router.navigate(['home']);
+        return;
+      }
 
-            this.realtimeService.register('step', [], step =>{
-              this.meetingInfo.status = step.model.id;
-              this.router.navigate(['/meeting/'+this.meetingId]);
-            } );
+      if(this.meetingId){
+        this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
+          this.meetingInfo = res;
+          this.meetingInfo.isFinished = res.finished;
+          //Lista de participantes a mostrar
+          this.thumbnail = this.meetingInfo.attendants;
 
-            this.realtimeService.register('finish', [], finish =>{
-              this.meetingInfo.isFinished = finish.model.id;
-              this.router.navigate(['/minutes/'+this.meetingId]);
-            } );
+          if(this.meetingInfo.isFinished){
+            this.router.navigate(['/minutes/'+this.meetingId]);
+          }else{
+            this.realtimeService.connect(this.meetingId, () => {
 
-            this.realtimeService.register('attendants', [], participant =>{
-              
-              let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
-              if(part) 
-              part.hasAttended = participant.model.hasAttended
-              else
-              this.meetingInfo.attendants.push(participant.model);
+              this.realtimeService.register('step', [], step =>{
+                this.meetingInfo.status = step.model.id;
+                this.router.navigate(['/meeting/'+this.meetingId]);
+              } );
+
+              this.realtimeService.register('finish', [], finish =>{
+                this.meetingInfo.isFinished = finish.model.id;
+                this.router.navigate(['/minutes/'+this.meetingId]);
+              } );
+
+              this.realtimeService.register('attendants', [], participant =>{
+                
+                let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
+                if(part) 
+                part.hasAttended = participant.model.hasAttended
+                else
+                this.meetingInfo.attendants.push(participant.model);
+              });
+              this.realtimeService.subscribe();
+
+              this.logged = this.loginService.getPrincipal();
+              this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
+              this.loaded = true;
             });
-            this.realtimeService.subscribe();
-
-            this.logged = this.loginService.getPrincipal();
-            this.realtimeService.send('/meeting/attended/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
-            this.loaded = true;
-          });
-          this.users = res.attendants;
-        }
-      });
-    }
+            this.users = res.attendants;
+          }
+        });
+      }
+    });
   } 
 
   ngOnDestroy() {

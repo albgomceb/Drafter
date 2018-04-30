@@ -110,4 +110,18 @@ export class BrainStormingMinutesPageComponent implements OnInit {
       doc.save('Minutes.pdf');
     });
   }
+
+  public format(): string {
+    var s: number = this.meeting.timer;
+    var m: number = Math.floor(this.meeting.timer/60);
+    var h: number = Math.floor(m/60);
+
+    m -= 60*h;
+    s -= 3600*h + 60*m;
+
+    var sm: string = ("00" + m).slice(-2);
+    var ss: string = ("00" + s).slice(-2);
+
+    return "" + h + ":" + sm + ":" + ss;
+  }
 }

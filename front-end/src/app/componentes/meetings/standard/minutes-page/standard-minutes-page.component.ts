@@ -30,13 +30,14 @@ export class StandardMinutesPageComponent implements OnInit {
     //OBTENER SESSION LEADER
     this.attendants = this.meetingInfo.attendants;
     this.attendants.forEach(at => {
-      if(at.role=="LEADER"){this.leader = at;} 
+      if(at.role=="LEADER")
+        this.leader = at;
     });
 
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
        this.meeting = data;
-       console.log(this.meeting);
     });
+
     this.meetingService.getAgendas(this.meetingId).subscribe(data => {
       this.agendas = data;
       this.model = [];
@@ -46,10 +47,23 @@ export class StandardMinutesPageComponent implements OnInit {
           conclusion:ag
         }
 
-       
         this.model.push(val);
       }
     });
   };
+
+  public format(): string {
+    var s: number = this.meeting.timer;
+    var m: number = Math.floor(this.meeting.timer/60);
+    var h: number = Math.floor(m/60);
+
+    m -= 60*h;
+    s -= 3600*h + 60*m;
+
+    var sm: string = ("00" + m).slice(-2);
+    var ss: string = ("00" + s).slice(-2);
+
+    return "" + h + ":" + sm + ":" + ss;
+  }
 
 }
