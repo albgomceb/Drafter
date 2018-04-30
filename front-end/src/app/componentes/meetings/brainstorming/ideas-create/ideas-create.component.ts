@@ -30,31 +30,24 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private realTimeService: RealTimeService,
-    private meetingService: MeetingService,
     private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     var meetingId = this.activeRoute.snapshot.params['id'];
-    this.meetingService.isParticipant(meetingId).subscribe(res => {
-      if(!res) {
-        this.router.navigate(['home']);
-        return;
-      }
 
-      this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
-        this.entradas = res;
-        
-        var idea = new Idea();
-        idea.isInput = true;
-        idea.text = "";
-        this.entradas.push(idea);
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
+      this.entradas = res;
+      
+      var idea = new Idea();
+      idea.isInput = true;
+      idea.text = "";
+      this.entradas.push(idea);
 
-        this.realTimeService.connect(this.meetingId, () => {
-          this.setFocus();
+      this.realTimeService.connect(this.meetingId, () => {
+        this.setFocus();
 
-          this.realTimeService.register('entradas', this.entradas);
-          this.realTimeService.subscribe();
-        });
+        this.realTimeService.register('entradas', this.entradas);
+        this.realTimeService.subscribe();
       });
     });
   }

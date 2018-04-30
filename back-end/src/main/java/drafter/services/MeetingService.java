@@ -140,5 +140,20 @@ public class MeetingService {
 //		}
 		return updated;
 	}
+	public Participant quit(int meetingId, User user) {
+		Meeting m  = findById(meetingId);
+		User principal = user !=null?user:userService.findByPrincipal();
+		Participant updated = null;
+//		if(isParticipant(meetingId)) {
+		for(Participant p : m.getParticipants())
+			if(p.getUser().equals(principal)) {
+				p.setHasAttended(false);
+				updated = participantService.save(p);
+				break;
+			}
+		
+//		}
+		return updated;
+	}
 }    
 

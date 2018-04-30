@@ -37,7 +37,7 @@ export class RealTimeService {
   }
 
   public getUsers(): any {
-    return JSON.stringify(this.users, null, "\t");
+    return this.users;
   }
 
   public getUserColor(uuid: string): string {
@@ -148,14 +148,13 @@ export class RealTimeService {
             return;
         }
 
-        if (obj.type.charAt(0) != '*') {
+        if (obj.type.charAt(0) != '*') {          
           model = this.models[obj.name].model;
           callback = this.models[obj.name].callback;
         }
 
         switch (obj.type) {
           case WSResponseType.HEARTBEAT:
-            this.heartbeat();
             break;
 
           case WSResponseType.PUSH:
@@ -234,8 +233,8 @@ export class RealTimeService {
             this.disconnectUser(obj.data['userUUID']);
             break;
         }
-
-        this.users[obj.data['userUUID']].last = Date.now();
+        
+        this.users[obj.data['userUUID']]?this.users[obj.data['userUUID']].last = Date.now():null;
         if (callback)
           callback(obj);
       }
