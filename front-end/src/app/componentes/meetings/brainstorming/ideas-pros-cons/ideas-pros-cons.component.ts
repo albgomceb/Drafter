@@ -31,37 +31,30 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
   constructor(private ideaService: IdeaService,
     private realTimeService: RealTimeService,
     private activeRoute: ActivatedRoute,
-    private meetingService: MeetingService,
     private router: Router) { }
 
   ngOnInit() {
 
     var meetingId = this.activeRoute.snapshot.params['id'];
-    this.meetingService.isParticipant(meetingId).subscribe(res => {
-      if (!res) {
-        this.router.navigate(['home']);
-        return;
+
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(
+      data => {
+        this.ideas = data;
+        this.realTimeService.connect(this.meetingId, () => {
+          var i = 0;
+          for (var idea of this.ideas) {
+            this.realTimeService.register('p' + i, idea.pros);
+            this.realTimeService.register('c' + i, idea.cons);
+            i++;
+          }
+          this.realTimeService.subscribe();
+        });
+
+      },
+      error => {
+        this.errorListIdeas = true;
       }
-
-      this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(
-        data => {
-          this.ideas = data;
-          this.realTimeService.connect(this.meetingId, () => {
-            var i = 0;
-            for (var idea of this.ideas) {
-              this.realTimeService.register('p' + i, idea.pros);
-              this.realTimeService.register('c' + i, idea.cons);
-              i++;
-            }
-            this.realTimeService.subscribe();
-          });
-
-        },
-        error => {
-          this.errorListIdeas = true;
-        }
-      );
-    });
+    );
 
   }
 

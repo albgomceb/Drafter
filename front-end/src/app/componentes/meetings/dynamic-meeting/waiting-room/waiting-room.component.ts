@@ -2,7 +2,7 @@ import { Participant } from './../../../models/participant.model';
 import { OnInit, Component, Input, Output, EventEmitter } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DynamicMeetingService } from "../../../services/dynamic-meeting.service";
-import { RealTimeService } from "../../../../services/real-time.service";
+import { RealTimeService, WSResponseType } from "../../../../services/real-time.service";
 import { User } from "../../../models/user.model";
 import { UserService } from "../../../services/user.service";
 
@@ -28,8 +28,8 @@ export class WaitingRoomComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private meetingService: DynamicMeetingService, private router: Router, private userService:UserService) { }
 
   ngOnInit() {
-    this.userService.getParticipant(this.meetingId).subscribe(principal =>{
-      this.principal = principal;
+    this.userService.getLoginUser().subscribe(principal =>{
+      this.principal = this.meetingInfo.attendants.find(x => x.username === principal.username);
     });
     this.attendants = this.meetingInfo.attendants
   }
