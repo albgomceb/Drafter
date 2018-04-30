@@ -1,7 +1,9 @@
 package drafter.controllers;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -202,12 +204,23 @@ public class MeetingController extends AbstractController {
 		return userService.findByPrincipal().equals(userService.findById(new Integer(userId)));	
 	}
 	
-	@GetMapping("/notifications/")
-	public MeetingBean getNotifications() {
+	@GetMapping("/notifications")
+	public Collection<MeetingBean> getNotifications() {
 		
 		User logged = userService.findByPrincipal();
-		//logged.get
+		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
+		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
+		for(Meeting m : meetings) {
+			MeetingBean bean = new MeetingSerializer().fromMeeting(m);
+			res.add(bean);
+		}
 		
-		return null;
+		return res;
+	}
+	
+	@GetMapping("/hideNotification/{meetingId}")
+	public Collection<MeetingBean> hideNotification(@PathVariable int meetingId){
+		User logged = userService.findByPrincipal();
+		return null; //TODO HACERRR
 	}
 }

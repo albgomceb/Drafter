@@ -24,8 +24,16 @@
               <a class="dropdown-item" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}/page/0">My meetings</a>
           </div>          
         </li>
-        <li class="nav-item" *ngIf="getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="notifications">Notifications</a>
+        <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
+          <a data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
+            <span>Notifications</span>
+          </a>
+          <div class="dropdown-menu shadow">
+            <span *ngIf="notifications.length===0" style="color: grey">You don't have any notifications</span>
+          <ul>
+            <li *ngFor="let meeting of notifications">{{meeting.title}}<button (click)="hideNotification(meeting)">X</button></li>
+          </ul>
+        </div>
         </li>
         <li>
           <div class="dropdown-menu shadow">

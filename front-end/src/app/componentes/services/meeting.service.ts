@@ -39,4 +39,12 @@ export class MeetingService {
   public isParticipant(meetingId: number): Observable<boolean> {
     return this.http.get<boolean>(this.staticUrl+'/meeting/isParticipant/' + meetingId);
   }
+
+  public getNotifications(): Observable<Array<Meeting>> {
+    return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/notifications');
+  }
+
+  public hideNotification(id:number): Observable<Meeting[]> {
+    return this.http.post<Meeting[]>(this.staticUrl+'/meeting/hideNotification/'+id,[],{});
+  }
 }

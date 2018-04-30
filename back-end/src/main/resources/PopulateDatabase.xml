@@ -687,9 +687,11 @@
 	<bean id="participant1" class="drafter.domain.Participant">
 		<property name="role" value="participant1" />
 		<property name="hasAttended" value="true" />
+		<property name="showNotification" value="false"/>
 		<property name="department" ref="department1" />
 		<property name="user" ref="user1" />
 		<property name="meeting" ref="standard1" />
+
 	</bean>
 
 	<bean id="participant2" class="drafter.domain.Participant">

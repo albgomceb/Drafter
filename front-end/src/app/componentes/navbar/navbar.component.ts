@@ -1,5 +1,8 @@
 import { LoginService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
+import { Meeting } from '../models/meeting.model';
+import { MeetingService } from '../services/meeting.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'navbar',
@@ -8,11 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  private notifications : Array<Meeting>
+
+  constructor(private loginService: LoginService,
+    private meetingService : MeetingService,
+    private router : Router) { }
 
   ngOnInit() {
+    this.meetingService.getNotifications().subscribe(meetings => {
+      this.notifications = meetings;     
+    });
   }
 
+  public hideNotification(meeting : Meeting){
+    this.meetingService.hideNotification(meeting.id).subscribe(res =>{
+      this.notifications = res;
+    })  
+  }
 
   public getLoginService(): LoginService {
     return this.loginService;
