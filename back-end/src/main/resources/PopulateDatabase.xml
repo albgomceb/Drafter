@@ -500,8 +500,8 @@
 	
 	
 	<bean id="sixhats1" class="drafter.domain.SixHats">
-		<property name="title" value="sixhats1" />
-		<property name="description" value="sixhats1" />
+		<property name="title" value="Análisis del avance del proyecto." />
+		<property name="description" value="En esta reunión vamos a analizar la situación actual del proyecto desde diversos puntos de vista." />
 		<property name="date" value="2018/01/01 00:22" />
 		<property name="numberOfMeeting" value="6" />
 		<property name="image"
@@ -510,6 +510,7 @@
 		<property name="hasfinished" value="false" />
 		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1" /> -->
+		<property name="roundTime" value="2018/01/01 00:24"/>
 		<property name="agendas">
 			<list>
 			</list>
@@ -542,8 +543,8 @@
 	
 	
 		<bean id="sixhats2" class="drafter.domain.SixHats">
-		<property name="title" value="sixhats2" />
-		<property name="description" value="sixhats2" />
+		<property name="title" value="Análisis inicial del proyecto" />
+		<property name="description" value="En esta reunión vamos a tratar los diferentes puntos de vista a la hora de encarar nuestro nuevo proyecto." />
 		<property name="date" value="2019/01/01 00:22" />
 		<property name="numberOfMeeting" value="6" />
 		<property name="image"
@@ -551,6 +552,7 @@
 		<property name="timer" value="0" />
 		<property name="hasfinished" value="false" />
 		<property name="status" value="1" />
+		<property name="roundTime" value="2019/01/01 00:24"/>
 		<!-- <property name="project" ref="project1" /> -->
 		<property name="agendas">
 			<list>

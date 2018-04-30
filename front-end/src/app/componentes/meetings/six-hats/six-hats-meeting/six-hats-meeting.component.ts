@@ -38,11 +38,11 @@ export class SixHatsMeetingComponent implements OnInit {
 
   //----------------------- Atributos del contador -----------------------
   private future: number;
-  private timemilis: number;
   private diff: number;
-  private $counter: Observable<number>;
+  public $counter: Observable<number>;
   private subscription: Subscription;
   private message: string;
+  
 
   //----------------------- Constructor -----------------------
    constructor(private sixHatsService: SixHatsService,
@@ -50,14 +50,23 @@ export class SixHatsMeetingComponent implements OnInit {
     private realTimeService: RealTimeService,
     private loginService: LoginService,
     private userService: UserService) {
-      this.timemilis = 12000;
   }   
 
   //----------------------- OnInit -----------------------
   ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
-      this.sixHats = sixHats;     
+      this.sixHats = sixHats;       
       
+    //CONTADOR    
+    this.future = new Date().getTime() + this.sixHats.secondsLeft;
+    
+    this.$counter = Observable.interval(1000).map((x) => {        
+        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
+        return x;
+    });
+
+    this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
+
     //WEBSOCKET
     this.realTimeService.connect(this.meetingId, () => {
       for(let hat of this.sixHats.hats){
@@ -67,8 +76,18 @@ export class SixHatsMeetingComponent implements OnInit {
       this.realTimeService.register('sixHats-'+this.meetingId, [], sixHats => {
         
         this.sixHats = sixHats.model;
+        
         this.sortAttendants();
         this.getCurrentHat();
+        this.addFirstConclusion(); 
+
+        this.future = new Date().getTime() + this.sixHats.secondsLeft;
+        this.$counter = Observable.interval(1000).map((x) => {        
+        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
+        return x;
+    });
+
+    this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
       });
 
       this.realTimeService.subscribe();
@@ -80,17 +99,6 @@ export class SixHatsMeetingComponent implements OnInit {
         this.addFirstConclusion(); 
       });      
     });
-    
-
-    //CONTADOR
-    this.future = new Date().getTime() + this.timemilis;
-    
-    this.$counter = Observable.interval(1000).map((x) => {        
-        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);
-        return x;
-    });
-
-    this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
    
   }
 
@@ -151,14 +159,15 @@ export class SixHatsMeetingComponent implements OnInit {
   }
 
   addFirstConclusion(){
+    var length = this.currentHat.hatConclusions.length;
+  
+    this.currentHat.hatConclusions[length] = new HatConclusion();
+    this.currentHat.hatConclusions[length].id = 0;
+    this.currentHat.hatConclusions[length].version = 0;
+    this.currentHat.hatConclusions[length].text = "";
+    this.currentHat.hatConclusions[length].isInput = true;
     
-    if(this.currentHat.hatConclusions.length === 0){
-      this.currentHat.hatConclusions[0] = new HatConclusion();
-      this.currentHat.hatConclusions[0].id = 0;
-      this.currentHat.hatConclusions[0].version = 0;
-      this.currentHat.hatConclusions[0].text = "";
-      this.currentHat.hatConclusions[0].isInput = true;
-    }
+    
   }
 
   // ----------------------- Métodos para añadir/eliminar una conclusión ----------------------
