@@ -170,6 +170,7 @@ export class VideoconferencesComponent implements OnInit {
             console.log('Adding Stream object');
             console.log("STREAM: ",camStream);
             hostPC.addStream(camStream);
+            console.log('Waiting for peer...');
         } catch (e) {
             console.log("Failed to create PeerConnection, exception: " + e.message);
             alert("Cannot create RTCPeerConnection object; WebRTC is not supported by this browser.");
