@@ -19,7 +19,6 @@ export class OrganizationDepartmentPageComponent implements OnInit {
   frmRegistro: FormGroup;
 
   public notAddedUsers: Array<User>;
-  public organization: Organization;
   public departments: Array<Department>;
   public userId: number;
   public counter: number;
@@ -50,7 +49,6 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       this.organizationId = params['organizationId'];
     });
     if(this.organizationId == 0){
-      this.organization = new Organization();
       this.departments=[];
       this.departments.push(new Department());
       this.departments[0].id = 0;
@@ -73,8 +71,20 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       this.organizationService.getOrganization(this.organizationId).subscribe(
         data => 
         {
-          this.organization = data;
-          this.departments = this.organization.departments;
+           // Meto los datos
+           this.frmRegistro = this.fb.group({  // Esto es la validación de los campos
+            enterprise: [data.enterprise, Validators.compose([Validators.required]) ],
+            description: [data.description, Validators.compose([Validators.required]) ],
+            address: [data.address, Validators.compose([Validators.required]) ],
+            phone: [data.phone, Validators.compose([Validators.required, Validators.pattern('[0-9]+')]) ],
+            email: [data.email, Validators.compose([Validators.email]) ],
+            logo: [data.logo, Validators.compose([Validators.required, 
+              Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')]) ],
+            id: [data.id, ],
+            userId: [data.userId, ]
+          })
+
+          this.departments = data.departments;
           this.counter = this.departments.length + 1;
           // Cogemos todos los usuarios que no están metidos para cada departamento
           this.userService.getUsers().subscribe(
@@ -170,13 +180,23 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     this.departments[itemIndex] = department;
   }
 
-  saveOrganization(departments: Department[], organization: Organization){
+  saveOrganization(departments: Department[], formGroup: FormGroup){
     var temp = new Array<Department>();
     for(var a of departments){
       if(a.name && a.name.trim() != ''){
         temp.push(a);
       }
     }
+    this.frmRegistro
+    var organization = new Organization();
+    organization.enterprise = formGroup.value.enterprise;
+    organization.description = formGroup.value.description;
+    organization.address = formGroup.value.address;
+    organization.phone = formGroup.value.phone;
+    organization.email = formGroup.value.email;
+    organization.logo = formGroup.value.logo;
+    organization.id = formGroup.value.id;
+    organization.userId = formGroup.value.userId;
     organization.departments = temp;
 
     this.organizationService.saveOrganization(organization, this.userId).subscribe(res =>{
