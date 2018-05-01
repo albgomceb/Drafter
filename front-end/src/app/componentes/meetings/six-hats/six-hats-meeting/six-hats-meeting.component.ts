@@ -74,7 +74,6 @@ export class SixHatsMeetingComponent implements OnInit {
       }
       
       this.realTimeService.register('sixHats-'+this.meetingId, [], sixHats => {
-        
         this.sixHats = sixHats.model;
         
         this.sortAttendants();
@@ -83,11 +82,11 @@ export class SixHatsMeetingComponent implements OnInit {
 
         this.future = new Date().getTime() + this.sixHats.secondsLeft;
         this.$counter = Observable.interval(1000).map((x) => {        
-        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
-        return x;
-    });
+          this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
+          return x;
+        });
 
-    this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
+        this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
       });
 
       this.realTimeService.subscribe();

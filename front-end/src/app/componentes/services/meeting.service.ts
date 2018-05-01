@@ -44,6 +44,10 @@ export class MeetingService {
     return this.http.get<Array<Meeting>>(this.staticUrl+'/meeting/notifications');
   }
 
+  public showNotifications(): Observable<Meeting[]> {
+    return this.http.get<Meeting[]>(this.staticUrl+'/meeting/showNotifications');
+  }
+
   public hideNotification(id:number): Observable<Meeting[]> {
     return this.http.get<Meeting[]>(this.staticUrl+'/meeting/hideNotification/'+id);
   }
