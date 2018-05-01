@@ -13,6 +13,7 @@ div.info-meeting-bar {
 
     @include media-breakpoint-down(md) {
         top: 3.75rem;
+        padding: 0.5rem;
     }
 
     span.timer {
@@ -36,7 +37,6 @@ div.meeting-wrapper-chat {
     }
 }
 
-/* BRAINSTORMING */
 div.ideas-container {
     div.ideas-title {
         padding: 0.75rem;
@@ -70,7 +70,8 @@ div.ideas-container {
                     width: 80%;
                 }
     
-                input.idea {
+                input.idea,
+                textarea.idea {
                     padding: 0.3rem;
                 }
     
@@ -107,7 +108,7 @@ div.ideas-container {
 }
 
 /* STANDARD */
-div.topic-container {
+/*div.topic-container {
     margin-bottom: 2rem;
 
     div.topic {
@@ -154,7 +155,7 @@ div.conclusion-container {
             word-wrap: break-word
         }
     }
-}
+}*/
 
 /* Meeting minutes */
 div.subtitle {

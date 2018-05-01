@@ -128,6 +128,12 @@ img.logo {
 }
 
 img.avatar {
-    max-width: 3.75rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    border: 2px solid $mp_secondary_color;
     border-radius: 50%;
+}
+
+img.not-present {
+    border: 2px solid red !important;
 }
