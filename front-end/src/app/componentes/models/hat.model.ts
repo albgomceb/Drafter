@@ -1,5 +1,6 @@
 import { Conclusion } from "../../models/conclusion";
-import { HatConclusion } from "./HatConclusion.model";
+import { HatConclusion } from "./hat-conclusion.model";
+
 
 export class Hat {
   id: number;

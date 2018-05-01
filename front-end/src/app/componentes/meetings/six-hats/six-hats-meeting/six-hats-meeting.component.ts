@@ -10,9 +10,9 @@ import { RealTimeService, WSResponseType } from '../../../../services/real-time.
 import { Option } from '../../../models/option.model';
 import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
-import { HatConclusion } from '../../../models/HatConclusion.model';
 import { Participant } from '../../../models/participant.model';
 import { Observable, Subscription } from 'rxjs';
+import { HatConclusion } from '../../../models/hat-conclusion.model';
 
 
 @Component({
