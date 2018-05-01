@@ -61,38 +61,35 @@
 
   <div class="form-group">    
     <h2 class="text-center m-4">Departments</h2>
-    <table class="table table-hover">
       <div *ngFor="let department of departments; let i=index">
-        <tr>
-          <td>{{departments.indexOf(department)+1}}.&nbsp;</td>
-          <td style ="width: 100%">
-            <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
+
+          <!-- Lista de añadidos -->
+          <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
             (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
-          <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div></td>
-          <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
-          <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
-        </tr>
-
-        <tr>
+          <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div>
+          <button *ngIf="i!=0" (click)="removeDepartment(department, i)" style="float: right" class="btn bt-lg">Remove</button>
+          <div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center; float: right">Required</div>
           <label>Select the department participants:</label>
-            <div class="list-group">
-              <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
-              <div *ngIf="errorListUsers" class="errorList">
-                <img src="../../../assets/img/warning_turq.png" width="20%" />
-                <h4>505 Internal Server Error</h4>
-                <h6>Try again later</h6>
-              </div>
 
-              <div *ngFor="let us of department.notAddedUsers; let j = index">
-                  <a class="list-group-item list-group-item-action">
-                    <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
-                    <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
-                  </a>
-              </div>
+          <!-- Lista de todos los usuaruios posibles para añadir -->
+          <div class="list-group" style="float: left; width: 50%">
+            <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
+            <div *ngIf="errorListUsers" class="errorList">
+              <img src="../../../assets/img/warning_turq.png" width="20%" />
+              <h4>505 Internal Server Error</h4>
+              <h6>Try again later</h6>
             </div>
 
-        <td>
-          <div class="list-group">
+            <div *ngFor="let us of department.notAddedUsers; let j = index">
+              <a class="list-group-item list-group-item-action">
+                <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
+                <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Lista de añadidos -->
+          <div class="list-group" style="float: right; width: 50%">
             <h4 *ngIf="department.users == null">Add user...</h4>
             <div *ngFor="let us of department.users; let j = index">
               <a class="list-group-item list-group-item-action">
@@ -101,11 +98,8 @@
               </a>
             </div>
           </div>
-        </td>
-        </tr>
 
       </div>
-    </table>
     <div class="text-center">
       <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
     </div>
