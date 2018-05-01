@@ -80,8 +80,7 @@ export class RealTimeService {
     this.users = {};
     this.usersCount = 0;
     this.meeting = meeting;
-    //this.user = this.loginService.getPrincipal().username;
-    this.user = this.loginService.getPrincipal().name;
+    this.user = this.loginService.getPrincipal().username;
     this.models = new Array<any>();
 
     var ws = new SockJS(environment.baseWS);

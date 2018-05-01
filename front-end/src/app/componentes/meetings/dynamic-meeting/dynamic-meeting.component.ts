@@ -75,13 +75,10 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
               //ALERT ON JOIN
               this.realtimeService.registerOnJoinUser((name,uuid) => {
-                console.log(this.meetingInfo.attendants);
-                console.log("NAME: "+name);  
-                let part = this.meetingInfo.attendants.find(att => att.name == name);
+                let part = this.meetingInfo.attendants.find(att => att.username == name);
                   if(part) {
                     var scope = this;
                     if(part.name != this.loginService.getPrincipal().name){
-                      console.log("MEETING - ENTRA USUARIO: "+name+", "+uuid);
                       this.joinAttendant =  part.name;
                       setTimeout(function(){
                         scope.joinAttendant = null;
@@ -92,13 +89,10 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
               //ALERT ON LEFT
               this.realtimeService.registerOnLeaveUser((name,uuid) => {
-                console.log(this.meetingInfo.attendants);
-                console.log("NAME: "+name);  
-                let part = this.meetingInfo.attendants.find(att => att.name == name);
+                let part = this.meetingInfo.attendants.find(att => att.username == name);
                   if(part) {
                     var scope = this;
                     if(part.name != this.loginService.getPrincipal().name){
-                      console.log("MEETING - SALE USUARIO: "+name+", "+uuid);
                       this.leftAttendant =  part.name;
                       setTimeout(function(){
                         scope.leftAttendant = null;
