@@ -45,6 +45,6 @@ export class MeetingService {
   }
 
   public hideNotification(id:number): Observable<Meeting[]> {
-    return this.http.post<Meeting[]>(this.staticUrl+'/meeting/hideNotification/'+id,[],{});
+    return this.http.get<Meeting[]>(this.staticUrl+'/meeting/hideNotification/'+id);
   }
 }
