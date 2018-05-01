@@ -37,8 +37,16 @@
 
         <!-- Info meeting -->
         <div class="item-wrapper mx-auto mb-5">
-            <h4>Meeting information</h4>
-            <div class="content-wrapper">
+            <div class="header-wrapper d-flex justify-content-between flex-wrap">
+                <h4>Meeting information</h4>
+                <button *ngIf="showInfo" type="button" (click)="toggleInfo();" class="toggle-btn btn">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+                <button *ngIf="!showInfo" type="button" (click)="toggleInfo();" class="toggle-btn btn">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+            <div *ngIf="showInfo" class="content-wrapper">
                 <div class="row">
                     <div class="col-md-6">
                         <label>

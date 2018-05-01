@@ -27,6 +27,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public isFinished:boolean;
   public showChat:boolean = false;
   public showVideo:boolean = false;
+  public showInfo:boolean = true;
   public loaded;
   public unreadedMsg: number;
   public attendants: any[];
@@ -125,6 +126,10 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
       this.showChat = false;
     }
     this.showVideo = !this.showVideo;
+  }
+
+  toggleInfo() {
+    this.showInfo = !this.showInfo;
   }
 
   receiveEventChat($event) {

@@ -25,6 +25,12 @@ div.info-meeting-bar {
     }
 }
 
+button.toggle-btn,
+button.toggle-btn:hover {
+    color: white;
+    background-color: $button_hover;
+}
+
 div.meeting-wrapper {
     padding-top: 1.75rem;
 }

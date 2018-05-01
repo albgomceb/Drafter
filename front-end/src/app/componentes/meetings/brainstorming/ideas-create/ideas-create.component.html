@@ -1,5 +1,4 @@
-<h4 class="text-center">Type your ideas</h4>
-
+<h4>Type your ideas</h4>
 <div class="ideas-container">
   <div class="ideas-title">
     Ideas
@@ -8,9 +7,8 @@
     <ul class="list-ideas">
         <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
           <input type="text" [(ngModel)]="entrada.text" 
-                 *ngIf="entrada.isInput" (keyup.enter)="killFocus($event)" 
-                 placeholder="Type your idea here..." required class="idea" 
-                 (focusout)="convert(entrada)">
+                 *ngIf="entrada.isInput" (keyup.enter)="killFocus($event)" (focusout)="convert(entrada)"
+                 placeholder="Type your idea here..." class="idea">
           <div *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
             {{entrada.text}}
           </div>
