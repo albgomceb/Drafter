@@ -31,7 +31,9 @@
           <div  *ngIf="clicked"  class="shadow">
             <span *ngIf="notifications.length===0" style="color: grey">You don't have any notifications</span>
           <ul *ngIf="notifications.length>0">
-            <li style="color: white" *ngFor="let meeting of notifications">{{meeting.title}}<button (click)="hideNotification(meeting)">X</button></li>
+            <li style="color: white" *ngFor="let meeting of notifications">
+              <a href="{{staticUrl}}/meeting/{{meeting.id}}">{{meeting.title}}</a> <button (click)="hideNotification(meeting)">X</button>
+            </li>
           </ul>
           </div>
         </li>
