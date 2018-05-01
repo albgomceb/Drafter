@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  private notifications : Array<Meeting>
+  private notifications : Array<Meeting>;
+  private clicked : boolean;
 
   constructor(private loginService: LoginService,
     private meetingService : MeetingService,
@@ -21,12 +22,17 @@ export class NavbarComponent implements OnInit {
     this.meetingService.getNotifications().subscribe(meetings => {
       this.notifications = meetings;     
     });
+    this.clicked = false;
   }
 
   public hideNotification(meeting : Meeting){
     this.meetingService.hideNotification(meeting.id).subscribe(res =>{
       this.notifications = res;
     })  
+  }
+
+  public convert(){
+    this.clicked = !this.clicked;
   }
 
   public getLoginService(): LoginService {
