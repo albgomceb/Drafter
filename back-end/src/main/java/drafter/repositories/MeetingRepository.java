@@ -19,6 +19,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer>{
 	
 	@Query("select m from Participant p join p.meeting m where "
 			+ "p.user.id = ?1 and m.hasfinished=false and "
-			+ "(p.showNotification = null or p.showNotification = true)")
+			+ "(p.showNotification = null or p.showNotification = true) and "
+			+ "p.role!='LEADER'")
 	Collection<Meeting> findNotifications(int userId);
 }

@@ -1,3 +1,3 @@
 export class Configuration {
-  public static readonly pollingNotificationTime : number = 10; //seconds
+  public static readonly pollingNotificationTime : number = 7; //seconds
 }

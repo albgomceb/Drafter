@@ -29,7 +29,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.meetingService.getNotifications().subscribe(meetings => {
+      console.log("antes", this.hasNewNotifications);
+      
       this.hasNewNotifications = false;
+      console.log("despues", this.hasNewNotifications);
+
       this.notifications = meetings;   
       for(let meeting of meetings){
         if(meeting.showNotification === null){
@@ -37,8 +41,8 @@ export class NavbarComponent implements OnInit {
           break;
         }   
       }
-      //TODO Queda por hacer que en lugar de notificationsLength se lea la propiedad showNotification de participant (si == null es que no se ha visto la notificacion)
     });
+
     this.clicked = false;
     this.staticUrl = environment.baseApi;
 
@@ -83,6 +87,13 @@ export class NavbarComponent implements OnInit {
 
   public convert(){
     this.clicked = !this.clicked;
+    if(this.hasNewNotifications){
+      this.hasNewNotifications = false;
+    }
+  }
+
+  public goMeeting(meetingId : number){
+    this.router.navigate(["/meeting/"+meetingId]);
   }
 
   public getLoginService(): LoginService {
