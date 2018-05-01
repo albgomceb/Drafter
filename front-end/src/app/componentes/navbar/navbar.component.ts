@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Meeting } from '../models/meeting.model';
 import { MeetingService } from '../services/meeting.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'navbar',
@@ -13,6 +14,7 @@ export class NavbarComponent implements OnInit {
 
   private notifications : Array<Meeting>;
   private clicked : boolean;
+  private staticUrl : String;
 
   constructor(private loginService: LoginService,
     private meetingService : MeetingService,
@@ -23,6 +25,7 @@ export class NavbarComponent implements OnInit {
       this.notifications = meetings;     
     });
     this.clicked = false;
+    this.staticUrl = environment.baseApi;
   }
 
   public hideNotification(meeting : Meeting){
