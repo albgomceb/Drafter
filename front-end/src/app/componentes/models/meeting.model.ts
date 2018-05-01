@@ -11,6 +11,7 @@ export class Meeting {
     numberOfMeeting: number;
     attendants: Array<Option>;
     type : string;
+    showNotification : Boolean;
 
   setAttendants(attendants: Array<Option>) {
     this.attendants = attendants;

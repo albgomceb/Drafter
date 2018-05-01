@@ -15,7 +15,6 @@ import { Configuration } from '../../constants/configuration';
 export class NavbarComponent implements OnInit {
 
   private notifications : Array<Meeting>;
-  private notificationsLength : number;
   private clicked : boolean;
   private staticUrl : String;
   private hasNewNotifications : boolean;
@@ -30,8 +29,14 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.meetingService.getNotifications().subscribe(meetings => {
+      this.hasNewNotifications = false;
       this.notifications = meetings;   
-      this.notificationsLength = this.notifications.length;  
+      for(let meeting of meetings){
+        if(meeting.showNotification === null){
+          this.hasNewNotifications = true;
+          break;
+        }   
+      }
       //TODO Queda por hacer que en lugar de notificationsLength se lea la propiedad showNotification de participant (si == null es que no se ha visto la notificacion)
     });
     this.clicked = false;
@@ -47,8 +52,11 @@ export class NavbarComponent implements OnInit {
       if(this.spentSeconds%Configuration.pollingNotificationTime === 0){
         this.meetingService.getNotifications().subscribe(meetings => {
           this.notifications = meetings; 
-          if(this.notifications.length > this.notificationsLength){
-            this.hasNewNotifications = true;
+          for(let meeting of meetings){
+            if(meeting.showNotification === null){
+              this.hasNewNotifications = true;
+              break;
+            }
           }
         });
       }
@@ -63,7 +71,6 @@ export class NavbarComponent implements OnInit {
     if(this.clicked){
       this.meetingService.showNotifications().subscribe(res =>{
         this.notifications = res;
-        this.notificationsLength = this.notifications.length;
       });
     }
   }

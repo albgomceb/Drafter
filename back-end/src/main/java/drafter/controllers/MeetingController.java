@@ -211,7 +211,12 @@ public class MeetingController extends AbstractController {
 		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
 		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
 		meetings.stream()
-					.forEach(meeting -> res.add(new MeetingSerializer().fromMeeting(meeting)));
+					.forEach(meeting -> {
+						Participant participant = participantService.findByMeetingAndUser(meeting.getId());
+						MeetingBean bean = new MeetingSerializer().fromMeeting(meeting);
+						bean.setShowNotification(participant.getShowNotification());
+						res.add(bean);
+						});
 		
 		return res;
 	}

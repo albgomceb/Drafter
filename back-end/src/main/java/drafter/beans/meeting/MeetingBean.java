@@ -17,6 +17,7 @@ public class MeetingBean {
 	private String type;
 	private boolean hasFinished;
 	private int status;
+	private Boolean showNotification;
 
 
 	
@@ -86,6 +87,12 @@ public class MeetingBean {
 	}
 	public void setDate(long date) {
 		this.date = date;
+	}
+	public Boolean getShowNotification() {
+		return showNotification;
+	}
+	public void setShowNotification(Boolean showNotification) {
+		this.showNotification = showNotification;
 	}
 	
 	
