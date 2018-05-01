@@ -155,5 +155,9 @@ public class MeetingService {
 //		}
 		return updated;
 	}
+	
+	public User getLeader(int meetingId) {
+		return meetingRepository.getLeader(meetingId);
+	}
 }    
 

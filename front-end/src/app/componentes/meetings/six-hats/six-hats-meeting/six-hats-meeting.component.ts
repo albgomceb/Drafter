@@ -75,7 +75,13 @@ export class SixHatsMeetingComponent implements OnInit {
       
       this.realTimeService.register('sixHats-'+this.meetingId, [], sixHats => {
         
-        this.sixHats = sixHats.model;
+        this.sixHats.secondsLeft = sixHats.model.secondsLeft;
+        var i = 0;
+        for(var hat of this.sixHats.hats) {
+          hat.version = sixHats.model.hats[i].version;
+          hat.order = sixHats.model.hats[i].order;
+          i++;
+        }
         
         this.sortAttendants();
         this.getCurrentHat();
