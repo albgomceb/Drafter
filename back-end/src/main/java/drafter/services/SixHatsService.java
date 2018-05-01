@@ -65,7 +65,7 @@ public class SixHatsService {
     	res.setHasfinished(false);
     	res.setNumberOfMeeting(meeting.getNumberOfMeeting());
     	res.setProject(meeting.getProject());
-    	res.setStatus(1);
+    	res.setStatus(0);
     	res.setTimer(meeting.getTimer());
     	res.setTitle(meeting.getTitle());
     	res.setRoundTime(new Date());;

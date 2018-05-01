@@ -155,7 +155,6 @@ export class RealTimeService {
 
         switch (obj.type) {
           case WSResponseType.HEARTBEAT:
-            this.heartbeat();
             break;
 
           case WSResponseType.PUSH:
@@ -234,8 +233,6 @@ export class RealTimeService {
             this.disconnectUser(obj.data['userUUID']);
             break;
         }
-        console.log(this.users);
-        console.log(obj.data['userUUID']);
         
         this.users[obj.data['userUUID']]?this.users[obj.data['userUUID']].last = Date.now():null;
         if (callback)

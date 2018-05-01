@@ -1091,8 +1091,8 @@
 		<property name="color" value="RED"/>
 		<property name="sixHats" ref="sixhats1" />
 		<property name="hatConclusions">
-		<list>
-		</list>
+			<list>
+			</list>
 		</property>
 	</bean>
 	
@@ -1103,8 +1103,8 @@
 		<property name="color" value="YELLOW"/>
 		<property name="sixHats" ref="sixhats1" />
 		<property name="hatConclusions">
-		<list>
-		</list>
+			<list>
+			</list>
 		</property>
 	</bean>
 	
@@ -1115,8 +1115,8 @@
 		<property name="color" value="GREEN"/>
 		<property name="sixHats" ref="sixhats1" />
 		<property name="hatConclusions">
-		<list>
-		</list>
+			<list>
+			</list>
 		</property>
 	</bean>
 </beans>
