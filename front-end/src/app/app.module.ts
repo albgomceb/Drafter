@@ -87,7 +87,7 @@ import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/wai
     PaymentSuccessPageComponent,
     EditProfilePageComponent,
     ProfilePageComponent,
-    NotificationsPageComponent
+    NotificationsPageComponent,
     WaitingRoomComponent
   ],
   imports: [

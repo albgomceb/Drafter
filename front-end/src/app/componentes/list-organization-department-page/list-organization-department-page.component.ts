@@ -12,7 +12,7 @@ export class ListOrganizationDepartmentPageComponent implements OnInit {
 
   show=[]
 
-  private organizations: Array<Organization>;
+  public organizations: Array<Organization>;
   public userId: number;
 
   errorListUsers:boolean = false;

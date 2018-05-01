@@ -210,10 +210,8 @@ public class MeetingController extends AbstractController {
 		User logged = userService.findByPrincipal();
 		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
 		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
-		for(Meeting m : meetings) {
-			MeetingBean bean = new MeetingSerializer().fromMeeting(m);
-			res.add(bean);
-		}
+		meetings.stream()
+					.forEach(meeting -> res.add(new MeetingSerializer().fromMeeting(meeting)));
 		
 		return res;
 	}
@@ -221,6 +219,14 @@ public class MeetingController extends AbstractController {
 	@GetMapping("/hideNotification/{meetingId}")
 	public Collection<MeetingBean> hideNotification(@PathVariable int meetingId){
 		User logged = userService.findByPrincipal();
-		return null; //TODO HACERRR
+		Participant participant = participantService.findByMeetingAndUser(meetingId);
+		participant.setShowNotification(false);
+		participantService.save(participant);
+		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
+		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
+		meetings.stream()
+					.forEach(meeting -> res.add(new MeetingSerializer().fromMeeting(meeting)));
+		
+		return res;
 	}
 }
