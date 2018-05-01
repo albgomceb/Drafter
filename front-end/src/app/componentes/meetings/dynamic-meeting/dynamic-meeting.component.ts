@@ -32,7 +32,8 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public attendants: any[];
   public logged: User;
   public stoped: boolean;
-  public currentAttendant:string;
+  public joinAttendant:string;
+  public leftAttendant:string;
 
 
   constructor(private loginService:LoginService, private userService: UserService,
@@ -72,18 +73,38 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
                 this.router.navigate(['/minutes/'+this.meetingId]);
               } );
 
+              //ALERT ON JOIN
+              this.realtimeService.registerOnJoinUser((name,uuid) => {
+                let part = this.meetingInfo.attendants.find(att => att.username == name);
+                  if(part) {
+                    var scope = this;
+                    if(part.name != this.loginService.getPrincipal().name){
+                      this.joinAttendant =  part.name;
+                      setTimeout(function(){
+                        scope.joinAttendant = null;
+                      },3000);
+                    }
+                  }
+                });
+
+              //ALERT ON LEFT
+              this.realtimeService.registerOnLeaveUser((name,uuid) => {
+                let part = this.meetingInfo.attendants.find(att => att.username == name);
+                  if(part) {
+                    var scope = this;
+                    if(part.name != this.loginService.getPrincipal().name){
+                      this.leftAttendant =  part.name;
+                      setTimeout(function(){
+                        scope.leftAttendant = null;
+                      },3000);
+                    }
+                  }
+                });
+
               this.realtimeService.register('attendants', [], participant =>{
-                
                 let part = this.meetingInfo.attendants.find(att => att.id == participant.model.id);
                 if(part) {
                   part.hasAttended = participant.model.hasAttended
-                  var scope = this;
-                  if(part.name != this.loginService.getPrincipal().name){
-                    this.currentAttendant =  part.name;
-                    setTimeout(function(){
-                      scope.currentAttendant = null;
-                    },3000);
-                  }
                 }else
                   this.meetingInfo.attendants.push(participant.model);
               });
