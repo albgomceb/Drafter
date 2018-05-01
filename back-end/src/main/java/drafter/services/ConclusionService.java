@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import drafter.beans.conclusion.ConclusionBean;
+import drafter.beans.conclusion.ConclusionSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.Conclusion;
 import drafter.repositories.ConclusionRepository;
@@ -19,6 +21,9 @@ public class ConclusionService {
 
 	@Autowired
 	private ConclusionRepository conclusionRepository;
+	
+	@Autowired
+	private AgendaService agendaService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -36,6 +41,11 @@ public class ConclusionService {
     
     public Conclusion save(Conclusion conclusion) {
     	return conclusionRepository.save(conclusion);
+    }
+    
+    public ConclusionBean saveBean(ConclusionBean conclusion) {
+		Conclusion res = new ConclusionSerializer().fromBean(conclusion, agendaService, this);
+    	return new ConclusionSerializer().fromConclusion(this.save(res));
     }
 
     public void delete(int id) {

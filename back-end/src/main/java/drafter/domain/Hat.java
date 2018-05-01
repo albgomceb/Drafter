@@ -1,11 +1,13 @@
 package drafter.domain;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -26,7 +28,6 @@ public class Hat extends DomainEntity{
 	private static final String WHITE = "WHITE"; 
 	private int orden; 
 	private String color; 
-	private ArrayList<String> conclusions;
 	
 	public Hat() {
 		
@@ -53,18 +54,10 @@ public class Hat extends DomainEntity{
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-	
-	public ArrayList<String> getConclusions() {
-		return conclusions;
-	}
-
-	public void setConclusions(ArrayList<String> conclusions) {
-		this.conclusions = conclusions;
-	}
 
 	// Relationships ---------------------------------------------------------------
 	private SixHats sixHats; 
+	private Collection<HatConclusion> hatConclusions;
 	
 	@NotNull
 	@Valid
@@ -75,6 +68,17 @@ public class Hat extends DomainEntity{
 	
 	public void setSixHats(SixHats sixHats) {
 		this.sixHats = sixHats;
+	}	
+	
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "hat", fetch=FetchType.EAGER)
+	public Collection<HatConclusion> getHatConclusions() {
+		return hatConclusions;
+	}
+	
+	public void setHatConclusions(Collection<HatConclusion> hatConclusions) {
+		this.hatConclusions = hatConclusions;
 	}	
 
 }

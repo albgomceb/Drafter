@@ -1,6 +1,6 @@
-<div class="page page-wrapper">
+<div class="page page-wrapper" *ngIf="loaded">
     <navbar></navbar>
-    <div class="fluid-container content">
+    <div class="container content">
         <router-outlet></router-outlet>
     </div>
     <footer class="main-footer"></footer>

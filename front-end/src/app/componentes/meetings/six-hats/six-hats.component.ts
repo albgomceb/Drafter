@@ -1,4 +1,6 @@
 import { OnInit, Component, Input, EventEmitter, Output } from "@angular/core";
+import { Hat } from "../../models/hat.model";
+import { SixHatsService } from "../../services/sixhats.service";
 
 @Component({
     selector: 'six-hats',
@@ -10,6 +12,8 @@ export class SixHatsComponent implements OnInit {
     public meetingInfo:any;
     @Input()
     public meetingId:number;
+    
+    
     @Input()
     public attendants:Array<any>;
     
@@ -18,9 +22,9 @@ export class SixHatsComponent implements OnInit {
     public finishMeeting(meetingId:number){
         this.finish.emit(meetingId);
     };
-
     
     constructor() {}
+    
     ngOnInit(){
         //Here should be the code that determines which step of a six-hat meeting should be loaded.
     }

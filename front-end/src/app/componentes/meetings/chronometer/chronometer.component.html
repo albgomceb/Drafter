@@ -1,1 +1,9 @@
-<span>{{ format() }}</span>
+<div *ngIf="loaded">
+    <span class="timer"><i class="far fa-clock"></i> {{ format() }} </span>
+    <button *ngIf="!isRunning" type="button" (click)="start()" class="btn">
+        <i class="fa fa-play"></i>
+    </button>
+    <button *ngIf="isRunning" type="button" (click)="stop()" class="btn">
+        <i class="fa fa-pause"></i>
+    </button>
+</div>

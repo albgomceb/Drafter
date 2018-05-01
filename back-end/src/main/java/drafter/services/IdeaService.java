@@ -31,7 +31,9 @@ public class IdeaService {
 		//CRUD Methods------------------------------------------------------------------------------
 	    
 	    public Idea save(Idea idea) {
-	    	return ideaRepository.save(idea);
+	    	Idea res = ideaRepository.save(idea);
+	    	res.setVersion(res.getVersion()+1);
+	    	return res;
 	    }
 	    
 	    public IdeaBean saveBean(Idea idea) {

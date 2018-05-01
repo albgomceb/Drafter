@@ -1,55 +1,62 @@
-<h1 class="title-page text-center">
-    <span class="capital-letter">M</span>eeting <span class="capital-letter">M</span>inutes
-</h1>
+<div id="content" #content>
+    <h1 class="title-page text-center">
+        <span class="capital-letter">M</span>eeting
+        <span class="capital-letter">M</span>inutes
+    </h1>
 
-<div class="subtitle">
-    Summary
-</div>
-<div class="minutes-container">
-    <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Title</span> {{meeting.title}}
+    <div class="subtitle">
+        Summary
     </div>
-    <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Type</span> {{meeting.type}}
+    <div class="minutes-container">
+        <div class="summary-item d-inline-block">
+            <span class="summary-item-title">Title</span> {{meeting.title}}
+        </div>
+        <div class="summary-item d-inline-block">
+            <span class="summary-item-title">Type</span> {{meeting.type}}
+        </div>
+        <div class="summary-item d-inline-block">
+            <span class="summary-item-title">Date</span> {{meeting.date | date:"EEEE, dd LLL yyyy HH:mm"}}
+        </div>
+        <div class="summary-item d-inline-block">
+            <span class="summary-item-title">Length</span> {{ format() }}
+        </div>
+        <div class="summary-item d-inline-block">
+            <span class="summary-item-title">Session leader</span> {{leader.name}}
+        </div>
+        <div class="summary-item d-block">
+            <span class="summary-item-title">Description</span> {{meeting.description}}
+        </div>
     </div>
-    <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Date</span> {{meeting.date | date:"EEEE, dd LLL yyyy HH:mm"}}
-    </div>
-    <div class="summary-item d-inline-block">
-        <span class="summary-item-title">Length</span> {{meeting.timer | date:"hh:mm:ss"}}
-    </div>
-    <div class="summary-item d-block">
-        <span class="summary-item-title">Description</span> {{meeting.description}}
-    </div>
-</div>
 
-<div class="subtitle">
-    Participants
-</div>
-<div class="minutes-container">
-    <div class="d-flex justify-content-start flex-wrap">
-        <div *ngFor="let at of meeting.attendants" class="card">
-            <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
-            <div class="card-body">
-                <h4 class="card-title">{{at.name}}</h4>
-                <h5>prueba</h5>
+    <div class="subtitle">
+        Participants
+    </div>
+    <div class="minutes-container">
+        <div class="d-flex justify-content-start flex-wrap">
+            <div *ngFor="let at of meeting.attendants" class="card">
+                <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
+                <div class="card-body">
+                    <h4 class="card-title">{{at.name}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="subtitle">
+        Conclusions
+    </div>
+    <div class="minutes-container">
+        <div *ngFor="let agenda of agendas" class="point-container">
+            <h3>Topic: {{agenda.description}}</h3>
+            <div *ngFor="let co of agenda.conclusions">
+                <p>{{co.conclusion}}</p>
             </div>
         </div>
     </div>
 </div>
-
-<div class="subtitle">
-    Conclusions
+<div class="text-center">
+    <button (click)="downloadPDF()" class="btn mb-3">Export to PDF</button>
 </div>
-<div class="minutes-container">
-  <div *ngFor="let agenda of agendas" class="point-container">
-      <h3>Topic: {{agenda.description}}</h3>
-      <div *ngFor="let co of agenda.conclusions">
-        <p>{{co.conclusion}}</p> 
-      </div>
-  </div>
-</div>
-
 <div class="text-center">
     <button routerLink="../../meeting" class="btn">New meeting</button>
     <button routerLink="../../" class="btn">Finish</button>

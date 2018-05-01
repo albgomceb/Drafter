@@ -1,5 +1,9 @@
 package drafter.beans.sixHats;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,15 +25,15 @@ public class SixHatsSerializer {
 		
 		res.setHats(hats);
 		res.setMeetingId(sixHats.getId());
+		res.setSecondsLeft(getSecondsLeft(sixHats.getRoundTime()));
 		
 		return res;
 	}
 	
 	public SixHats fromBean(SixHatsBean sixHatsBean, Meeting meeting) {
 		SixHats sixHats = new SixHats();
-		sixHats.setHats(new HatSerializer().fromBean(sixHatsBean.getHats()));
-		sixHats.setId(sixHatsBean.getMeetingId());
-		
+		sixHats.setId(sixHatsBean.getMeetingId());	
+		sixHats.setVersion(meeting.getVersion());
 		sixHats.setTitle(meeting.getTitle());
 		sixHats.setDescription(meeting.getDescription());
 		sixHats.setDate(new Date());
@@ -40,7 +44,20 @@ public class SixHatsSerializer {
 		sixHats.setSteps(meeting.getSteps());
 		sixHats.setAgendas(meeting.getAgendas());
 		sixHats.setParticipants(meeting.getParticipants());
+		sixHats.setStatus(1);
+		sixHats.setRoundTime(getRoundTime(sixHatsBean.getSecondsLeft()));
+		
+		sixHats.setHats(new HatSerializer().fromBean(sixHatsBean.getHats(), sixHats));
 		
 		return sixHats;
+	}
+	
+	private int getSecondsLeft(Date sixHatsDate) {
+		
+		return (int) Math.round((sixHatsDate.getTime() - new Date().getTime()));
+	}
+	
+	private Date getRoundTime(int secondsLeft) {
+		return new Date(new Date().getTime() + (secondsLeft/1000));
 	}
 }
