@@ -122,7 +122,7 @@ export class StandardMeetingComponent implements OnInit {
 
   setFocus() {
     setTimeout(() => {
-      var e = $('input')[0];
+      var e = $('textarea')[0];
       if(e)
         e.focus();
     }, 0);
