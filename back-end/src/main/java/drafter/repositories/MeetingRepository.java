@@ -13,7 +13,7 @@ import drafter.domain.User;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Integer>{
 
-	@Query("select m from Meeting m join m.participants p where p.user.id = ?1")
+	@Query("select m from Meeting m join m.participants p where p.user.id = ?1 order by m.date DESC")
 	Page<Meeting> findByUserId(int userId, Pageable pageable);
 	
 	@Query("select p.user from Participant p where p.meeting.id=?1 and p.role='LEADER'")
