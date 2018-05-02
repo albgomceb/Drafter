@@ -28,7 +28,6 @@ public class SixHats extends Meeting{
 	
 	private Date roundTime;
 
-	@NotNull 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getRoundTime() {

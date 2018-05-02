@@ -25,8 +25,6 @@ import drafter.beans.meeting.MeetingSerializer;
 import drafter.beans.model.ModelBean;
 import drafter.beans.participant.ParticipantBean;
 import drafter.beans.participant.ParticipantSerializer;
-import drafter.beans.user2.UserBean2;
-import drafter.beans.user2.UserSerializer2;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.SixHats;
@@ -77,7 +75,7 @@ public class MeetingController extends AbstractController {
 		participantService.relateWithParticipants(result, meeting.getAttendants());
 		if(meeting.getType().equals("six-hats")) {
 			SixHats sixHats = sixHatsService.create(result);
-			sixHatsService.save(sixHats);
+			sixHatsService.save(sixHats, true);
 			sixHats.getHats().stream()
 								.forEach(hat -> hatService.save(hat));
 		}
