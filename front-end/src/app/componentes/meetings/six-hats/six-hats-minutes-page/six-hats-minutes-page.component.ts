@@ -7,6 +7,8 @@ import { SixHatsService } from '../../../services/sixhats.service';
 import { ActivatedRoute } from '@angular/router';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas'
+import { Participant } from '../../../models/participant.model';
+import { Option } from '../../../models/option.model';
 
 @Component({
   selector: 'six-hats-minutes-page',
@@ -22,6 +24,8 @@ export class SixHatsMinutesPageComponent implements OnInit {
   public meetingId: number;
   @Input() 
   public meetingInfo: any;
+
+  private leader : Option;
   
 
   constructor(private meetingService: MeetingService, 
@@ -38,9 +42,11 @@ export class SixHatsMinutesPageComponent implements OnInit {
       }
       this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(data => {
         this.sixHats = data;
+        this.meetingService.getLeader(this.meetingId).subscribe(leader => 
+          this.leader = leader);
       });
     });
-  };
+  }
   
   downloadPDF() {
 

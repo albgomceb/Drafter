@@ -76,8 +76,12 @@ public class UserService {
 		return user;
 	}
 	
-	public List<User> filterUsers(String keyword){
-		return userRepository.filterUsers(keyword);
+	public List<User> filterUsers(String keyword, String department){
+		return userRepository.filterUsers(keyword, department);
+	}
+	
+	public List<User> filterUsers2(String keyword){
+		return userRepository.filterUsers2(keyword);
 	}
 
 	public List<User> findAllWithoutPrincipal(int id) {
