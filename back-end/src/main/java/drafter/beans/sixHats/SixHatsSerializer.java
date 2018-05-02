@@ -1,9 +1,5 @@
 package drafter.beans.sixHats;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,16 +41,21 @@ public class SixHatsSerializer {
 		sixHats.setAgendas(meeting.getAgendas());
 		sixHats.setParticipants(meeting.getParticipants());
 		sixHats.setStatus(1);
-		sixHats.setRoundTime(getRoundTime(sixHatsBean.getSecondsLeft()));
+		if(sixHatsBean.getSecondsLeft() != null)
+			sixHats.setRoundTime(getRoundTime(sixHatsBean.getSecondsLeft()));
 		
 		sixHats.setHats(new HatSerializer().fromBean(sixHatsBean.getHats(), sixHats));
 		
 		return sixHats;
 	}
 	
-	private int getSecondsLeft(Date sixHatsDate) {
+	private Integer getSecondsLeft(Date sixHatsDate) {
+		Integer res = null;
 		
-		return (int) Math.round((sixHatsDate.getTime() - new Date().getTime()));
+		if(sixHatsDate != null)
+			res = new Integer(Math.round((sixHatsDate.getTime() - new Date().getTime())));
+			
+		return res;
 	}
 	
 	private Date getRoundTime(int secondsLeft) {

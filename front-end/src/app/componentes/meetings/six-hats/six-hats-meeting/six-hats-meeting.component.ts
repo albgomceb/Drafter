@@ -56,18 +56,55 @@ export class SixHatsMeetingComponent implements OnInit {
   ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;       
+      console.log("Antes del seteo",this.sixHats);
       
-    //CONTADOR    
-    this.future = new Date().getTime() + this.sixHats.secondsLeft;
-    
+      if(this.sixHats.secondsLeft === null){
+        this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
+          this.sixHats = res;
+          console.log("Despues del seteo",this.sixHats);
+          this.initializeCounter();
+          this.initializeWebSocket();
+          this.initializeParticipant();
+        });
+      }
+      //CONTADOR 
+      if(this.sixHats.secondsLeft != null)
+        this.initializeCounter();
+
+      //WEBSOCKET
+      this.initializeWebSocket();
+      
+      //CURRENT PARTICIPANT
+      this.initializeParticipant();
+    });
+   
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  // ----------------------- Métodos de instanciación ----------------------
+  initializeParticipant(){
+    this.userService.getParticipant(this.meetingId).subscribe(participant => {
+      this.currentParticipant = participant;
+      this.sortAttendants();
+      this.getCurrentHat();
+      this.addConclusion(); 
+    });
+  }
+  initializeCounter(){
+    this.future = new Date().getTime() + Number.parseInt(this.sixHats.secondsLeft.toString());
+      
     this.$counter = Observable.interval(1000).map((x) => {        
         this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
         return x;
     });
-
+    
     this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
+  }
 
-    //WEBSOCKET
+  initializeWebSocket(){
     this.realTimeService.connect(this.meetingId, () => {
       for(let hat of this.sixHats.hats){
         this.realTimeService.register('hat-'+hat.color, hat.hatConclusions);
@@ -85,34 +122,20 @@ export class SixHatsMeetingComponent implements OnInit {
         
         this.sortAttendants();
         this.getCurrentHat();
-        this.addFirstConclusion(); 
+        this.addConclusion(); 
 
-        this.future = new Date().getTime() + this.sixHats.secondsLeft;
+        this.future = new Date().getTime() + Number.parseInt(this.sixHats.secondsLeft.toString());
         this.$counter = Observable.interval(1000).map((x) => {        
-        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
-        return x;
-    });
+          this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
+          return x;
+        });
 
     this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
       });
 
       this.realTimeService.subscribe();
     });
-      this.userService.getParticipant(this.meetingId).subscribe(participant => {
-        this.currentParticipant = participant;
-        this.sortAttendants();
-        this.getCurrentHat();
-        this.addFirstConclusion(); 
-      });      
-    });
-   
   }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  // ----------------------- Métodos de instanciación ----------------------
 
   countdown(t) {
     var minutes, seconds;
@@ -164,24 +187,12 @@ export class SixHatsMeetingComponent implements OnInit {
     }
   }
 
-  addFirstConclusion(){
-    var length = this.currentHat.hatConclusions.length;
-  
-    this.currentHat.hatConclusions[length] = new HatConclusion();
-    this.currentHat.hatConclusions[length].id = 0;
-    this.currentHat.hatConclusions[length].version = 0;
-    this.currentHat.hatConclusions[length].text = "";
-    this.currentHat.hatConclusions[length].isInput = true;
-    
-    
-  }
-
   // ----------------------- Métodos para añadir/eliminar una conclusión ----------------------
 
   addConclusion(){
     var i=0;                            
     for(var con of this.currentHat.hatConclusions) {
-      if(!con.text || con.text.trim().length == 0)
+      if(!this.checkNotBlank(con.text))
         this.currentHat.hatConclusions.splice(i, 1);
       
       i++;
@@ -209,13 +220,17 @@ export class SixHatsMeetingComponent implements OnInit {
     //Si la conclusion es un texto, se convierte en input
     } else if(!conclusion.isInput) {
       conclusion.isInput = true;
-      if(conclusion.text.trim() == 0)
-        this.deleteConclusion(conclusion.id, conclusionIndex);
-        
+    }
+    else if(!this.checkNotBlank(conclusion.text) && conclusion.isInput){
+      this.currentHat.hatConclusions.splice(conclusionIndex, 1);
     }
   }
 
   deleteConclusion(conclusionId : number, conclusionIndex : number) {
+    if(conclusionId === 0){
+      this.currentHat.hatConclusions.splice(conclusionIndex, 1);
+    }
+
     this.realTimeService.send('/sixHats/delete/' + conclusionId + '/', 
                                     WSResponseType.POP, 
                                     'hat-'+this.currentHat.color,
@@ -243,14 +258,6 @@ export class SixHatsMeetingComponent implements OnInit {
   }
 
   // ----------------------- Reasignación de sombrero (guardado de SixHats) ----------------------
-
-  // saveSixHats(){
-  //   this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
-  //     this.router.navigate(["/meeting/"+this.meetingId]);
-  //     this.sixHats = res;
-  //     this.getCurrentHat();
-  //   });
-  // }
 
   saveSixHats(){
     this.realTimeService.send('/sixHats/reassign/', 

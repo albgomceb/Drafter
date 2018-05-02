@@ -86,7 +86,7 @@ public class SixHatsController {
 		Meeting meeting = sixHatsService.findById(new Integer(meetingId));
 		SixHats result = new SixHatsSerializer().fromBean(sixHats, meeting);
 		result.setHats(hatService.reassignHats(result));
-		result = sixHatsService.save(result);
+		result = sixHatsService.save(result, false);
 		result.getHats().stream()
 						.forEach(hat -> hatService.save(hat));
 		SixHatsBean res =new SixHatsSerializer().fromSixHats(result);
@@ -153,7 +153,7 @@ public class SixHatsController {
 		SixHats meeting = sixHatsService.findById(new Integer(meetingId));
 		meeting.setHats(new ArrayList<Hat>(new HashSet<Hat>(meeting.getHats())));
 		meeting.setHats(hatService.reassignHats(meeting));
-		sixHatsService.save(meeting);
+		sixHatsService.save(meeting, false);
 		meeting.getHats().stream()
 						.forEach(hat -> hatService.save(hat));
 		SixHatsBean res =new SixHatsSerializer().fromSixHats(meeting);

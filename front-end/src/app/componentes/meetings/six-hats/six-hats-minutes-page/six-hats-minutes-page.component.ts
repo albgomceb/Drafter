@@ -37,6 +37,8 @@ export class SixHatsMinutesPageComponent implements OnInit {
     
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
+      console.log("timer", this.meeting.timer);
+      
       if (!this.meeting.hasFinished) {
         this.router.navigateByUrl('/meeting/' + this.meetingId);
       }
@@ -46,6 +48,20 @@ export class SixHatsMinutesPageComponent implements OnInit {
           this.leader = leader);
       });
     });
+  }
+
+  public format(): string {
+    var s: number = this.meeting.timer;
+    var m: number = Math.floor(this.meeting.timer / 60);
+    var h: number = Math.floor(m / 60);
+
+    m -= 60 * h;
+    s -= 3600 * h + 60 * m;
+
+    var sm: string = ("00" + m).slice(-2);
+    var ss: string = ("00" + s).slice(-2);
+
+    return "" + h + ":" + sm + ":" + ss;
   }
   
   downloadPDF() {
