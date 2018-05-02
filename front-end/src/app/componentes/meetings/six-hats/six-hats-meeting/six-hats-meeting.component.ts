@@ -130,7 +130,7 @@ export class SixHatsMeetingComponent implements OnInit {
           return x;
         });
 
-    this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
+        this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
       });
 
       this.realTimeService.subscribe();
