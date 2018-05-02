@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { SixHats } from '../../../models/sixHats.model';
 import { Meeting } from '../../../models/meeting.model';
@@ -25,12 +26,16 @@ export class SixHatsMinutesPageComponent implements OnInit {
 
   constructor(private meetingService: MeetingService, 
     private sixHatsService: SixHatsService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
+      if (!this.meeting.hasFinished) {
+        this.router.navigateByUrl('/meeting/' + this.meetingId);
+      }
       this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(data => {
         this.sixHats = data;
       });

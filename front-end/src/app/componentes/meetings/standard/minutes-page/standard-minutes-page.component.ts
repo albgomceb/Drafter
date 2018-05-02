@@ -27,7 +27,7 @@ export class StandardMinutesPageComponent implements OnInit {
 
 
   constructor(private meetingService: MeetingService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     //OBTENER SESSION LEADER
@@ -39,6 +39,9 @@ export class StandardMinutesPageComponent implements OnInit {
 
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
+      if (!this.meeting.hasFinished) {
+        this.router.navigateByUrl('/meeting/' + this.meetingId);
+      }
     });
 
     this.meetingService.getAgendas(this.meetingId).subscribe(data => {

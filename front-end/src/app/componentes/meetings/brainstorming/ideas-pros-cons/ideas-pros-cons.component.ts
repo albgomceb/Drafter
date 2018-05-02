@@ -1,3 +1,5 @@
+import { UserService } from './../../../services/user.service';
+import { Participant } from './../../../models/participant.model';
 import { Cons } from './../../../models/cons.model';
 import { Pros } from './../../../models/pros.model';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
@@ -31,9 +33,14 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
   constructor(private ideaService: IdeaService,
     private realTimeService: RealTimeService,
     private activeRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private userService: UserService) { }
 
+  public participant: Participant;
   ngOnInit() {
+    this.userService.getParticipant(this.meetingId).subscribe(participant => {
+      this.participant = participant;
+    });
 
     var meetingId = this.activeRoute.snapshot.params['id'];
 
@@ -95,7 +102,7 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
     for (var e of this.ideas[index].cons)
       if (e.isInput)
         return;
-        
+
     var length = this.ideas[index].cons.length;
     this.ideas[index].cons.push(new Cons());
     this.ideas[index].cons[length].isInput = true;
@@ -117,13 +124,13 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
     p.isInput = false;
     var text = p.pros ? p.pros.trim() : '';
     if (text.length == 0) {
-      if(p.id != undefined && p.id != 0)
+      if (p.id != undefined && p.id != 0)
         this.realTimeService.send('/pros/delete/' + p.id + '/', WSResponseType.POP, 'p' + index, {}, { id: p.id });
       this.ideas[index].pros.splice(i, 1);
     } else {
       p.numberPros = 1;
       p.ideaId = this.ideas[index].id;
-      this.realTimeService.send('/pros/savePro/', WSResponseType.PUSH, 'p' + index, p, { id: p.id|0 });
+      this.realTimeService.send('/pros/savePro/', WSResponseType.PUSH, 'p' + index, p, { id: p.id | 0 });
     }
   }
 
@@ -131,20 +138,20 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
     c.isInput = false;
     var text = c.cons ? c.cons.trim() : '';
     if (text.length == 0) {
-      if(c.id != undefined && c.id != 0)
+      if (c.id != undefined && c.id != 0)
         this.realTimeService.send('/cons/delete/' + c.id + '/', WSResponseType.POP, 'c' + index, {}, { id: c.id });
       this.ideas[index].cons.splice(i, 1);
     } else {
       c.numberCons = 1;
       c.ideaId = this.ideas[index].id;
-      this.realTimeService.send('/cons/saveCon/', WSResponseType.PUSH, 'c' + index, c, { id: c.id|0 });
+      this.realTimeService.send('/cons/saveCon/', WSResponseType.PUSH, 'c' + index, c, { id: c.id | 0 });
     }
   }
 
   setFocus() {
     setTimeout(() => {
       var e = $('input')[0];
-      if(e)
+      if (e)
         e.focus();
     }, 0);
   }
