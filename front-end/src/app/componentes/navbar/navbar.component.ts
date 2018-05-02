@@ -2,8 +2,7 @@ import { LoginService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Meeting } from '../models/meeting.model';
 import { MeetingService } from '../services/meeting.service';
-import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Configuration } from '../../constants/configuration';
 import { RealTimeService } from '../../services/real-time.service';
@@ -17,7 +16,6 @@ export class NavbarComponent implements OnInit {
 
   private notifications : Array<Meeting>;
   private clicked : boolean;
-  private staticUrl : String;
   private hasNewNotifications : boolean;
 
   public $counter: Observable<number>;
@@ -30,12 +28,8 @@ export class NavbarComponent implements OnInit {
     private realTimeService : RealTimeService) { }
 
   ngOnInit() {
-    this.meetingService.getNotifications().subscribe(meetings => {
-      console.log("antes", this.hasNewNotifications);
-      
+    this.meetingService.getNotifications().subscribe(meetings => {      
       this.hasNewNotifications = false;
-      console.log("despues", this.hasNewNotifications);
-
       this.notifications = meetings;   
       for(let meeting of meetings){
         if(meeting.showNotification === null){
@@ -46,7 +40,6 @@ export class NavbarComponent implements OnInit {
     });
 
     this.clicked = false;
-    this.staticUrl = environment.baseApi;
 
     //CONTADOR        
     this.$counter = Observable.interval(1000).map((x) => {    
