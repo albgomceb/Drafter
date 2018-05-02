@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
@@ -29,7 +30,8 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
   constructor(private meetingService: MeetingService,
     private brainstormingService: BrainStormingService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -41,6 +43,9 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
+      if (!this.meeting.hasFinished) {
+        this.router.navigateByUrl('/meeting/' + this.meetingId);
+      }
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
       });
