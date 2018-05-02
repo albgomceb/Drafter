@@ -248,7 +248,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     if(this.searchField.value.length>0){
       //FILTRAR USUARIOS
       setTimeout(function(){
-        scope.userService.filterUsers(scope.searchField.value).subscribe(
+        scope.userService.filterUsers2(scope.searchField.value).subscribe(
           data => {
             // Elimino lo usuarios que ya tengo metidos en mi departamento
             if(department.users != null){
@@ -273,7 +273,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     }else{
       setTimeout(function(){
         //TODOS LOS USUARIOS
-        scope.userService.filterUsers(scope.searchField.value).subscribe(
+        scope.userService.filterUsers2(scope.searchField.value).subscribe(
           data => {
             // Elimino lo usuarios que ya tengo metidos en mi departamento
             if(department.users != null){
