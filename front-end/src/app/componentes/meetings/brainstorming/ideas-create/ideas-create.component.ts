@@ -1,3 +1,5 @@
+import { Participant } from './../../../models/participant.model';
+import { UserService } from './../../../services/user.service';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { IdeaService } from '../../../services/idea.service';
@@ -26,18 +28,23 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
   public nextStep = new EventEmitter<number>();
 
   constructor(private ideaService: IdeaService,
-    private dynamicMeetingService: DynamicMeetingService, 
+    private dynamicMeetingService: DynamicMeetingService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private realTimeService: RealTimeService,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute,
+    private userService: UserService) { }
 
+  public participant: Participant;
   ngOnInit() {
+    this.userService.getParticipant(this.meetingId).subscribe(participant => {
+      this.participant = participant;
+    });
     var meetingId = this.activeRoute.snapshot.params['id'];
 
-    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe( res => {
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(res => {
       this.entradas = res;
-      
+
       var idea = new Idea();
       idea.isInput = true;
       idea.text = "";
@@ -60,9 +67,9 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
     this.nextStep.emit(this.meetingId);
   }
 
-  addIdea(){                       
-    for(var en of this.entradas)
-      if(en.isInput)
+  addIdea() {
+    for (var en of this.entradas)
+      if (en.isInput)
         return;
 
     var length = this.entradas.length;
@@ -71,47 +78,47 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
     this.entradas[length].text = "";
 
     this.setFocus();
-  } 
+  }
 
-  removeIdea(entrada : Idea, entradasIndex : number){ 
-    if(!entrada.id || entrada.id == 0)
+  removeIdea(entrada: Idea, entradasIndex: number) {
+    if (!entrada.id || entrada.id == 0)
       this.entradas.splice(entradasIndex, 1);
     else
       this.deleteIdea(entrada.id);
   }
 
   private deleteIdea(id: number) {
-    this.realTimeService.send('/idea/delete/' + id + '/', 
-                                    WSResponseType.POP, 
-                                    'entradas',  
-                                    {}, 
-                                    {id: id});
+    this.realTimeService.send('/idea/delete/' + id + '/',
+      WSResponseType.POP,
+      'entradas',
+      {},
+      { id: id });
   }
 
-  convert(entrada){
+  convert(entrada) {
     setTimeout(() => {
       entrada.number = 1;
-      if(entrada.isInput) {
-        if(this.checkNotBlank(entrada.text)) {
+      if (entrada.isInput) {
+        if (this.checkNotBlank(entrada.text)) {
           entrada.isInput = false;
-          this.realTimeService.send('/idea/save/', 
-                                      WSResponseType.PUSH, 
-                                      'entradas',  
-                                      entrada, 
-                                      {id: entrada.id|0});
+          this.realTimeService.send('/idea/save/',
+            WSResponseType.PUSH,
+            'entradas',
+            entrada,
+            { id: entrada.id | 0 });
 
-          if(entrada.id == undefined || entrada.id == 0) {
+          if (entrada.id == undefined || entrada.id == 0) {
             this.addIdea();
           }
-        } else if(entrada.id != undefined && entrada.id != 0) {
+        } else if (entrada.id != undefined && entrada.id != 0) {
           this.deleteIdea(entrada.id);
         }
       } else {
-        var i=0;
-        for(var en of this.entradas) {
-          if(en.isInput)
+        var i = 0;
+        for (var en of this.entradas) {
+          if (en.isInput)
             en.isInput = false;
-          if(en.text.trim().length == 0)
+          if (en.text.trim().length == 0)
             this.entradas.splice(i, 1);
 
           i++
@@ -131,18 +138,18 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
   setFocus() {
     setTimeout(() => {
       var e = $('input')[0];
-      if(e)
+      if (e)
         e.focus();
     }, 0);
   }
 
-  checkNotBlank(string : String) : boolean{
-    if(!string)
+  checkNotBlank(string: String): boolean {
+    if (!string)
       return false;
 
     var res = true;
 
-    if(string.trim().length == 0){
+    if (string.trim().length == 0) {
       res = false;
     }
 

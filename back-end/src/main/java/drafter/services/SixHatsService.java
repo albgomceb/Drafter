@@ -130,7 +130,7 @@ public class SixHatsService {
         return null;
     }
 
-	public SixHats save(SixHats sixHats) {
+	public SixHats save(SixHats sixHats, boolean isFirstSave) {
 		List<String> colors = new ArrayList<>();
 		if(sixHats.getParticipants() == null)
 			sixHats.setParticipants( new ArrayList<Participant>());
@@ -146,7 +146,12 @@ public class SixHatsService {
     			if(hat.getHatConclusions() == null || hat.getHatConclusions().isEmpty())
     				hat.setHatConclusions(new ArrayList<HatConclusion>());
     	}
-    	sixHats.setRoundTime(new Date(System.currentTimeMillis() + 120000));
+    	
+    	if(!isFirstSave)
+    		sixHats.setRoundTime(new Date(System.currentTimeMillis() + 120000));
+    	else
+    		sixHats.setRoundTime(null);
+    	
 		return sixHatsRepository.save(sixHats);
 	}
 	

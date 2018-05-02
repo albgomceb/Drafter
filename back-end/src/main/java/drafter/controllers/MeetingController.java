@@ -77,7 +77,7 @@ public class MeetingController extends AbstractController {
 		participantService.relateWithParticipants(result, meeting.getAttendants());
 		if(meeting.getType().equals("six-hats")) {
 			SixHats sixHats = sixHatsService.create(result);
-			sixHatsService.save(sixHats);
+			sixHatsService.save(sixHats, true);
 			sixHats.getHats().stream()
 								.forEach(hat -> hatService.save(hat));
 		}
