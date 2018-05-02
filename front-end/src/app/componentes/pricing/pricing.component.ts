@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './../services/login.service';
 
 declare let paypal: any;
 
@@ -20,9 +21,13 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
   amount: number = 0;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private loginService: LoginService) { }
 
   ngOnInit() {
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
   paypalConfig = {

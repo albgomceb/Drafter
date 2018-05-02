@@ -14,6 +14,7 @@ import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-m
 import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
 import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
 import { PricingComponent } from './componentes/pricing/pricing.component';
+import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
 
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
@@ -21,15 +22,18 @@ import { VideoconferencesComponent } from './componentes/videoconferences/videoc
 import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
 import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
 import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-profile-page.component';
+import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'pricing',component: PricingComponent},
+  {path: 'legal',component: LegalPageComponent},
   {path: 'success',component: PaymentSuccessPageComponent},
   {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
+  {path: 'notifications',component: NotificationsPageComponent},
   {path: 'meeting/:id', component: DynamicMeetingComponent},
   {path: 'minutes/:id', component: DynamicMinutesComponent},
   {path: 'agenda/:meetingId', component: AgendaPageComponent},

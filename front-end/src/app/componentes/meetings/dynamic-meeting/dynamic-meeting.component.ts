@@ -27,6 +27,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public isFinished:boolean;
   public showChat:boolean = false;
   public showVideo:boolean = false;
+  public showInfo:boolean = true;
   public loaded;
   public unreadedMsg: number;
   public attendants: any[];
@@ -38,7 +39,12 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
   constructor(private loginService:LoginService, private userService: UserService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
-    public realtimeService:RealTimeService, private meetingService2: MeetingService) {}
+    public realtimeService:RealTimeService, private meetingService2: MeetingService,
+    private route : ActivatedRoute) {
+      route.params.subscribe(val => {
+        this.ngOnInit();
+      });
+    }
 
   ngOnInit() {
     this.loaded = false;
@@ -146,6 +152,10 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
       this.showChat = false;
     }
     this.showVideo = !this.showVideo;
+  }
+
+  toggleInfo() {
+    this.showInfo = !this.showInfo;
   }
 
   receiveEventChat($event) {

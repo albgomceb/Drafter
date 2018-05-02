@@ -9,14 +9,14 @@
       <div *ngIf="profileForm.get('name').errors" class="alert alert-danger">
         Required
       </div>
-      <input [(ngModel)]="user.name" type="text" name="name" id="name" formControlName="name" class="form-control">
+      <input type="text" name="name" id="name" formControlName="name" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
       <label for="surname">Surname</label>
       <div *ngIf="profileForm.get('surname').errors" class="alert alert-danger">
         Required
       </div>
-      <input [(ngModel)]="user.surname" type="text" name="surname" id="surname" formControlName="surname" class="form-control">
+      <input type="text" name="surname" id="surname" formControlName="surname" class="form-control">
     </div>
   </div>
 
@@ -26,14 +26,14 @@
       <div *ngIf="profileForm.get('username').errors" class="alert alert-danger">
         Required | Minimum 5 characters
       </div>
-      <input [(ngModel)]="user.username" type="text" name="username" id="username" formControlName="username" class="form-control">
+      <input type="text" name="username" id="username" formControlName="username" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
       <label for="password">New password. Put the current password to keep it</label>
       <div *ngIf="profileForm.get('password').errors" class="alert alert-danger">
         Required | Minimum 5 characters
       </div>
-      <input type="text" name="password" id="password" formControlName="password" class="form-control"/>
+      <input type="password" name="password" id="password" formControlName="password" class="form-control"/>
     </div>
   </div>
 
@@ -43,7 +43,7 @@
       <div *ngIf="profileForm.get('email').errors" class="alert alert-danger">
         Must be a correct email format
       </div>
-      <input [(ngModel)]="user.email" type="text" name="email" id="email" formControlName="email" class="form-control">
+      <input type="text" name="email" id="email" formControlName="email" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
       <label for="phone">Phone number</label>
@@ -55,11 +55,22 @@
           Must be numeric
         </div>
       </div>
-      <input [(ngModel)]="user.phone" type="text" name="phone" id="phone" formControlName="phone" class="form-control">
+      <input type="text" name="phone" id="phone" formControlName="phone" class="form-control">
     </div>
   </div>
 
+  <div class="row">
+      <div class="col-lg-6 col-md-12 form-group">
+        <label for="photo">Photo</label>
+        <div *ngIf="profileForm.get('photo').errors" class="alert alert-danger">
+          Must be a correct url format
+        </div>
+        <input type="text" name="photo" id="photo" formControlName="photo" class="form-control">
+      </div>
+    </div>
+
   <div class="text-center">
+
     <button type="onsubmit" class="btn">Save</button>
     <button routerLink=".." class="btn">Cancel</button>
   </div>
