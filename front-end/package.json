@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "@types/html2canvas": "0.0.33",
+    "attachmediastream": "^2.0.0",
     "bootstrap": "^4.0.0",
     "bootstrap-select": "^1.12.4",
     "bootswatch": "^4.0.0",
