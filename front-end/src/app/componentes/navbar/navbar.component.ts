@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
 import { Configuration } from '../../constants/configuration';
+import { RealTimeService } from '../../services/real-time.service';
 
 @Component({
   selector: 'navbar',
@@ -25,7 +26,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private loginService: LoginService,
     private meetingService : MeetingService,
-    private router : Router) { }
+    private router : Router,
+    private realTimeService : RealTimeService) { }
 
   ngOnInit() {
     this.meetingService.getNotifications().subscribe(meetings => {

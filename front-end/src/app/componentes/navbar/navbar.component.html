@@ -35,7 +35,7 @@
             <span *ngIf="notifications.length===0" style="color: grey">You don't have any notifications</span>
             <div *ngIf="notifications.length>0" > 
               <div *ngFor="let meeting of notifications">
-                <a routerLink="meeting/{{meeting.id}}">{{meeting.title}}</a>
+                <a (click)="goMeeting(meeting.id)" >{{meeting.title}}</a>
                 <button (click)="hideNotification(meeting)">X</button>     
               </div>
             </div>
