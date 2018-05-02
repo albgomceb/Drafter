@@ -252,4 +252,14 @@ public class MeetingController extends AbstractController {
 		
 		return res;
 	}
+	
+	@GetMapping("/getLeader/{meetingId}")
+	public Option getLeader(@PathVariable int meetingId) {
+		User leader = meetingService.getLeader(meetingId);
+		Option res = new Option();
+		res.setId(leader.getId()+"");
+		res.setName(leader.getName());
+		res.setPhoto(leader.getPhoto());
+		return res;
+	}
 }

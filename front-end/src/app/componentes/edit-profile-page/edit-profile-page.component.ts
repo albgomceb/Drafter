@@ -25,34 +25,63 @@ export class EditProfilePageComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private profileService: ProfileService, private router: Router) {
     this.profileForm = this.fb.group({  // Esto es la validación de los campos
-      name: ['name', Validators.compose([Validators.required]) ],
-      surname: ['surname', Validators.compose([Validators.required]) ],
-      username: ['username', Validators.compose([Validators.required, Validators.minLength(5)]) ],
-      phone: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]+')]) ],
-      email: ['a@a.com', Validators.compose([Validators.email]) ],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(5)]) ]
+      name: ['', ],
+      surname: ['',  ],
+      username: ['', ],
+      phone: ['', ],
+      email: ['', ],
+      password: ['', ],
+      photo: ['', ]
     })
 
 
    }
 
+  //  Validators.compose([Validators.required, Validators.minLength(5)]) 
+
   ngOnInit() {
     this.profileService.getUser().subscribe(
       data => {
         this.user = data;
+        if(this.user.photo == "/assets/img/none.png"){
+          this.profileForm = this.fb.group({  // Esto es la validación de los campos
+            name: [this.user.name, Validators.compose([Validators.required]) ],
+            surname: [this.user.surname, Validators.compose([Validators.required]) ],
+            username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(5)]) ],
+            phone: [this.user.phone, Validators.compose([Validators.required, Validators.pattern('[0-9]+')]) ],
+            email: [this.user.email, Validators.compose([Validators.email]) ],
+            password: [this.user.password, Validators.compose([Validators.required, Validators.minLength(5)]) ],
+            photo: ['', Validators.compose([Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')  ]) ]
+          })
+        }
+        
+        else{
+          this.profileForm = this.fb.group({  // Esto es la validación de los campos
+            name: [this.user.name, Validators.compose([Validators.required]) ],
+            surname: [this.user.surname, Validators.compose([Validators.required]) ],
+            username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(5)]) ],
+            phone: [this.user.phone, Validators.compose([Validators.required, Validators.pattern('[0-9]+')]) ],
+            email: [this.user.email, Validators.compose([Validators.email]) ],
+            password: [this.user.password, Validators.compose([Validators.required, Validators.minLength(5)]) ],
+            photo: [this.user.photo, Validators.compose([Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')  ]) ]
+          })
+        }
       },
       error => {
         this.errorListUsers = true;
       }
     );
+   
   }
 
   onSubmit(profileForm){
     this.user.name = this.profileForm.value.name;
     this.user.surname = this.profileForm.value.surname;
     this.user.username = this.profileForm.value.username;
+    this.user.phone = this.profileForm.value.phone;
     this.user.email = this.profileForm.value.email;
     this.user.password = this.profileForm.value.password;
+    this.user.photo = this.profileForm.value.photo;
 
     if(this.user.password != "" && (this.user.password).length >= 5){
       this.profileService.updateUser(this.user).subscribe((res:any) =>{

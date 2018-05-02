@@ -160,5 +160,9 @@ public class MeetingService {
 	public Collection<Meeting> findNotifications(int userId){
 		return meetingRepository.findNotifications(userId);
 	}
+	
+	public User getLeader(int meetingId) {
+		return meetingRepository.getLeader(meetingId);
+	}
 }    
 

@@ -80,8 +80,8 @@
 
 
 	<bean id="userAccount7" class="drafter.security.UserAccount">
-		<property name="username" value="mapos" />
-		<property name="password" value="0591fe2b4a41d67dd0a9822c3c711e23" />
+		<property name="username" value="maxpoll" />
+		<property name="password" value="1eb6f00bce6906823056dea5b20fd0d7" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -114,7 +114,7 @@
 		<property name="email" value="larofe@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-1.jpg" />
 	</bean>
 
 	<!-- Users -->
@@ -126,7 +126,7 @@
 		<property name="email" value="macaba@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/428341/pexels-photo-428341.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-3.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -147,7 +147,7 @@
 		<property name="email" value="macai@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/265036/pexels-photo-265036.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-7.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -167,7 +167,7 @@
 		<property name="email" value="adrocru@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/440588/pexels-photo-440588.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-4.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -186,7 +186,7 @@
 		<property name="email" value="cocome@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/450271/pexels-photo-450271.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-5.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -205,7 +205,7 @@
 		<property name="email" value="querico@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/461497/pexels-photo-461497.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-6.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -221,10 +221,10 @@
 		<property name="userAccount" ref="userAccount7" />
 		<property name="name" value="Max" />
 		<property name="surname" value="Powell" />
-		<property name="email" value="mapos@gmail.com" />
+		<property name="email" value="maxpoll@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-8.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department3" />
@@ -245,7 +245,7 @@
 		<property name="email" value="wiscre@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/428339/pexels-photo-428339.jpeg" />
+			value="https://drafter-app.herokuapp.com/assets/img/avatar/avatar-2.jpg" />
 		<property name="departments">
 			<list>
 

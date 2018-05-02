@@ -1,7 +1,11 @@
 package drafter.beans.user;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 
 import drafter.beans.Option;
 import drafter.domain.User;
@@ -23,6 +27,7 @@ public class UserSerializer {
 		res.setSurname(user.getSurname());
 		res.setId(new Integer(user.getId()).toString());
 		res.setUsername(user.getUserAccount().getUsername());
+		res.setPassword(user.getUserAccount().getPassword());
 		res.setAuthorities(user.getUserAccount().getAuthorities()
 				.stream()
 				.map(au -> au.getAuthority())
@@ -38,4 +43,5 @@ public class UserSerializer {
 	public static User fromBean(UserBean user) {
 		return null;
 	}
+	
 }

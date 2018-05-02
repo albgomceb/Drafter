@@ -8,7 +8,7 @@ public class UserBean2 {
 	public String phone;
 	public String username;
 	public String password;
-	
+	public String photo;	
 	
 	public String getPhone() {
 		return phone;
@@ -45,6 +45,12 @@ public class UserBean2 {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
 }

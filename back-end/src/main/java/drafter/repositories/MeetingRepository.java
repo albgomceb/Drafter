@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import drafter.domain.Meeting;
+import drafter.domain.User;
 
 
 @Repository
@@ -22,4 +23,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer>{
 			+ "(p.showNotification = null or p.showNotification = true) and "
 			+ "p.role!='LEADER'")
 	Collection<Meeting> findNotifications(int userId);
+	
+	@Query("select p.user from Participant p where p.meeting.id=?1 and p.role='LEADER'")
+	User getLeader(int meetingId);
 }
