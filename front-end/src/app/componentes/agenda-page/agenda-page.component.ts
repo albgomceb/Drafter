@@ -51,6 +51,14 @@ export class AgendaPageComponent implements OnInit {
   }
 
   addAgenda(){
+    for(var a of this.entradas) {
+      if(a.isInput) {
+        this.setFocus();
+        return;
+      }
+    }
+    
+
     var length = this.entradas.length;
     this.entradas.push(new Agenda());
     this.entradas[length].id = this.counter;
