@@ -1,57 +1,85 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark shadow">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" routerLink="home">
+    <a class="navbar-brand" href="/home">
       <img src="../../../assets/img/white-logo.png" alt="Logo">
     </a>
     <!-- Button only for small screens -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" 
-    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" 
+            data-toggle="collapse" data-target="#navbarToggler" 
+            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Menu items -->
     <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="home">Home</a>
+          <a class="nav-link" href="/home">
+            Home
+          </a>
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-          <a data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
-            <span>Meeting</span>
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownMeetingLink" 
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Meeting
           </a>
-          <div class="dropdown-menu shadow">
-              <a class="dropdown-item" routerLink="meeting">New meeting</a>
-              <a class="dropdown-item" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}/page/0">My meetings</a>
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownMeetingLink">
+              <a class="dropdown-item" href="/meeting">
+                New meeting
+              </a>
+              <a class="dropdown-item" href="/meeting/list/{{getLoginService().getPrincipal().id}}/page/0">
+                My meetings
+              </a>
           </div>          
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-          <a data-toggle="dropdown" id="navbarDropdownOrganizationLink" class="nav-link dropdown-toggle position-relative">
-            <span>Organization</span>
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownOrganizationLink" 
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Organization
           </a>
-          <div class="dropdown-menu shadow">
-            <a class="dropdown-item" routerLink="organization-department/0">New organization</a>
-            <a class="dropdown-item" routerLink="organization/list/{{getLoginService().getPrincipal().id}}">My organizations</a>	
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownOrganizationLink">
+            <a class="dropdown-item" href="/organization-department/0">
+              New organization
+            </a>
+            <a class="dropdown-item" href="/organization/list/{{getLoginService().getPrincipal().id}}">
+              My organizations
+            </a>	
           </div>          
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="pricing">Pricing</a>
+          <a class="nav-link" href="/pricing">
+             Pricing
+          </a>
         </li>
       </ul>
       <ul class="nav navbar-nav">
         <li class="nav-item" *ngIf="!getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="register">Sign up</a>
+          <a class="nav-link" href="/register">
+            Sign up
+          </a>
         </li>
         <li class="nav-item"  *ngIf="!getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="login">Sign in</a>
+          <a class="nav-link" href="/login">
+            Sign in
+          </a>
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-            <a data-toggle="dropdown" id="navbarDropdownUserLink" class="nav-link dropdown-toggle position-relative">
-              <div class="img-profile"><img  attr.src="{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().photo : ''}}"></div>
-              <span class="username">{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}</span>
+            <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownUserLink" 
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="img-profile">
+                <img attr.src="{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().photo : ''}}">
+              </div>
+              <span class="username">
+                {{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}
+              </span>
             </a>
-            <div class="dropdown-menu shadow">
-              <a routerLink="me" class="dropdown-item">Profile</a>
-              <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
+            <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownUserLink">
+              <a class="dropdown-item" href="/me">
+                Profile
+              </a>
+              <a class="dropdown-item" (click)="getLoginService().logout()">
+                Logout
+              </a>
             </div>
         </li>
       </ul>

@@ -1,6 +1,6 @@
 <div class="ideas-container">
     <div class="ideas-title">
-        Pros and cons to the ideas
+        Step 2: Describing pros and cons
     </div>
     <div class="ideas-body">
         <ul class="list-ideas">
@@ -12,7 +12,9 @@
                     <div class="pros-cons">
                         <ul class="list-pros-cons">
                             <li *ngFor="let p of idea.pros; let i = index" class="alert alert-success" (click)="convert(p)">
-                                <textarea *ngIf="p.isInput" [(ngModel)]="p.pros" class="none" (focusout)="killfocusPros(p, ii, i)" (keyup.enter)="enter($event)"></textarea>
+                                <textarea *ngIf="p.isInput" [(ngModel)]="p.pros" class="none" 
+                                          (focusout)="killfocusPros(p, ii, i)" (keyup.enter)="enter($event)"
+                                          placeholder="Type your pros here..."></textarea>
                                 <div *ngIf="!p.isInput" class="idea">
                                     {{ p.pros }}
                                 </div>
@@ -38,7 +40,9 @@
                     <div class="pros-cons">
                         <ul class="list-pros-cons">
                             <li *ngFor="let c of idea.cons; let i = index" class="alert alert-danger" (click)="convert(c)">
-                                <textarea *ngIf="c.isInput" [(ngModel)]="c.cons" class="none" (focusout)="killfocusCons(c, ii, i)" (keyup.enter)="enter($event)"></textarea>
+                                <textarea *ngIf="c.isInput" [(ngModel)]="c.cons" class="none" 
+                                          (focusout)="killfocusCons(c, ii, i)" (keyup.enter)="enter($event)"
+                                          placeholder="Type your cons here..."></textarea>
                                 <div *ngIf="!c.isInput" class="idea">
                                     {{ c.cons }}
                                 </div>
