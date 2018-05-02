@@ -102,7 +102,7 @@ export class MeetingPageComponent implements OnInit {
 
       //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
       let principal:User = this.getLoginService().getPrincipal();
-      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER");
+      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER",principal.username);
 
       var index = this.attendants.findIndex( x => x.id === principalOption.id);
       if(index == -1){
@@ -110,7 +110,7 @@ export class MeetingPageComponent implements OnInit {
       }
 
       //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
-      let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER");
+      let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER",attendant.username);
 
       //SI EL USUARIO NO ESTA AÑADIDO YA COMO PARTICIPANTE
       if(!this.thumbnail.find(x => x.id === att.id)){
@@ -126,7 +126,7 @@ export class MeetingPageComponent implements OnInit {
 
   removeAttendant(attendant:User){
 
-    let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER");
+    let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER",attendant.username);
     var index = this.thumbnail.findIndex( x => x.id === att.id);
 
     if( index != -1){

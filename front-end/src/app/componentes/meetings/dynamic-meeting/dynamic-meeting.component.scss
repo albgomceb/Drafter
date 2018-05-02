@@ -1,4 +1,27 @@
 @import '../../../../scss/colors';
+
+.alert-join{
+    border-radius:5px;
+    position: fixed;
+    width:320px;
+    left:50%;
+    margin-left:-160px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-color: #d0e9c6;
+}
+
+.alert-left{
+    border-radius:5px;
+    position: fixed;
+    width:320px;
+    left:50%;
+    margin-left:-160px;
+    background-color: #ff9800;
+    color: #fff;
+    border-color: #d0e9c6;
+}
+
 form.form {
     border: 1px solid #ced4da;
     border-radius: 5px;
