@@ -14,6 +14,7 @@ import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-m
 import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
 import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
 import { PricingComponent } from './componentes/pricing/pricing.component';
+import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
 
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
@@ -26,6 +27,7 @@ import { NotificationsPageComponent } from './componentes/notifications-page/not
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'pricing',component: PricingComponent},
+  {path: 'legal',component: LegalPageComponent},
   {path: 'success',component: PaymentSuccessPageComponent},
   {path: 'meeting', component: MeetingPageComponent},
   {path: 'login', component: LoginPageComponent},

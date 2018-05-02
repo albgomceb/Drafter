@@ -49,6 +49,7 @@ import { ProfilePageComponent } from './componentes/profile-page/profile-page.co
 import { ProfileService } from './componentes/services/profile.service';
 import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
 import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/waiting-room/waiting-room.component';
+import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/wai
     EditProfilePageComponent,
     ProfilePageComponent,
     NotificationsPageComponent,
-    WaitingRoomComponent
+    WaitingRoomComponent,
+    LegalPageComponent
   ],
   imports: [
     BrowserModule,
