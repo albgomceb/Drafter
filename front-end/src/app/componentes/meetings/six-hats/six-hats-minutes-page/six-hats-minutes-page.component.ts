@@ -37,7 +37,6 @@ export class SixHatsMinutesPageComponent implements OnInit {
     
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
-      console.log("timer", this.meeting.timer);
       
       if (!this.meeting.hasFinished) {
         this.router.navigateByUrl('/meeting/' + this.meetingId);

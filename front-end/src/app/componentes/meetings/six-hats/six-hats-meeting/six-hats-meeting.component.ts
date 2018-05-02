@@ -56,12 +56,10 @@ export class SixHatsMeetingComponent implements OnInit {
   ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;       
-      console.log("Antes del seteo",this.sixHats);
       
       if(this.sixHats.secondsLeft === null){
         this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
           this.sixHats = res;
-          console.log("Despues del seteo",this.sixHats);
           this.initializeCounter();
           this.initializeWebSocket();
           this.initializeParticipant();
