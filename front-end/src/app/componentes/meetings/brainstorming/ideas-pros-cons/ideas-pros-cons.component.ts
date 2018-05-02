@@ -31,37 +31,30 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
   constructor(private ideaService: IdeaService,
     private realTimeService: RealTimeService,
     private activeRoute: ActivatedRoute,
-    private meetingService: MeetingService,
     private router: Router) { }
 
   ngOnInit() {
 
     var meetingId = this.activeRoute.snapshot.params['id'];
-    this.meetingService.isParticipant(meetingId).subscribe(res => {
-      if (!res) {
-        this.router.navigate(['home']);
-        return;
+
+    this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(
+      data => {
+        this.ideas = data;
+        this.realTimeService.connect(this.meetingId, () => {
+          var i = 0;
+          for (var idea of this.ideas) {
+            this.realTimeService.register('p' + i, idea.pros);
+            this.realTimeService.register('c' + i, idea.cons);
+            i++;
+          }
+          this.realTimeService.subscribe();
+        });
+
+      },
+      error => {
+        this.errorListIdeas = true;
       }
-
-      this.ideaService.getIdeasByMeeting(this.meetingId).subscribe(
-        data => {
-          this.ideas = data;
-          this.realTimeService.connect(this.meetingId, () => {
-            var i = 0;
-            for (var idea of this.ideas) {
-              this.realTimeService.register('p' + i, idea.pros);
-              this.realTimeService.register('c' + i, idea.cons);
-              i++;
-            }
-            this.realTimeService.subscribe();
-          });
-
-        },
-        error => {
-          this.errorListIdeas = true;
-        }
-      );
-    });
+    );
 
   }
 
@@ -120,6 +113,12 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
     this.setFocus();
   }
 
+  deletePros(p: Pros, index: number, i: number) {
+    if(p.id != undefined && p.id != 0)
+        this.realTimeService.send('/pros/delete/' + p.id + '/', WSResponseType.POP, 'p' + index, {}, { id: p.id });
+    this.ideas[index].pros.splice(i, 1);
+  }
+
   killfocusPros(p: Pros, index: number, i: number) {
     p.isInput = false;
     var text = p.pros ? p.pros.trim() : '';
@@ -132,6 +131,12 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
       p.ideaId = this.ideas[index].id;
       this.realTimeService.send('/pros/savePro/', WSResponseType.PUSH, 'p' + index, p, { id: p.id|0 });
     }
+  }
+
+  deleteCons(c: Cons, index: number, i: number) {
+    if(c.id != undefined && c.id != 0)
+      this.realTimeService.send('/cons/delete/' + c.id + '/', WSResponseType.POP, 'c' + index, {}, { id: c.id });
+    this.ideas[index].cons.splice(i, 1);
   }
 
   killfocusCons(c: Cons, index: number, i: number) {

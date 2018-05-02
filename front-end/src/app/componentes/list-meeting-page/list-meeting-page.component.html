@@ -49,12 +49,9 @@
       <button *ngIf="meeting.hasFinished" type="button" (click)="seeMinutesMeeting(meeting.id)" class="btn">
         <i class="far fa-file-alt"></i> Minutes
       </button>
-      <button *ngIf="!meeting.hasFinished && meeting.date >= today" type="button" (click)="goToMeeting(meeting.id)" class="btn">
+      <button *ngIf="!meeting.hasFinished" type="button" (click)="goToMeeting(meeting.id)" class="btn">
           <i class="fas fa-play"></i> Go to meeting!
       </button>
-      <p *ngIf="!meeting.hasFinished && meeting.date < today">
-        The meeting have not minutes.
-      </p>
     </div>
   </div> 
 </div>

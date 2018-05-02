@@ -1,7 +1,5 @@
 import { RealTimeService, WSResponseType } from './../../../services/real-time.service';
-import { timer } from 'rxjs/observable/timer';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { window } from 'rxjs/operators/window';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { DynamicMeetingService } from '../../services/dynamic-meeting.service';
 
 @Component({
@@ -14,8 +12,12 @@ export class ChronometerComponent implements OnInit, OnDestroy {
   @Input() meetingId: number;
   private timer: number;
   private timeout: any;
-  private isRunning: boolean;
+  public isRunning: boolean;
   private binit: boolean;
+  public loaded: boolean;
+
+  @Output()
+  public change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor(private dynamicMeetingService: DynamicMeetingService, private realTimeService: RealTimeService) { }
@@ -25,6 +27,7 @@ export class ChronometerComponent implements OnInit, OnDestroy {
     this.timeout = null;
     this.isRunning = false;
     this.binit = false;
+    this.loaded = false;
 
     this.dynamicMeetingService.getMeetingInfo(this.meetingId).subscribe(res => {
       this.timer = res.timer;
@@ -40,9 +43,11 @@ export class ChronometerComponent implements OnInit, OnDestroy {
           if(obj.data.running) {
             this.timer = obj.data.timer;
             this._start();
+            this.change.emit(true);
           } else {
             this.timer = obj.data.timer;
             this._stop();
+            this.change.emit(false);            
           }
         });
   
@@ -69,13 +74,15 @@ export class ChronometerComponent implements OnInit, OnDestroy {
         this.init();
   
         this.realTimeService.subscribe();
+        this.loaded = true;
+        this.start();
       });
     });
 
   }
 
   ngOnDestroy() {
-    this.stop();
+    this.saveState();
   }
 
 

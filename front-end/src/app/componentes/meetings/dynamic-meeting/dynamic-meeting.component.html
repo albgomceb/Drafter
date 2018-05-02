@@ -1,14 +1,19 @@
 <div *ngIf="loaded">
     <!-- Attendant connected -->
-    <div *ngIf="currentAttendant!=null" class="alert alert-dismissible alert-success mt-5" style="border-radius:10px;position:absolute;width:320px;left:50%;margin-left:-160px;">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{currentAttendant}}</strong> has joined to meeting
-        </div>
+    <div *ngIf="joinAttendant!=null" class="alert alert-dismissible alert-join mt-5" >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{joinAttendant}}</strong> has joined to meeting
+    </div>
+    <!-- Attendant disconnected -->
+    <div *ngIf="leftAttendant!=null" class="alert alert-dismissible alert-left mt-5">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{leftAttendant}}</strong> has left the meeting
+    </div>
     <!-- Info meeting bar -->
     <div class="info-meeting-bar shadow">
         <div class="container d-flex justify-content-between">
             <!-- Timer -->
-            <span class="timer"><i class="far fa-clock"></i> 00:00:00</span>
+            <chronometer *ngIf="meetingInfo.status > 0" [meetingId]="meetingId" (change)="changeChronometer($event)"></chronometer>
             <div>
                 <!-- Chat button -->          
                 <button *ngIf="!showChat" type="button" (click)="toggleChat();" class="btn">
@@ -36,44 +41,60 @@
         </h1>
 
         <!-- Info meeting -->
-        <div class="item-wrapper mx-auto">
-            <div class="content-wrapper">
-                <div>
-                    <label><strong>Topic</strong></label> {{meetingInfo.title}}
-                </div>
-                <div>
-                    <label><strong>Description</strong></label> {{meetingInfo.description}}
-                </div>                
-                <!-- Participants -->
-                <label><strong>Participants</strong></label> 
-                <div class="d-flex flex-wrap">
-                    <div *ngFor="let us of thumbnail" class="text-center mx-2">
-                        <img attr.src="{{us.photo}}" class="img-fluid avatar">                         
-                        <span class="d-block">{{us.name}}</span>
+        <div class="item-wrapper mx-auto mb-5">
+            <div class="header-wrapper d-flex justify-content-between flex-wrap">
+                <h4>Meeting information</h4>
+                <button *ngIf="showInfo" type="button" (click)="toggleInfo();" class="toggle-btn btn">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+                <button *ngIf="!showInfo" type="button" (click)="toggleInfo();" class="toggle-btn btn">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+            <div *ngIf="showInfo" class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <strong>Topic</strong>
+                        </label> 
+                        <p>
+                            {{meetingInfo.title}}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <strong>Description</strong>
+                        </label> 
+                        <p>
+                            {{meetingInfo.description}}
+                        </p>
                     </div>
                 </div>
-                <label><strong>Attendants</strong></label> 
+                <label><strong>Participants</strong></label> 
                 <div class="d-flex flex-wrap">
                     <div *ngFor="let att of meetingInfo.attendants" class="text-center mx-2">
-                        <img *ngIf="att.hasAttended" attr.src="{{att.photo}}" class="img-fluid avatar">                         
-                        <span *ngIf="att.hasAttended" class="d-block">{{att.name}}</span>
+                        <img *ngIf="att.hasAttended" attr.src="{{att.photo}}" class="img-fluid avatar">
+                        <img *ngIf="!att.hasAttended" attr.src="{{att.photo}}" class="img-fluid not-present avatar">                        
+                        <span class="d-block">{{att.name}}</span>
                     </div>
                 </div>
             </div>
         </div>
         <waiting-room  *ngIf= "meetingInfo.status == 0" [meetingId]= "meetingId" [meetingInfo] = "meetingInfo" (nextStep)="nextStep($event)"></waiting-room>
-        <standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard' && meetingInfo.status > 0" 
+        <div [ngClass]="{'meeting-stoped': stoped}" id="meeting-disabled">
+            <standard *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'standard' && meetingInfo.status > 0" 
                     [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
                     (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
-        </standard>
-        <six-hats *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'six-hats' && meetingInfo.status > 0" 
-                    [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
-                    (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
-        </six-hats>
-        <brainstorming *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'brainstorming' && meetingInfo.status > 0" 
-                        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="meetingInfo.attendats" 
+            </standard>
+            <six-hats *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'six-hats' && meetingInfo.status > 0" 
+                        [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
                         (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
-        </brainstorming>
+            </six-hats>
+            <brainstorming *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'brainstorming' && meetingInfo.status > 0" 
+                            [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="meetingInfo.attendats" 
+                            (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
+            </brainstorming>
+        </div>
     </div>
 
     <!-- Chat -->
