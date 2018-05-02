@@ -8,6 +8,7 @@ import drafter.domain.User;
 public class Option {
 	public String id;
 	public String name;
+	public String username;
 	public String photo;
 	public String organization;
 	public String role;
@@ -51,13 +52,14 @@ public class Option {
 		this.photo = photo;
 	}
 	
-	public Option(String id, String name, String organization, String photo, String role) {
+	public Option(String id, String name, String organization, String photo, String role, String username) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.organization = organization;
 		this.photo = photo;
 		this.role = role;
+		this.username = username;
 	}
 	
 	public Option() {
@@ -112,6 +114,18 @@ public class Option {
 
 	public void setHasAttended(Boolean hasAttended) {
 		this.hasAttended = hasAttended;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

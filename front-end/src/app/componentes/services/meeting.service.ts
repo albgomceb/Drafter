@@ -7,6 +7,8 @@ import { Meeting } from '../models/meeting.model';
 import { Agenda2 } from '../models/agenda.model2';
 import { Conclusion } from '../../models/conclusion';
 import { MeetingPagination } from '../models/meetingPagination.model';
+import { Participant } from '../models/participant.model';
+import { Option } from '../models/option.model';
 
 
 const httpOptions = {
@@ -38,5 +40,9 @@ export class MeetingService {
 
   public isParticipant(meetingId: number): Observable<boolean> {
     return this.http.get<boolean>(this.staticUrl+'/meeting/isParticipant/' + meetingId);
+  }
+
+  public getLeader(meetingId: number): Observable<Option> {
+    return this.http.get<Option>(this.staticUrl+'/meeting/getLeader/' + meetingId);
   }
 }

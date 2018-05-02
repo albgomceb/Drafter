@@ -3,5 +3,6 @@ import { Hat } from "./hat.model";
 
 export class SixHats {
   id: number;
+  secondsLeft: number;
   hats: Array<Hat>;
 }

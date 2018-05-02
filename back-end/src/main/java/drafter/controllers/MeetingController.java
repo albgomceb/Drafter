@@ -25,6 +25,8 @@ import drafter.beans.meeting.MeetingSerializer;
 import drafter.beans.model.ModelBean;
 import drafter.beans.participant.ParticipantBean;
 import drafter.beans.participant.ParticipantSerializer;
+import drafter.beans.user2.UserBean2;
+import drafter.beans.user2.UserSerializer2;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.SixHats;
@@ -200,5 +202,15 @@ public class MeetingController extends AbstractController {
 	
 	private boolean isPrincipal(int userId) {
 		return userService.findByPrincipal().equals(userService.findById(new Integer(userId)));	
+	}
+	
+	@GetMapping("/getLeader/{meetingId}")
+	public Option getLeader(@PathVariable int meetingId) {
+		User leader = meetingService.getLeader(meetingId);
+		Option res = new Option();
+		res.setId(leader.getId()+"");
+		res.setName(leader.getName());
+		res.setPhoto(leader.getPhoto());
+		return res;
 	}
 }

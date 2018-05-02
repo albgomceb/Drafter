@@ -4,29 +4,29 @@
         <span class="capital-letter">M</span>inutes
     </h1>
 
-<div class="subtitle">
-  Summary
-</div>
-<div class="minutes-container">
-  <div class="summary-item d-inline-block">
-      <span class="summary-item-title">Title</span> {{meeting.title}}
-  </div>
-  <div class="summary-item d-inline-block">
-      <span class="summary-item-title">Type</span> {{meeting.type}}
-  </div>
-  <div class="summary-item d-inline-block">
-      <span class="summary-item-title">Date</span> {{meeting.date | date:"EEEE, dd LLL yyyy HH:mm"}}
-  </div>
-  <div class="summary-item d-inline-block">
-      <span class="summary-item-title">Length</span> {{meeting.timer | date:"hh:mm:ss"}}
-  </div>
-  <div class="summary-item d-inline-block">
-      <span class="summary-item-title">Session leader</span> {{leader.name}}
-  </div>
-  <div class="summary-item d-block">
-      <span class="summary-item-title">Description</span> {{meeting.description}}
-  </div>
-</div>
+    <div class="subtitle">
+    Summary
+    </div>
+    <div class="minutes-container">
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Title</span> {{meeting.title}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Type</span> {{meeting.type}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Date</span> {{meeting.date | date:"EEEE, dd LLL yyyy HH:mm"}}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Length</span> {{ format() }}
+    </div>
+    <div class="summary-item d-inline-block">
+        <span class="summary-item-title">Session leader</span> {{leader.name}}
+    </div>
+    <div class="summary-item d-block">
+        <span class="summary-item-title">Description</span> {{meeting.description}}
+    </div>
+    </div>
 
     <div class="subtitle">
         Participants
@@ -67,7 +67,7 @@
     </div>
 </div>
 <div class="text-center">
-    <button (click)="downloadPDF()" class="btn">Export to PDF</button>
+    <button (click)="downloadPDF()" class="btn mb-3">Export to PDF</button>
 </div>
 <div class="text-center">
     <button routerLink="../../meeting" class="btn">New meeting</button>

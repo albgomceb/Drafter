@@ -27,33 +27,27 @@ export class StandardMeetingComponent implements OnInit {
   public meetingId: number;
 
   constructor(private activeRoute: ActivatedRoute, private realTimeService: RealTimeService, private agendaService: AgendaService,
-  private router:Router, private meetingService: MeetingService) { }
+  private router:Router) { }
 
   ngOnInit() {
 
     var meetingId = this.activeRoute.snapshot.params['id'];
-    this.meetingService.isParticipant(meetingId).subscribe(res => {
-      if(!res) {
-        this.router.navigate(['home']);
-        return;
-      }
 
-      this.agendas = new Array<Agenda>();
-      for(var a of this.agendas)
-        a.conclusions = new Array<Conclusion>();
-      this.meetingId = meetingId; 
-      this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
-        this.agendas = agenda;
-        this.realTimeService.connect(this.meetingId, () => {
-          var i = 0;
-          for(var cs of this.agendas) {
-            this.realTimeService.register('c'+i, cs.conclusions);
-            i++;
-          }
-          this.realTimeService.subscribe();
-        });
+    this.agendas = new Array<Agenda>();
+    for(var a of this.agendas)
+      a.conclusions = new Array<Conclusion>();
+    this.meetingId = meetingId; 
+    this.agendaService.getAgendasByMeeting(this.meetingId).subscribe( agenda => {
+      this.agendas = agenda;
+      this.realTimeService.connect(this.meetingId, () => {
+        var i = 0;
+        for(var cs of this.agendas) {
+          this.realTimeService.register('c'+i, cs.conclusions);
+          i++;
+        }
+        this.realTimeService.subscribe();
       });
-    })
+    });
 
   }
 

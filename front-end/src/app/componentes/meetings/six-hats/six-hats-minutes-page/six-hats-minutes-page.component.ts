@@ -1,9 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { SixHats } from '../../../models/sixHats.model';
 import { Meeting } from '../../../models/meeting.model';
 import { MeetingService } from '../../../services/meeting.service';
 import { SixHatsService } from '../../../services/sixhats.service';
 import { ActivatedRoute } from '@angular/router';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas'
+import { Participant } from '../../../models/participant.model';
+import { Option } from '../../../models/option.model';
 
 @Component({
   selector: 'six-hats-minutes-page',
@@ -14,10 +18,14 @@ export class SixHatsMinutesPageComponent implements OnInit {
 
   meeting: Meeting = new Meeting();
   sixHats: SixHats = new SixHats();
+  @ViewChild('content') content: ElementRef
   @Input() 
   public meetingId: number;
   @Input() 
   public meetingInfo: any;
+
+  private leader : Option;
+  
 
   constructor(private meetingService: MeetingService, 
     private sixHatsService: SixHatsService,
@@ -29,7 +37,38 @@ export class SixHatsMinutesPageComponent implements OnInit {
       this.meeting = data;
       this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(data => {
         this.sixHats = data;
+        this.meetingService.getLeader(this.meetingId).subscribe(leader => 
+          this.leader = leader);
       });
     });
-  };
+  }
+  
+  downloadPDF() {
+
+
+    let content = this.content.nativeElement;
+
+    html2canvas(content, { useCORS: true }).then(function (canvas) {
+      var imgWidth = 210;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+
+      var img = canvas.toDataURL();
+
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
+
+      doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save('Minutes.pdf');
+    });
+  }
 }

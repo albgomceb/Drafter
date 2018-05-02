@@ -25,9 +25,13 @@
   <div class="form-group">
     <label>Participants</label>
 
-    <div class="row">
-      <div *ngFor="let us of thumbnail" class="card addParticipants">
-          <div class="tooltip-img img-profile"><span class="tooltiptext">{{us.name}}</span><img  attr.src="{{us.photo}}"></div>
+    <div class="d-flex flex-wrap mt-3">
+      <div *ngFor="let us of thumbnail" class="text-center mx-2">
+          <div class="thumbnail-container" (click)="removeAttendant(us);">
+            <img attr.src="{{us.photo}}" class="img-fluid avatar">           
+            <div class="after"><b>X</b></div>    
+          </div>          
+          <span class="d-block">{{us.name}}</span>
       </div>
     </div>
 
@@ -54,11 +58,8 @@
             <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
             <div class="push"></div>
             <div class="btn-card">
-              <button type="button" (click)="addAttendant(us); hideme[i] = !hideme[i]" class="btn">
+              <button type="button" (click)="addAttendant(us);" class="btn">
                   Add
-              </button>
-              <button type="button" (click)="removeAttendant(us);" class="btn">
-                  Remove
               </button>
             </div>
           </div>   

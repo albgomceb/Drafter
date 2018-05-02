@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { MeetingService } from '../../../services/meeting.service';
@@ -20,8 +21,8 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
   meeting: Meeting = new Meeting();
   ideas: Array<Idea> = [];
-  leader:Option;
-  attendants:Array<Option>;
+  leader: Option;
+  attendants: Array<Option>;
   @Input() meetingId: number;
   @Input() meetingInfo: any;
   @ViewChild('content') content: ElementRef
@@ -35,9 +36,9 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     //OBTENER SESSION LEADER
     this.attendants = this.meetingInfo.attendants;
     this.attendants.forEach(at => {
-      if(at.role=="LEADER"){this.leader = at;} 
+      if (at.role == "LEADER") { this.leader = at; }
     });
-    
+
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
@@ -55,59 +56,41 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
     let content = this.content.nativeElement;
 
-    /*var canvasToImage = function (canvas) {
-      var img = new Image();
-      var dataURL = canvas.toDataURL('image/png');
-      img.src = dataURL;
-      return img;
-    };
-    var canvasShiftImage = function (oldCanvas, shiftAmt) {
-      shiftAmt = parseInt(shiftAmt) || 0;
-      if (!shiftAmt) { return oldCanvas; }
+    html2canvas(content, { useCORS: true }).then(function (canvas) {
+      var imgWidth = 210;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
 
-      var newCanvas = document.createElement('canvas');
-      newCanvas.height = oldCanvas.height - shiftAmt;
-      newCanvas.width = oldCanvas.width;
-      var ctx = newCanvas.getContext('2d');
+      var img = canvas.toDataURL();
 
-      var img = canvasToImage(oldCanvas);
-      ctx.drawImage(img, 0, shiftAmt, img.width, img.height, 0, 0, img.width, img.height);
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
 
-      return newCanvas;
-    };
+      doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
 
-    html2canvas(content).then(function (canvas) {
-      var pdf = new jsPDF('l', 'px'),
-        pdfInternals = pdf.internal,
-        pdfPageSize = pdfInternals.pageSize,
-        pdfScaleFactor = pdfInternals.scaleFactor,
-        pdfPageWidth = pdfPageSize.width,
-        pdfPageHeight = pdfPageSize.height,
-        totalPdfHeight = 0,
-        htmlPageHeight = canvas.height,
-        htmlScaleFactor = canvas.width / (pdfPageWidth * pdfScaleFactor),
-        safetyNet = 0;
-
-      while (totalPdfHeight < htmlPageHeight && safetyNet < 15) {
-        var newCanvas = canvasShiftImage(canvas, totalPdfHeight);
-        pdf.addImage(newCanvas, 'png', 0, 0, pdfPageWidth, 0, null, 'NONE');
-
-        totalPdfHeight += (pdfPageHeight * pdfScaleFactor * htmlScaleFactor);
-
-        if (totalPdfHeight < htmlPageHeight) {
-          pdf.addPage();
-        }
-        safetyNet++;
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
       }
-
-      pdf.save('test.pdf');
-*/
-    html2canvas(content).then(function (canvas) {
-
-      var img = canvas.toDataURL("image/png");
-      var doc = new jsPDF();
-      doc.addImage(img, 'PNG',10,10,190,250);
       doc.save('Minutes.pdf');
     });
+  }
+
+  public format(): string {
+    var s: number = this.meeting.timer;
+    var m: number = Math.floor(this.meeting.timer / 60);
+    var h: number = Math.floor(m / 60);
+
+    m -= 60 * h;
+    s -= 3600 * h + 60 * m;
+
+    var sm: string = ("00" + m).slice(-2);
+    var ss: string = ("00" + s).slice(-2);
+
+    return "" + h + ":" + sm + ":" + ss;
   }
 }
