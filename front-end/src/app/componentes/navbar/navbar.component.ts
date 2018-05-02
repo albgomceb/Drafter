@@ -1,5 +1,6 @@
 import { LoginService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'navbar',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router:Router) { }
 
   ngOnInit() {
   }
@@ -18,4 +19,13 @@ export class NavbarComponent implements OnInit {
     return this.loginService;
   }
 
+
+  navigate() {
+    eval("$('.navbar-collapse').collapse('hide')");
+  }
+
+  logout() {
+    this.getLoginService().logout();
+    this.navigate();
+  }
 }
