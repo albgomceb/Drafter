@@ -64,22 +64,18 @@
       <div *ngFor="let department of departments; let i=index">
 
           <!-- Lista de añadidos -->
-          <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
+          <input class="col-sm" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
             (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
           <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div>
           <button *ngIf="i!=0" (click)="removeDepartment(department, i)" style="float: right" class="btn bt-lg">Remove</button>
-          <div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center; float: right">Required</div>
-          <label>Select the department participants:</label>
 
           <!-- Buscador -->
-          <div class="form-group">
-          <div class="search-users form-group col-lg-5 col-md-10">
+          <div class="search-users form-group col-sm-5 mt-3">
             <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search(department);" [formControl]="searchField">
-          </div>
           </div>
 
           <!-- Lista de todos los usuaruios posibles para añadir -->
-          <div class="list-group" style="float: left; width: 50%">
+          <div class="list-group mb-3" style="float: left; width: 50%">
             <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
             <div *ngIf="errorListUsers" class="errorList">
               <img src="../../../assets/img/warning_turq.png" width="20%" />
@@ -88,20 +84,20 @@
             </div>
 
             <div *ngFor="let us of department.notAddedUsers; let j = index">
-              <a class="list-group-item list-group-item-action">
-                <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
-                <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+              <a class="list-group-item list-group-item-action" (click)="addUser(us, department, i)">
+                <!-- <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button> -->
+                <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.surname}}, {{us.name}}</span>
               </a>
             </div>
           </div>
 
           <!-- Lista de añadidos -->
-          <div class="list-group" style="float: right; width: 50%">
+          <div class="list-group mb-3" style="float: right; width: 50%">
             <h4 *ngIf="department.users == null">Add user...</h4>
             <div *ngFor="let us of department.users; let j = index">
-              <a class="list-group-item list-group-item-action">
-                <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
-                <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+              <a class="list-group-item list-group-item-action" (click)="deleteUser(us, department, i)">
+                <!-- <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button> -->
+                <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.surname}}, {{us.name}}</span>
               </a>
             </div>
           </div>
