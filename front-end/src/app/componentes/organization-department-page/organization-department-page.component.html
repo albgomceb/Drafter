@@ -71,6 +71,13 @@
           <div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center; float: right">Required</div>
           <label>Select the department participants:</label>
 
+          <!-- Buscador -->
+          <div class="form-group">
+          <div class="search-users form-group col-lg-5 col-md-10">
+            <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search(department);" [formControl]="searchField">
+          </div>
+          </div>
+
           <!-- Lista de todos los usuaruios posibles para añadir -->
           <div class="list-group" style="float: left; width: 50%">
             <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
@@ -106,7 +113,12 @@
     
   </div>
   <div style="margin:2%;text-align:center">
-    <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
-    <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn bt-lg">Cancel</button>
-    <button *ngIf="organizationId == 0" routerLink="/home" class="btn bt-lg">Cancel</button>
+    <div *ngIf="organizationId > 0" >
+        <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Save changes</button>
+        <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn bt-lg">Cancel</button>
+    </div>
+    <div *ngIf="organizationId == 0">
+        <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
+        <button routerLink="/home" class="btn bt-lg">Cancel</button>
+    </div>
   </div>

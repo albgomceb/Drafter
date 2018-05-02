@@ -8,6 +8,7 @@ import { User } from '../models/user.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'organization-department-page',
@@ -23,6 +24,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
   public userId: number;
   public counter: number;
   public organizationId: number;
+  public searchField: FormControl;
 
   errorListUsers:boolean = false;
   errorListOrganizations = false;
@@ -118,6 +120,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       );
     }
     
+    this.searchField = new FormControl();
     this.userId = this.loginService.getPrincipal().id;
   }
 
@@ -236,6 +239,62 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     }
 
     return res;
+  }
+
+  search(department: Department){
+
+    var scope = this
+
+    if(this.searchField.value.length>0){
+      //FILTRAR USUARIOS
+      setTimeout(function(){
+        scope.userService.filterUsers(scope.searchField.value).subscribe(
+          data => {
+            // Elimino lo usuarios que ya tengo metidos en mi departamento
+            if(department.users != null){
+              for(var u of department.users){
+                let index = data.findIndex(item => item.id == u.id);
+                if(index >= 0)
+                  data.splice(index, 1);
+              }
+            }
+            department.notAddedUsers = data;
+
+            // Actualizo el departamento completo para verlo en la vista
+            let itemIndex = scope.departments.findIndex(item => item.id == department.id);
+            scope.departments[itemIndex] = department;
+          },
+          error => {
+            scope.errorListUsers = true;
+          }
+        );
+      },400);
+
+    }else{
+      setTimeout(function(){
+        //TODOS LOS USUARIOS
+        scope.userService.filterUsers(scope.searchField.value).subscribe(
+          data => {
+            // Elimino lo usuarios que ya tengo metidos en mi departamento
+            if(department.users != null){
+              for(var u of department.users){
+                let index = data.findIndex(item => item.id == u.id);
+                if(index >= 0)
+                  data.splice(index, 1);
+              }
+            }
+            department.notAddedUsers = data;
+
+            // Actualizo el departamento completo para verlo en la vista
+            let itemIndex = scope.departments.findIndex(item => item.id == department.id);
+            scope.departments[itemIndex] = department;
+          },
+          error => {
+            scope.errorListUsers = true;
+          }
+        );
+      },400);
+    }
   }
 
 }
