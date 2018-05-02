@@ -67,6 +67,6 @@
     </div>
 </div>-->
 
-<div class="buttons text-center">
+<div *ngIf="participant.role=='LEADER'" class="text-center">
     <button (click)="finish()" class="btn">Finish</button>
 </div>

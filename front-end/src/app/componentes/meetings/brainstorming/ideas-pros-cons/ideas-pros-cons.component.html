@@ -68,7 +68,7 @@
                 </div>
             </li>
         </ul>
-        <div class="text-center">
+        <div *ngIf="participant.role=='LEADER'" class="text-center">
             <button (click)="next()" class="btn">Next step</button>
         </div>
     </div>
