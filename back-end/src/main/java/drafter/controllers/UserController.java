@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +29,7 @@ import drafter.beans.user.UserBean;
 import drafter.beans.user.UserSerializer;
 import drafter.beans.user2.UserBean2;
 import drafter.beans.user2.UserSerializer2;
+import drafter.domain.Department;
 import drafter.domain.User;
 import drafter.security.Authority;
 import drafter.security.LoginService;
@@ -57,16 +57,34 @@ public class UserController extends AbstractController {
 	
 	@GetMapping("/filterUsers")
 	public List<UserBean> filterUsers(@RequestParam("search") String keyword) {	
-		List<User> res;
-		if(keyword==null || keyword=="" || keyword.length()==0) {
-			res = this.userService.findAll();
-		}else {
-			res = this.userService.filterUsers(keyword);	
+		List<User> res = new ArrayList<User>();
+		User principal = userService.findByPrincipal();
+			
+		for (Department d: principal.getDepartments()) {
+			List<User> usersOrganization = new ArrayList<User>();
+			usersOrganization = userService.filterUsers(keyword, d.getName());
+			for(User u: usersOrganization) {
+				if (!res.contains(u))
+					res.add(u);
+			}
 		}
-		
 		List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
 		
 		return result;
+	}
+	
+	@GetMapping("/filterUsers2")
+	public List<UserBean> filterUsers2(@RequestParam("search") String keyword) {	
+	 List<User> res;
+	    if(keyword==null || keyword=="" || keyword.length()==0) {
+	      res = this.userService.findAll();
+	    }else {
+	      res = this.userService.filterUsers2(keyword);  
+	    }
+	    
+	    List<UserBean> result = res.stream().map(user -> UserSerializer.fromUser(user)).collect(Collectors.toList());
+	    
+	    return result;
 	}
 	
 	//Parte de registrar y logear. El logeo no tiene seguridad actualmente.
@@ -198,17 +216,25 @@ public class UserController extends AbstractController {
 	}
 
 	@PostMapping("/me/edit")
-	public Object update(@RequestBody UserBean2 user) {
+	public void update(@RequestBody UserBean2 user) {
 		User principal = userService.findByPrincipal();
+		
 		principal.setEmail(user.getEmail());
 		principal.setName(user.getName());
 		principal.setSurname(user.getSurname());
 		UserAccount userAccount = principal.getUserAccount();
 		userAccount.setUsername(user.getUsername());
-		userAccount.setPassword(encodePassword(user.getPassword()));
 		
+		if(userAccount.getPassword().equals(user.getPassword())) {
+			userAccount.setPassword(user.getPassword());
+		}
+		else {
+			userAccount.setPassword(encodePassword(user.getPassword()));
+		}
+		principal.setPhoto(user.getPhoto());
+		principal.setPhone(user.getPhone());
+
 		userService.save(principal);
-		return null;
 	}
 
 //	private boolean existeEmail(String email) {
