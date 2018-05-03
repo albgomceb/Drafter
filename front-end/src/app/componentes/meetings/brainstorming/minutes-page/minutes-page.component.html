@@ -35,8 +35,13 @@
         <div class="d-flex justify-content-start flex-wrap">
             <div *ngFor="let at of meeting.attendants" class="card">
                 <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
-                <div class="card-body">
-                    <h4 class="card-title">{{at.name}}</h4>
+                <div class="card-body-2 text-center my-1">
+                    <h5 class="card-title">
+                        {{at.name}}
+                    </h5>
+                    <span *ngIf="!at.hasAttended" class="card-title">
+                        He or she has not attended
+                    </span>
                 </div>
             </div>
         </div>
@@ -45,8 +50,6 @@
     <div class="subtitle">
         Ideas
     </div>
-
-
     <div class="minutes-container">
         <div *ngFor="let idea of ideas" class="point-container">
             <h3>{{idea.text}}</h3>
