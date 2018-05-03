@@ -162,13 +162,8 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
 
   setFocus() {
     setTimeout(() => {
-<<<<<<< HEAD
       var e = $('textarea')[0];
       if(e)
-=======
-      var e = $('input')[0];
-      if (e)
->>>>>>> 4e95f9b14a04d68ac809c7ea6307278c3aba7adf
         e.focus();
     }, 0);
   }

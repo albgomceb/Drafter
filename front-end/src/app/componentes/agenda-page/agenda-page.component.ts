@@ -13,7 +13,6 @@ import * as $ from 'jquery';
 
 export class AgendaPageComponent implements OnInit {
 
-  @ViewChildren('input') vc;
   public entradas: Array<Agenda>;
   public counter: number;
   public meetingId: number; 
@@ -65,7 +64,6 @@ export class AgendaPageComponent implements OnInit {
     this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].description = "";
-    this.lastFocus();
   } 
 
   removeAgenda(entrada : Agenda, entradasIndex : number){    
@@ -119,12 +117,6 @@ export class AgendaPageComponent implements OnInit {
     }
 
     return res;
-  }
-
-  lastFocus(){
-    this.vc.changes.subscribe(elements => {
-      elements.last.nativeElement.focus();
-    });
   }
   
 }
