@@ -91,7 +91,7 @@
             </standard>
             <six-hats *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'six-hats' && meetingInfo.status > 0" 
                         [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
-                        (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
+                        (finish) = "finishMeeting($event)" (next) = "nextStep($event)" [stoped]="stoped">
             </six-hats>
             <brainstorming *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'brainstorming' && meetingInfo.status > 0" 
                             [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="meetingInfo.attendats" 

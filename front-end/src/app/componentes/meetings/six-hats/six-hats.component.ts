@@ -12,6 +12,8 @@ export class SixHatsComponent implements OnInit {
     public meetingInfo:any;
     @Input()
     public meetingId:number;
+    @Input()
+    public stoped:boolean;
     
     
     @Input()

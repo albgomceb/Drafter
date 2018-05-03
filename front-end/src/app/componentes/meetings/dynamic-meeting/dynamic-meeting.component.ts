@@ -35,6 +35,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   public stoped: boolean;
   public joinAttendant:string;
   public leftAttendant:string;
+  private isRedirect: boolean;
 
 
   constructor(private loginService:LoginService, private userService: UserService,
@@ -45,6 +46,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loaded = false;
     this.stoped = false;
+    this.isRedirect = false;
     this.activatedRoute.params.subscribe(params => {this.meetingId = params['id']});
 
     this.meetingService2.isParticipant(this.meetingId).subscribe(res => {
@@ -55,6 +57,11 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
 
       if(this.meetingId){
         this.meetingService.getMeetingInfo(this.meetingId).subscribe((res:any) =>{
+          if(res.hasFinished) {
+            this.router.navigate(['minutes/'+this.meetingId]);
+            return;
+          }
+
           this.meetingInfo = res;
           this.meetingInfo.isFinished = res.finished;
           //Lista de participantes a mostrar
