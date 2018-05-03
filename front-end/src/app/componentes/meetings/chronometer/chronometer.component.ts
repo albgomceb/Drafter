@@ -64,9 +64,11 @@ export class ChronometerComponent implements OnInit, OnDestroy {
             if(obj.data.running) {
               this.timer = obj.data.timer;
               this._start();
+              this.change.emit(true);
             } else {
               this.timer = obj.data.timer;
               this._stop();
+              this.change.emit(false);
             }
           }
         });
@@ -75,7 +77,6 @@ export class ChronometerComponent implements OnInit, OnDestroy {
   
         this.realTimeService.subscribe();
         this.loaded = true;
-        this.start();
       });
     });
 

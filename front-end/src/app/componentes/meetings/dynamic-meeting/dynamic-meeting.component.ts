@@ -40,11 +40,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   constructor(private loginService:LoginService, private userService: UserService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     public realtimeService:RealTimeService, private meetingService2: MeetingService,
-    private route : ActivatedRoute) {
-      route.params.subscribe(val => {
-        this.ngOnInit();
-      });
-    }
+    private route : ActivatedRoute) { }
 
   ngOnInit() {
     this.loaded = false;

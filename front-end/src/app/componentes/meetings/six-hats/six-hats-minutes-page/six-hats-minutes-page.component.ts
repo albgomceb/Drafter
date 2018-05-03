@@ -25,7 +25,7 @@ export class SixHatsMinutesPageComponent implements OnInit {
   @Input() 
   public meetingInfo: any;
 
-  private leader : Option;
+  public leader : Option;
   
 
   constructor(private meetingService: MeetingService, 
