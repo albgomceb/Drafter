@@ -50,7 +50,7 @@
       <input type="text" name="email" id="email" formControlName="email" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
-      <label for="phone">Phone number. Example: +XX XXXXXXXXX</label>
+      <label for="phone">Phone number</label>
       <div *ngIf="profileForm.get('phone').errors">
         <div *ngIf="profileForm.get('phone').errors['required']" class="alert alert-danger">
           Required
