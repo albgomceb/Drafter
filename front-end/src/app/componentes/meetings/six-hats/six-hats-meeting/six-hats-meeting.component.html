@@ -92,9 +92,14 @@
     </div>
 </div>
 
-<div *ngIf="currentParticipant.role=='LEADER'" class="text-center">
-  <button class="btn" (click)="saveSixHats()"><i class="fas fa-recycle"></i> Reassign</button>
-  <button class="btn" (click)="finish()">Finish</button>
-</div>
+  <div *ngIf="currentParticipant.role=='LEADER'">
+    <button class="btn" (click)="saveSixHats()"><i class="fas fa-recycle"></i> Reassign</button>
+    <button ngConfirm
+    [title]="'Finish Meeting Confirmation'"
+    [message]="'You are about to end the meeting, are you sure?'"
+    [options]="options"
+    (onConfirm)="finish()"
+    (onCancel)="cancel()" class="btn">Finish</button>
+  </div>
 
 

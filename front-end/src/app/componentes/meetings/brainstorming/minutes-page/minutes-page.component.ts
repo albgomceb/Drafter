@@ -48,6 +48,7 @@ export class BrainStormingMinutesPageComponent implements OnInit {
       }
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
+        this.ideas.sort(this.getAverage)
       });
     });
   };

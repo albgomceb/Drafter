@@ -75,5 +75,7 @@ export class IdeaVotePageComponent implements OnInit {
   finish() {
     this.finishMeeting.emit(this.meetingId);
   }
+  cancel() {
+  }
 
 }

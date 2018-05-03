@@ -50,6 +50,7 @@ import { ProfileService } from './componentes/services/profile.service';
 import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
 import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/waiting-room/waiting-room.component';
 import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
+import { ConfirmationModalModule } from 'ng-confirmation-modal';
 
 
 @NgModule({
@@ -98,7 +99,14 @@ import { LegalPageComponent } from './componentes/legal-page/legal-page.componen
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ConfirmationModalModule.forRoot({
+      confirmBtnClass: 'btn btn-success',
+      confirmBtnText: 'Confirm',
+      cancelBtnClass: 'btn btn-danger',
+      cancelBtnText: 'Cancel',
+      modalSize: 'lg',
+      modalClass: 'some-modal-class'
+     })
   ],
 
   providers: [

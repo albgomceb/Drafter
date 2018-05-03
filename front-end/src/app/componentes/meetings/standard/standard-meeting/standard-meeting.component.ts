@@ -142,5 +142,7 @@ export class StandardMeetingComponent implements OnInit {
   finish(){
     this.finishMeeting.emit(this.meetingId);
   }
+  cancel() {
+  }
 
 }
