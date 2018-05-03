@@ -44,6 +44,7 @@ export class StandardMeetingComponent implements OnInit {
     this.agendas = new Array<Agenda>();
     for (var a of this.agendas)
       a.conclusions = new Array<Conclusion>();
+      
     this.agendaService.getAgendasByMeeting(this.meetingId).subscribe(agenda => {
       this.agendas = agenda;
       this.realTimeService.connect(this.meetingId, () => {
