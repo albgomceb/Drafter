@@ -114,7 +114,7 @@
 		<property name="email" value="larofe@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-1.jpg" />
+			  value="https://image.ibb.co/jfZs9S/avatar_1.jpg" />
 	</bean>
 
 	<!-- Users -->
@@ -126,7 +126,7 @@
 		<property name="email" value="macaba@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-3.jpg" />
+			  value="https://image.ibb.co/frTVw7/avatar_3.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -147,7 +147,7 @@
 		<property name="email" value="macai@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-7.jpg" />
+			  value="https://image.ibb.co/kNiKpS/avatar_7.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -167,7 +167,7 @@
 		<property name="email" value="adrocru@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-4.jpg" />
+			  value="https://image.ibb.co/hfGHb7/avatar_4.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -186,7 +186,7 @@
 		<property name="email" value="cocome@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-5.jpg" />
+			  value="https://image.ibb.co/jtzEOn/avatar_5.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -205,7 +205,7 @@
 		<property name="email" value="querico@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-6.jpg" />
+			  value="https://image.ibb.co/enfcb7/avatar_6.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -224,7 +224,7 @@
 		<property name="email" value="maxpoll@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-8.jpg" />
+			  value="https://image.ibb.co/ksdkUS/avatar_8.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department3" />
@@ -245,7 +245,7 @@
 		<property name="email" value="wiscre@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			  value="/assets/img/avatar/avatar-2.jpg" />
+			  value="https://image.ibb.co/bUEEOn/avatar_2.jpg" />
 		<property name="departments">
 			<list>
 
