@@ -265,5 +265,7 @@ export class SixHatsMeetingComponent implements OnInit {
   finish(){
     this.finishMeeting.emit(this.meetingId);
   }
+  cancel() {
+  }
 
 }

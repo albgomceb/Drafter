@@ -61,7 +61,12 @@
 
   <div *ngIf="currentParticipant.role=='LEADER'">
     <button  class="btn" (click)="saveSixHats()">Reassign</button>
-    <button class="btn" (click)="finish()">Finish</button>
+    <button ngConfirm
+    [title]="'Finish Meeting Confirmation'"
+    [message]="'You are about to end the meeting, are you sure?'"
+    [options]="options"
+    (onConfirm)="finish()"
+    (onCancel)="cancel()" class="btn">Finish</button>
   </div>
 
 
