@@ -74,6 +74,8 @@ export class ChronometerComponent implements OnInit, OnDestroy {
         });
   
         this.init();
+        if(this.timer == 0)
+          this._start();
   
         this.realTimeService.subscribe();
         this.loaded = true;

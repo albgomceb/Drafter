@@ -28,6 +28,8 @@ export class SixHatsMeetingComponent implements OnInit {
   public meetingInfo;
   @Input()
   public attendants:Array<any>;
+  @Input()
+  public stoped:boolean;
   @Output()
   public finishMeeting = new EventEmitter<number>();
   public hatContainer = new Map([
@@ -70,6 +72,7 @@ export class SixHatsMeetingComponent implements OnInit {
 
   //----------------------- OnInit -----------------------
   ngOnInit() {    
+    this.stoped = false;
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
       this.sixHats = sixHats;
       
@@ -110,8 +113,11 @@ export class SixHatsMeetingComponent implements OnInit {
   initializeCounter(){
     this.future = new Date().getTime() + Number.parseInt(this.sixHats.secondsLeft.toString());
       
-    this.$counter = Observable.interval(1000).map((x) => {        
-        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
+    this.$counter = Observable.interval(1000).map((x) => { 
+        if(!this.stoped)       
+          this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);    
+        else
+          this.future += 1000;    
         return x;
     });
     
