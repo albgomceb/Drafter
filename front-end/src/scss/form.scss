@@ -126,3 +126,28 @@ table.table-agenda {
         color: red;
     }
 }
+
+/* Departments */
+div.departments {
+    border: 1px solid $content_border;
+    border-radius: 5px;
+    padding: 1.25rem 2.5rem;
+
+    div.department {
+        border-bottom: 1px solid $content_border;
+
+        div.list-employee {
+            max-height: 30rem;
+            overflow: auto;
+    
+            div.title-list-employee {
+                color: $mp_font_color;
+                background-color: $mp_primary_color;
+            }
+
+            span.employed {
+                word-wrap: break-word;
+            }
+        }
+    }
+}

@@ -59,62 +59,97 @@
   </div>
 </form>
 
-  <div class="form-group">    
-    <h2 class="text-center m-4">Departments</h2>
-      <div *ngFor="let department of departments; let i=index">
+<div class="text-center my-3">
+  <div *ngIf="organizationId > 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Save changes</button>
+      <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn">Cancel</button>
+  </div>
+  <div *ngIf="organizationId == 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Create organization and department</button>
+      <button routerLink="/home" class="btn">Cancel</button>
+  </div>
+</div>
 
-          <!-- Lista de añadidos -->
-          <input class="col-sm" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
-            (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
-          <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div>
-          <button *ngIf="i!=0" (click)="removeDepartment(department, i)" style="float: right" class="btn bt-lg">Remove</button>
+<h1 class="title-page text-center mt-4">
+  <span class="capital-letter">D</span>epartments
+</h1>
 
-          <!-- Buscador -->
-          <div class="search-users form-group col-sm-5 mt-3">
-            <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search(department);" [formControl]="searchField">
+<div class="departments">
+    <div *ngFor="let department of departments; let i=index" class="department my-3">
+
+        <!-- Lista de añadidos -->
+        <div class="d-flex justify-content-between">
+          <input type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
+                 (keyup.enter)="convert(department); addDepartment()" placeholder="Type the department here..." class="w-75">
+          <div *ngIf="!department.isInput" (click)="convert(department)" class="text-truncate w-75">
+            <span class="align-bottom font-weight-bold">{{department.name}}</span>
           </div>
+          <div class="text-right">
+            <button *ngIf="department.isInput" (click)="convert(department); addDepartment()" class="btn">
+                <i class="fas fa-check"></i>
+            </button>
+            <button *ngIf="!department.isInput" (click)="convert(department)" class="btn">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button (click)="removeDepartment(department, i)" class="btn">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
 
+        <!-- Buscador -->
+        <div class="search-users form-group my-3 w-100">
+          <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search(department);" [formControl]="searchField">
+        </div>
+
+        <div class="row mb-3">
           <!-- Lista de todos los usuaruios posibles para añadir -->
-          <div class="list-group mb-3" style="float: left; width: 50%">
+          <div class="list-group mb-3" class="col-12 col-md-6 list-employee">
+            <div class="text-center font-weight-bold my-1 p-1 title-list-employee">
+                <h3 class="text-truncate">Candidates</h3>
+            </div>
             <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
             <div *ngIf="errorListUsers" class="errorList">
               <img src="../../../assets/img/warning_turq.png" width="20%" />
               <h4>505 Internal Server Error</h4>
               <h6>Try again later</h6>
             </div>
-
             <div *ngFor="let us of department.notAddedUsers; let j = index">
               <a class="list-group-item list-group-item-action" (click)="addUser(us, department, i)">
-                <!-- <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button> -->
-                <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.surname}}, {{us.name}}</span>
+                <img src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <span class="employed">{{us.name}} {{us.surname}}</span>
               </a>
             </div>
           </div>
 
           <!-- Lista de añadidos -->
-          <div class="list-group mb-3" style="float: right; width: 50%">
+          <div class="list-group mb-3" class="col-12 col-md-6 list-employee">
+            <div class="text-center font-weight-bold my-1 p-1 title-list-employee">            
+              <h3 class="text-truncate">Employees</h3>
+            </div>
             <h4 *ngIf="department.users == null">Add user...</h4>
             <div *ngFor="let us of department.users; let j = index">
               <a class="list-group-item list-group-item-action" (click)="deleteUser(us, department, i)">
-                <!-- <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button> -->
-                <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.surname}}, {{us.name}}</span>
+                <img src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <span class="employed">{{us.name}} {{us.surname}}</span>
               </a>
             </div>
           </div>
+        </div>
 
-      </div>
-    <div class="text-center">
-      <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
     </div>
-    
+  <div class="text-center">
+    <button type="button" (click)="addDepartment()" class="btn">Add department</button>
+  </div>  
+</div>
+
+<div class="text-center my-3">
+  <div *ngIf="organizationId > 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Save changes</button>
+      <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn">Cancel</button>
   </div>
-  <div style="margin:2%;text-align:center">
-    <div *ngIf="organizationId > 0" >
-        <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Save changes</button>
-        <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn bt-lg">Cancel</button>
-    </div>
-    <div *ngIf="organizationId == 0">
-        <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
-        <button routerLink="/home" class="btn bt-lg">Cancel</button>
-    </div>
+  <div *ngIf="organizationId == 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Create organization and department</button>
+      <button routerLink="/home" class="btn">Cancel</button>
   </div>
+</div>
