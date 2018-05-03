@@ -84,6 +84,16 @@ form.form-2 {
         background-color: $content_border;
     }
 
+    a {
+        color: $mp_secondary_color;
+    }
+
+    a:active, 
+    a:focus, 
+    a:hover {
+        color: $mp_secondary_color;
+    }
+
     button.btn-2 {
         border: none;
         border-radius: 0;
