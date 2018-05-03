@@ -1,7 +1,9 @@
 package drafter.controllers;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +27,6 @@ import drafter.beans.meeting.MeetingSerializer;
 import drafter.beans.model.ModelBean;
 import drafter.beans.participant.ParticipantBean;
 import drafter.beans.participant.ParticipantSerializer;
-import drafter.beans.user2.UserBean2;
-import drafter.beans.user2.UserSerializer2;
 import drafter.domain.Meeting;
 import drafter.domain.Participant;
 import drafter.domain.SixHats;
@@ -77,7 +77,7 @@ public class MeetingController extends AbstractController {
 		participantService.relateWithParticipants(result, meeting.getAttendants());
 		if(meeting.getType().equals("six-hats")) {
 			SixHats sixHats = sixHatsService.create(result);
-			sixHatsService.save(sixHats);
+			sixHatsService.save(sixHats, true);
 			sixHats.getHats().stream()
 								.forEach(hat -> hatService.save(hat));
 		}
@@ -202,6 +202,55 @@ public class MeetingController extends AbstractController {
 	
 	private boolean isPrincipal(int userId) {
 		return userService.findByPrincipal().equals(userService.findById(new Integer(userId)));	
+	}
+	
+	@GetMapping("/notifications")
+	public Collection<MeetingBean> getNotifications() {
+		
+		User logged = userService.findByPrincipal();
+		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
+		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
+		meetings.stream()
+					.forEach(meeting -> {
+						Participant participant = participantService.findByMeetingAndUser(meeting.getId());
+						MeetingBean bean = new MeetingSerializer().fromMeeting(meeting);
+						bean.setShowNotification(participant.getShowNotification());
+						res.add(bean);
+						});
+		
+		return res;
+	}
+	
+	@GetMapping("/showNotifications")
+	public Collection<MeetingBean> showNotifications(){
+		User logged = userService.findByPrincipal();
+		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
+		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
+		meetings.stream()
+					.forEach(meeting -> {
+						Participant participant = participantService.findByMeetingAndUser(meeting.getId());
+						participant.setShowNotification(true);
+						participantService.save(participant);
+						MeetingBean bean = new MeetingSerializer().fromMeeting(meeting);
+						bean.setShowNotification(participant.getShowNotification());
+						res.add(bean);
+					});
+		
+		return res;
+	}
+	
+	@GetMapping("/hideNotification/{meetingId}")
+	public Collection<MeetingBean> hideNotification(@PathVariable int meetingId){
+		User logged = userService.findByPrincipal();
+		Participant participant = participantService.findByMeetingAndUser(meetingId);
+		participant.setShowNotification(false);
+		participantService.save(participant);
+		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
+		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
+		meetings.stream()
+					.forEach(meeting -> res.add(new MeetingSerializer().fromMeeting(meeting)));
+		
+		return res;
 	}
 	
 	@GetMapping("/getLeader/{meetingId}")
