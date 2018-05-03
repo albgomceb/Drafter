@@ -21,13 +21,7 @@
             <span class="summary-item-title">Length</span> {{ format() }}
         </div>
         <div class="summary-item d-inline-block">
-            <span class="summary-item-title">Session leader</span>
-            <div class="card">
-                <img class="card-img-top img-fluid" src="{{leader.photo}}" alt="Avatar">
-                <div class="card-body">
-                    <h4 class="card-title">{{leader.name}}</h4>
-                </div>
-            </div>
+            <span class="summary-item-title">Session leader</span> {{leader.name}}
         </div>
         <div class="summary-item d-block">
             <span class="summary-item-title">Description</span> {{meeting.description}}
@@ -55,7 +49,7 @@
 
     <div class="minutes-container">
         <div *ngFor="let hat of sixHats.hats" class="point-container">
-            <h4>{{hat.color}}</h4>
+            <h4>{{hat.color}} HAT</h4>
             <ul>
                 <li *ngFor="let conclusion of hat.hatConclusions">{{conclusion.text}}</li>
             </ul>

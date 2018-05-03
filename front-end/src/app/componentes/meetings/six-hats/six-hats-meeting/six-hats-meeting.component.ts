@@ -30,6 +30,22 @@ export class SixHatsMeetingComponent implements OnInit {
   public attendants:Array<any>;
   @Output()
   public finishMeeting = new EventEmitter<number>();
+  public hatContainer = new Map([
+                                ["RED", "danger"],
+                                ["BLACK", "dark"],
+                                ["BLUE", "primary"],
+                                ["WHITE", "light"],
+                                ["YELLOW", "warning"],
+                                ["GREEN", "success"]
+                              ]);
+  public hatButtons = new Map([
+                                ["RED", "danger text-white"],
+                                ["BLACK", "dark text-white"],
+                                ["BLUE", "info text-white"],
+                                ["WHITE", "secondary text-white"],
+                                ["YELLOW", "warning text-dark"],
+                                ["GREEN", "success text-white"]
+                              ]);
 
   //----------------------- Atributos del meeting -----------------------
   public currentParticipant : Participant = new Participant();
