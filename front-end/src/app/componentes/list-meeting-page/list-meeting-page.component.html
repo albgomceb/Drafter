@@ -2,7 +2,7 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">M</span>eetings
 </h1>
 
-<h2 *ngIf="meetingPagination.beans.length == 0" style="text-align: center">Aún no has tenido ninguna reunión</h2>
+<h2 *ngIf="meetingPagination.beans.length == 0" style="text-align: center">You have not had any meetings yet</h2>
 
 <div class="text-center">
   <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
