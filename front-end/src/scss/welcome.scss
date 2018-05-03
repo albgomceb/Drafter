@@ -24,10 +24,14 @@ div.home-container {
     div.quote-container {
         border: 1px solid $content_border;
         border-radius: 5px;
-        padding: 1.5rem 2.5rem;
+        padding: 1rem 2.5rem;
 
         blockquote.blockquote {
             margin-top: 2rem;
+
+            &:first-child {
+                margin-top: 0;
+            }
         }
     }
 
