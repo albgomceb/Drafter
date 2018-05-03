@@ -259,6 +259,9 @@ export class RealTimeService {
     var name = this.users[userUUID].name;
     delete this.users[userUUID];
 
+    for(var user in this.users)
+      alert(user)
+
     if (this.onLeaveUser != undefined)
       this.onLeaveUser(name, userUUID);
   }

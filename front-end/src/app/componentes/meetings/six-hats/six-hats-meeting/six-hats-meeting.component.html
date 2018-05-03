@@ -92,7 +92,7 @@
     </div>
 </div>
 
-  <div *ngIf="currentParticipant.role=='LEADER'">
+  <div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'">
     <button class="btn" (click)="saveSixHats()"><i class="fas fa-recycle"></i> Reassign</button>
     <button ngConfirm
     [title]="'Finish Meeting Confirmation'"
