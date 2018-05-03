@@ -40,11 +40,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   constructor(private loginService:LoginService, private userService: UserService,
     private router:Router, private activatedRoute:ActivatedRoute, private meetingService:DynamicMeetingService,
     public realtimeService:RealTimeService, private meetingService2: MeetingService,
-    private route : ActivatedRoute) {
-      route.params.subscribe(val => {
-        this.ngOnInit();
-      });
-    }
+    private route : ActivatedRoute) { }
 
   ngOnInit() {
     this.loaded = false;
@@ -128,7 +124,8 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   } 
 
   ngOnDestroy() {
-    this.realtimeService.send('/meeting/quit/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
+    if(this.logged != undefined)
+      this.realtimeService.send('/meeting/quit/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
     this.realtimeService.disconnect();
   }
 

@@ -107,6 +107,9 @@ export class RealTimeService {
   }
 
   public disconnect() {
+    if(this.stompClient == undefined)
+      return;
+
     this.send('/chat/send/', WSResponseType.DISCONNECT, "", null, {});
     this.stompClient.disconnect(() => {
       this.models = new Array<any>();
@@ -258,6 +261,10 @@ export class RealTimeService {
 
     var name = this.users[userUUID].name;
     delete this.users[userUUID];
+
+    for(var user in this.users)
+      if(this.users[user].name == name)
+        return;
 
     if (this.onLeaveUser != undefined)
       this.onLeaveUser(name, userUUID);

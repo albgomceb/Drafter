@@ -25,7 +25,8 @@ export class SixHatsMinutesPageComponent implements OnInit {
   @Input() 
   public meetingInfo: any;
 
-  private leader : Option;
+  public leader : Option;
+  public loaded: boolean;
   
 
   constructor(private meetingService: MeetingService, 
@@ -34,7 +35,7 @@ export class SixHatsMinutesPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    
+    this.loaded = false;
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
       console.log("timer", this.meeting.timer);
@@ -44,8 +45,10 @@ export class SixHatsMinutesPageComponent implements OnInit {
       }
       this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(data => {
         this.sixHats = data;
-        this.meetingService.getLeader(this.meetingId).subscribe(leader => 
-          this.leader = leader);
+        this.meetingService.getLeader(this.meetingId).subscribe(leader => {
+          this.leader = leader;
+          this.loaded = true;
+        });
       });
     });
   }

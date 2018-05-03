@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<div *ngIf="participant.role=='LEADER'" class="text-center">
+<div *ngIf="participant != undefined && participant.role=='LEADER'" class="text-center">
     <button ngConfirm
     [title]="'Finish Meeting Confirmation'"
     [message]="'You are about to end the meeting, are you sure?'"

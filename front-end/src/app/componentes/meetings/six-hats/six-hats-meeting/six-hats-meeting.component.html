@@ -53,8 +53,8 @@
             <div *ngIf="hat.color === currentHat.color" class="alert" [ngClass]="'alert-'+hatContainer.get(hat.color)">
               <li *ngFor="let conclusion of currentHat.hatConclusions; let i=index" class="d-flex justify-content-between">
                 <textarea type="text" [(ngModel)]="conclusion.text" 
-                          *ngIf="conclusion.isInput" (keyup.enter)="convert(conclusion, i);" 
-                          placeholder="Type your conclusion here..." class="idea"></textarea>
+                          *ngIf="conclusion.isInput" (focusout)="convert(conclusion, i);" 
+                          placeholder="Type your conclusion here..." class="idea" (keyup.enter)="killFocus($event)"></textarea>
                 <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, i)" class="idea">
                     {{conclusion.text}}
                 </div>
@@ -92,7 +92,7 @@
     </div>
 </div>
 
-  <div *ngIf="currentParticipant.role=='LEADER'">
+  <div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'">
     <button class="btn" (click)="saveSixHats()"><i class="fas fa-recycle"></i> Reassign</button>
     <button ngConfirm
     [title]="'Finish Meeting Confirmation'"

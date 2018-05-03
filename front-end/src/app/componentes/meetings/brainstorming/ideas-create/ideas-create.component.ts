@@ -101,6 +101,7 @@ export class IdeasCreateComponent implements OnInit, OnDestroy {
       if (entrada.isInput) {
         if (this.checkNotBlank(entrada.text)) {
           entrada.isInput = false;
+          entrada.text = entrada.text.trim();
           this.realTimeService.send('/idea/save/',
             WSResponseType.PUSH,
             'entradas',
