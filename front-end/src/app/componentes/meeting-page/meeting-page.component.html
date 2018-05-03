@@ -57,9 +57,14 @@
             <h4 class="card-title">{{us.name}}</h4>
             <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
             <div class="push"></div>
-            <div class="btn-card">
+            <div *ngIf="!exists(us)" class="btn-card">
               <button type="button" (click)="addAttendant(us);" class="btn">
                   Add
+              </button>
+            </div>
+            <div *ngIf="exists(us)" class="btn-card">
+              <button type="button" (click)="removeAttendant(us);" class="btn">
+                  Remove
               </button>
             </div>
           </div>   
