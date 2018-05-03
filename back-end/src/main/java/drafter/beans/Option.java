@@ -8,6 +8,7 @@ import drafter.domain.User;
 public class Option {
 	public String id;
 	public String name;
+	public String surname;
 	public String username;
 	public String photo;
 	public String organization;
@@ -31,6 +32,7 @@ public class Option {
 			Option o = new Option();
 			o.id = new Integer(u.getId()).toString();
 			o.name = u.getName();
+			o.surname = u.getSurname();
 			o.photo = u.getPhoto();
 			optionalUsers.add(o);
 		}
