@@ -11,7 +11,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Menu items -->
-    <div class="collapse navbar-collapse" id="navbarToggler">
+    <div class="collapse navbar-collapse wrapper-width-fixed" id="navbarToggler">
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" href="/home">
@@ -33,23 +33,6 @@
           </div>          
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-          <a (click)="convert(); showNotifications();" data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
-            <span>Notifications</span>
-            <div *ngIf="hasNewNotifications">
-              <i class="fas fa-circle" style="color:#00A98F"></i>
-            </div>
-          </a>
-          <div *ngIf="clicked" class="shadow" style="background-color: rgb(221, 221, 221)">
-            <span *ngIf="notifications.length===0" style="color: grey">You don't have any notifications</span>
-            <div *ngIf="notifications.length>0" > 
-              <div *ngFor="let meeting of notifications">
-                <a (click)="goMeeting(meeting.id)" >{{meeting.title}}</a>
-                <button (click)="hideNotification(meeting)">X</button>     
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
           <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownOrganizationLink" 
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Organization
@@ -67,6 +50,30 @@
           <a class="nav-link" href="/pricing">
              Pricing
           </a>
+        </li>
+        <li class="nav-item dropdown wrapper-width-fixed" *ngIf="getLoginService().isAuthenticated()">
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownNotificationLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              (click)="convert(); showNotifications();">
+            <span *ngIf="hasNewNotifications">
+              <i  class="fas fa-bell fa-spin notification"></i>&nbsp;
+            </span> Notifications
+          </a>
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownNotificationLink">
+            <span *ngIf="notifications.length === 0" class="dropdown-item">
+              You don't have any notification
+            </span>
+            <div *ngIf="notifications.length > 0"> 
+              <div *ngFor="let meeting of notifications" class="d-flex justify-content-between row-notification">
+                <a (click)="goMeeting(meeting.id)" class="info-notification text-truncate dropdown-item ml-2">
+                  {{meeting.title}}
+                </a>
+                <button (click)="hideNotification(meeting)" class="btn mr-2">
+                  <i class="fas fa-times"></i>
+                </button>     
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
       <ul class="nav navbar-nav">

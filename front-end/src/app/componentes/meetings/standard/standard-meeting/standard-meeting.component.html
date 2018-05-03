@@ -35,38 +35,6 @@
     </div>
 </div>
 
-<!--<div *ngFor="let a of agendas; let ii = index" class="conclusion-container">
-    <div class="d-flex justify-content-between conclusion-title">
-        <span>{{a.number}}. {{a.description}}</span>
-    </div>
-    <ul class="conclusion-container">
-        <li *ngFor="let c of a.conclusions; let i = index" class="d-flex justify-content-between">
-            <input type="text" [(ngModel)]="c.conclusion" 
-                   *ngIf="c.isInput" (keyup.enter)="killFocus($event)" (focusout)="convert(c, ii)"
-                   placeholder="Type your conclusion here..." required class="idea">
-            <div *ngIf="!c.isInput" (click)="convert(c, ii)" class="idea">
-                {{c.conclusion}}
-            </div>
-            <div class="options-ideas text-right">
-                <button *ngIf="c.isInput" (click)="convert(c, ii);" class="btn">
-                    <i class="fas fa-check"></i>
-                </button>
-                <button *ngIf="!c.isInput" (click)="convert(c, ii);" class="btn">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button (click)="removeConclusion(c, ii, i)" class="btn">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-        </li>
-    </ul>
-    <div class="text-center">
-        <button (click)="addConclusion(ii)" class="btn">
-            <i class="fas fa-lightbulb"></i> Add conclusion
-        </button>
-    </div>
-</div>-->
-
 <div *ngIf="participant.role=='LEADER'" class="text-center">
     <button ngConfirm
     [title]="'Finish Meeting Confirmation'"
