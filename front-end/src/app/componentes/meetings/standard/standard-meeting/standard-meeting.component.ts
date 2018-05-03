@@ -95,6 +95,7 @@ export class StandardMeetingComponent implements OnInit {
         if (conclusion.conclusion.trim().length != 0) {
           conclusion.isInput = false;
           conclusion.agendaId = this.agendas[index].id;
+          conclusion.conclusion = conclusion.conclusion.trim();
           this.realTimeService.send('/conclusion/save/',
             WSResponseType.PUSH,
             'c' + index,

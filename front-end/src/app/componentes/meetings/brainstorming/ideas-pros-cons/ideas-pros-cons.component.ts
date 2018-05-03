@@ -136,6 +136,7 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
     } else {
       p.numberPros = 1;
       p.ideaId = this.ideas[index].id;
+      p.pros = p.pros.trim();
       this.realTimeService.send('/pros/savePro/', WSResponseType.PUSH, 'p' + index, p, { id: p.id | 0 });
     }
   }
@@ -156,6 +157,7 @@ export class IdeasProsConsComponent implements OnInit, OnDestroy {
     } else {
       c.numberCons = 1;
       c.ideaId = this.ideas[index].id;
+      c.cons = c.cons.trim();
       this.realTimeService.send('/cons/saveCon/', WSResponseType.PUSH, 'c' + index, c, { id: c.id | 0 });
     }
   }
