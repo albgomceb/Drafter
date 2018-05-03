@@ -56,7 +56,6 @@ export class AgendaPageComponent implements OnInit {
         return;
       }
     }
-    
 
     var length = this.entradas.length;
     this.entradas.push(new Agenda());
@@ -64,6 +63,8 @@ export class AgendaPageComponent implements OnInit {
     this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].description = "";
+
+    this.setFocus();
   } 
 
   removeAgenda(entrada : Agenda, entradasIndex : number){    
