@@ -95,4 +95,13 @@ export class NavbarComponent implements OnInit {
     return this.loginService;
   }
 
+
+  navigate() {
+    eval("$('.navbar-collapse').collapse('hide')");
+  }
+
+  logout() {
+    this.getLoginService().logout();
+    this.navigate();
+  }
 }

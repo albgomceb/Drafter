@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark shadow">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" href="/home">
+    <a class="navbar-brand" routerLink="/home" (click)="navigate()">
       <img src="../../../assets/img/white-logo.png" alt="Logo">
     </a>
     <!-- Button only for small screens -->
@@ -11,10 +11,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Menu items -->
-    <div class="collapse navbar-collapse" id="navbarToggler">
+    <div class="collapse navbar-collapse wrapper-width-fixed" id="navbarToggler">
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/home">
+          <a class="nav-link" routerLink="/home" (click)="navigate()">
             Home
           </a>
         </li>
@@ -24,30 +24,13 @@
             Meeting
           </a>
           <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownMeetingLink">
-              <a class="dropdown-item" href="/meeting">
+              <a class="dropdown-item" routerLink="/meeting" (click)="navigate()">
                 New meeting
               </a>
-              <a class="dropdown-item" href="/meeting/list/{{getLoginService().getPrincipal().id}}/page/0">
+              <a class="dropdown-item" routerLink="/meeting/list/{{getLoginService().getPrincipal().id}}/page/0" (click)="navigate()">
                 My meetings
               </a>
           </div>          
-        </li>
-        <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-          <a (click)="convert(); showNotifications();" data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
-            <span>Notifications</span>
-            <div *ngIf="hasNewNotifications">
-              <i class="fas fa-circle" style="color:#00A98F"></i>
-            </div>
-          </a>
-          <div *ngIf="clicked" class="shadow" style="background-color: rgb(221, 221, 221)">
-            <span *ngIf="notifications.length===0" style="color: grey">You don't have any notifications</span>
-            <div *ngIf="notifications.length>0" > 
-              <div *ngFor="let meeting of notifications">
-                <a (click)="goMeeting(meeting.id)" >{{meeting.title}}</a>
-                <button (click)="hideNotification(meeting)">X</button>     
-              </div>
-            </div>
-          </div>
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
           <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownOrganizationLink" 
@@ -55,28 +38,52 @@
             Organization
           </a>
           <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownOrganizationLink">
-            <a class="dropdown-item" href="/organization-department/0">
+            <a class="dropdown-item" routerLink="/organization-department/0" (click)="navigate()">
               New organization
             </a>
-            <a class="dropdown-item" href="/organization/list/{{getLoginService().getPrincipal().id}}">
+            <a class="dropdown-item" routerLink="/organization/list/{{getLoginService().getPrincipal().id}}" (click)="navigate()">
               My organizations
             </a>	
           </div>          
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/pricing">
+          <a class="nav-link" routerLink="/pricing" (click)="navigate()">
              Pricing
           </a>
+        </li>
+        <li class="nav-item dropdown wrapper-width-fixed" *ngIf="getLoginService().isAuthenticated()">
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownNotificationLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              (click)="convert(); showNotifications();">
+            <span *ngIf="hasNewNotifications">
+              <i  class="fas fa-bell fa-spin notification"></i>&nbsp;
+            </span> Notifications
+          </a>
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownNotificationLink">
+            <span *ngIf="notifications != undefined && notifications.length === 0" class="dropdown-item">
+              You don't have any notification
+            </span>
+            <div *ngIf="notifications != undefined && notifications.length > 0"> 
+              <div *ngFor="let meeting of notifications" class="d-flex justify-content-between row-notification">
+                <a (click)="goMeeting(meeting.id)" class="info-notification text-truncate dropdown-item ml-2">
+                  {{meeting.title}}
+                </a>
+                <button (click)="hideNotification(meeting)" class="btn mr-2">
+                  <i class="fas fa-times"></i>
+                </button>     
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
       <ul class="nav navbar-nav">
         <li class="nav-item" *ngIf="!getLoginService().isAuthenticated()">
-          <a class="nav-link" href="/register">
+          <a class="nav-link" routerLink="/register" (click)="navigate()">
             Sign up
           </a>
         </li>
         <li class="nav-item"  *ngIf="!getLoginService().isAuthenticated()">
-          <a class="nav-link" href="/login">
+          <a class="nav-link" routerLink="/login" (click)="navigate()">
             Sign in
           </a>
         </li>
@@ -91,10 +98,10 @@
               </span>
             </a>
             <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownUserLink">
-              <a class="dropdown-item" href="/me">
+              <a class="dropdown-item" routerLink="/me" (click)="navigate()">
                 Profile
               </a>
-              <a class="dropdown-item" (click)="getLoginService().logout()">
+              <a class="dropdown-item" (click)="logout()">
                 Logout
               </a>
             </div>

@@ -30,6 +30,22 @@ export class SixHatsMeetingComponent implements OnInit {
   public attendants:Array<any>;
   @Output()
   public finishMeeting = new EventEmitter<number>();
+  public hatContainer = new Map([
+                                ["RED", "danger"],
+                                ["BLACK", "dark"],
+                                ["BLUE", "primary"],
+                                ["WHITE", "light"],
+                                ["YELLOW", "warning"],
+                                ["GREEN", "success"]
+                              ]);
+  public hatButtons = new Map([
+                                ["RED", "danger text-white"],
+                                ["BLACK", "dark text-white"],
+                                ["BLUE", "info text-white"],
+                                ["WHITE", "secondary text-white"],
+                                ["YELLOW", "warning text-dark"],
+                                ["GREEN", "success text-white"]
+                              ]);
 
   //----------------------- Atributos del meeting -----------------------
   public currentParticipant : Participant = new Participant();
@@ -55,13 +71,11 @@ export class SixHatsMeetingComponent implements OnInit {
   //----------------------- OnInit -----------------------
   ngOnInit() {    
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
-      this.sixHats = sixHats;       
-      console.log("Antes del seteo",this.sixHats);
+      this.sixHats = sixHats;
       
       if(this.sixHats.secondsLeft === null){
         this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
           this.sixHats = res;
-          console.log("Despues del seteo",this.sixHats);
           this.initializeCounter();
           this.initializeWebSocket();
           this.initializeParticipant();
@@ -204,6 +218,8 @@ export class SixHatsMeetingComponent implements OnInit {
     this.currentHat.hatConclusions[length].text = "";
     this.currentHat.hatConclusions[length].id = 0;
     this.currentHat.hatConclusions[length].version = 0;
+
+    this.setFocus();
   } 
 
   convert(conclusion, conclusionIndex){
@@ -211,15 +227,20 @@ export class SixHatsMeetingComponent implements OnInit {
     //Si la actual conclusion tiene longitud > 0 y además la conclusion es un input, se convierte en texto
     if(this.checkNotBlank(conclusion.text) && conclusion.isInput) {
       conclusion.isInput = false;
+      conclusion.text = conclusion.text.trim();
       this.realTimeService.send('/sixHats/save/'+this.currentHat.id+'/', 
                             WSResponseType.PUSH, 
                             'hat-'+this.currentHat.color,  
                             conclusion, 
                             {id: conclusion.id |0});
 
+      if (conclusion.id == undefined || conclusion.id == 0)
+        this.addConclusion();
+
     //Si la conclusion es un texto, se convierte en input
     } else if(!conclusion.isInput) {
       conclusion.isInput = true;
+      this.setFocus();
     }
     else if(!this.checkNotBlank(conclusion.text) && conclusion.isInput){
       this.currentHat.hatConclusions.splice(conclusionIndex, 1);
@@ -271,6 +292,20 @@ export class SixHatsMeetingComponent implements OnInit {
 
   finish(){
     this.finishMeeting.emit(this.meetingId);
+  }
+  cancel() {
+  }
+
+  setFocus() {
+    setTimeout(() => {
+      var e = $('textarea')[0];
+      if (e)
+        e.focus();
+    }, 0);
+  }
+
+  killFocus(event) {
+    event.target.blur();
   }
 
 }

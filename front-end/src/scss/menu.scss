@@ -23,14 +23,43 @@ nav.navbar {
         padding: 0.9375rem 1.5em !important;
         color: $mp_font_color !important;
         transition: all .2s ease-in;
+
+        i.notification {
+            color: $content_background_color;
+        }
     }
 
     a.nav-link:hover {
         background-color: $mp_secondary_color;
+
+        i.notification {
+            color: $mp_font_color;
+        }
     }
 
     div.dropdown-menu {
         background-color: $content_background_color;
+
+        div.row-notification {
+            a.info-notification {
+                border-left: 1px solid $content_background_color_2;
+                border-bottom: 1px solid $content_background_color_2;
+
+                @include media-breakpoint-down(lg) {
+                    width: calc(100% - 2.25rem) !important;
+                }
+
+                @include media-breakpoint-up(lg) {
+                    max-width: 30rem;
+                }
+            }
+            
+            &:first-child {
+                a.info-notification {
+                    border-top: 1px solid $content_background_color_2;
+                }
+            }
+        }
 
         a.dropdown-item:hover,
         a.dropdown-item:focus,
@@ -38,5 +67,11 @@ nav.navbar {
             color: inherit;
             background-color: $content_background_color_2;
         }
+    }
+
+    @include media-breakpoint-down(lg) {
+        .wrapper-width-fixed {
+            max-width: calc(100%) !important;    
+        }        
     }
 }

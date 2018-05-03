@@ -48,6 +48,7 @@ export class BrainStormingMinutesPageComponent implements OnInit {
       }
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
+        this.ideas.sort(this.getAverage)
       });
     });
   };
@@ -62,7 +63,7 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     let content = this.content.nativeElement;
 
     html2canvas(content, { useCORS: true }).then(function (canvas) {
-      var imgWidth = 210;
+      var imgWidth = 190;
       var pageHeight = 295;
       var imgHeight = canvas.height * imgWidth / canvas.width;
       var heightLeft = imgHeight;
@@ -72,13 +73,13 @@ export class BrainStormingMinutesPageComponent implements OnInit {
       var doc = new jsPDF('p', 'mm');
       var position = 0;
 
-      doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         doc.addPage();
-        doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+        doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
       doc.save('Minutes.pdf');
