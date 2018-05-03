@@ -23,9 +23,23 @@
     </textarea>
   </div>
   <div class="form-group">
-    <label>Participants</label>
+    <label>Search for participants</label>
 
-    <div class="d-flex flex-wrap mt-3">
+    <p *ngIf="errorListUsers==false && users==null" class="errorList text-center">Loading...</p>
+    <div *ngIf="errorListUsers" class="text-center">
+      <img src="../../../assets/img/warning_turq.png" width="100px" class="img-fluid">
+      <p>Try again later</p>
+    </div>
+
+    <form *ngIf="errorListUsers==false && users!=null">
+      <div class="search-users form-group w-100">
+          <input type="text" id="search" name="search" (keyup)="search();" 
+                  [formControl]="searchField" placeholder="Type the participant's details here...." class="form-control w-100">
+      </div>
+    </form>
+
+    <div class="text-center mt-3">Participants</div>
+    <div class="d-flex justify-content-center flex-wrap mt-3">
       <div *ngFor="let us of thumbnail" class="text-center mx-2">
           <div class="thumbnail-container" (click)="removeAttendant(us);">
             <img attr.src="{{us.photo}}" class="img-fluid avatar">           
@@ -34,37 +48,24 @@
           <span class="d-block">{{us.name}}</span>
       </div>
     </div>
-
-    <p *ngIf="errorListUsers==false && users==null" class="errorList text-center">Loading...</p>
-    <div *ngIf="errorListUsers" class="text-center">
-      <img src="../../../assets/img/warning_turq.png" width=100px class="img-fluid">
-      <p>Try again later</p>
-    </div>
-
-    <div *ngIf="errorListUsers==false && users!=null" class="row justify-content-center mt-5">
-      <form class="form-inline">
-        <div class="search-users form-group col-lg-5 col-md-10">
-            <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search();" [formControl]="searchField">
-        </div>
-      </form>
-    </div>
-
-    <div class="d-flex justify-content-center flex-wrap mt-5">
+    <hr>
+    <div class="text-center mt-3">Potential participants</div>
+    <div class="d-flex justify-content-center flex-wrap mt-3">
       <div *ngFor="let us of results | async; let i=index" [hidden]="us.id==getLoginService().getPrincipal().id" class="card">
 
-          <img class="card-img-top" src="{{us.photo}}" alt="Avatar">
+          <img class="img-fluid card-img-top" src="{{us.photo}}" alt="Avatar">
           <div class="card-body">
             <h4 class="card-title">{{us.name}}</h4>
             <p class="card-text" *ngFor="let d of us.departments">{{d.organization}} ({{d.name}})</p>
             <div class="push"></div>
-            <div *ngIf="!exists(us)" class="btn-card">
+            <div *ngIf="!exists(us)" class="btn-card text-center">
               <button type="button" (click)="addAttendant(us);" class="btn">
-                  Add
+                  <i class="fas fa-user-plus"></i> Add
               </button>
             </div>
-            <div *ngIf="exists(us)" class="btn-card">
+            <div *ngIf="exists(us)" class="btn-card text-cente">
               <button type="button" (click)="removeAttendant(us);" class="btn">
-                  Remove
+                <i class="fas fa-user-times"></i> Remove
               </button>
             </div>
           </div>   
