@@ -2,6 +2,10 @@
   <span class="capital-letter">P</span>rofile
 </h1>
 
+<div *ngIf="showError == true" class="alert alert-danger text-center">
+  Check all the cells with errors
+</div>
+
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit(profileForm)" method="post" class="general-form">
   <div class="row">
     <div class="col-lg-6 col-md-12 form-group">
@@ -46,13 +50,13 @@
       <input type="text" name="email" id="email" formControlName="email" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
-      <label for="phone">Phone number</label>
+      <label for="phone">Phone number. Example: +XX XXXXXXXXX</label>
       <div *ngIf="profileForm.get('phone').errors">
         <div *ngIf="profileForm.get('phone').errors['required']" class="alert alert-danger">
           Required
         </div>
         <div *ngIf="profileForm.get('phone').errors['pattern']" class="alert alert-danger">
-          Must be numeric
+          Must be like example
         </div>
       </div>
       <input type="text" name="phone" id="phone" formControlName="phone" class="form-control">
