@@ -33,6 +33,23 @@
           </div>          
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
+          <a (click)="convert(); showNotifications();" data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
+            <span>Notifications</span>
+            <div *ngIf="hasNewNotifications">
+              <i class="fas fa-circle" style="color:#00A98F"></i>
+            </div>
+          </a>
+          <div *ngIf="clicked" class="shadow" style="background-color: rgb(221, 221, 221)">
+            <span *ngIf="notifications.length===0" style="color: grey">You don't have any notifications</span>
+            <div *ngIf="notifications.length>0" > 
+              <div *ngFor="let meeting of notifications">
+                <a (click)="goMeeting(meeting.id)" >{{meeting.title}}</a>
+                <button (click)="hideNotification(meeting)">X</button>     
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
           <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownOrganizationLink" 
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Organization

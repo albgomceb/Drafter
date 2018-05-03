@@ -47,6 +47,7 @@ import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-p
 import { AuthGuard } from './security/auth.guard';
 import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
 import { ProfileService } from './componentes/services/profile.service';
+import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
 import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/waiting-room/waiting-room.component';
 import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
 
@@ -87,6 +88,7 @@ import { LegalPageComponent } from './componentes/legal-page/legal-page.componen
     PaymentSuccessPageComponent,
     EditProfilePageComponent,
     ProfilePageComponent,
+    NotificationsPageComponent,
     WaitingRoomComponent,
     LegalPageComponent
   ],
