@@ -1,105 +1,101 @@
-
 <div class="ideas-container">
-    <!-- Current hat -->
-    <div class="ideas-title" [ngClass]="currentHat.color === 'BLACK' ? 'gray-background' : ''">
-      <!-- Countdown -->
-      <div *ngIf="(($counter | async) * 1000) + 1000 < sixHats.secondsLeft" class="text-center">
-        <h3><strong><i class="far fa-clock"></i> {{message}}</strong></h3>
-      </div>
-      <div style="color: red" *ngIf="(($counter | async) * 1000) + 1000 >= sixHats.secondsLeft" class="text-center">
-        <h3><strong><i class="far fa-clock"></i> 00:00</strong></h3>
-      </div>
-      <div [ngClass]="currentHat.color+'-hat'" class="text-cap text-center">
-        <i class="fas fa-graduation-cap"></i> {{currentHat.color}} HAT
-      </div>
+  <!-- Current hat -->
+  <div class="ideas-title" [ngClass]="currentHat.color === 'BLACK' ? 'gray-background' : ''">
+    <!-- Countdown -->
+    <div *ngIf="(($counter | async) * 1000) + 1000 < sixHats.secondsLeft" class="text-center">
+      <h3>
+        <strong>
+          <i class="far fa-clock"></i> {{message}}</strong>
+      </h3>
     </div>
-    <!-- Information about the current hat -->
-    <div class="ideas-body">
-      <div class="ideas-title">
-        <span *ngIf="currentHat.color==='RED'">
-          You're wearing the red hat:
-          Get intuitive or instinctive gut reactions or statements of emotional feeling (but not any justification).
-        </span>
-        <span *ngIf="currentHat.color==='BLACK'">
-          You're wearing the black hat:
-          Apply logic to identify reasons to be cautious and conservative. Be practical and realistic.
-        </span>
-        <span *ngIf="currentHat.color==='BLUE'">
-          You're wearing the blue hat:
-          You're the moderator. Answer the next questions: what is the subject? what are we thinking about? Are we reaching the goal?
-        </span>
-        <span *ngIf="currentHat.color==='WHITE'">
-          You're wearing the white hat:
-          Consider purely what information is available. What are the facts?
-        </span>
-        <span *ngIf="currentHat.color==='YELLOW'">
-          You're wearing the yellow hat:
-          Apply logic to identify benefits, seeking harmony. See the brighter, sunny side of situations.
-        </span>
-        <span *ngIf="currentHat.color==='GREEN'">
-          You're wearing the green hat:
-          Think statements of provocation and investigation, seeing where a thought goes. Think creatively, outside the box.
-        </span>
-      </div>
-      <div *ngIf="currentParticipant.role=='LEADER'" class="text-center mb-3">
-        <button class="btn" (click)="saveSixHats()"><i class="fas fa-recycle"></i> Reassign</button>
-        <button class="btn" (click)="finish()">Finish</button>
-      </div>
-      <!-- Conclusions -->
-      <ul class="list-ideas list-ideas-6-hats">
-        <div *ngFor="let hat of sixHats.hats; let hatIndex=index" class="hat-container mb-3"
-             [ngClass]="hat.color === currentHat.color ? ' first-one' : 'not-first-one'">
-            <!-- Current hat -->
-            <div *ngIf="hat.color === currentHat.color" class="alert" [ngClass]="'alert-'+hatContainer.get(hat.color)">
-              <li *ngFor="let conclusion of currentHat.hatConclusions; let i=index" class="d-flex justify-content-between">
-                <textarea type="text" [(ngModel)]="conclusion.text" 
-                          *ngIf="conclusion.isInput" (focusout)="convert(conclusion, i);" 
-                          placeholder="Type your conclusion here..." class="idea" (keyup.enter)="killFocus($event)"></textarea>
-                <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, i)" class="idea">
-                    {{conclusion.text}}
-                </div>
-                <!-- Options -->
-                <div class="options-ideas text-right">
-                  <button *ngIf="conclusion.isInput" (click)="convert(conclusion, i);" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
-                    <i class="fas fa-check"></i>
-                  </button>
-                  <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, i);" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
-                    <i class="fas fa-pencil-alt"></i>
-                  </button>          
-                  <button (click)="deleteConclusion(conclusion.id, i)" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
-              </li>
-              <div class="text-center my-3">
-                <button type="button" (click)="addConclusion()" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
-                  <i class="fas fa-lightbulb"></i> New conclusion
-                </button>
-              </div>
+    <div style="color: red" *ngIf="(($counter | async) * 1000) + 1000 >= sixHats.secondsLeft" class="text-center">
+      <h3>
+        <strong>
+          <i class="far fa-clock"></i> 00:00</strong>
+      </h3>
+    </div>
+    <div [ngClass]="currentHat.color+'-hat'" class="text-cap text-center">
+      <i class="fas fa-graduation-cap"></i> {{currentHat.color}} HAT
+    </div>
+  </div>
+  <!-- Information about the current hat -->
+  <div class="ideas-body">
+    <div class="ideas-title">
+      <span *ngIf="currentHat.color==='RED'">
+        You're wearing the red hat: Get intuitive or instinctive gut reactions or statements of emotional feeling (but not any justification).
+      </span>
+      <span *ngIf="currentHat.color==='BLACK'">
+        You're wearing the black hat: Apply logic to identify reasons to be cautious and conservative. Be practical and realistic.
+      </span>
+      <span *ngIf="currentHat.color==='BLUE'">
+        You're wearing the blue hat: You're the moderator. Answer the next questions: what is the subject? what are we thinking about?
+        Are we reaching the goal?
+      </span>
+      <span *ngIf="currentHat.color==='WHITE'">
+        You're wearing the white hat: Consider purely what information is available. What are the facts?
+      </span>
+      <span *ngIf="currentHat.color==='YELLOW'">
+        You're wearing the yellow hat: Apply logic to identify benefits, seeking harmony. See the brighter, sunny side of situations.
+      </span>
+      <span *ngIf="currentHat.color==='GREEN'">
+        You're wearing the green hat: Think statements of provocation and investigation, seeing where a thought goes. Think creatively,
+        outside the box.
+      </span>
+    </div>
+    <div *ngIf="currentParticipant.role=='LEADER'" class="text-center mb-3">
+      <button class="btn" (click)="saveSixHats()">
+        <i class="fas fa-recycle"></i> Reassign</button>
+      <button ngConfirm [title]="'Finish Meeting Confirmation'" [message]="'You are about to end the meeting, are you sure?'" [options]="options"
+        (onConfirm)="finish()" (onCancel)="cancel()" class="btn">Finish</button>
+    </div>
+    <!-- Conclusions -->
+    <ul class="list-ideas list-ideas-6-hats">
+      <div *ngFor="let hat of sixHats.hats; let hatIndex=index" class="hat-container mb-3" [ngClass]="hat.color === currentHat.color ? ' first-one' : 'not-first-one'">
+        <!-- Current hat -->
+        <div *ngIf="hat.color === currentHat.color" class="alert" [ngClass]="'alert-'+hatContainer.get(hat.color)">
+          <li *ngFor="let conclusion of currentHat.hatConclusions; let i=index" class="d-flex justify-content-between">
+            <textarea type="text" [(ngModel)]="conclusion.text" *ngIf="conclusion.isInput" (focusout)="convert(conclusion, i);" placeholder="Type your conclusion here..."
+              class="idea" (keyup.enter)="killFocus($event)"></textarea>
+            <div *ngIf="!conclusion.isInput" (click)="convert(conclusion, i)" class="idea">
+              {{conclusion.text}}
             </div>
-            <div *ngIf="hat.color != currentHat.color" class="alert" [ngClass]="'alert-'+hatContainer.get(hat.color)">
-              <h4 class="text-center">
-                <i class="fas fa-graduation-cap"></i> {{hat.color}} HAT CONCLUSIONS
-              </h4>
-              <li *ngFor="let conclusion of hat.hatConclusions" class="idea">
-                <div class="idea">
-                  {{conclusion.text}}
-                </div>
-              </li>
+            <!-- Options -->
+            <div class="options-ideas text-right">
+              <button *ngIf="conclusion.isInput" (click)="convert(conclusion, i);" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
+                <i class="fas fa-check"></i>
+              </button>
+              <button *ngIf="!conclusion.isInput" (click)="convert(conclusion, i);" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <button (click)="deleteConclusion(conclusion.id, i)" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </div>
+          </li>
+          <div class="text-center my-3">
+            <button type="button" (click)="addConclusion()" class="btn" [ngClass]="'bg-'+hatButtons.get(hat.color)">
+              <i class="fas fa-lightbulb"></i> New conclusion
+            </button>
+          </div>
         </div>
-      </ul>
-    </div>
+        <div *ngIf="hat.color != currentHat.color" class="alert" [ngClass]="'alert-'+hatContainer.get(hat.color)">
+          <h4 class="text-center">
+            <i class="fas fa-graduation-cap"></i> {{hat.color}} HAT CONCLUSIONS
+          </h4>
+          <li *ngFor="let conclusion of hat.hatConclusions" class="idea">
+            <div class="idea">
+              {{conclusion.text}}
+            </div>
+          </li>
+        </div>
+      </div>
+    </ul>
+  </div>
 </div>
 
-  <div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'">
-    <button class="btn" (click)="saveSixHats()"><i class="fas fa-recycle"></i> Reassign</button>
-    <button ngConfirm
-    [title]="'Finish Meeting Confirmation'"
-    [message]="'You are about to end the meeting, are you sure?'"
-    [options]="options"
-    (onConfirm)="finish()"
-    (onCancel)="cancel()" class="btn">Finish</button>
-  </div>
-
-
+<div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'">
+  <button class="btn" (click)="saveSixHats()">
+    <i class="fas fa-recycle"></i> Reassign</button>
+  <button ngConfirm [title]="'Finish Meeting Confirmation'" [message]="'You are about to end the meeting, are you sure?'" [options]="options"
+    (onConfirm)="finish()" (onCancel)="cancel()" class="btn">Finish</button>
+</div>
