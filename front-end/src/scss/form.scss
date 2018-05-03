@@ -16,29 +16,15 @@ form.general-form {
         max-width: 10rem;
         margin: 0 1.5rem 1.5rem 0.5rem;
 
+        img.card-img-top {
+            max-height: 6.6rem;
+        }
+
         div.card-body {
             padding: 0.75rem;
 
             p.card-text {
                 font-size: 0.9rem;
-            }
-        }
-
-        div.push {
-            height: 7rem;
-
-            @media only screen and (max-width: 350px) {
-                height: 8rem;
-            }
-        }
-
-        div.btn-card {
-            position: absolute;
-            bottom: 0;
-
-            button {
-                width: 95%;
-                margin-bottom: 1rem;
             }
         }
     }
