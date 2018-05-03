@@ -60,10 +60,10 @@
             </span> Notifications
           </a>
           <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownNotificationLink">
-            <span *ngIf="notifications.length === 0" class="dropdown-item">
+            <span *ngIf="notifications != undefined && notifications.length === 0" class="dropdown-item">
               You don't have any notification
             </span>
-            <div *ngIf="notifications.length > 0"> 
+            <div *ngIf="notifications != undefined && notifications.length > 0"> 
               <div *ngFor="let meeting of notifications" class="d-flex justify-content-between row-notification">
                 <a (click)="goMeeting(meeting.id)" class="info-notification text-truncate dropdown-item ml-2">
                   {{meeting.title}}
