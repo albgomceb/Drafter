@@ -25,10 +25,8 @@ div.info-meeting-bar {
     }
 }
 
-button.toggle-btn,
-button.toggle-btn:hover {
-    color: white;
-    background-color: $button_hover;
+div.info-meeting-header {
+    padding: 0rem 1rem !important;
 }
 
 div.meeting-wrapper {

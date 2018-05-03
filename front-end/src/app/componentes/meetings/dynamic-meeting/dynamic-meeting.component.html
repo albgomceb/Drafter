@@ -45,12 +45,12 @@
 
         <!-- Info meeting -->
         <div class="item-wrapper mx-auto mb-5">
-            <div class="header-wrapper d-flex justify-content-between flex-wrap">
-                <h4>Meeting information</h4>
-                <button *ngIf="showInfo" type="button" (click)="toggleInfo();" class="toggle-btn btn">
+            <div class="header-wrapper info-meeting-header d-flex justify-content-between flex-wrap">
+                <h5 class="mt-1">Meeting information</h5>
+                <button *ngIf="showInfo" type="button" (click)="toggleInfo();" class="btn">
                     <i class="fas fa-arrow-up"></i>
                 </button>
-                <button *ngIf="!showInfo" type="button" (click)="toggleInfo();" class="toggle-btn btn">
+                <button *ngIf="!showInfo" type="button" (click)="toggleInfo();" class="btn">
                     <i class="fas fa-arrow-down"></i>
                 </button>
             </div>
