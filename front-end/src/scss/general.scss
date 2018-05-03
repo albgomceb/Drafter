@@ -113,6 +113,12 @@ div.card {
         }
     }
 
+    div.card-body-2 {
+        max-width: 9rem;
+        padding: 0 0.5rem;
+        word-wrap: break-word;
+    }
+
     @include media-breakpoint-down(md) {
         margin: 1.5rem 0.3rem;
     }
