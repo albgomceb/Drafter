@@ -107,6 +107,9 @@ export class RealTimeService {
   }
 
   public disconnect() {
+    if(this.stompClient == undefined)
+      return;
+
     this.send('/chat/send/', WSResponseType.DISCONNECT, "", null, {});
     this.stompClient.disconnect(() => {
       this.models = new Array<any>();

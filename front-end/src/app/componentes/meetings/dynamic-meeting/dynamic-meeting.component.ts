@@ -124,7 +124,8 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
   } 
 
   ngOnDestroy() {
-    this.realtimeService.send('/meeting/quit/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
+    if(this.logged != undefined)
+      this.realtimeService.send('/meeting/quit/',WSResponseType.PUSH,'attendants',{id:this.logged.id,name:this.logged.username});
     this.realtimeService.disconnect();
   }
 
