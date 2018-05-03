@@ -37,5 +37,6 @@
 </div>
 
 <div class="text-center button-group"> 
-  <button (click)="saveAgenda(entradas)" class="btn">Create the meeting</button>
+  <button [disabled]="!(entradas.length > 0) || entradas[0].description == ''"
+    (click)="saveAgenda(entradas)" class="btn">Create the meeting</button>
 </div>

@@ -41,7 +41,15 @@
             <button class="btn" (click)="save()">Vote</button>
         </div>
         <div *ngIf="hasVoted==true && participant.role=='LEADER'" class="text-center">
-            <button (click)="finish()" class="btn bt-lg">Finish</button>
+            <button ngConfirm
+            [title]="'Finish Meeting Confirmation'"
+            [message]="'You are about to end the meeting, check that everyone has voted'"
+            [options]="options"
+            (onConfirm)="finish()"
+            (onCancel)="cancel()" class="btn bt-lg">Finish</button>
+        </div>
+        <div *ngIf="hasVoted==true && participant.role!='LEADER'" class="text-center">
+            <p>Wait until the meeting leader finishes the meeting</p>
         </div>
     </div>
 </div>

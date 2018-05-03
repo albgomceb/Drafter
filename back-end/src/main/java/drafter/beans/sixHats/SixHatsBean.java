@@ -5,7 +5,7 @@ import java.util.Collection;
 public class SixHatsBean {
 
 	private int meetingId;
-	private int secondsLeft;
+	private Integer secondsLeft;
 	private Collection<HatBean> hats;
 	
 	public int getMeetingId() {
@@ -15,10 +15,10 @@ public class SixHatsBean {
 		this.meetingId = meetingId;
 	}
 	
-	public int getSecondsLeft() {
+	public Integer getSecondsLeft() {
 		return secondsLeft;
 	}
-	public void setSecondsLeft(int secondsLeft) {
+	public void setSecondsLeft(Integer secondsLeft) {
 		this.secondsLeft = secondsLeft;
 	}
 	public Collection<HatBean> getHats() {

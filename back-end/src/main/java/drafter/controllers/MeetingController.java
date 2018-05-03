@@ -77,7 +77,7 @@ public class MeetingController extends AbstractController {
 		participantService.relateWithParticipants(result, meeting.getAttendants());
 		if(meeting.getType().equals("six-hats")) {
 			SixHats sixHats = sixHatsService.create(result);
-			sixHatsService.save(sixHats);
+			sixHatsService.save(sixHats, true);
 			sixHats.getHats().stream()
 								.forEach(hat -> hatService.save(hat));
 		}
@@ -207,7 +207,12 @@ public class MeetingController extends AbstractController {
 	@GetMapping("/notifications")
 	public Collection<MeetingBean> getNotifications() {
 		
-		User logged = userService.findByPrincipal();
+		User logged;
+		try {
+			logged = userService.findByPrincipal();
+		} catch(Throwable e) {
+			return new ArrayList<MeetingBean>();
+		}
 		Collection<Meeting> meetings = meetingService.findNotifications(logged.getId());
 		Collection<MeetingBean> res = new ArrayList<MeetingBean>();
 		meetings.stream()

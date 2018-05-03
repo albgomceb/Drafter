@@ -28,8 +28,26 @@ export class SixHatsMeetingComponent implements OnInit {
   public meetingInfo;
   @Input()
   public attendants:Array<any>;
+  @Input()
+  public stoped:boolean;
   @Output()
   public finishMeeting = new EventEmitter<number>();
+  public hatContainer = new Map([
+                                ["RED", "danger"],
+                                ["BLACK", "dark"],
+                                ["BLUE", "primary"],
+                                ["WHITE", "light"],
+                                ["YELLOW", "warning"],
+                                ["GREEN", "success"]
+                              ]);
+  public hatButtons = new Map([
+                                ["RED", "danger text-white"],
+                                ["BLACK", "dark text-white"],
+                                ["BLUE", "info text-white"],
+                                ["WHITE", "secondary text-white"],
+                                ["YELLOW", "warning text-dark"],
+                                ["GREEN", "success text-white"]
+                              ]);
 
   //----------------------- Atributos del meeting -----------------------
   public currentParticipant : Participant = new Participant();
@@ -54,20 +72,59 @@ export class SixHatsMeetingComponent implements OnInit {
 
   //----------------------- OnInit -----------------------
   ngOnInit() {    
+    this.stoped = false;
     this.sixHatsService.getSixHatsByMeeting(this.meetingId).subscribe(sixHats => {
-      this.sixHats = sixHats;       
+      this.sixHats = sixHats;
       
-    //CONTADOR    
-    this.future = new Date().getTime() + this.sixHats.secondsLeft;
-    
-    this.$counter = Observable.interval(1000).map((x) => {        
-        this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
+      if(this.sixHats.secondsLeft === null){
+        this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
+          this.sixHats = res;
+          this.initializeCounter();
+          this.initializeWebSocket();
+          this.initializeParticipant();
+        });
+      }
+      //CONTADOR 
+      if(this.sixHats.secondsLeft != null)
+        this.initializeCounter();
+
+      //WEBSOCKET
+      this.initializeWebSocket();
+      
+      //CURRENT PARTICIPANT
+      this.initializeParticipant();
+    });
+   
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  // ----------------------- Métodos de instanciación ----------------------
+  initializeParticipant(){
+    this.userService.getParticipant(this.meetingId).subscribe(participant => {
+      this.currentParticipant = participant;
+      this.sortAttendants();
+      this.getCurrentHat();
+      this.addConclusion(); 
+    });
+  }
+  initializeCounter(){
+    this.future = new Date().getTime() + Number.parseInt(this.sixHats.secondsLeft.toString());
+      
+    this.$counter = Observable.interval(1000).map((x) => { 
+        if(!this.stoped)       
+          this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);    
+        else
+          this.future += 1000;    
         return x;
     });
-
+    
     this.subscription = this.$counter.subscribe((x) => this.message = this.countdown(this.diff));
+  }
 
-    //WEBSOCKET
+  initializeWebSocket(){
     this.realTimeService.connect(this.meetingId, () => {
       for(let hat of this.sixHats.hats){
         this.realTimeService.register('hat-'+hat.color, hat.hatConclusions);
@@ -85,9 +142,9 @@ export class SixHatsMeetingComponent implements OnInit {
         
         this.sortAttendants();
         this.getCurrentHat();
-        this.addFirstConclusion(); 
+        this.addConclusion(); 
 
-        this.future = new Date().getTime() + this.sixHats.secondsLeft;
+        this.future = new Date().getTime() + Number.parseInt(this.sixHats.secondsLeft.toString());
         this.$counter = Observable.interval(1000).map((x) => {        
           this.diff = Math.round(Math.floor(this.future - new Date().getTime()) / 1000);        
           return x;
@@ -98,21 +155,7 @@ export class SixHatsMeetingComponent implements OnInit {
 
       this.realTimeService.subscribe();
     });
-      this.userService.getParticipant(this.meetingId).subscribe(participant => {
-        this.currentParticipant = participant;
-        this.sortAttendants();
-        this.getCurrentHat();
-        this.addFirstConclusion(); 
-      });      
-    });
-   
   }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  // ----------------------- Métodos de instanciación ----------------------
 
   countdown(t) {
     var minutes, seconds;
@@ -164,24 +207,12 @@ export class SixHatsMeetingComponent implements OnInit {
     }
   }
 
-  addFirstConclusion(){
-    var length = this.currentHat.hatConclusions.length;
-  
-    this.currentHat.hatConclusions[length] = new HatConclusion();
-    this.currentHat.hatConclusions[length].id = 0;
-    this.currentHat.hatConclusions[length].version = 0;
-    this.currentHat.hatConclusions[length].text = "";
-    this.currentHat.hatConclusions[length].isInput = true;
-    
-    
-  }
-
   // ----------------------- Métodos para añadir/eliminar una conclusión ----------------------
 
   addConclusion(){
     var i=0;                            
     for(var con of this.currentHat.hatConclusions) {
-      if(!con.text || con.text.trim().length == 0)
+      if(!this.checkNotBlank(con.text))
         this.currentHat.hatConclusions.splice(i, 1);
       
       i++;
@@ -193,6 +224,8 @@ export class SixHatsMeetingComponent implements OnInit {
     this.currentHat.hatConclusions[length].text = "";
     this.currentHat.hatConclusions[length].id = 0;
     this.currentHat.hatConclusions[length].version = 0;
+
+    this.setFocus();
   } 
 
   convert(conclusion, conclusionIndex){
@@ -200,22 +233,31 @@ export class SixHatsMeetingComponent implements OnInit {
     //Si la actual conclusion tiene longitud > 0 y además la conclusion es un input, se convierte en texto
     if(this.checkNotBlank(conclusion.text) && conclusion.isInput) {
       conclusion.isInput = false;
+      conclusion.text = conclusion.text.trim();
       this.realTimeService.send('/sixHats/save/'+this.currentHat.id+'/', 
                             WSResponseType.PUSH, 
                             'hat-'+this.currentHat.color,  
                             conclusion, 
                             {id: conclusion.id |0});
 
+      if (conclusion.id == undefined || conclusion.id == 0)
+        this.addConclusion();
+
     //Si la conclusion es un texto, se convierte en input
     } else if(!conclusion.isInput) {
       conclusion.isInput = true;
-      if(conclusion.text.trim() == 0)
-        this.deleteConclusion(conclusion.id, conclusionIndex);
-        
+      this.setFocus();
+    }
+    else if(!this.checkNotBlank(conclusion.text) && conclusion.isInput){
+      this.currentHat.hatConclusions.splice(conclusionIndex, 1);
     }
   }
 
   deleteConclusion(conclusionId : number, conclusionIndex : number) {
+    if(conclusionId === 0){
+      this.currentHat.hatConclusions.splice(conclusionIndex, 1);
+    }
+
     this.realTimeService.send('/sixHats/delete/' + conclusionId + '/', 
                                     WSResponseType.POP, 
                                     'hat-'+this.currentHat.color,
@@ -244,14 +286,6 @@ export class SixHatsMeetingComponent implements OnInit {
 
   // ----------------------- Reasignación de sombrero (guardado de SixHats) ----------------------
 
-  // saveSixHats(){
-  //   this.sixHatsService.saveSixHats(this.sixHats, this.meetingId).subscribe(res =>{
-  //     this.router.navigate(["/meeting/"+this.meetingId]);
-  //     this.sixHats = res;
-  //     this.getCurrentHat();
-  //   });
-  // }
-
   saveSixHats(){
     this.realTimeService.send('/sixHats/reassign/', 
                             WSResponseType.SET, 
@@ -264,6 +298,20 @@ export class SixHatsMeetingComponent implements OnInit {
 
   finish(){
     this.finishMeeting.emit(this.meetingId);
+  }
+  cancel() {
+  }
+
+  setFocus() {
+    setTimeout(() => {
+      var e = $('textarea')[0];
+      if (e)
+        e.focus();
+    }, 0);
+  }
+
+  killFocus(event) {
+    event.target.blur();
   }
 
 }

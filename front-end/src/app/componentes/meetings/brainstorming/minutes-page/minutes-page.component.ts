@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { element } from 'protractor';
 import { Component, OnInit, Input, ViewChild, ElementRef, Renderer } from '@angular/core';
@@ -29,9 +30,11 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
   constructor(private meetingService: MeetingService,
     private brainstormingService: BrainStormingService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
+    this.leader = new Option('', '', '', '', '', ''); // Fix bug
 
     //OBTENER SESSION LEADER
     this.attendants = this.meetingInfo.attendants;
@@ -41,8 +44,12 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
       this.meeting = data;
+      if (!this.meeting.hasFinished) {
+        this.router.navigateByUrl('/meeting/' + this.meetingId);
+      }
       this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
+        this.ideas.sort(this.getAverage)
       });
     });
   };
@@ -57,7 +64,7 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     let content = this.content.nativeElement;
 
     html2canvas(content, { useCORS: true }).then(function (canvas) {
-      var imgWidth = 210;
+      var imgWidth = 190;
       var pageHeight = 295;
       var imgHeight = canvas.height * imgWidth / canvas.width;
       var heightLeft = imgHeight;
@@ -67,13 +74,13 @@ export class BrainStormingMinutesPageComponent implements OnInit {
       var doc = new jsPDF('p', 'mm');
       var position = 0;
 
-      doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         doc.addPage();
-        doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
+        doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
       doc.save('Minutes.pdf');

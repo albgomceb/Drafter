@@ -25,10 +25,8 @@ div.info-meeting-bar {
     }
 }
 
-button.toggle-btn,
-button.toggle-btn:hover {
-    color: white;
-    background-color: $button_hover;
+div.info-meeting-header {
+    padding: 0rem 1rem !important;
 }
 
 div.meeting-wrapper {
@@ -50,6 +48,10 @@ div.ideas-container {
         font-size: 1.2rem;
         font-weight: bolder;
         background-color: $mp_primary_color;
+
+        div.text-cap {
+            font-size: 2.5rem;
+        }
     }
 
     div.ideas-body {
@@ -127,10 +129,78 @@ div.ideas-container {
                 }
             }
         }
+
+        ul.list-ideas-6-hats {
+            display: flex;
+            flex-wrap: wrap;
+           
+            div.alert-danger {
+                @extend %border-danger;
+        
+                li {
+                    @extend %border-danger;
+                }
+            }
+        
+            div.alert-dark {
+                @extend %border-dark;
+        
+                li {
+                    @extend %border-dark;
+                }
+            }
+        
+            div.alert-primary {
+                @extend %border-primary;
+        
+                li {
+                    @extend %border-primary;
+                }
+            }
+        
+            div.alert-light {
+                @extend %border-light;
+        
+                li {
+                    @extend %border-light;
+                }
+            }
+        
+            div.alert-warning {
+                @extend %border-warning;
+        
+                li {
+                    @extend %border-warning;
+                }
+            }
+        
+            div.alert-success {
+                @extend %border-success;
+        
+                li {
+                    @extend %border-success;
+                }
+            }
+            
+            div.first-one {
+                order: 1;
+            }
+            div.not-first-one {
+                order: 2;
+            }
+            div.hat-container {
+                width: 100%;
+            }   
+        }
     }
 
     div.rating-box {
         width: 5rem;
+    }
+
+    div.gray-background {
+        color: black;
+        background-color: #d4d4d4 !important;
     }
 }
 
@@ -178,4 +248,89 @@ div.minutes-container {
         max-width: 9rem;
         margin: auto;
     }
+}
+
+/* 6 hats */
+.RED{
+    background-color: rgb(255, 126, 126);
+    border-style: solid;
+    border-color: rgb(161, 77, 77);
+
+    &-hat {
+        color: $red_hat;
+    }
+}
+
+.BLACK{
+    background-color: rgba(138, 138, 138, 0.76);
+    border-style: solid;
+    border-color: rgba(70, 70, 70, 0.425);
+
+    &-hat {
+        color: $black_hat;
+    }
+}
+
+.BLUE{
+    background-color:rgb(124, 185, 255);
+    border-style: solid;
+    border-color: rgb(76, 121, 172);
+
+    &-hat {
+        color: $blue_hat;
+    }
+}
+
+.WHITE{
+    background-color: white;
+    border-style: solid;
+    border-color: rgb(163, 163, 163);
+
+    &-hat {
+        color: $white_hat;
+    }
+}
+
+.YELLOW{
+    background-color: rgb(255, 255, 133);
+    border-style: solid;
+    border-color: rgb(179, 179, 26);
+
+    &-hat {
+        color: $yellow_hat;
+    }
+}
+
+.GREEN{
+    background-color: rgb(137, 173, 96);
+    border-style: solid;
+    border-color: rgb(66, 104, 24);
+
+    &-hat {
+        color: $green_hat;
+    }
+}
+
+%border-danger {
+    border-color: $red_hat_border !important;
+}
+
+%border-dark {
+    border-color: $black_hat_border !important;
+}
+
+%border-primary {
+    border-color: $blue_hat_border !important;
+}
+
+%border-light {
+    border-color: $white_hat_border !important;
+}
+
+%border-warning {
+    border-color: $yellow_hat_border !important;
+}
+
+%border-success {
+    border-color: $green_hat_border !important;
 }
