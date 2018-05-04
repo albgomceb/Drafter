@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="row">
+   <div class="row">
     <div class="col-lg-6 col-md-12 form-group">
       <label for="email">Email</label>
       <div *ngIf="profileForm.get('email').errors" class="alert alert-danger">
@@ -50,7 +50,7 @@
       <input type="text" name="email" id="email" formControlName="email" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
-      <label for="phone">Phone number. Example: +XX XXXXXXXXX</label>
+      <label for="phone">Phone number</label>
       <div *ngIf="profileForm.get('phone').errors">
         <div *ngIf="profileForm.get('phone').errors['required']" class="alert alert-danger">
           Required
@@ -59,7 +59,10 @@
           Must be like example
         </div>
       </div>
-      <input type="text" name="phone" id="phone" formControlName="phone" class="form-control">
+      <div *ngIf="errorNumber == true" class="alert alert-danger text-center">
+        Must be like example: 600600600
+      </div>
+      <input type="number" placeholder="600600600" name="phone" min="1" max="999999999" ng-pattern="/^-?[0-9][^\.]*$/" id="phone" formControlName="phone" class="form-control">
     </div>
   </div>
 
