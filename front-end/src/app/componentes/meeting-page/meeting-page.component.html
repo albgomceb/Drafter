@@ -23,8 +23,8 @@
     </textarea>
   </div>
   <div class="form-group">
-    <label>Search for participants</label>
-
+    <label>Search for participants *</label><br/>
+    <span style="font-size: 13px;">* Currently, you can only see users from your department</span>
     <p *ngIf="errorListUsers==false && users==null" class="errorList text-center">Loading...</p>
     <div *ngIf="errorListUsers" class="text-center">
       <img src="../../../assets/img/warning_turq.png" width="100px" class="img-fluid">
@@ -34,7 +34,7 @@
     <form *ngIf="errorListUsers==false && users!=null">
       <div class="search-users form-group w-100">
           <input type="text" id="search" name="search" (keyup)="search();" 
-                  [formControl]="searchField" placeholder="Type the participant's details here...." class="form-control w-100">
+                  [formControl]="searchField" placeholder="name, username or email" class="form-control w-100">
       </div>
     </form>
 
