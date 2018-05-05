@@ -9,26 +9,42 @@ export class AuthGuard implements CanActivate {
 
     public user:User;
 
-    constructor(private router:Router, private loginService:LoginService) {
+    constructor(private loginService:LoginService, public router: Router){
+    //constructor(private router:Router, private loginService:LoginService) {
 
     }
 
-    canActivate(route:ActivatedRouteSnapshot,
-                state:RouterStateSnapshot):Observable<boolean> {
-        console.log('entro en canActivate');
+    canActivate():boolean {
 
-        
+
         if (this.loginService.getPrincipal() !=null) {
             console.log("logeado");
             
-            return Observable.of(true);
+            return true;
         }
         else{
             console.log("no logueado");
 
-            this.router.navigate(['/login']);
-            return Observable.of(false);
+            this.router.navigate(['login']);
+            return false;
         }
+
+    // canActivate(route:ActivatedRouteSnapshot,
+    //             state:RouterStateSnapshot):Observable<boolean> {
+    //     console.log('entro en canActivate');
+
+        
+    //     if (this.loginService.getPrincipal() !=null) {
+    //         console.log("logeado");
+            
+    //         return Observable.of(true);
+    //     }
+    //     else{
+    //         console.log("no logueado");
+
+    //         this.router.navigate(['/login']);
+    //         return Observable.of(false);
+    //     }
         
         
         // .subscribe(isLogged =>{
