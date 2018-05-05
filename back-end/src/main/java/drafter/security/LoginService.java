@@ -66,8 +66,7 @@ public class LoginService implements UserDetailsService {
 		//Assert.assertTrue(principal instanceof UserAccount);
 		try {
 		result = findByEmailAndPassword(principal.toString()).getUserAccount();
-		} catch (Exception e){
-			throw new NullPointerException("Error login.");
+		} catch (NullPointerException e){
 		}
 		//Assert.assertNotNull(result);
 		//Assert.assertTrue(result.getId() != 0);
