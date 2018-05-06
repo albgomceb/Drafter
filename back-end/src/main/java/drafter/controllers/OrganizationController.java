@@ -53,13 +53,7 @@ public class OrganizationController {
 	
 	@PostMapping("/{userId}")
 	public OrganizationBean save(@PathVariable("userId") int userId, @RequestBody OrganizationBean organizationBean){
-//		Organization old = null;
-//		if(new Integer(organizationBean.getId()) > 0) { // Cojo la organización justo antes de ser modificada
-//			old = organizationService.findById(new Integer(organizationBean.getId()));
-//		}
-		
 		Organization result = organizationService.saveBean(organizationBean, userId);
-//		organizationService.deleteDepartment(organizationBean, result, old);
 		
 		OrganizationBean res = new OrganizationSerializer().fromOrganization(result);
 		

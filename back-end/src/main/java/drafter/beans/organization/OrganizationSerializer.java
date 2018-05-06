@@ -19,7 +19,7 @@ public class OrganizationSerializer {
 		OrganizationBean res = new OrganizationBean();
 		List<Option> depar = organization.getDepartments()
 			.stream()
-			.map(or -> new Option(new Integer(or.getId()).toString(),or.getName(),or.getUsers()))
+			.map(or -> new Option(new Integer(or.getId()).toString(),or.getName(),or.getWorkers()))
 			.collect(Collectors.toList());
 		res.setDepartments(depar);
 		res.setEnterprise(organization.getEnterprise());
@@ -47,9 +47,7 @@ public class OrganizationSerializer {
 		organization.setLogo(organizationBean.getLogo());
 		
 		Collection<Department> departments = new ArrayList<Department>();
-		if(organizationBean.id != null && new Integer(organizationBean.id) > 80) { // Si estoy editando
-			// TODO Cambiar eso 80, está puesto así para que no pete, el problema es que desde
-			// el front-end traigo los departamentos nuevos con un id mayor que 0... CORREGIR
+		if(organizationBean.id != null && new Integer(organizationBean.id) > 0) { // Si estoy editando
 			// For clásico para manterner el orden de los departamentos
 			for(int i=organizationBean.departments.size()-1; i >= 0 ; i--) {
 				int departmentId = new Integer(organizationBean.departments.get(i).getId());
@@ -63,16 +61,9 @@ public class OrganizationSerializer {
 				for(Option u: organizationBean.departments.get(i).users) {
 					User newUser = userService.findById(new Integer(u.id));
 					
-					// Meto en el listado de departamentos de ese usuario el nuevo departamento donde ahora pertenece
-					if(!newUser.getDepartments().contains(department)) {
-						List<Department> nuevaLista = newUser.getDepartments();
-						nuevaLista.add(department);
-						newUser.setDepartments(nuevaLista);
-					}
-					
 					users.add(newUser);
 				}
-				department.setUsers(users);
+				department.setWorkers(users);
 				
 				department.setOrganization(organization);
 				departments.add(department);
@@ -86,14 +77,9 @@ public class OrganizationSerializer {
 				for(Option u: d.users) {
 					User newUser = userService.findById(new Integer(u.id));
 					
-					// Meto en el listado de departamentos de ese usuario el nuevo departamento donde ahora pertenece
-					List<Department> nuevaLista = newUser.getDepartments();
-					nuevaLista.add(department);
-					newUser.setDepartments(nuevaLista);
-					
 					users.add(newUser);
 				}
-				department.setUsers(users);
+				department.setWorkers(users);
 				
 				department.setOrganization(organization);
 				departments.add(department);

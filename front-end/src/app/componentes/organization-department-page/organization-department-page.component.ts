@@ -56,7 +56,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       this.departments[0].id = 0;
       this.departments[0].isInput = true;
       this.departments[0].name = "";
-      this.counter = 1;
+      this.counter = -1;
       // Cogemos todos los usuarios de la base de datos
       this.userService.getUsers().subscribe(
         data => 
@@ -87,7 +87,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
           })
 
           this.departments = data.departments;
-          this.counter = this.departments.length + 1;
+          this.counter = -this.departments.length - 1;
           // Cogemos todos los usuarios que no están metidos para cada departamento
           this.userService.getUsers().subscribe(
             data => 
@@ -211,7 +211,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
     var length = this.departments.length;
     this.departments.push(new Department());
     this.departments[length].id = this.counter;
-    this.counter++;
+    this.counter--;
     this.departments[length].isInput = true;
     this.departments[length].name = "";
     this.departments[length].notAddedUsers = this.notAddedUsers;
