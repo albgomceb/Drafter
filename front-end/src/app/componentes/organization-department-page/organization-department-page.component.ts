@@ -39,7 +39,7 @@ export class OrganizationDepartmentPageComponent implements OnInit {
         enterprise: ['', Validators.compose([Validators.required]) ],
         description: ['', Validators.compose([Validators.required]) ],
         address: ['', Validators.compose([Validators.required]) ],
-        phone: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]+')]) ],
+        phone: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{9}')]) ],
         email: ['', Validators.compose([Validators.email]) ],
         logo: ['', Validators.compose([Validators.required, 
           Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')]) ]
