@@ -78,7 +78,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
                     if(part.name != this.loginService.getPrincipal().name && part.hasAttended==false){
                       
                       //CREAR CADA ALERTA PARA IR AGREGANDO AL DOM
-                      var alert = $( "<div class='alert alert-dismissible mt-2' style='position: relative;width:320px;left:50%;margin-left:-160px;margin: 0 auto;background-color: #4CAF50;color: #fff;border-radius:5px;text-align: center;border-color: #d0e9c6;'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>"+part.name+"</strong> has joined to meeting</div>" );
+                      var alert = $( "<div class='alert alert-dismissible mx-auto' style='width:20rem;background-color: #4CAF50;color: #fff;border-radius:5px;text-align: center;box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>"+part.name+"</strong> has joined to meeting</div>" );
                       $("#alerts").append(alert);
 
                       //IR ELIMINANDO ALERTAS CONFORME PASEN 4 SEG
@@ -97,7 +97,7 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
                     if(part.name != this.loginService.getPrincipal().name){
 
                       //CREAR CADA ALERTA PARA IR AGREGANDO AL DOM
-                      var alert = $( "<div class='alert alert-dismissible mt-2' style='position: relative;width:320px;left:50%;margin-left:-160px;margin: 0 auto;background-color: #ff9800;color: #fff;border-radius:5px;text-align: center;border-color: #d0e9c6;'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>"+part.name+"</strong> has left the meeting</div>" );
+                      var alert = $( "<div class='alert alert-dismissible mx-auto' style='width:20rem;background-color: #ff9800;color: #fff;border-radius:5px;text-align: center;box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>"+part.name+"</strong> has left the meeting</div>" );
                       $("#alerts").append(alert);
 
                       //IR ELIMINANDO ALERTAS CONFORME PASEN 4 SEG
