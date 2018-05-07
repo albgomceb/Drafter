@@ -17,8 +17,10 @@
       <p class="card-text">Space for organizations</p>
       <p class="card-text">Service & Support</p>
       <p class="card-price">€ {{licenses[0].price}} <small>per month</small></p>
-      <div id="paypal-checkout-btn"></div>
-      <p style="font-size:16px;color:white!important" *ngIf="paypalLoad">Paypal is loading...</p>                
+      <div *ngIf="getLoginService().isAuthenticated()">
+        <div id="paypal-checkout-btn"></div>
+        <p style="font-size:16px;color:white!important" *ngIf="paypalLoad">Paypal is loading...</p>
+      </div>
     </div>
   </div>
   <div class="card">
@@ -28,7 +30,7 @@
     <div class="card-body text-center">
       <p class="card-text">All enterprise services</p>
       <p class="card-text">Personalized service</p>
-      <button href="mailto:drafter.ispp.app@gmail.com" target="_top" class="btn">Contact us</button>
+      <a href="mailto:drafter.ispp.app@gmail.com?subject=Standalone%20version%20request" target="_top"><button type="button" class="btn">Contact us</button></a>
     </div>
   </div>
 </div>

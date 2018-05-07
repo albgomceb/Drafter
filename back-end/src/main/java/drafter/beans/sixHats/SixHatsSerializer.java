@@ -21,6 +21,7 @@ public class SixHatsSerializer {
 		
 		res.setHats(hats);
 		res.setMeetingId(sixHats.getId());
+		res.setSecondsLeft(getSecondsLeft(sixHats.getRoundTime()));
 		
 		return res;
 	}
@@ -40,9 +41,24 @@ public class SixHatsSerializer {
 		sixHats.setAgendas(meeting.getAgendas());
 		sixHats.setParticipants(meeting.getParticipants());
 		sixHats.setStatus(1);
+		if(sixHatsBean.getSecondsLeft() != null)
+			sixHats.setRoundTime(getRoundTime(sixHatsBean.getSecondsLeft()));
 		
 		sixHats.setHats(new HatSerializer().fromBean(sixHatsBean.getHats(), sixHats));
 		
 		return sixHats;
+	}
+	
+	private Integer getSecondsLeft(Date sixHatsDate) {
+		Integer res = null;
+		
+		if(sixHatsDate != null)
+			res = new Integer(Math.round((sixHatsDate.getTime() - new Date().getTime())));
+			
+		return res;
+	}
+	
+	private Date getRoundTime(int secondsLeft) {
+		return new Date(new Date().getTime() + (secondsLeft/1000));
 	}
 }

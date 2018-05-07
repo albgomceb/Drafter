@@ -11,7 +11,7 @@
         <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
           <input #input id="inp{{i}}" type="text" [(ngModel)]="entrada.description"  
                   *ngIf="entrada.isInput" (keyup.enter)="killFocus($event)" (focusout)="convert(entrada);"
-                  placeholder="Type your topic here..." required class="idea">
+                  placeholder="Type your topic here..." class="idea">
           <div #text{{i}} *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
             {{entradas.indexOf(entrada)+1}}. {{entrada.description}}
           </div>
@@ -37,5 +37,6 @@
 </div>
 
 <div class="text-center button-group"> 
-  <button (click)="saveAgenda(entradas)" class="btn">Create the meeting</button>
+  <button [disabled]="!(entradas.length > 0) || entradas[0].description == ''"
+    (click)="saveAgenda(entradas)" class="btn">Create the meeting</button>
 </div>

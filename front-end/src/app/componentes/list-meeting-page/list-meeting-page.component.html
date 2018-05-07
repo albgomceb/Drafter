@@ -2,10 +2,12 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">M</span>eetings
 </h1>
 
+<h2 *ngIf="meetingPagination.beans.length == 0" style="text-align: center">You have not had any meetings yet</h2>
+
 <div class="text-center">
   <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
       class="m-1"><button type="button" class="btn">Previous</button></a>
-  <span class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
+  <span *ngIf="meetingPagination.beans.length > 0" class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
   <a *ngIf="meetingPagination.hasNextPage" href="/meeting/list/{{userId}}/page/{{nextNumberOfPage}}"
      class="m-1"><button type="button" class="btn">Next</button></a>
 </div>
@@ -59,7 +61,7 @@
 <div class="text-center">
   <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
       class="m-1"><button type="button" class="btn">Previous</button></a>
-  <span class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
+  <span *ngIf="meetingPagination.beans.length > 0" class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
   <a *ngIf="meetingPagination.hasNextPage" href="/meeting/list/{{userId}}/page/{{nextNumberOfPage}}"
       class="m-1"><button type="button" class="btn">Next</button></a>
 </div>

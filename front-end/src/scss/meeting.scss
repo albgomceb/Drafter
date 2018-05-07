@@ -13,6 +13,7 @@ div.info-meeting-bar {
 
     @include media-breakpoint-down(md) {
         top: 3.75rem;
+        padding: 0.5rem;
     }
 
     span.timer {
@@ -22,6 +23,10 @@ div.info-meeting-bar {
         white-space: nowrap;
         overflow: hidden;
     }
+}
+
+div.info-meeting-header {
+    padding: 0rem 1rem !important;
 }
 
 div.meeting-wrapper {
@@ -36,7 +41,6 @@ div.meeting-wrapper-chat {
     }
 }
 
-/* BRAINSTORMING */
 div.ideas-container {
     div.ideas-title {
         padding: 0.75rem;
@@ -44,6 +48,10 @@ div.ideas-container {
         font-size: 1.2rem;
         font-weight: bolder;
         background-color: $mp_primary_color;
+
+        div.text-cap {
+            font-size: 2.5rem;
+        }
     }
 
     div.ideas-body {
@@ -70,7 +78,8 @@ div.ideas-container {
                     width: 80%;
                 }
     
-                input.idea {
+                input.idea,
+                textarea.idea {
                     padding: 0.3rem;
                 }
     
@@ -87,72 +96,111 @@ div.ideas-container {
                         height: 36px;
                     }
                 }
-    
-                ul.list-pros,
-                ul.list-cons {
-                    min-width: 20rem;
-                    list-style-type: none;
-                    border-collapse: collapse;
-                    padding: 0;
-    
-                    li {
-                        margin: 1rem 0;
-                        padding: 0.75rem;
-                        word-wrap: break-word;
+
+                div.pros-cons {
+                    width: 45%;
+
+                    @include media-breakpoint-down(md) {
+                        width: 100%;
+                    }
+
+                    ul.list-pros-cons {
+                        list-style-type: none;
+                        border-collapse: collapse;
+                        padding: 0;
+
+                        li {
+                            margin: 1rem 0;
+                            padding: 0.75rem;
+                            word-wrap: break-word;
+
+                            textarea {
+                                width: 100%;
+                                padding: 0.3rem;
+                                resize: none;
+                                overflow-y: auto;
+                            }
+
+                            div.idea {
+                                width: 100%;
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-}
 
-/* STANDARD */
-div.topic-container {
-    margin-bottom: 2rem;
-
-    div.topic {
-        width: 100%;
-        margin: 1em 0;
-        border: 1px solid $content_border;
-        padding: 0.2em;
-        background-color: white;
-        font-weight: bold;
-    
-        span {
-            float: left;
+        ul.list-ideas-6-hats {
+            display: flex;
+            flex-wrap: wrap;
+           
+            div.alert-danger {
+                @extend %border-danger;
+        
+                li {
+                    @extend %border-danger;
+                }
+            }
+        
+            div.alert-dark {
+                @extend %border-dark;
+        
+                li {
+                    @extend %border-dark;
+                }
+            }
+        
+            div.alert-primary {
+                @extend %border-primary;
+        
+                li {
+                    @extend %border-primary;
+                }
+            }
+        
+            div.alert-light {
+                @extend %border-light;
+        
+                li {
+                    @extend %border-light;
+                }
+            }
+        
+            div.alert-warning {
+                @extend %border-warning;
+        
+                li {
+                    @extend %border-warning;
+                }
+            }
+        
+            div.alert-success {
+                @extend %border-success;
+        
+                li {
+                    @extend %border-success;
+                }
+            }
+            
+            div.first-one {
+                order: 1;
+            }
+            div.not-first-one {
+                order: 2;
+            }
+            div.hat-container {
+                width: 100%;
+            }   
         }
     }
 
-    ul.input-container {
-        margin: 0;
-        border: 1px solid $content_border;
-        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
-        background-color: white;
-        word-wrap: break-word;
-    }
-}
-div.conclusion-container {
-    margin: 1rem 0;
-    border-bottom: 1px solid $content_border;
-    padding-bottom: 1rem;
-
-    div.conclusion-title {
-        padding: 0.75rem;
-        color: $mp_font_color;
-        font-weight: bolder;
-        background-color: $mp_primary_color;
+    div.rating-box {
+        width: 5rem;
     }
 
-    ul.conclusions {
-        padding-top: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-        background-color: $content_background_color_2;        
-
-        li.conclusion {
-            margin-bottom: 1rem;
-            word-wrap: break-word
-        }
+    div.gray-background {
+        color: black;
+        background-color: #d4d4d4 !important;
     }
 }
 
@@ -200,4 +248,89 @@ div.minutes-container {
         max-width: 9rem;
         margin: auto;
     }
+}
+
+/* 6 hats */
+.RED{
+    background-color: rgb(255, 126, 126);
+    border-style: solid;
+    border-color: rgb(161, 77, 77);
+
+    &-hat {
+        color: $red_hat;
+    }
+}
+
+.BLACK{
+    background-color: rgba(138, 138, 138, 0.76);
+    border-style: solid;
+    border-color: rgba(70, 70, 70, 0.425);
+
+    &-hat {
+        color: $black_hat;
+    }
+}
+
+.BLUE{
+    background-color:rgb(124, 185, 255);
+    border-style: solid;
+    border-color: rgb(76, 121, 172);
+
+    &-hat {
+        color: $blue_hat;
+    }
+}
+
+.WHITE{
+    background-color: white;
+    border-style: solid;
+    border-color: rgb(163, 163, 163);
+
+    &-hat {
+        color: $white_hat;
+    }
+}
+
+.YELLOW{
+    background-color: rgb(255, 255, 133);
+    border-style: solid;
+    border-color: rgb(179, 179, 26);
+
+    &-hat {
+        color: $yellow_hat;
+    }
+}
+
+.GREEN{
+    background-color: rgb(137, 173, 96);
+    border-style: solid;
+    border-color: rgb(66, 104, 24);
+
+    &-hat {
+        color: $green_hat;
+    }
+}
+
+%border-danger {
+    border-color: $red_hat_border !important;
+}
+
+%border-dark {
+    border-color: $black_hat_border !important;
+}
+
+%border-primary {
+    border-color: $blue_hat_border !important;
+}
+
+%border-light {
+    border-color: $white_hat_border !important;
+}
+
+%border-warning {
+    border-color: $yellow_hat_border !important;
+}
+
+%border-success {
+    border-color: $green_hat_border !important;
 }

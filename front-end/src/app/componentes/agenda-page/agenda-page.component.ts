@@ -4,6 +4,8 @@ import { Agenda } from '../models/agenda.model';
 import { AgendaService } from '../services/agenda.service'; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as $ from 'jquery';
+import { DynamicMeetingService } from '../services/dynamic-meeting.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'agenda-page',
@@ -13,7 +15,6 @@ import * as $ from 'jquery';
 
 export class AgendaPageComponent implements OnInit {
 
-  @ViewChildren('input') vc;
   public entradas: Array<Agenda>;
   public counter: number;
   public meetingId: number; 
@@ -24,11 +25,35 @@ export class AgendaPageComponent implements OnInit {
     private renderer : Renderer,
     private renderer2 : Renderer2,
     private elRef: ElementRef,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private meetingService: DynamicMeetingService,
+    private loginService: LoginService) { }
 
   ngOnInit() {
+    if(this.loginService.isAnonymous())
+      this.router.navigate(['login']);
+
     this.activatedRoute.params.subscribe((params: Params) => {
       this.meetingId = params['meetingId'];
+      this.meetingService.getMeetingInfo(this.meetingId).subscribe((meeting) => {
+        if(meeting.type != 'standard')
+          this.router.navigate(['meeting']);
+
+        // Ver si es el participante LEADER
+        if(meeting.attendants != undefined) {
+          for(var at of meeting.attendants) {
+            if(at.username == this.loginService.getPrincipal().username) {
+              if(at.role == 'LEADER')
+                return;
+              else
+                this.router.navigate(['home']);
+            }
+          }
+        }
+
+        // Sino
+        this.router.navigate(['meeting']);
+      }, error => this.router.navigate(['meeting']));
     });
     this.entradas=[];
     this.entradas.push(new Agenda());
@@ -51,13 +76,21 @@ export class AgendaPageComponent implements OnInit {
   }
 
   addAgenda(){
+    for(var a of this.entradas) {
+      if(a.isInput) {
+        this.setFocus();
+        return;
+      }
+    }
+
     var length = this.entradas.length;
     this.entradas.push(new Agenda());
     this.entradas[length].id = this.counter;
     this.counter++;
     this.entradas[length].isInput = true;
     this.entradas[length].description = "";
-    this.lastFocus();
+
+    this.setFocus();
   } 
 
   removeAgenda(entrada : Agenda, entradasIndex : number){    
@@ -111,12 +144,6 @@ export class AgendaPageComponent implements OnInit {
     }
 
     return res;
-  }
-
-  lastFocus(){
-    this.vc.changes.subscribe(elements => {
-      elements.last.nativeElement.focus();
-    });
   }
   
 }

@@ -4,6 +4,7 @@ import { MeetingService } from '../services/meeting.service';
 import { MeetingPagination } from '../models/meetingPagination.model';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { Meeting } from '../models/meeting.model';
 
 
 @Component({
@@ -37,6 +38,9 @@ export class ListMeetingPageComponent implements OnInit {
     });
 
     this.today = new Date().getTime();
+    var meetings = new Array<Meeting>();
+    this.meetingPagination = new MeetingPagination();
+    this.meetingPagination.beans = meetings;
 
     this.meetingService.getMeetingsByUser(this.userId, this.numberOfPage).subscribe(
       data => 

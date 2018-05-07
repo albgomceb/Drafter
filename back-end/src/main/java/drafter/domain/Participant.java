@@ -18,9 +18,7 @@ public class Participant extends DomainEntity{
 	
 	private String role; 
 	private boolean hasAttended; 
-	
-	
-	
+	private Boolean showNotification;
 	
 	
 	//Constructor----------------------------------------
@@ -50,11 +48,15 @@ public class Participant extends DomainEntity{
 		this.hasAttended = hasAttended;
 	}
 
-	
+	public Boolean getShowNotification() {
+		return showNotification;
+	}
 
+	public void setShowNotification(Boolean showNotification) {
+		this.showNotification = showNotification;
+	}
 	
 	// Relationships-------------------------------------
-
 	private Department department; 
 	private User user; 
 	private Meeting meeting; 

@@ -7,7 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import drafter.beans.organization.OrganizationBean;
+import drafter.beans.organization.OrganizationSerializer;
 import drafter.domain.Organization;
+import drafter.domain.User;
 import drafter.repositories.OrganizationRepository;
 
 @Service
@@ -18,7 +21,13 @@ public class OrganizationService {
 
 	@Autowired
 	private OrganizationRepository	organizationRepository;
+	
+	@Autowired
+	private UserService	userService;
 
+	@Autowired
+	private DepartmentService departmentService;
+	
 	//Service---------------------------------------------------------------------------------
 
 	
@@ -54,10 +63,20 @@ public class OrganizationService {
 		return organizationRepository.save(organization);
 	}
 
+	public Organization saveBean(OrganizationBean organizationBean, int userId) {
+		User user = userService.findById(new Integer(userId));
+		User userLogued = userService.findByPrincipal();
+		if(!userLogued.equals(user)) {
+			return null;
+		}
+		
+		return save(new OrganizationSerializer().fromBean(organizationBean, user, userService, this, departmentService));
+	}
 
 	//Other business Methods-----------------------------------------------------------------------------
 
 	public List<Organization> findByUserId(int userId) {
 		return organizationRepository.findByUserId(userId);
 	}
+
 }

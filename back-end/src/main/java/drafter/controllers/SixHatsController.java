@@ -3,6 +3,7 @@ package drafter.controllers;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,6 @@ public class SixHatsController {
 	@Autowired
 	private SimpMessagingTemplate template;
 	
-
 	@GetMapping("/{meetingId}")
 	public SixHatsBean findMeeting(@PathVariable("meetingId")Integer meetingId) {
 		SixHats res = this.sixHatsService.findById(meetingId);
@@ -61,6 +61,7 @@ public class SixHatsController {
 			res = sixHatsService.create(res);
 
 		}
+		res.setHats(new ArrayList<Hat>(new HashSet<Hat>(res.getHats())));
 		for(Hat hat : res.getHats()) {
 			List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hat.getHatConclusions());
 			conclusions.sort(new Comparator<HatConclusion>() {
@@ -73,7 +74,8 @@ public class SixHatsController {
 			});
 			hat.setHatConclusions(conclusions);
 			
-		}
+		}		
+		
 		SixHatsBean result = new SixHatsSerializer().fromSixHats(res);
 
 		return result;
@@ -84,7 +86,7 @@ public class SixHatsController {
 		Meeting meeting = sixHatsService.findById(new Integer(meetingId));
 		SixHats result = new SixHatsSerializer().fromBean(sixHats, meeting);
 		result.setHats(hatService.reassignHats(result));
-		sixHatsService.save(result);
+		result = sixHatsService.save(result, false);
 		result.getHats().stream()
 						.forEach(hat -> hatService.save(hat));
 		SixHatsBean res =new SixHatsSerializer().fromSixHats(result);
@@ -103,31 +105,34 @@ public class SixHatsController {
 			
 			HatConclusion hatConclusion = new HatConclusionSerializer().fromBean(hat, bean.getModel());
 			List<HatConclusion> conclusions = new ArrayList<HatConclusion>(hat.getHatConclusions());
-			if(hatConclusion.getId() <= 0) {
+			
+		
+			Integer index = null;
+			if(hatConclusion.getId() == 0) {
 				conclusions.add(hatConclusion);
-				hat.setHatConclusions(conclusions);
-				hatService.save(hat);
-				hatConclusion = hatConclusionService.save(hatConclusion);
 			}
 			else {
-				Integer index = null;
-				for(HatConclusion conclusion : conclusions) {
-					if(conclusion.getId() == hatConclusion.getId()) {
-						index = conclusions.indexOf(conclusion);
-						break;
+				if(conclusions.isEmpty())
+					index = 0;
+				else {
+					for(HatConclusion conclusion : conclusions) {
+						if(conclusion.getId() == hatConclusion.getId()) {
+							index = conclusions.indexOf(conclusion);
+							break;
+						}
 					}
 				}
-				
+			
 				if(index != null) {
 					conclusions.add(index, hatConclusion);
-					hat.setHatConclusions(conclusions);
-					hatService.save(hat);
-					hatConclusion = hatConclusionService.save(hatConclusion);
 				}
 				else {
 					throw new IllegalArgumentException("Non belonging conclusion to the hat with ID="+hat.getId()+".");
 				}
 			}
+			hat.setHatConclusions(conclusions);
+			//hatService.save(hat);
+			hatConclusion = hatConclusionService.save(hatConclusion);
 			
 			bean.setModel(new HatConclusionSerializer().fromConclusion(hatConclusion));
 			template.convertAndSend("/meeting/" + meetingId, bean);
@@ -146,8 +151,9 @@ public class SixHatsController {
 	@MessageMapping("/sixHats/reassign/{meetingId}")
 	public void reassign(@DestinationVariable int meetingId,ModelBean<Option> data) {
 		SixHats meeting = sixHatsService.findById(new Integer(meetingId));
+		meeting.setHats(new ArrayList<Hat>(new HashSet<Hat>(meeting.getHats())));
 		meeting.setHats(hatService.reassignHats(meeting));
-		sixHatsService.save(meeting);
+		sixHatsService.save(meeting, false);
 		meeting.getHats().stream()
 						.forEach(hat -> hatService.save(hat));
 		SixHatsBean res =new SixHatsSerializer().fromSixHats(meeting);

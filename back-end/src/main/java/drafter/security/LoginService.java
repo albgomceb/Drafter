@@ -46,7 +46,7 @@ public class LoginService implements UserDetailsService {
 	}
 
 	public UserAccount getPrincipal() {
-		UserAccount result;
+		UserAccount result = null;
 		SecurityContext context;
 		Authentication authentication;
 		Object principal;
@@ -64,7 +64,10 @@ public class LoginService implements UserDetailsService {
 		//Assert.assertNotNull(authentication);
 		principal = authentication.getPrincipal();
 		//Assert.assertTrue(principal instanceof UserAccount);
+		try {
 		result = findByEmailAndPassword(principal.toString()).getUserAccount();
+		} catch (NullPointerException e){
+		}
 		//Assert.assertNotNull(result);
 		//Assert.assertTrue(result.getId() != 0);
 

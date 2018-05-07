@@ -14,6 +14,7 @@ import { ListMeetingPageComponent } from './componentes/list-meeting-page/list-m
 import { ListOrganizationDepartmentPageComponent } from './componentes/list-organization-department-page/list-organization-department-page.component';
 import { IdeasProsConsComponent } from './componentes/meetings/brainstorming/ideas-pros-cons/ideas-pros-cons.component';
 import { PricingComponent } from './componentes/pricing/pricing.component';
+import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
 
 import { IdeasCreateComponent } from './componentes/meetings/brainstorming/ideas-create/ideas-create.component';
 import { IdeaVotePageComponent } from './componentes/meetings/brainstorming/idea-vote-page/idea-vote-page.component';
@@ -21,25 +22,29 @@ import { VideoconferencesComponent } from './componentes/videoconferences/videoc
 import { PaymentSuccessPageComponent } from './componentes/payment-success-page/payment-success-page.component';
 import { ProfilePageComponent } from './componentes/profile-page/profile-page.component';
 import { EditProfilePageComponent } from './componentes/edit-profile-page/edit-profile-page.component';
+import { NotificationsPageComponent } from './componentes/notifications-page/notifications-page.component';
+import { AuthGuard } from './security/auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'pricing',component: PricingComponent},
+  {path: 'legal',component: LegalPageComponent},
   {path: 'success',component: PaymentSuccessPageComponent},
-  {path: 'meeting', component: MeetingPageComponent},
+  {path: 'meeting', component: MeetingPageComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginPageComponent},
   {path: 'register', component: RegisterPageComponent},
   {path: 'home', component: HomePageComponent},
-  {path: 'meeting/:id', component: DynamicMeetingComponent},
-  {path: 'minutes/:id', component: DynamicMinutesComponent},
-  {path: 'agenda/:meetingId', component: AgendaPageComponent},
-  {path: 'organization-department/:organizationId', component: OrganizationDepartmentPageComponent},
-  {path: 'meeting/list/:userId/page/:p', component: ListMeetingPageComponent},
-  {path: 'organization/list/:userId', component: ListOrganizationDepartmentPageComponent},
-  {path: 'ideas', component: IdeasCreateComponent},
-  {path: 'callings/:id',component: VideoconferencesComponent},
-  { path: 'me', component: ProfilePageComponent },
-  { path: 'me/edit', component: EditProfilePageComponent },
+  {path: 'notifications',component: NotificationsPageComponent, canActivate: [AuthGuard]},
+  {path: 'meeting/:id', component: DynamicMeetingComponent, canActivate: [AuthGuard]},
+  {path: 'minutes/:id', component: DynamicMinutesComponent, canActivate: [AuthGuard]},
+  {path: 'agenda/:meetingId', component: AgendaPageComponent, canActivate: [AuthGuard]},
+  {path: 'organization-department/:organizationId', component: OrganizationDepartmentPageComponent, canActivate: [AuthGuard]},
+  {path: 'meeting/list/:userId/page/:p', component: ListMeetingPageComponent, canActivate: [AuthGuard]},
+  {path: 'organization/list/:userId', component: ListOrganizationDepartmentPageComponent, canActivate: [AuthGuard]},
+  {path: 'ideas', component: IdeasCreateComponent, canActivate: [AuthGuard]},
+  {path: 'callings/:id',component: VideoconferencesComponent, canActivate: [AuthGuard]},
+  { path: 'me', component: ProfilePageComponent, canActivate: [AuthGuard]},
+  { path: 'me/edit', component: EditProfilePageComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundPageComponent}
 
   //FALTA ACTUALIZAR ESTA PARTE - TEMA DE AUTH.GUARD

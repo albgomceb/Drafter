@@ -26,7 +26,7 @@ public class User extends Actor	{
 	
 	@NotNull
 	@Valid
-	@ManyToMany
+	@ManyToMany(mappedBy="workers")
 	public List<Department> getDepartments() {
 		return departments;
 	}

@@ -1,5 +1,5 @@
-<div>
-    <div class="text-center" *ngIf = "principal.role === 'LEADER'">
+<div *ngIf="loaded">
+    <div class="text-center" *ngIf = "principal != undefined && principal.role === 'LEADER'">
         <button (click)="next()" class="btn">Next step</button>
     </div>
 </div>

@@ -113,6 +113,12 @@ div.card {
         }
     }
 
+    div.card-body-2 {
+        max-width: 9rem;
+        padding: 0 0.5rem;
+        word-wrap: break-word;
+    }
+
     @include media-breakpoint-down(md) {
         margin: 1.5rem 0.3rem;
     }
@@ -128,6 +134,12 @@ img.logo {
 }
 
 img.avatar {
-    max-width: 3.75rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    border: 2px solid $mp_secondary_color;
     border-radius: 50%;
+}
+
+img.not-present {
+    border: 2px solid red !important;
 }

@@ -1,16 +1,13 @@
-<h4 class="text-center">Type your ideas</h4>
-
 <div class="ideas-container">
   <div class="ideas-title">
-    Ideas
+    Step 1: Proposing ideas
   </div> 
   <div class="ideas-body">
     <ul class="list-ideas">
         <li *ngFor="let entrada of entradas; let i=index" class="d-flex justify-content-between">
           <input type="text" [(ngModel)]="entrada.text" 
-                 *ngIf="entrada.isInput" (keyup.enter)="killFocus($event)" 
-                 placeholder="Type your idea here..." required class="idea" 
-                 (focusout)="convert(entrada)">
+                 *ngIf="entrada.isInput" (keyup.enter)="killFocus($event)" (focusout)="convert(entrada)"
+                 placeholder="Type your idea here..." class="idea">
           <div *ngIf="!entrada.isInput" (click)="convert(entrada)" class="idea">
             {{entrada.text}}
           </div>
@@ -34,8 +31,7 @@
     </div>
   </div>
 </div>
-
-<div class="text-center">
+<div *ngIf="participant != undefined && participant.role=='LEADER'" class="text-center">
   <!-- <button type="button" >Skip this step</button> -->
   <button  (click)="next()" class="btn">Next step</button>
 </div>

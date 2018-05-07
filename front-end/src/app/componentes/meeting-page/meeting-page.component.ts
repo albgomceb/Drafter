@@ -1,7 +1,7 @@
+import { User } from './../models/user.model';
 import { NgModule, Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { OrganizationService } from '../services/organization.service';
-import { User } from '../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Meeting } from '../models/meeting.model';
@@ -28,7 +28,6 @@ export class MeetingPageComponent implements OnInit {
   hideme=[]
   searchField: FormControl;
   loading: boolean = false;
-  exist:boolean = false;
 
   users: Array<User>;
 
@@ -122,6 +121,14 @@ export class MeetingPageComponent implements OnInit {
         }
 
       }
+  }
+
+  exists(user:User){
+    if(!this.thumbnail.find(x => x.id === user.id.toString())){
+      return false
+    }else{
+      return true;
+    }
   }
 
   removeAttendant(attendant:User){

@@ -2,6 +2,8 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">O</span>rganizations
 </h1>
 
+<h2 *ngIf="organizations.length == 0" style="text-align: center">You do not belong to any organization</h2>
+
 <div *ngFor="let organization of organizations; let i=index">
   <div class="item-wrapper mx-auto">
     <div class="content-wrapper">

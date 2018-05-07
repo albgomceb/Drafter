@@ -7,7 +7,7 @@
     <div class="col-lg-6 col-md-12 form-group">
       <label for="enterprise">Enterprise</label>
       <div *ngIf="frmRegistro.get('enterprise').errors" class="alert alert-danger">Required</div>
-      <input [(ngModel)]="organization.enterprise" type="text" name="enterprise" id="enterprise" formControlName="enterprise" class="form-control">
+      <input type="text" name="enterprise" id="enterprise" formControlName="enterprise" class="form-control">
     </div>
     <div class="col-lg-6 col-md-12 form-group">
       <label for="logo">Logo (URL)</label>
@@ -19,7 +19,7 @@
           Must be a correct URL (http:// or https://)
         </div>
       </div>
-      <input [(ngModel)]="organization.logo" type="text" name="logo" id="logo" formControlName="logo" class="form-control">
+      <input type="text" name="logo" id="logo" formControlName="logo" class="form-control">
     </div>
   </div>
   <div class="row"> 
@@ -30,17 +30,17 @@
           Required
         </div>
         <div *ngIf="frmRegistro.get('phone').errors['pattern']" class="alert alert-danger">
-          Must be numeric
+          Must be a phone number
         </div>
       </div>
-      <input [(ngModel)]="organization.phone" type="text" name="phone" id="phone" formControlName="phone" class="form-control">
+      <input type="text" name="phone" id="phone" formControlName="phone" class="form-control">
     </div>       
     <div class="col-lg-6 col-md-12 form-group">
       <label for="email">Email</label>
       <div *ngIf="frmRegistro.get('email').errors" class="alert alert-danger">
         Must be a correct email format
       </div>
-      <input [(ngModel)]="organization.email" type="email" name="email" id="email" formControlName="email" class="form-control">
+      <input type="email" name="email" id="email" formControlName="email" class="form-control">
     </div>
   </div>
   <div class="form-group">
@@ -48,70 +48,108 @@
     <div *ngIf="frmRegistro.get('address').errors" class="alert alert-danger">
       Required
     </div>
-    <textarea id="address" name="address" rows="4" [(ngModel)]="organization.address" formControlName="address" class="form-control desc-input"></textarea>
+    <textarea id="address" name="address" rows="4" formControlName="address" class="form-control desc-input"></textarea>
   </div>
   <div class="form-group">
     <label for="description">Description</label>
     <div *ngIf="frmRegistro.get('description').errors" class="alert alert-danger">
        Required
     </div>
-    <textarea id="description" name="description" rows="4" [(ngModel)]="organization.description" formControlName="description" class="form-control desc-input"></textarea>
+    <textarea id="description" name="description" rows="4" formControlName="description" class="form-control desc-input"></textarea>
   </div>
+</form>
 
-  <div class="form-group">    
-    <h2 class="text-center m-4">Departments</h2>
-    <table class="table table-hover">
-      <div *ngFor="let department of departments; let i=index">
-        <tr>
-          <td>{{departments.indexOf(department)+1}}.&nbsp;</td>
-          <td style ="width: 100%">
-            <input class="col-12" type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
-            (keyup.enter)="convert(department); addDepartment()" placeholder="Department name" required/>
-          <div *ngIf="!department.isInput" (click)="convert(department)">{{department.name}}</div></td>
-          <td><button *ngIf="i!=0" (click)="removeDepartment(department, i)" class="btn bt-lg">Remove</button></td>
-          <td><div *ngIf="!checkNotBlank(department.name) && i==0" style="color: red; text-align: center">Required</div></td>
-        </tr>
+<div class="text-center my-3">
+  <div *ngIf="organizationId > 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Save changes</button>
+      <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn">Cancel</button>
+  </div>
+  <div *ngIf="organizationId == 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Create organization and department</button>
+      <button routerLink="/home" class="btn">Cancel</button>
+  </div>
+</div>
 
-        <tr>
-          <label>Select the department participants:</label>
-            <div class="list-group">
-              <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
-              <div *ngIf="errorListUsers" class="errorList">
-                <img src="../../../assets/img/warning_turq.png" width="20%" />
-                <h4>505 Internal Server Error</h4>
-                <h6>Try again later</h6>
-              </div>
+<h1 class="title-page text-center mt-4">
+  <span class="capital-letter">D</span>epartments
+</h1>
 
-              <div *ngFor="let us of department.notAddedUsers; let j = index">
-                  <a class="list-group-item list-group-item-action">
-                    <button type="button" (click)="addUser(us, department, i)" class="btn bt-lg mr-1 add">Add</button>
-                    <img src="{{us.photo}}" width="18%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
-                  </a>
-              </div>
+<div class="departments">
+    <div *ngFor="let department of departments; let i=index" class="department my-3">
+
+        <!-- Lista de añadidos -->
+        <div class="d-flex justify-content-between">
+          <input type="text" [(ngModel)]="department.name" name="depart" *ngIf="department.isInput" (focusout)="convert(department)"
+                 (keyup.enter)="convert(department); addDepartment()" placeholder="Type the department here..." class="w-75">
+          <div *ngIf="!department.isInput" (click)="convert(department)" class="text-truncate w-75">
+            <span class="align-bottom font-weight-bold">{{department.name}}</span>
+          </div>
+          <div class="text-right">
+            <button *ngIf="department.isInput" (click)="convert(department); addDepartment()" class="btn">
+                <i class="fas fa-check"></i>
+            </button>
+            <button *ngIf="!department.isInput" (click)="convert(department)" class="btn">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button (click)="removeDepartment(department, i)" class="btn">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Buscador -->
+        <div class="search-users form-group my-3 w-100">
+          <input placeholder="Search for participants..." type="text" id="search" name="search" class="form-control" (keyup)="search(department);" [formControl]="searchField">
+        </div>
+
+        <div class="row mb-3">
+          <!-- Lista de todos los usuaruios posibles para añadir -->
+          <div class="list-group mb-3" class="col-12 col-md-6 list-employee">
+            <div class="text-center font-weight-bold my-1 p-1 title-list-employee">
+                <h3 class="text-truncate">Candidates</h3>
             </div>
-
-        <td>
-          <div class="list-group">
-            <h4 *ngIf="department.users == null">Add user...</h4>
-            <div *ngFor="let us of department.users; let j = index">
-              <a class="list-group-item list-group-item-action">
-                <button type="button" (click)="deleteUser(us, department, i)" class="btn bt-lg mr-1 add">Remove</button>
-                <img src="{{us.photo}}" width="8%" /><span class="employed"> {{us.name}} <span class="organization" *ngFor="let d of us.departments">{{d.organization}}</span><span class="department" *ngFor="let d of us.departments"> ({{d.name}})</span></span>
+            <span *ngIf="errorListUsers==false && department.notAddedUsers==null" class="errorList">Loading...</span>
+            <div *ngIf="errorListUsers" class="errorList">
+              <img src="../../../assets/img/warning_turq.png" width="20%" />
+              <h4>505 Internal Server Error</h4>
+              <h6>Try again later</h6>
+            </div>
+            <div *ngFor="let us of department.notAddedUsers; let j = index">
+              <a class="list-group-item list-group-item-action" (click)="addUser(us, department, i)">
+                <img src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <span class="employed">{{us.name}} {{us.surname}}</span>
               </a>
             </div>
           </div>
-        </td>
-        </tr>
 
-      </div>
-    </table>
-    <div class="text-center">
-      <button type="button" (click)="addDepartment()" class="btn btn-success btn-circle btn-lg">Add department</button>
+          <!-- Lista de añadidos -->
+          <div class="list-group mb-3" class="col-12 col-md-6 list-employee">
+            <div class="text-center font-weight-bold my-1 p-1 title-list-employee">            
+              <h3 class="text-truncate">Employees</h3>
+            </div>
+            <h4 *ngIf="department.users == null">Add user...</h4>
+            <div *ngFor="let us of department.users; let j = index">
+              <a class="list-group-item list-group-item-action" (click)="deleteUser(us, department, i)">
+                <img src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <span class="employed">{{us.name}} {{us.surname}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
     </div>
-    
+  <div class="text-center">
+    <button type="button" (click)="addDepartment()" class="btn">Add department</button>
+  </div>  
+</div>
+
+<div class="text-center my-3">
+  <div *ngIf="organizationId > 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Save changes</button>
+      <button *ngIf="organizationId > 0" routerLink="/organization/list/{{userId}}" class="btn">Cancel</button>
   </div>
-  <div style="margin:2%;text-align:center">
-    <button (click)="saveOrganization(departments, organization)" [disabled]="!frmRegistro.valid" class="btn bt-lg">Create organization and department</button>
-    <button routerLink=".." class="btn bt-lg">Cancel</button>
+  <div *ngIf="organizationId == 0">
+      <button (click)="saveOrganization(departments, frmRegistro)" [disabled]="!frmRegistro.valid" class="btn">Create organization and department</button>
+      <button routerLink="/home" class="btn">Cancel</button>
   </div>
-</form>
+</div>
