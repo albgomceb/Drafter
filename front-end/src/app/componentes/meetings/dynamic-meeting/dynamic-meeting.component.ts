@@ -86,26 +86,35 @@ export class DynamicMeetingComponent implements OnInit, OnDestroy {
               this.realtimeService.registerOnJoinUser((name,uuid) => {
                 let part = this.meetingInfo.attendants.find(att => att.username == name);
                   if(part) {
-                    var scope = this;
-                    if(part.name != this.loginService.getPrincipal().name){
-                      this.joinAttendant =  part.name;
+                    if(part.name != this.loginService.getPrincipal().name && part.hasAttended==false){
+                      
+                      //CREAR CADA ALERTA PARA IR AGREGANDO AL DOM
+                      var alert = $( "<div class='alert alert-dismissible mx-auto' style='width:20rem;background-color: #4CAF50;color: #fff;border-radius:5px;text-align: center;box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>"+part.name+"</strong> has joined to meeting</div>" );
+                      $("#alerts").append(alert);
+
+                      //IR ELIMINANDO ALERTAS CONFORME PASEN 4 SEG
                       setTimeout(function(){
-                        scope.joinAttendant = null;
-                      },3000);
+                        alert.remove();
+                      },4000);
+
                     }
                   }
                 });
 
-              //ALERT ON LEFT
+              //ALERT ON LEAVE
               this.realtimeService.registerOnLeaveUser((name,uuid) => {
                 let part = this.meetingInfo.attendants.find(att => att.username == name);
                   if(part) {
-                    var scope = this;
                     if(part.name != this.loginService.getPrincipal().name){
-                      this.leftAttendant =  part.name;
+
+                      //CREAR CADA ALERTA PARA IR AGREGANDO AL DOM
+                      var alert = $( "<div class='alert alert-dismissible mx-auto' style='width:20rem;background-color: #ff9800;color: #fff;border-radius:5px;text-align: center;box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>"+part.name+"</strong> has left the meeting</div>" );
+                      $("#alerts").append(alert);
+
+                      //IR ELIMINANDO ALERTAS CONFORME PASEN 4 SEG
                       setTimeout(function(){
-                        scope.leftAttendant = null;
-                      },3000);
+                        alert.remove();
+                      },4000);
                     }
                   }
                 });
