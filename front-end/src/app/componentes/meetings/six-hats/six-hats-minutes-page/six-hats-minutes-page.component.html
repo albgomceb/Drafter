@@ -51,10 +51,10 @@
         Conclusions
     </div>
     <div class="minutes-container">
-        <div *ngFor="let hat of sixHats.hats" class="point-container">
-            <h4>{{hat.color}} HAT</h4>
+        <div *ngFor="let hat of sixHats.hats" class="alert m-3" [ngClass]="'alert-'+hatContainer.get(hat.color)">
+            <h4><i class="fas fa-graduation-cap"></i> {{hat.color}} HAT</h4>
             <ul>
-                <li *ngFor="let conclusion of hat.hatConclusions">{{conclusion.text}}</li>
+                <li *ngFor="let conclusion of hat.hatConclusions" class="mt-1">{{conclusion.text}}</li>
             </ul>
         </div>
     </div>
