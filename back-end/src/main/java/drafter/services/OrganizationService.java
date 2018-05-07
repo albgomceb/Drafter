@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import drafter.beans.organization.OrganizationBean;
 import drafter.beans.organization.OrganizationSerializer;
-import drafter.domain.Department;
 import drafter.domain.Organization;
 import drafter.domain.User;
 import drafter.repositories.OrganizationRepository;
@@ -78,37 +77,6 @@ public class OrganizationService {
 
 	public List<Organization> findByUserId(int userId) {
 		return organizationRepository.findByUserId(userId);
-	}
-
-	public void deleteDepartment(OrganizationBean organizationBean, Organization result, Organization old) {
-
-		// Tengo un problema y es que tanto result como old vienen pruneados y no puede acceder a sus list
-		// TODO En el caso de que se haya eliminado un usuario de un departamento, tenemos que
-		// reflejarlo en su lista de departamentos quitando ese departamento
-		if(new Integer(organizationBean.getId()) > 0) {
-			for(Department dOld: old.getDepartments()) { 		// Recorro la vieja organización
-				if(!result.getDepartments().contains(dOld)) { 	// Si se ha eliminado un departamento
-					for(User uOld: dOld.getUsers()) { 			// Cojo los usuarios que estaban dentro
-						List<Department> listDe = uOld.getDepartments();
-						listDe.remove(dOld);  					// Y les quito ese departamento de su lista de departamentos
-						uOld.setDepartments(listDe);
-						userService.save(uOld);
-					}
-				} else { // En caso de que no se haya eliminado el departamento
-					for(Department dNew: result.getDepartments()) {
-						for(User uOld: dOld.getUsers()) {
-							if(!dNew.getUsers().contains(uOld)) { // Compruebo si se han eliminado miembros
-								List<Department> listDe = uOld.getDepartments();
-								listDe.remove(dNew); 			// Y les quito ese departamento de su lista de departamentos
-								uOld.setDepartments(listDe);
-								userService.save(uOld);
-							}
-						}
-					}
-				}
-			}
-		}
-		
 	}
 
 }
