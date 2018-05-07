@@ -117,7 +117,15 @@
                         <p><i class="fas fa-graduation-cap"></i> Blue hat</p>
                         <p>It controls the rest of the hats; it controls the timing and order of the hats.</p>
                     </div>
-                </div>                
+                </div>
+                <div *ngIf="meetingInfo.type === 'brainstorming'">
+                    A brainstorming meeting consists of three steps:
+                    <ol class="mt-2">
+                        <li> Participants will freely contribute ideas on a topic proposed by the session leader.</li>
+                        <li> Participants will contribute pros and cons on the ideas provided in the previous step. This will make it possible to study these ideas.</li>
+                        <li> Participants will rate each of the ideas with a value between 1 and 10 based on the pros and cons provided in the previous step.</li>
+                    </ol>                    
+                </div>              
             </div>
         </div>
         <waiting-room  *ngIf= "meetingInfo.status == 0" [meetingId]= "meetingId" [meetingInfo] = "meetingInfo" (nextStep)="nextStep($event)"></waiting-room>
