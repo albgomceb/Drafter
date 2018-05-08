@@ -50,7 +50,7 @@ export class IdeaVotePageComponent implements OnInit {
 
     this.votes = new Array<Vote>();
     var realTime = () => {
-      if(lock != 2)
+      if (lock != 2)
         return;
 
       this.realTimeService.connect(this.meetingId, () => {
@@ -68,10 +68,21 @@ export class IdeaVotePageComponent implements OnInit {
   }
 
   save() {
-    this.voteService.saveVote(this.votes).subscribe(res => {
-    });
-    this.hasVoted=true;
+    if (!this.validVotes()) {
+      alert("Vote values must be between 1 and 10");
+      return false;
+    }else{
+      this.voteService.saveVote(this.votes).subscribe(res => {
+      });
+      this.hasVoted = true;
+    }
   }
+  validVotes(){
+    let res=true;
+    this.votes.forEach(v=>{if (v.value == null || v.value < 1 || v.value > 10){res= false;}})
+    return res;
+  }
+
   finish() {
     this.finishMeeting.emit(this.meetingId);
   }
