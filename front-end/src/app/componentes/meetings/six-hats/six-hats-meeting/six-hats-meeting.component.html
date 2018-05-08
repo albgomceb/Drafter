@@ -42,11 +42,11 @@
         outside the box.
       </span>
     </div>
-    <div *ngIf="currentParticipant.role=='LEADER'" class="text-center mb-3">
+    <div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'" class="text-center mb-3">
       <button class="btn" (click)="saveSixHats()">
-        <i class="fas fa-recycle"></i> Reassign</button>
+      <i class="fas fa-recycle"></i> Reassign</button>
       <button ngConfirm [title]="'Finish Meeting Confirmation'" [message]="'You are about to end the meeting, are you sure?'" [options]="options"
-        (onConfirm)="finish()" (onCancel)="cancel()" class="btn">Finish</button>
+      (onConfirm)="finish()" (onCancel)="cancel()" class="btn">Finish</button>
     </div>
     <!-- Conclusions -->
     <ul class="list-ideas list-ideas-6-hats">
@@ -93,7 +93,7 @@
   </div>
 </div>
 
-<div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'">
+<div *ngIf="currentParticipant != undefined && currentParticipant.role=='LEADER'" class="text-center mb-3">
   <button class="btn" (click)="saveSixHats()">
     <i class="fas fa-recycle"></i> Reassign</button>
   <button ngConfirm [title]="'Finish Meeting Confirmation'" [message]="'You are about to end the meeting, are you sure?'" [options]="options"

@@ -45,7 +45,7 @@ public class Department extends DomainEntity{
 	
 
 	private Organization organization; 
-	private List<User> users; 
+	private List<User> workers; 
 	
 	@NotNull
 	@Valid
@@ -64,14 +64,14 @@ public class Department extends DomainEntity{
 
 	@Valid
 	@ManyToMany
-	public List<User> getUsers() {
-		return users;
+	public List<User> getWorkers() {
+		return workers;
 	}
 
 
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setWorkers(List<User> workers) {
+		this.workers = workers;
 	}
 
 	

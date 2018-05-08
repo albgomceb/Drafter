@@ -1,19 +1,11 @@
 <div *ngIf="loaded">
-    <!-- Attendant connected -->
-    <div *ngIf="joinAttendant!=null" class="alert alert-dismissible alert-join mt-5" >
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>{{joinAttendant}}</strong> has joined to meeting
-    </div>
-    <!-- Attendant disconnected -->
-    <div *ngIf="leftAttendant!=null" class="alert alert-dismissible alert-left mt-5">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>{{leftAttendant}}</strong> has left the meeting
-    </div>
+    <!-- User connection alerts -->
+    <div id="alerts"></div>
     <!-- Info meeting bar -->
     <div class="info-meeting-bar shadow">
         <div class="container d-flex justify-content-between">
             <!-- Timer -->
-            <span *ngIf="meetingInfo.status == 0" class="font-weight-bold">
+            <span *ngIf="meetingInfo.status == 0" class="font-weight-bold text-info-meeting-bar">
                 Waiting room
             </span>
             <chronometer *ngIf="meetingInfo.status > 0" [meetingId]="meetingId" (change)="changeChronometer($event)"></chronometer>
@@ -72,7 +64,7 @@
                             {{meetingInfo.description}}
                         </p>
                     </div>
-                </div>
+                </div>                
                 <label><strong>Participants</strong></label> 
                 <div class="d-flex flex-wrap">
                     <div *ngFor="let att of meetingInfo.attendants" class="text-center mx-2">
@@ -81,6 +73,53 @@
                         <span class="d-block">{{att.name}}</span>
                     </div>
                 </div>
+                <div *ngIf="meetingInfo.status == 0">
+                    <label class="mt-3"><strong>About the meeting</strong></label>
+                    <div *ngIf="meetingInfo.type === 'standard'">
+                        A standard meeting has an agenda that will be discussed by the participants. 
+                        For each agenda item, the appropriate conclusions will be drawn.
+                    </div>
+                    <div *ngIf="meetingInfo.type === 'six-hats'">
+                        A six hats meeting is based on a methodology proposed by the Maltese Edward de Bono 
+                        for group decision-making. To this end, the session leader proposes a topic 
+                        for discussion. The meeting is divided into two-minute turns, which can be extended 
+                        by the leader. During these turns, each participant will be assigned a different hat 
+                        and will give their opinion on the proposed topic depending on the hat assigned. In total 
+                        there are six hats:
+                        <div class="alert bg-white my-3">
+                            <p><i class="fas fa-graduation-cap"></i> White hat</p>
+                            <p>It is a hat to think in the most objective and neutral way possible.</p>
+                        </div>
+                        <div class="alert alert-danger my-3">
+                            <p><i class="fas fa-graduation-cap"></i> Red hat</p>
+                            <p>To express our feelings, without the need for justification.</p>
+                        </div>
+                        <div class="alert alert-dark my-3">
+                            <p><i class="fas fa-graduation-cap"></i> Black hat</p>
+                            <p>To be critical in a cautious way and think about why something might not go right.</p>
+                        </div>
+                        <div class="alert alert-warning my-3">
+                            <p><i class="fas fa-graduation-cap"></i> Yellow hat</p>
+                            <p>Unlike the black hat, this one tries to look for the positive aspects of a certain situation or fact.</p>
+                        </div>
+                        <div class="alert alert-success my-3">
+                            <p><i class="fas fa-graduation-cap"></i> Green hat</p>
+                            <p>Opens up creative possibilities and is closely related to your idea of lateral or divergent thinking.</p>
+                        </div>
+                        <div class="alert alert-info my-3">
+                            <p><i class="fas fa-graduation-cap"></i> Blue hat</p>
+                            <p>It controls the rest of the hats; it controls the timing and order of the hats.</p>
+                        </div>
+                    </div>
+                    <div *ngIf="meetingInfo.type === 'brainstorming'">
+                        A brainstorming meeting consists of three steps:
+                        <ol class="mt-2">
+                            <li> Participants will freely contribute ideas on a topic proposed by the session leader.</li>
+                            <li> Participants will contribute pros and cons on the ideas provided in the previous step. This will make it possible to study these ideas.</li>
+                            <li> Participants will rate each of the ideas with a value between 1 and 10 based on the pros and cons provided in the previous step.</li>
+                        </ol>                    
+                    </div>
+                </div>          
             </div>
         </div>
         <waiting-room  *ngIf= "meetingInfo.status == 0" [meetingId]= "meetingId" [meetingInfo] = "meetingInfo" (nextStep)="nextStep($event)"></waiting-room>
@@ -91,7 +130,7 @@
             </standard>
             <six-hats *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'six-hats' && meetingInfo.status > 0" 
                         [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="users" 
-                        (finish) = "finishMeeting($event)" (next) = "nextStep($event)">
+                        (finish) = "finishMeeting($event)" (next) = "nextStep($event)" [stoped]="stoped">
             </six-hats>
             <brainstorming *ngIf="!meetingInfo.isFinished && meetingInfo.type === 'brainstorming' && meetingInfo.status > 0" 
                             [meetingInfo]= "meetingInfo" [meetingId]="meetingId" [attendants]="meetingInfo.attendats" 

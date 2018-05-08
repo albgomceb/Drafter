@@ -35,6 +35,7 @@ export class BrainStormingMinutesPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.leader = new Option('', '', '', '', '', ''); // Fix bug
 
     //OBTENER SESSION LEADER
     this.attendants = this.meetingInfo.attendants;

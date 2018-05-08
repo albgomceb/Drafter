@@ -34,9 +34,12 @@
     <div class="minutes-container">
         <div class="d-flex justify-content-start flex-wrap">
             <div *ngFor="let at of meeting.attendants" class="card">
-                <img class="card-img-top img-fluid" src="{{at.photo}}" alt="Avatar">
-                <div class="card-body">
-                    <h4 class="card-title">{{at.name}}</h4>
+                <img *ngIf="at.photo" src="{{at.photo}}" class="card-img-top img-fluid" alt="Avatar">
+                <img *ngIf="!at.photo" src="/assets/img/none.png" class="card-img-top img-fluid" alt="Avatar">
+                <div class="card-body-2 text-center my-1">
+                    <h5 class="card-title">
+                        {{at.name}}
+                    </h5>
                 </div>
             </div>
         </div>
@@ -45,8 +48,6 @@
     <div class="subtitle">
         Ideas
     </div>
-
-
     <div class="minutes-container">
         <div *ngFor="let idea of ideas" class="point-container">
             <h3>{{idea.text}}</h3>

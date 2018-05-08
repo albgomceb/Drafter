@@ -27,6 +27,14 @@ export class SixHatsMinutesPageComponent implements OnInit {
 
   public leader : Option;
   public loaded: boolean;
+  public hatContainer = new Map([
+                                  ["RED", "danger"],
+                                  ["BLACK", "dark"],
+                                  ["BLUE", "primary"],
+                                  ["WHITE", "light"],
+                                  ["YELLOW", "warning"],
+                                  ["GREEN", "success"]
+                                ]);
   
 
   constructor(private meetingService: MeetingService, 
