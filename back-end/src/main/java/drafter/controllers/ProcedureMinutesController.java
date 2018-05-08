@@ -22,8 +22,10 @@ import drafter.beans.meeting.MeetingSerializer;
 import drafter.domain.Agenda;
 import drafter.domain.BrainStorming;
 import drafter.domain.Conclusion;
+import drafter.domain.Idea;
 import drafter.domain.Meeting;
 import drafter.services.BrainStormingService;
+import drafter.services.IdeaService;
 import drafter.services.MeetingService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -38,6 +40,9 @@ public class ProcedureMinutesController {
 	
 	@Autowired
 	private BrainStormingService brainStormingService;
+	
+	@Autowired
+	private IdeaService ideaService;
 	
 	/*@Autowired
 	private AgendaService agendaService;
@@ -118,5 +123,16 @@ public class ProcedureMinutesController {
 		
 	}
 	
+	@GetMapping("/meeting/{id}/ideas/sorted")
+	public List<IdeaBean> findSortedIdeas(@PathVariable("id")int idM){
+		List<Idea> ideas= new ArrayList<Idea>();
+		ideas=ideaService.findSortedByMeeting(idM);
+		IdeaSerializer serializer = new IdeaSerializer(); 
+		List<IdeaBean> result = ideas.stream()
+				.map(a -> serializer.fromIdea(a))
+				.collect(Collectors.toList()); 
+		return result; 
+		
+	}
 	
 }
