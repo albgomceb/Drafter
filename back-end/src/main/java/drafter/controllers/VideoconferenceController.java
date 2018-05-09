@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import drafter.beans.model.ModelBean;
 import drafter.beans.videoconference.Available;
+import drafter.beans.videoconference.Candidate;
 import drafter.beans.videoconference.Offer;
 import drafter.services.MeetingService;
 import drafter.services.ParticipantService;
@@ -50,6 +51,12 @@ public class VideoconferenceController extends AbstractController {
 	@MessageMapping("/meeting/send-available/{meetingId}")
 	public void available(@DestinationVariable int meetingId, ModelBean<Available> data) {
 		System.out.println("SEND AVAILABLE CALLED");
+		template.convertAndSend("/meeting/" + meetingId, data);
+	}
+	
+	@MessageMapping("/meeting/send-candidate/{meetingId}")
+	public void candidate(@DestinationVariable int meetingId, ModelBean<Candidate> data) {
+		System.out.println("SEND CANDIDATE CALLED");
 		template.convertAndSend("/meeting/" + meetingId, data);
 	}
 	

@@ -39,8 +39,7 @@ export class VideoconferencesComponent implements OnInit {
                 {
                     'urls': 'turn:192.158.29.39:3478?transport=tcp',
                     'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                    'username': '28224511:1379330808'
-                }
+                    'username': '28224511:1379330808'}
 
             ],
             optional: [{ DtlsSrtpKeyAgreement: true }]
@@ -69,7 +68,29 @@ export class VideoconferencesComponent implements OnInit {
                 console.log("Streams Local: ", hostPC.getLocalStreams());
 
             }
+
         });
+
+        this.realTimeService.register('candidate', [], _respuesta => {
+            console.log("ENTRO A CANDIDATEEEEEEEEEEEEEEEEEEEEEEEEEE");
+            console.log(_respuesta);
+            console.log(_respuesta.model.candidate);
+            let respuesta = _respuesta.model;
+            if (respuesta) {
+                console.log("Candidate Received");
+                console.log(respuesta.candidate);
+
+                try{
+
+                    var candidate:any = JSON.parse(respuesta.candidate);
+                    hostPC.addIceCandidate(new RTCIceCandidate(candidate));
+
+                }catch(e){
+                    console.log("Error: Failure during addIceCandidate(). ",e);
+                }
+            }
+        });
+
         this.realTimeService.register('video-available', [], _respuesta => {
             let respuesta = _respuesta.model;
             if (respuesta && respuesta.uuid != this.realTimeService.getUserUUID()) {
@@ -101,6 +122,7 @@ export class VideoconferencesComponent implements OnInit {
         //PEDIMOS PERMISO DE CAPTURA DE AUDIO Y VIDEO A LOS DISPOSITIVOS ACTIVOS
         function start() {
             console.log('Requesting local stream');
+            alert("HOLA");
 
             if (navigator.getUserMedia) {
 
@@ -115,8 +137,6 @@ export class VideoconferencesComponent implements OnInit {
                         navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
                             .then(function (stream) {
                                 console.log('Received local stream');
-                                if (stream.getVideoTracks.length > 0)
-                                    stream.getVideoTracks[0].stop();
                                 camStream = stream;
                                 doGetUserMedia();
                             })
@@ -132,8 +152,6 @@ export class VideoconferencesComponent implements OnInit {
                         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                             .then(function (stream) {
                                 console.log('Received local stream');
-                                if (stream.getVideoTracks.length > 0)
-                                    stream.getVideoTracks[0].stop();
                                 camStream = stream;
                                 doGetUserMedia();
                             })
@@ -189,34 +207,34 @@ export class VideoconferencesComponent implements OnInit {
                 // Create an RTCPeerConnection
                 hostPC = new RTCPeerConnection(servers);
                 console.log('Creating RTCPeerConnnection', hostPC);
-                hostPC.onicecandidate = function (event) {
-
-                    hostPC.addIceCandidate(event.candidate);
-                }
+                hostPC.addStream(camStream);
 
                 hostPC.onaddstream = function (event) {
-                    console.log("ON TRACK: ", event);
+                console.log("ON TRACK: ", event);
 
+                console.log("Streams Remote: ", hostPC.getRemoteStreams());
+                console.log("Streams Local: ", hostPC.getLocalStreams());
+                // remoteVideo.srcObject = event.streams[0];
 
-                    console.log("Streams Remote: ", hostPC.getRemoteStreams());
-                    console.log("Streams Local: ", hostPC.getLocalStreams());
-                    // remoteVideo.srcObject = event.streams[0];
+                var remoteVideo: any = document.getElementById("remoteVideo");
+                // console.log("Tracks: ",event.streams.getVideoTracks());
+                console.log("Receivers: ", hostPC.getReceivers());
 
-                    var remoteVideo: any = document.getElementById("remoteVideo");
-                    // console.log("Tracks: ",event.streams.getVideoTracks());
-                    console.log("Receivers: ", hostPC.getReceivers());
-
-                    remoteVideo.srcObject = event.stream
-                    // var mediaControl: any = document.getElementById("remoteVideo");
-                    // if ('srcObject' in mediaControl) {
-                    //     mediaControl.srcObject = event.streams[0];
-                    //     mediaControl.src = URL.createObjectURL(event.streams[0]);
-                    // } else if (navigator.userAgent.search("Firefox") !== -1) {
-                    //     mediaControl.mozSrcObject = event.streams[0];
-                    // }
+                remoteVideo.srcObject = event.stream
 
                 }
-                hostPC.addStream(camStream);
+
+                hostPC.onicecandidate = function (event) {
+                    console.log("Enviando candidato");
+                    console.log("NO JSON ",event.candidate);
+
+                    if(event.candidate!=null){
+                        scope.realTimeService.send('/meeting/send-candidate/', WSResponseType.SET, 'candidate', {candidate:JSON.stringify(event.candidate)});    
+                    }           
+                }
+
+                
+                
                 scope.realTimeService.send('/meeting/send-available/', WSResponseType.SET, 'video-available', { uuid: scope.realTimeService.getUserUUID() });
                 console.log('Waiting for peer...');
             } catch (e) {
