@@ -1,8 +1,11 @@
+import { LoginService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 import { User } from '../models/user.model';
+import { environment } from '../../../environments/environment';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'edit-profile-page',
@@ -25,7 +28,7 @@ export class EditProfilePageComponent implements OnInit {
 
   errorListUsers:boolean = false;
 
-  constructor(private fb:FormBuilder, private profileService: ProfileService, private router: Router) {
+  constructor(private fb:FormBuilder, private profileService: ProfileService, private router: Router, private loginService: LoginService) {
     this.profileForm = this.fb.group({  // Esto es la validación de los campos
       name: ['', ],
       surname: ['',  ],
@@ -83,7 +86,6 @@ export class EditProfilePageComponent implements OnInit {
     this.user.phone = this.profileForm.value.phone;
     this.user.email = this.profileForm.value.email;
     this.user.password = this.profileForm.value.password;
-    this.user.photo = this.profileForm.value.photo;
 
    if((this.user.phone+'').length>=10 || (this.user.phone+'').length<9){
       this.errorNumber = true;
@@ -97,6 +99,33 @@ export class EditProfilePageComponent implements OnInit {
         });
       }
     }
+  }
+
+  changePhoto(event) {
+    var elem = $(event.target.parentNode).find('span');
+    var text = elem.text();
+    elem.text("Uploading...");
+
+    var formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    $.ajax({
+      url: environment.baseApi + '/image/save',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      method: 'POST',
+      type: 'POST',
+      success: (data) => {
+        this.user.photo = '';
+        this.loginService.getPrincipal().photo = '';
+        elem.text(text);
+        setTimeout(() => { 
+          this.user.photo = '/data/image/' + this.user.id;
+          this.loginService.getPrincipal().photo = '/data/image/' + this.user.id; 
+        }, 0);
+      }
+    });
   }
 
 }
