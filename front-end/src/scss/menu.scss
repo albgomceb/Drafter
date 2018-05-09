@@ -27,13 +27,13 @@ nav.navbar {
         i.notification {
             color: $content_background_color;
         }
-    }
 
-    a.nav-link:hover {
-        background-color: $mp_secondary_color;
-
-        i.notification {
-            color: $mp_font_color;
+        &:hover {
+            background-color: $mp_secondary_color;
+    
+            i.notification {
+                color: $mp_font_color;
+            }
         }
     }
 

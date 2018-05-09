@@ -68,6 +68,7 @@ export class RegisterPageComponent implements OnInit {
    
     this.registerService.saveUser(this.user).subscribe((res:any) =>{
       this.loginService.login(new Login(this.user.email, this.user.password)).subscribe(res => {
+        this.loginService.init(()=>{});
         this.router.navigate(['/home/']);
       });
     }, error => {

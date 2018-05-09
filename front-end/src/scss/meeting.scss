@@ -16,6 +16,10 @@ div.info-meeting-bar {
         padding: 0.5rem;
     }
 
+    span.text-info-meeting-bar {
+        font-size: 1.35rem;
+    }
+
     span.timer {
         font-size: 1.2rem;
         font-weight: bold;
@@ -242,6 +246,20 @@ div.minutes-container {
         border: 1px solid $content_border;
         padding: 0.5rem;
         background-color: white;
+    }
+
+    div.alert {
+        ul {
+            padding-left: 1.5rem;
+        }
+
+        &-light {
+            color: black !important;
+        }
+
+        &-dark {
+            border-color: #333 !important;
+        }
     }
 
     img.card-img-top {
