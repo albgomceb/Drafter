@@ -52,8 +52,8 @@ export class EditProfilePageComponent implements OnInit {
             username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(5)]) ],
             phone: [this.user.phone, Validators.compose([Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('[0-9]+')]) ],
             email: [this.user.email, Validators.compose([Validators.email]) ],
-            password: [this.user.password, Validators.compose([Validators.required, Validators.minLength(5)]) ],
-            photo: ['', Validators.compose([Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')  ]) ]
+            password: [this.user.password, Validators.compose([Validators.minLength(5)]) ],
+            photo: ['', Validators.compose([Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}')  ]) ]
           })
         }
         
@@ -64,8 +64,8 @@ export class EditProfilePageComponent implements OnInit {
             username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(5)]) ],
             phone: [this.user.phone, Validators.compose([Validators.required,Validators.minLength(9), Validators.maxLength(9), Validators.pattern('[0-9]+')]) ],
             email: [this.user.email, Validators.compose([Validators.email]) ],
-            password: [this.user.password, Validators.compose([Validators.required, Validators.minLength(5)]) ],
-            photo: [this.user.photo, Validators.compose([Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}')  ]) ]
+            password: [this.user.password, Validators.compose([Validators.minLength(5)]) ],
+            photo: [this.user.photo, Validators.compose([Validators.pattern('https?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}')  ]) ]
           })
         }
       },
@@ -89,7 +89,7 @@ export class EditProfilePageComponent implements OnInit {
       this.errorNumber = true;
     }
     else{
-      if(this.user.password != "" && (this.user.password).length >= 5 && this.user.phone != ""){
+      if(this.user.phone != ""){
         this.profileService.updateUser(this.user).subscribe((res:any) =>{
           this.router.navigate(['/me/']);
         }, error => {

@@ -35,7 +35,7 @@
     <div class="col-lg-6 col-md-12 form-group">
       <label for="password">New password. Put the current password to keep it</label>
       <div *ngIf="profileForm.get('password').errors" class="alert alert-danger">
-        Required | Minimum 5 characters
+        Minimum 5 characters
       </div>
       <input type="password" name="password" id="password" formControlName="password" class="form-control"/>
     </div>
