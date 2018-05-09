@@ -5,7 +5,8 @@
 <div class="item-wrapper">
     <div class="content-wrapper row">
         <div class="item-content col-lg-6 col-md-12">
-            <img src={{user.photo}} class="img-fluid">                
+            <img *ngIf="user.photo" src={{user.photo}} class="img-fluid">
+            <img *ngIf="!user.photo" src="/assets/img/none.png" class="img-fluid">            
         </div>
         <div class="col-lg-6 col-md-12">
             <div class="item-content">
