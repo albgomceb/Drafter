@@ -228,7 +228,6 @@ public class UserController extends AbstractController {
 		if(user.getPassword() != null && !user.getPassword().isEmpty()) {
 			userAccount.setPassword(encodePassword(user.getPassword()));
 		}
-		principal.setPhoto(user.getPhoto());
 		principal.setPhone(user.getPhone());
 
 		userService.save(principal);
