@@ -46,33 +46,6 @@ const routes: Routes = [
   { path: 'me', component: ProfilePageComponent, canActivate: [AuthGuard]},
   { path: 'me/edit', component: EditProfilePageComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundPageComponent}
-
-  //FALTA ACTUALIZAR ESTA PARTE - TEMA DE AUTH.GUARD
-  // { path: 'pricing', component: PricingComponent },
-  // { path: 'register', component: RegisterPageComponent },
-  // { path: 'home', component: HomePageComponent },
-  // { path: 'login', component: LoginPageComponent },
-  // {
-  //   path: '', component: HomePageComponent,
-  //   canActivate: [AuthGuard],
-  //   children: [
-  //     { path: 'meeting', component: MeetingPageComponent },
-  //     { path: 'meeting/:id', component: DynamicMeetingComponent },
-  //     { path: 'minutes/:id', component: DynamicMinutesComponent },
-  //     { path: 'agenda/:meetingId', component: AgendaPageComponent },
-  //     { path: 'organization-department', component: OrganizationDepartmentPageComponent },
-  //     { path: 'meeting/list/:userId', component: ListMeetingPageComponent },
-  //     { path: 'ideas', component: IdeasCreateComponent },
-  //     { path: 'me', component: ProfilePageComponent },
-  //     { path: 'me/edit', component: EditProfilePageComponent },
-  //     { path: '**', component: NotFoundPageComponent }
-  // ]
-  // }
-
-  
-  
-// ];
-
 ];
 
 @NgModule({

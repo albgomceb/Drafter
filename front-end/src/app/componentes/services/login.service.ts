@@ -5,8 +5,10 @@ import { environment } from '../../../environments/environment';
 
 import { User } from '../models/user.model';
 import { Login } from '../models/login.model';
-import { Subject } from 'rxjs/Subject';
 import { Router } from '@angular/router';
+
+import * as $ from 'jquery';
+
 
 const httpOptions = {
     headers: new Headers({ 'Content-Type': 'application/json' })
@@ -46,6 +48,22 @@ export class LoginService {
             this.user = res;
             callback();
         }, error => callback());
+    }
+
+    public syncInit() {
+        if(this.user) {
+            return;
+        }
+
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: this.staticUrl+"/users/me",
+            success: (data) => {
+                this.user = data;
+            },
+            error: () => {}
+        });
     }
 
 

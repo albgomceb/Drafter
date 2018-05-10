@@ -18,7 +18,11 @@ export class AppComponent {
 
   ngOnInit(){
     this.loaded = false;
-    this.loginService.init(() => this.loaded = true);
+    if(this.loginService.isAnonymous) {
+      this.loginService.init(() => {
+        this.loaded = true
+      });
+    }
   }
 
 
