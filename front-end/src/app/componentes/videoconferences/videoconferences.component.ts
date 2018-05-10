@@ -19,9 +19,6 @@ export class VideoconferencesComponent implements OnInit {
         this.room = parseInt(window.location.pathname.split("/")[2]);
         var scope = this;
         let constraints;
-        let audioTracks: Array<MediaStreamTrack> = [];
-        let videoTracks: Array<MediaStreamTrack> = [];
-        let arrayTracks: Array<MediaStreamTrack> = [];
         let camStream: MediaStream;
         let remoteStream: MediaStream;
         let hostPC;
@@ -76,8 +73,7 @@ export class VideoconferencesComponent implements OnInit {
                     'username': '28224511:1379330808'
                 }
 
-            ],
-            optional: [{ DtlsSrtpKeyAgreement: true }]
+            ]
         };
         let socket: any;
         this.realTimeService.register('video-offer', [], _oferta => {
@@ -86,8 +82,10 @@ export class VideoconferencesComponent implements OnInit {
                 hostPC.setRemoteDescription(new RTCSessionDescription({ sdp: oferta.sdp, type: oferta.type }));
                 hostPC.createAnswer({ offerToReceiveAudio: 1, offerToReceiveVideo: 1 })
                     .then(answer => {
-                        console.log("SENDING ANSWER: ", answer);
+                        //console.log("SENDING ANSWER: ", answer);
                         hostPC.setLocalDescription(new RTCSessionDescription(answer));
+                        console.log("Video-offer received");
+                        console.log("Sending video-answer...");
                         this.realTimeService.send('/meeting/send-answer/', WSResponseType.SET, 'video-answer', { sdp: answer.sdp, type: answer.type, peerId: oferta.localId, localId: this.realTimeService.getUserUUID() });
                     }).catch(err => { console.log("answer failed: ", err); });
 
@@ -97,28 +95,27 @@ export class VideoconferencesComponent implements OnInit {
         this.realTimeService.register('video-answer', [], _respuesta => {
             let respuesta = _respuesta.model;
             if (respuesta && respuesta.peerId == this.realTimeService.getUserUUID()) {
-                console.log("Answer Received");
+                console.log("Video-answer received");
                 hostPC.setRemoteDescription(new RTCSessionDescription({ sdp: respuesta.sdp, type: respuesta.type }));
-                console.log("Streams Remote: ", hostPC.getRemoteStreams());
-                console.log("Streams Local: ", hostPC.getLocalStreams());
+                //console.log("Streams Remote: ", hostPC.getRemoteStreams());
+                //console.log("Streams Local: ", hostPC.getLocalStreams());
 
             }
 
         });
 
         this.realTimeService.register('candidate', [], _respuesta => {
-            console.log("ENTRO A CANDIDATEEEEEEEEEEEEEEEEEEEEEEEEEE");
-            console.log(_respuesta);
-            console.log(_respuesta.model.candidate);
+            //console.log("ENTRO A CANDIDATEEEEEEEEEEEEEEEEEEEEEEEEEE");
             let respuesta = _respuesta.model;
             if (respuesta) {
-                console.log("Candidate Received");
-                console.log(respuesta.candidate);
 
                 try {
 
                     var candidate: any = JSON.parse(respuesta.candidate);
-                    hostPC.addIceCandidate(new RTCIceCandidate(candidate));
+                    if(candidate!=null){
+                        hostPC.addIceCandidate(new RTCIceCandidate(candidate));
+                        console.log("Candidate Received",candidate);
+                    }
 
                 } catch (e) {
                     console.log("Error: Failure during addIceCandidate(). ", e);
@@ -132,13 +129,14 @@ export class VideoconferencesComponent implements OnInit {
 
                 hostPC.createOffer({ offerToReceiveAudio: 1, offerToReceiveVideo: 1 })
                     .then(offer => {
-                        console.log("SENDING OFFER: ", offer);
+                        //console.log("SENDING OFFER: ", offer);
                         hostPC.setLocalDescription(new RTCSessionDescription(offer));
+                        console.log("Sending video-offer...");
                         this.realTimeService.send('/meeting/send-offer/', WSResponseType.SET, 'video-offer', { sdp: offer.sdp, type: offer.type, peerId: respuesta.uuid, localId: this.realTimeService.getUserUUID() });
 
                     })
                     .catch(err => {
-                        console.log('ERROOOR: ', err);
+                        console.log('ERROR: ', err);
                     });
 
             }
@@ -157,21 +155,19 @@ export class VideoconferencesComponent implements OnInit {
         //PEDIMOS PERMISO DE CAPTURA DE AUDIO Y VIDEO A LOS DISPOSITIVOS ACTIVOS
         function start() {
             console.log('Requesting local stream');
-            alert("HOLA");
 
             if (navigator.getUserMedia) {
 
                 if (navigator.userAgent.search("IOS") !== -1) {
-                    //alert("Solo disponible para Desktop(Chrome o Firefox) y Android");
-                } else if (navigator.userAgent.search("Android") !== -1) {
-                    //alert("Usas Android");
+                    //alert("Usas IOS");
+
                     $("#buttonsAndroid").show();
 
                     $("#frontCam").click(function () {
 
                         navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
                             .then(function (stream) {
-                                console.log('Received local stream');
+                                //console.log('Received local stream');
                                 camStream = stream;
                                 doGetUserMedia();
                             })
@@ -186,7 +182,41 @@ export class VideoconferencesComponent implements OnInit {
 
                         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                             .then(function (stream) {
-                                console.log('Received local stream');
+                                //console.log('Received local stream');
+                                camStream = stream;
+                                doGetUserMedia();
+                            })
+                            .catch(function (e) {
+                                console.log('getUserMedia() error: ', e);
+                                alert('getUserMedia() error: ' + e)
+                            });
+
+                    });
+
+                } else if (navigator.userAgent.search("Android") !== -1) {
+                    //alert("Usas Android");
+                    $("#buttonsAndroid").show();
+
+                    $("#frontCam").click(function () {
+
+                        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                            .then(function (stream) {
+                                //console.log('Received local stream');
+                                camStream = stream;
+                                doGetUserMedia();
+                            })
+                            .catch(function (e) {
+                                console.log('getUserMedia() error: ', e);
+                                alert('getUserMedia() error: ' + e)
+                            });
+
+                    });
+
+                    $("#backCam").click(function () {
+
+                        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                            .then(function (stream) {
+                                //console.log('Received local stream');
                                 camStream = stream;
                                 doGetUserMedia();
                             })
@@ -203,7 +233,7 @@ export class VideoconferencesComponent implements OnInit {
 
                     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
                         .then(function (stream) {
-                            console.log('Received local stream');
+                            //console.log('Received local stream');
                             camStream = stream;
                             doGetUserMedia();
                         })
@@ -225,13 +255,13 @@ export class VideoconferencesComponent implements OnInit {
 
 
         function doGetUserMedia() {
-            console.log("User has granted access to local media.");
+            //console.log("User has granted access to local media.");
             localVideo.srcObject = camStream;
 
 
             // Caller creates PeerConnection.
             if (camStream) {
-                console.log("cam: ", camStream);
+                //console.log("cam: ", camStream);
                 createPeerConnection();
             }
         }
@@ -245,33 +275,34 @@ export class VideoconferencesComponent implements OnInit {
                 hostPC.addStream(camStream);
 
                 hostPC.onaddstream = function (event) {
-                    console.log("ON TRACK: ", event);
+                    //console.log("ON TRACK: ", event);
 
                     console.log("Streams Remote: ", hostPC.getRemoteStreams());
-                    console.log("Streams Local: ", hostPC.getLocalStreams());
+                    //console.log("Streams Local: ", hostPC.getLocalStreams());
                     // remoteVideo.srcObject = event.streams[0];
 
                     var remoteVideo: any = document.getElementById("remoteVideo");
                     // console.log("Tracks: ",event.streams.getVideoTracks());
-                    console.log("Receivers: ", hostPC.getReceivers());
+                    //console.log("Receivers: ", hostPC.getReceivers());
 
                     remoteVideo.srcObject = event.stream
 
                 }
 
                 hostPC.onicecandidate = function (event) {
-                    console.log("Enviando candidato");
-                    console.log("NO JSON ", event.candidate);
+                    
 
                     if (event.candidate != null) {
+                        console.log("Enviando candidato",event.candidate);
+                        console.log("Tipo", event.candidate.type);
                         scope.realTimeService.send('/meeting/send-candidate/', WSResponseType.SET, 'candidate', { candidate: JSON.stringify(event.candidate) });
                     }
                 }
 
 
-
-                scope.realTimeService.send('/meeting/send-available/', WSResponseType.SET, 'video-available', { uuid: scope.realTimeService.getUserUUID() });
                 console.log('Waiting for peer...');
+                scope.realTimeService.send('/meeting/send-available/', WSResponseType.SET, 'video-available', { uuid: scope.realTimeService.getUserUUID() });
+                
             } catch (e) {
                 console.log("Failed to create PeerConnection, exception: " + e.message);
                 alert("Cannot create RTCPeerConnection object; WebRTC is not supported by this browser.");
