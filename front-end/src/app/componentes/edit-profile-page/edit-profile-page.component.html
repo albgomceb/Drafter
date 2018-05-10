@@ -35,7 +35,7 @@
     <div class="col-lg-6 col-md-12 form-group">
       <label for="password">New password. Put the current password to keep it</label>
       <div *ngIf="profileForm.get('password').errors" class="alert alert-danger">
-        Required | Minimum 5 characters
+        Minimum 5 characters
       </div>
       <input type="password" name="password" id="password" formControlName="password" class="form-control"/>
     </div>
@@ -66,15 +66,19 @@
     </div>
   </div>
 
-  <div class="row">
-      <div class="col-lg-6 col-md-12 form-group">
-        <label for="photo">Photo</label>
-        <div *ngIf="profileForm.get('photo').errors" class="alert alert-danger">
-          Must be a correct url format
-        </div>
-        <input type="text" name="photo" id="photo" formControlName="photo" class="form-control">
-      </div>
+  <div class="my-2">
+    <div class="text-center photo-profile mx-auto">
+      <label class="d-block">Photo</label>
+      <img [src]="user.photo" class="img-fluid">
     </div>
+
+    <div class="container text-center">
+      <label class="btn-file">
+        <input type="file" name="file" style="display: none;" accept="image/*" (change)="changePhoto($event)">
+        <i class="fa fa-upload"></i> <span>Change photo</span>
+      </label>
+    </div>
+  </div>
 
   <div class="text-center">
 

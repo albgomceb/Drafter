@@ -40,23 +40,31 @@ nav.navbar {
     div.dropdown-menu {
         background-color: $content_background_color;
 
-        div.row-notification {
-            a.info-notification {
-                border-left: 1px solid $content_background_color_2;
-                border-bottom: 1px solid $content_background_color_2;
+        span.row-notification {
+            border-bottom: 0 !important;
+        }
 
-                @include media-breakpoint-down(lg) {
-                    width: calc(100% - 2.25rem) !important;
-                }
+        .row-notification {
+            font-size: 0.7rem;
+            border-bottom: 1px solid $content_background_color_2;
 
-                @include media-breakpoint-up(lg) {
-                    max-width: 30rem;
-                }
+            @include media-breakpoint-down(lg) {
+                font-size: 1rem
             }
+
+            a.info-notification {
+                &:hover,
+                &:focus,
+                &:active {
+                    color: inherit;
+                    background-color: $content_background_color_2;
+                }
+            }        
             
-            &:first-child {
-                a.info-notification {
-                    border-top: 1px solid $content_background_color_2;
+            button.btn-notification {
+                @include media-breakpoint-up(lg) {
+                    font-size: 0.7rem !important;
+                    padding: 0.2rem 0.25rem !important;
                 }
             }
         }
@@ -67,11 +75,5 @@ nav.navbar {
             color: inherit;
             background-color: $content_background_color_2;
         }
-    }
-
-    @include media-breakpoint-down(lg) {
-        .wrapper-width-fixed {
-            max-width: calc(100%) !important;    
-        }        
     }
 }

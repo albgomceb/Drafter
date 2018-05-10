@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.URL;
 
 import drafter.security.UserAccount;
 
@@ -82,7 +81,6 @@ public abstract class Actor extends DomainEntity{
 
 	@Lob
 	@SafeHtml
-	@URL
 	public String getPhoto() {
 		return photo;
 	}
