@@ -39,7 +39,42 @@ export class VideoconferencesComponent implements OnInit {
                 {
                     'urls': 'turn:192.158.29.39:3478?transport=tcp',
                     'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                    'username': '28224511:1379330808'}
+                    'username': '28224511:1379330808'
+                },
+                { 'urls': 'stun:stun01.sipphone.com' },
+                { 'urls': 'stun:stun.ekiga.net' },
+                { 'urls': 'stun:stun.fwdnet.net' },
+                { 'urls': 'stun:stun.ideasip.com' },
+                { 'urls': 'stun:stun.iptel.org' },
+                { 'urls': 'stun:stun.rixtelecom.se' },
+                { 'urls': 'stun:stun.schlund.de' },
+                { 'urls': 'stun:stun.l.google.com:19302' },
+                { 'urls': 'stun:stun1.l.google.com:19302' },
+                { 'urls': 'stun:stun2.l.google.com:19302' },
+                { 'urls': 'stun:stun3.l.google.com:19302' },
+                { 'urls': 'stun:stun4.l.google.com:19302' },
+                { 'urls': 'stun:stunserver.org' },
+                { 'urls': 'stun:stun.softjoys.com' },
+                { 'urls': 'stun:stun.voiparound.com' },
+                { 'urls': 'stun:stun.voipbuster.com' },
+                { 'urls': 'stun:stun.voipstunt.com' },
+                { 'urls': 'stun:stun.voxgratia.org' },
+                { 'urls': 'stun:stun.xten.com' },
+                {
+                    'urls': 'turn:numb.viagenie.ca',
+                    'credential': 'muazkh',
+                    'username': 'webrtc@live.com'
+                },
+                {
+                    'urls': 'turn:192.158.29.39:3478?transport=udp',
+                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+                    'username': '28224511:1379330808'
+                },
+                {
+                    'urls': 'turn:192.158.29.39:3478?transport=tcp',
+                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+                    'username': '28224511:1379330808'
+                }
 
             ],
             optional: [{ DtlsSrtpKeyAgreement: true }]
@@ -80,13 +115,13 @@ export class VideoconferencesComponent implements OnInit {
                 console.log("Candidate Received");
                 console.log(respuesta.candidate);
 
-                try{
+                try {
 
-                    var candidate:any = JSON.parse(respuesta.candidate);
+                    var candidate: any = JSON.parse(respuesta.candidate);
                     hostPC.addIceCandidate(new RTCIceCandidate(candidate));
 
-                }catch(e){
-                    console.log("Error: Failure during addIceCandidate(). ",e);
+                } catch (e) {
+                    console.log("Error: Failure during addIceCandidate(). ", e);
                 }
             }
         });
@@ -210,31 +245,31 @@ export class VideoconferencesComponent implements OnInit {
                 hostPC.addStream(camStream);
 
                 hostPC.onaddstream = function (event) {
-                console.log("ON TRACK: ", event);
+                    console.log("ON TRACK: ", event);
 
-                console.log("Streams Remote: ", hostPC.getRemoteStreams());
-                console.log("Streams Local: ", hostPC.getLocalStreams());
-                // remoteVideo.srcObject = event.streams[0];
+                    console.log("Streams Remote: ", hostPC.getRemoteStreams());
+                    console.log("Streams Local: ", hostPC.getLocalStreams());
+                    // remoteVideo.srcObject = event.streams[0];
 
-                var remoteVideo: any = document.getElementById("remoteVideo");
-                // console.log("Tracks: ",event.streams.getVideoTracks());
-                console.log("Receivers: ", hostPC.getReceivers());
+                    var remoteVideo: any = document.getElementById("remoteVideo");
+                    // console.log("Tracks: ",event.streams.getVideoTracks());
+                    console.log("Receivers: ", hostPC.getReceivers());
 
-                remoteVideo.srcObject = event.stream
+                    remoteVideo.srcObject = event.stream
 
                 }
 
                 hostPC.onicecandidate = function (event) {
                     console.log("Enviando candidato");
-                    console.log("NO JSON ",event.candidate);
+                    console.log("NO JSON ", event.candidate);
 
-                    if(event.candidate!=null){
-                        scope.realTimeService.send('/meeting/send-candidate/', WSResponseType.SET, 'candidate', {candidate:JSON.stringify(event.candidate)});    
-                    }           
+                    if (event.candidate != null) {
+                        scope.realTimeService.send('/meeting/send-candidate/', WSResponseType.SET, 'candidate', { candidate: JSON.stringify(event.candidate) });
+                    }
                 }
 
-                
-                
+
+
                 scope.realTimeService.send('/meeting/send-available/', WSResponseType.SET, 'video-available', { uuid: scope.realTimeService.getUserUUID() });
                 console.log('Waiting for peer...');
             } catch (e) {
