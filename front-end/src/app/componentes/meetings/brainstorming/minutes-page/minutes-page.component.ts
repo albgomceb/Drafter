@@ -11,7 +11,8 @@ import { Meeting } from '../../../models/meeting.model';
 import { BrainStormingService } from '../../../services/brainstorming.service';
 import { Option } from '../../../models/option.model';
 import * as jsPDF from 'jspdf';
-import * as html2canvas from 'html2canvas'
+import * as html2canvas from 'html2canvas';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -59,8 +60,7 @@ export class BrainStormingMinutesPageComponent implements OnInit {
   }
 
   downloadPDF() {
-
-
+    this.content.nativeElement.style.width = '210mm'
     let content = this.content.nativeElement;
 
     html2canvas(content, { useCORS: true, letterRendering:true}).then(function (canvas) {
@@ -83,8 +83,10 @@ export class BrainStormingMinutesPageComponent implements OnInit {
         doc.addImage(img, 'JPEG', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-      doc.save('Minutes.pdf');
+      doc.save('Minutes.pdf');  
     });
+    this.content.nativeElement.style.width = null;
+
   }
 downloadDoc(){
     var html = document.getElementById('content').outerHTML;
