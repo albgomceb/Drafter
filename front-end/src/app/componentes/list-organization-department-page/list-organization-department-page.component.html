@@ -63,7 +63,10 @@
               <tbody *ngFor="let us of department.users; let z=index">
                 <tr>
                   <th scope="row">{{z+1}}</th>
-                  <td><img src="{{us.photo}}" class="img-fluid avatar"></td>
+                  <td>
+                    <img *ngIf="us.photo" src="{{us.photo}}" class="img-fluid avatar">
+                    <img *ngIf="!us.photo" src="/assets/img/none.png" class="img-fluid avatar">
+                  </td>
                   <td>{{us.name}}</td>
                 </tr>
               </tbody>
