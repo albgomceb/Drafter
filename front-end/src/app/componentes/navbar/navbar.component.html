@@ -11,7 +11,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Menu items -->
-    <div class="collapse navbar-collapse wrapper-width-fixed" id="navbarToggler">
+    <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/home" (click)="navigate()">
@@ -63,7 +63,7 @@
             Sign in
           </a>
         </li>
-        <li class="nav-item dropdown wrapper-width-fixed" 
+        <li class="nav-item dropdown" 
             *ngIf="getLoginService().isAuthenticated()">
           <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownNotificationLink"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -79,17 +79,19 @@
             </span>
           </a>
           <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownNotificationLink">
-            <span *ngIf="notifications != undefined && notifications.length === 0" class="dropdown-item">
-              You don't have any notification
+            <span *ngIf="notifications != undefined && notifications.length === 0" class="row-notification d-inline-block px-2 py-1">
+              You don't have any notification.
             </span>
             <div *ngIf="notifications != undefined && notifications.length > 0">
-              <div *ngFor="let meeting of notifications" class="d-flex justify-content-between row-notification">
-                <a (click)="goMeeting(meeting.id)" class="info-notification text-truncate dropdown-item ml-2">
+              <div *ngFor="let meeting of notifications" class="row-notification">
+                <a (click)="goMeeting(meeting.id)" class="info-notification d-block p-2">
                   {{meeting.title}}
                 </a>
-                <button (click)="hideNotification(meeting)" class="btn mr-2">
-                  <i class="fas fa-times"></i>
-                </button>     
+                <div class="text-center mb-2">
+                  <button (click)="hideNotification(meeting)" class="btn btn-notification">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>             
               </div>
             </div>
           </div>

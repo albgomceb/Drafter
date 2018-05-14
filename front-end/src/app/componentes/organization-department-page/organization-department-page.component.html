@@ -103,7 +103,7 @@
         </div>
 
         <div class="row mb-3">
-          <!-- Lista de todos los usuaruios posibles para añadir -->
+          <!-- Lista de todos los usuarios posibles para añadir -->
           <div class="list-group mb-3" class="col-12 col-md-6 list-employee">
             <div class="text-center font-weight-bold my-1 p-1 title-list-employee">
                 <h3 class="text-truncate">Candidates</h3>
@@ -116,7 +116,8 @@
             </div>
             <div *ngFor="let us of department.notAddedUsers; let j = index">
               <a class="list-group-item list-group-item-action" (click)="addUser(us, department, i)">
-                <img src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <img *ngIf="us.photo" src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <img *ngIf="!us.photo" src="/assets/img/none.png" class="img-fluid avatar d-none d-md-inline-block">
                 <span class="employed">{{us.name}} {{us.surname}}</span>
               </a>
             </div>
@@ -130,7 +131,8 @@
             <h4 *ngIf="department.users == null">Add user...</h4>
             <div *ngFor="let us of department.users; let j = index">
               <a class="list-group-item list-group-item-action" (click)="deleteUser(us, department, i)">
-                <img src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <img *ngIf="us.photo" src="{{us.photo}}" class="img-fluid avatar d-none d-md-inline-block">
+                <img *ngIf="!us.photo" src="/assets/img/none.png" class="img-fluid avatar d-none d-md-inline-block">
                 <span class="employed">{{us.name}} {{us.surname}}</span>
               </a>
             </div>

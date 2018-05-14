@@ -39,7 +39,8 @@ h2.subtitle {
 }
 
 /* Button */
-button.btn {
+button.btn,
+.btn-file {
     border: none;
     border-radius: 0;
     color: $button_font_color;
@@ -48,7 +49,14 @@ button.btn {
     transition: all .2s ease-in;   
 }
 
-button.btn:hover:not([disabled=""]) {
+.btn-file {
+    padding: 0.5em; 
+    margin: 0.75em; 
+    cursor: pointer;
+}
+
+button.btn:hover:not([disabled=""]),
+.btn-file:hover {
     background-color: $button_hover;
 }
 
@@ -131,6 +139,11 @@ div.card {
 
 img.logo {
     max-width: 7.5rem;
+}
+
+div.photo-profile {
+    max-width: 30rem;
+    height: auto;
 }
 
 img.avatar {

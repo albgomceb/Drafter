@@ -66,19 +66,19 @@
     </div>
   </div>
 
-  <div class="row">
-      <div class="col-lg-6 col-md-12 form-group">
-        <label for="photo">Photo</label>
-        <div style="text-align: center"><img [src]="user.photo" style="width: 65%; text-align: center"></div>
-
-        <div class="container" style="text-align: center">
-          <label style="color: white; background-color: #333; padding: 0.5em; margin: 0.75em; cursor: pointer; font-weight: bold">
-            <input type="file" name="file" style="display: none;" accept="image/*" (change)="changePhoto($event)">
-            <i class="fa fa-upload"></i> <span>Change photo</span>
-          </label>
-        </div>
-      </div>
+  <div class="my-2">
+    <div class="text-center photo-profile mx-auto">
+      <label class="d-block">Photo</label>
+      <img [src]="user.photo" class="img-fluid">
     </div>
+
+    <div class="container text-center">
+      <label class="btn-file">
+        <input type="file" name="file" style="display: none;" accept="image/*" (change)="changePhoto($event)">
+        <i class="fa fa-upload"></i> <span>Change photo</span>
+      </label>
+    </div>
+  </div>
 
   <div class="text-center">
 
