@@ -1,5 +1,6 @@
 package drafter.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -7,8 +8,12 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -23,6 +28,7 @@ public class User extends Actor	{
 
 	private List<Department> departments;
 	private List<Organization> organizations;
+	private Date lastPay;
 	
 	@NotNull
 	@Valid
@@ -45,6 +51,15 @@ public class User extends Actor	{
 
 	public void setOrganizations(List<Organization> organizations) {
 		this.organizations = organizations;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getLastPay() {
+		return lastPay;
+	}
+
+	public void setLastPay(Date lastPay) {
+		this.lastPay = lastPay;
 	}
 
 }
