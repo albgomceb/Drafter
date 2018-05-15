@@ -50,4 +50,12 @@ export class UserService {
     return this.http.get<User>(this.staticUrl + '/users/me/');
   }
 
+  hasPay(): Observable<any> {
+    return this.http.get<User>(this.staticUrl + '/users/hasPay');
+  }
+
+  pay(): Observable<any> {
+    return this.http.get<User>(this.staticUrl + '/users/pay');
+  }
+
 }

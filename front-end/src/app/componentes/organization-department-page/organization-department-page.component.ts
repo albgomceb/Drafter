@@ -73,8 +73,8 @@ export class OrganizationDepartmentPageComponent implements OnInit {
       this.organizationService.getOrganization(this.organizationId).subscribe(
         data => 
         {
-           // Meto los datos
-           this.frmRegistro = this.fb.group({  // Esto es la validación de los campos
+            // Meto los datos
+            this.frmRegistro = this.fb.group({  // Esto es la validación de los campos
             enterprise: [data.enterprise, Validators.compose([Validators.required]) ],
             description: [data.description, Validators.compose([Validators.required]) ],
             address: [data.address, Validators.compose([Validators.required]) ],

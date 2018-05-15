@@ -72,7 +72,6 @@ public class MeetingController extends AbstractController {
 		Meeting result = serializer.fromBean(meeting);
 		//Falta guardar la relacion con los participantes
 		
-		
 		result = meetingService.save(result);
 		participantService.relateWithParticipants(result, meeting.getAttendants());
 		if(meeting.getType().equals("six-hats")) {

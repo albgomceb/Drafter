@@ -74,7 +74,7 @@
     </div>
   </div>
   <div class="text-center">
-    <button [disabled]="!(thumbnail.length > 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
+    <button [disabled]="!(thumbnail.length >= 0) || !meeting.title || meeting.title.trim() == '' || !meeting.description || meeting.description.trim() == ''" 
             type="submit" class="btn">Next</button>
     <button routerLink=".." class="btn">Cancel</button>
   </div>

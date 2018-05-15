@@ -64,7 +64,7 @@ public class UserController extends AbstractController {
 			List<User> usersOrganization = new ArrayList<User>();
 			usersOrganization = userService.filterUsers(keyword, d.getName());
 			for(User u: usersOrganization) {
-				if (!res.contains(u))
+				if (!res.contains(u) && userService.hasPay(d.getOrganization()))
 					res.add(u);
 			}
 		}
@@ -252,6 +252,18 @@ public class UserController extends AbstractController {
 	    m.update(password.getBytes(),0,password.length());
 	    String res = new BigInteger(1,m.digest()).toString(16);
 	    return res;
+	}
+	
+	@GetMapping("/hasPay")
+	public String hasPay() {	
+		boolean res = userService.principalHasPay();
+		return "{'result':" + "'" + (res ? "true" : "false") + "'}";
+	}
+	
+	@GetMapping("/pay")
+	public String pay() {	
+		userService.pay();
+		return "";
 	}
 	
 }
