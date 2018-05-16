@@ -26,19 +26,7 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
         let candidate: RTCIceCandidate;
         let servers = {
             iceServers: [
-                {
-                    'urls': 'stun:stun.l.google.com:19302'
-                },
-                {
-                    'urls': 'turn:192.158.29.39:3478?transport=udp',
-                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                    'username': '28224511:1379330808'
-                },
-                {
-                    'urls': 'turn:192.158.29.39:3478?transport=tcp',
-                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                    'username': '28224511:1379330808'
-                },
+                { 'urls': 'stun:stun.l.google.com:19302' },
                 { 'urls': 'stun:stun01.sipphone.com' },
                 { 'urls': 'stun:stun.ekiga.net' },
                 { 'urls': 'stun:stun.fwdnet.net' },
@@ -81,8 +69,8 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
             let oferta = _oferta.model;
             if (oferta && oferta.peerId == this.realTimeService.getUserUUID()) {
                 
-                //camName = _oferta.data['user'];
-                camName = "Not Logged";
+                camName = _oferta.data['user'];
+                //camName = "Not Logged";
 
                 this.hostPC.setRemoteDescription(new RTCSessionDescription({ sdp: oferta.sdp, type: oferta.type }));
                 this.hostPC.createAnswer({ offerToReceiveAudio: 1, offerToReceiveVideo: 1 })
@@ -100,6 +88,9 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
         this.realTimeService.register('video-answer', [], _respuesta => {
             let respuesta = _respuesta.model;
             if (respuesta && respuesta.peerId == this.realTimeService.getUserUUID()) {
+
+                camName = _respuesta.data['user'];
+
                 console.log("Video-answer received");
                 this.hostPC.setRemoteDescription(new RTCSessionDescription({ sdp: respuesta.sdp, type: respuesta.type })); 
                 //console.log("Streams Remote: ", hostPC.getRemoteStreams());
@@ -152,7 +143,7 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
         console.log("Initializing; room = " + this.room);
         var localVideo: any = document.getElementById("localVideo");
         var remoteVideo: any = document.getElementById("remoteVideo");
-        var loading = document.getElementById("loading");
+        // var loading = document.getElementById("loading");
         remoteVideo.style.visibility = "hidden";
 
         var constraintsPC:MediaStreamConstraints = {
@@ -195,12 +186,24 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
                     
                     //IOS
 
-                    localVideo.style.width = "100px";
-                    localVideo.style.height = "100px";
+                    localVideo.style.width = "20%";
+                    localVideo.style.position = "absolute";
+                    localVideo.style.top = "0";
+                    localVideo.style.left = "0";
+                    localVideo.style.zIndex = "300002";
+
+                    remoteVideo.style.width = "100%";
+                    remoteVideo.style.position = "absolute";
+                    remoteVideo.style.top = "0";
+                    remoteVideo.style.left = "0";
+                    remoteVideo.style.zIndex = "300000";
+
+                    var name = document.getElementById("localName");
+                    name.style.visibility = "hidden";
 
                     $("#buttonsAndroid").hide();
 
-                    navigator.mediaDevices.getUserMedia(constraintsPC)
+                    navigator.mediaDevices.getUserMedia(constraintsPhoneFace)
                         .then(function (stream) {
                             scope.camStream = stream;
                             doGetUserMedia();
@@ -246,12 +249,24 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
                     
                     //ANDROID
 
-                    localVideo.style.width = "100px";
-                    localVideo.style.height = "100px";
+                    localVideo.style.width = "20%";
+                    localVideo.style.position = "absolute";
+                    localVideo.style.top = "0";
+                    localVideo.style.left = "0";
+                    localVideo.style.zIndex = "300002";
+
+                    remoteVideo.style.width = "100%";
+                    remoteVideo.style.position = "absolute";
+                    remoteVideo.style.top = "0";
+                    remoteVideo.style.left = "0";
+                    remoteVideo.style.zIndex = "300000";
+
+                    var name = document.getElementById("localName");
+                    name.style.visibility = "hidden";
 
                     $("#buttonsAndroid").hide();
 
-                    navigator.mediaDevices.getUserMedia(constraintsPC)
+                    navigator.mediaDevices.getUserMedia(constraintsPhoneFace)
                         .then(function (stream) {
                             scope.camStream = stream;
                             doGetUserMedia();
@@ -312,9 +327,9 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
 
                 }
 
-                $("#hangUp").click(function () {
-                    hangup();
-                });
+                // $("#hangUp").click(function () {
+                //     hangup();
+                // });
 
             } else {
                 alert('Sorry, your browser does not support getUserMedia');
@@ -324,6 +339,7 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
 
         function doGetUserMedia() {
             //console.log("User has granted access to local media.");
+            localVideo.muted = true;
             localVideo.srcObject = scope.camStream;
 
 
@@ -352,23 +368,23 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
                     var remoteVideo: any = document.getElementById("remoteVideo");
                     // console.log("Tracks: ",event.streams.getVideoTracks());
                     //console.log("Receivers: ", hostPC.getReceivers());
-                    loading.style.visibility = "hidden";                   
+                    // loading.style.visibility = "hidden";                   
                     remoteVideo.srcObject = event.stream
                     remoteVideo.style.visibility = "visible";
                     var camRemota = document.getElementsByClassName("camRemota")[0];
                     var p = document.createElement("p");
                     p.style.display ="block";
-                    p.style.color = "#fff";
+                    p.style.color = "#222";
                     p.style.fontWeight = "bold";
                     p.style.position = "absolute";
-                    p.style.top = "1%";
+                    p.style.top = "0";
                     p.style.left = "0";
                     p.style.padding = "5px";
                     p.style.width = "100%";
-                    p.style.backgroundColor = "rgba(#fafafa, 0.3)";
-                    p.innerHTML = camName;
+                    p.style.backgroundColor = "rgba(250, 250, 250, 0.65)";
+                    p.style.zIndex = "300001";
+                    p.innerHTML = capitalizeFirstLetter(camName);
                     camRemota.appendChild(p);
-                    camName = "Not logged";
 
                 }
 
@@ -394,12 +410,17 @@ export class VideoconferencesComponent implements OnInit, OnDestroy {
 
         }
 
-        function hangup() {
-            console.log('Ending calls');
-            document.getElementById("loading").style.visibility = "hidden";
-            scope.hostPC.close();
-            $("#hangUp").hide();
+        // function hangup() {
+        //     console.log('Ending calls');
+        //     document.getElementById("loading").style.visibility = "hidden";
+        //     scope.hostPC.close();
+        //     $("#hangUp").hide();
+        // }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
+
     }
 
     ngOnDestroy(){
