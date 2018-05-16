@@ -7,8 +7,19 @@
   
   <button id="hangUp" class="btn mt-3 mb-3"><i class="fas fa-phone-slash"></i></button>
   <br/>
-  <video id="localVideo" autoplay="autoplay" controls></video>
-  <br/>
-  <video id="remoteVideo" autoplay="autoplay" controls></video>
+
+  <div id="videos" class="text-center">
+
+    <div class="camLocal">
+      <video id="localVideo" autoplay="autoplay" muted="muted" controls></video>
+      <p>Tú</p>
+    </div>
+
+    <h6 class="mt-3" id="loading" >Waiting...</h6>
+
+    <div class="camRemota">
+      <video id="remoteVideo" autoplay="autoplay" controls></video>
+    </div>
+  </div>
 
 </div>
