@@ -1,6 +1,7 @@
 
 package drafter.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import drafter.domain.Organization;
 import drafter.domain.User;
 import drafter.repositories.UserRepository;
 import drafter.security.LoginService;
@@ -25,6 +27,9 @@ public class UserService {
 	
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private OrganizationService organizationService;
 
 
 	//Constructor------------------------------------------------------------------------------
@@ -86,6 +91,26 @@ public class UserService {
 
 	public List<User> findAllWithoutPrincipal(int id) {
 		return userRepository.findAllWithoutPrincipal(id);
+	}
+	
+	public boolean hasPay(int organizationId) {
+		return hasPay(organizationService.findById(organizationId));
+	}
+	
+	public boolean hasPay(Organization organization) {
+		User owner = organization.getUser();
+		return owner.getLastPay() != null && owner.getLastPay().getTime() > System.currentTimeMillis() - 2628000000L;
+	}
+	
+	public boolean principalHasPay() {
+		User me = findByPrincipal();
+		return me.getLastPay() != null && me.getLastPay().getTime() > System.currentTimeMillis() - 2628000000L;
+	}
+	
+	public void pay() {
+		User me = findByPrincipal();
+		me.setLastPay(new Date(System.currentTimeMillis()));
+		userRepository.save(me);
 	}
 
 	/*public Boolean isUser() {

@@ -48,6 +48,16 @@ export class MeetingPageComponent implements OnInit {
   
   ngOnInit() {
 
+    //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
+    let principal:User = this.getLoginService().getPrincipal();
+    let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER",principal.username);
+
+    var index = this.attendants.findIndex( x => x.id === principalOption.id);
+    if(index == -1){
+      this.attendants.push(principalOption);
+    }
+
+
     this.meeting = new Meeting();
     this.thumbnail = new Array<Option>();
     this.meetingService.getMeetingTypes().subscribe(list => 
@@ -99,14 +109,7 @@ export class MeetingPageComponent implements OnInit {
 
   addAttendant(attendant:User){
 
-      //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
       let principal:User = this.getLoginService().getPrincipal();
-      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER",principal.username);
-
-      var index = this.attendants.findIndex( x => x.id === principalOption.id);
-      if(index == -1){
-        this.attendants.push(principalOption);
-      }
 
       //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
       let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER",attendant.username);

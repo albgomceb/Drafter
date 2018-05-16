@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
@@ -21,7 +22,7 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
   amount: number = 0;
 
-  constructor(private router:Router, private loginService: LoginService) { }
+  constructor(private router:Router, private loginService: LoginService, private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -66,6 +67,7 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
     onAuthorize: (data, actions) => {
       return actions.payment.execute().then((payment) => {
+        this.userService.pay().subscribe(()=>{});
         this.router.navigate(['success']);
       })
     }
