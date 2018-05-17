@@ -9,9 +9,11 @@ import { Pros } from '../../../models/pros.model';
 import { Cons } from '../../../models/cons.model';
 import { Meeting } from '../../../models/meeting.model';
 import { BrainStormingService } from '../../../services/brainstorming.service';
-import * as jsPDF from 'jspdf';
-import * as html2canvas from 'html2canvas'
 import { Option } from '../../../models/option.model';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'brainstorming-minutes-page',
@@ -47,9 +49,8 @@ export class BrainStormingMinutesPageComponent implements OnInit {
       if (!this.meeting.hasFinished) {
         this.router.navigateByUrl('/meeting/' + this.meetingId);
       }
-      this.brainstormingService.getIdeas(this.meetingId).subscribe(data => {
+      this.brainstormingService.getSortedIdeas(this.meetingId).subscribe(data => {
         this.ideas = data;
-        this.ideas.sort(this.getAverage)
       });
     });
   };
@@ -59,11 +60,10 @@ export class BrainStormingMinutesPageComponent implements OnInit {
   }
 
   downloadPDF() {
-
-
+    this.content.nativeElement.style.width = '210mm'
     let content = this.content.nativeElement;
 
-    html2canvas(content, { useCORS: true }).then(function (canvas) {
+    html2canvas(content, { useCORS: true, letterRendering:true}).then(function (canvas) {
       var imgWidth = 190;
       var pageHeight = 295;
       var imgHeight = canvas.height * imgWidth / canvas.width;
@@ -71,20 +71,39 @@ export class BrainStormingMinutesPageComponent implements OnInit {
 
       var img = canvas.toDataURL();
 
-      var doc = new jsPDF('p', 'mm');
+      var doc = new jsPDF('p','mm');
       var position = 0;
 
-      doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
+      doc.addImage(img, 'JPEG', 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         doc.addPage();
-        doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
+        doc.addImage(img, 'JPEG', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-      doc.save('Minutes.pdf');
+      doc.save('Minutes.pdf');  
     });
+    this.content.nativeElement.style.width = null;
+
+  }
+downloadDoc(){
+    var html = document.getElementById('content').outerHTML;
+    var blob = new Blob(['\ufeff', html], {
+      type: 'application/msword'
+    });
+    var href = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = href;
+    a.download = "documento.doc";
+    document.body.appendChild(a);
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(blob, 'documento.doc');
+    } else {
+      a.click();
+    }
+    document.body.removeChild(a);
   }
 
   public format(): string {

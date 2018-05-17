@@ -92,6 +92,7 @@ public class UserController extends AbstractController {
 	@PostMapping("/")
 	public Object register(@RequestBody UserBean2 user) {
 		User isUser = userService.findByEmail(user.getEmail());
+		User isUserSameUsername= userService.findByUsername(user.getUsername());
 		
 		try {
 			Assert.isTrue(todoCompleto(user) == true, "Se han enviado todos los campos");
@@ -122,6 +123,12 @@ public class UserController extends AbstractController {
 			Assert.isTrue(isUser == null, "El correo está libre.");
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.FAILED_DEPENDENCY);
+		}
+		
+		try {
+			Assert.isTrue(isUserSameUsername == null, "El nombre de usuario está libre.");
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(HttpStatus.UPGRADE_REQUIRED);
 		}
 		
 		try {

@@ -1,10 +1,12 @@
 package drafter.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import drafter.beans.idea.IdeaBean;
@@ -59,6 +61,14 @@ public class IdeaService {
 	    public List<Idea> findByMeeting(int id) {
 	        return ideaRepository.findByMeeting(id);
 	    }
-	    
+	    public List<Idea> findSortedByMeeting(int id) {
+	    	List<Object[]> ideasV;
+	        List<Idea> ideas= new ArrayList<Idea>();
+	        ideasV =ideaRepository.findSortedByMeeting(id);
+	        for(int i=0;i<ideasV.size();i++) {
+	        	ideas.add((Idea) ideasV.get(i)[0]);
+	        }
+	        return ideas;
+	    }
 
 }
