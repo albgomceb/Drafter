@@ -6,7 +6,7 @@ var proxy 			= httpProxy.createProxyServer({});
 var proxyWebsocket  = httpProxy.createProxyServer({
 	target: {
 		host: 'localhost',
-		port: 8081
+		port: 8080
 	}
 });
 
@@ -14,7 +14,7 @@ var proxyWebsocket  = httpProxy.createProxyServer({
 var data = '/data';
 var server = http.createServer(function(req, res) {
 	if(req.url.slice(0, data.length) == data) {
-		proxy.web(req, res, { target: 'http://localhost:8081' });
+		proxy.web(req, res, { target: 'http://localhost:8080' });
 	} else {
 		proxy.web(req, res, { target: 'http://localhost:4200' });
 	}
@@ -22,7 +22,7 @@ var server = http.createServer(function(req, res) {
 
 
 server.on('upgrade', function (req, socket, head) {
-	proxyWebsocket.ws(req, socket, head, { target: 'ws://localhost:8081' });
+	proxyWebsocket.ws(req, socket, head, { target: 'ws://localhost:8080' });
 });
 
 
