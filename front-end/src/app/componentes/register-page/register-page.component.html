@@ -41,6 +41,14 @@
             <p class="text-error">Username must contains at least 5 characters</p>
         </div>
     </div>
+    <div *ngIf="usernameRepeatedError == true">
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input formControlName="username" ng-required="true" name="username"
+                   type="text" class="form-control error" id="inputUsername">
+            <p class="text-error">Username already exists</p>
+        </div>
+    </div>
     <div *ngIf="emailError == false && correctEmailError == false">
         <div class="form-group">
             <label for="inputEmail">Email</label>

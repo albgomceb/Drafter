@@ -1,3 +1,29 @@
-#container video{
-    width:300px;
+#videos{
+    display: block;
+    margin: 0 auto;
+    position: relative;		
+  }
+
+.camLocal {
+    display: block;
+    margin: 0 auto;
+    position: relative;		
+}
+
+.camRemota {
+    display: block;
+    margin: 0 auto;
+    position: relative;		
+}
+
+#videos .camLocal p {
+    display: block;
+    color: #fff;
+    font-weight: bold;
+    position: absolute;
+    top:1%;
+    left: 0;
+    padding: 5px;
+    width: 100%;
+    z-index: 300004;
 }

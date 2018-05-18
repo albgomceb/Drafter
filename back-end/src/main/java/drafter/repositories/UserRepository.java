@@ -17,6 +17,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select u from User u where u.userAccount.id = ?1")
 	User findByUserAccount(int id);
 	
+	@Query("select u from User u where u.userAccount.username = ?1")
+	User findByUsername(String username);
+	
 	@Query("select u from User u join u.departments d where (u.name like %?1% or u.surname like %?1% or u.email like %?1% or u.userAccount.username like %?1%) and (d.name like %?2%)")
 	List<User> filterUsers(String keyword, String department);
 	
@@ -25,5 +28,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query("select u from User u where u.id !=?1")
 	List<User> findAllWithoutPrincipal(int id);
+
+	
 	
 }

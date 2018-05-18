@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="rating-box mx-auto">
-                    <input type="number" min="1" max="10" [(ngModel)]="votes[index].value" class="form-control">
+                    <input type="number" min="1" max="10" step="1" [(ngModel)]="votes[index].value" class="form-control" required>
                 </div>
             </li>
         </ul>

@@ -17,6 +17,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 import { forEach } from '@angular/router/src/utils/collection';
 import { LoginService } from '../services/login.service';
+import { Subject } from 'rxjs/Subject';
+import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'meeting-page',
@@ -37,7 +39,8 @@ export class MeetingPageComponent implements OnInit {
   attendants: Array<Option> = [];
 
   organizations: Array<Organization>
-  results: Observable<Array<User>>;
+  results: Observable<User[]>;
+  searchTerms = new Subject<string>();
 
   errorListUsers:boolean = false;
   meeting: Meeting;
@@ -85,9 +88,16 @@ export class MeetingPageComponent implements OnInit {
         this.errorListUsers = true;
       }
     );
+    
+    
     this.searchField = new FormControl();
 
-    this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
+    //this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
+    this.results = this.searchTerms.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap((keyword: string) => this.userService.filterUsers(keyword))
+    );
   } 
 
   search(){
