@@ -1,243 +1,438 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as attachMediaStream from 'attachmediastream';
-import { RealTimeService } from '../../services/real-time.service';
-import * as io from 'socket.io-adapter';
+import { RealTimeService, WSResponseType } from '../../services/real-time.service';
+import { LoginService } from '../services/login.service';
+declare var Meeting: any;
 
 @Component({
-  selector: 'videoconferences',
-  templateUrl: './videoconferences.component.html',
-  styleUrls: ['./videoconferences.component.scss']
+    selector: 'videoconferences',
+    templateUrl: './videoconferences.component.html',
+    styleUrls: ['./videoconferences.component.scss']
 })
-export class VideoconferencesComponent implements OnInit {
+export class VideoconferencesComponent implements OnInit, OnDestroy {
 
     @Input() idRoomMeeting: number;
-    room:number;
+    room: number;
 
-  constructor(private activatedRoute:ActivatedRoute, private loginService: LoginService, private realTimeService: RealTimeService) { }
-  
+    constructor(private activatedRoute: ActivatedRoute, private realTimeService: RealTimeService, private loginService:LoginService) { }
 
-  ngOnInit() {
+    public hostPC;
+    public camStream: MediaStream;
 
-    
+    ngOnInit() {
+        this.room = parseInt(window.location.pathname.split("/")[2]);
+        var scope = this;
+        var camName = "Not logged";
+        let candidate: RTCIceCandidate;
+        let servers = {
+            iceServers: [
+                { 'urls': 'stun:stun.l.google.com:19302' },
+                { 'urls': 'stun:stun01.sipphone.com' },
+                { 'urls': 'stun:stun.ekiga.net' },
+                { 'urls': 'stun:stun.fwdnet.net' },
+                { 'urls': 'stun:stun.ideasip.com' },
+                { 'urls': 'stun:stun.iptel.org' },
+                { 'urls': 'stun:stun.rixtelecom.se' },
+                { 'urls': 'stun:stun.schlund.de' },
+                { 'urls': 'stun:stun.l.google.com:19302' },
+                { 'urls': 'stun:stun1.l.google.com:19302' },
+                { 'urls': 'stun:stun2.l.google.com:19302' },
+                { 'urls': 'stun:stun3.l.google.com:19302' },
+                { 'urls': 'stun:stun4.l.google.com:19302' },
+                { 'urls': 'stun:stunserver.org' },
+                { 'urls': 'stun:stun.softjoys.com' },
+                { 'urls': 'stun:stun.voiparound.com' },
+                { 'urls': 'stun:stun.voipbuster.com' },
+                { 'urls': 'stun:stun.voipstunt.com' },
+                { 'urls': 'stun:stun.voxgratia.org' },
+                { 'urls': 'stun:stun.xten.com' },
+                {
+                    'urls': 'turn:numb.viagenie.ca',
+                    'credential': 'muazkh',
+                    'username': 'webrtc@live.com'
+                },
+                {
+                    'urls': 'turn:192.158.29.39:3478?transport=udp',
+                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+                    'username': '28224511:1379330808'
+                },
+                {
+                    'urls': 'turn:192.158.29.39:3478?transport=tcp',
+                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+                    'username': '28224511:1379330808'
+                }
 
-    //this.room = this.idRoomMeeting;
-    console.log(window.location.pathname.split("/")[2]);
-    this.room =  parseInt(window.location.pathname.split("/")[2]);
-
-    var scope = this;
-
-    let constraints;
-
-    let audioTracks:Array<MediaStreamTrack>=[];
-    let videoTracks:Array<MediaStreamTrack>=[];
-    let arrayTracks:Array<MediaStreamTrack>=[];
-    let camStream:MediaStream;
-    let remoteStream:MediaStream;
-    let hostPC = new RTCPeerConnection(null);
-    let clientPC = new RTCPeerConnection(null);
-    let candidate:RTCIceCandidate;
-    let servers = {iceServers: [
-        {
-            'urls': 'stun:stun.l.google.com:19302'
-          },
-          {
-            'urls': 'turn:192.158.29.39:3478?transport=udp',
-            'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-            'username': '28224511:1379330808'
-          },
-          {
-            'urls': 'turn:192.158.29.39:3478?transport=tcp',
-            'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-            'username': '28224511:1379330808'
-          },
-          {
-            'urls': 'turn:turn.bistri.com:80',
-            'credential': 'homeo',
-            'username': 'homeo'
-            }
-    ]};
-    let socket:any;
-
-    //VARIABLES VIDEOCONFERENCIA
-    console.log("Initializing; room = "+this.room);
-    var localVideo = document.getElementById("localVideo");
-    var remoteVideo = document.getElementById("remoteVideo");
-
-    var sdpConstraints = {'mandatory': {
-        'OfferToReceiveAudio':true, 
-        'OfferToReceiveVideo':true }};
-
-    constraints = {
-        'OfferToReceiveAudio':1, 
-        'OfferToReceiveVideo':1 };
-
-    //EJECUCION DEL CODIGO
-    start();
-
-
-    //PEDIMOS PERMISO DE CAPTURA DE AUDIO Y VIDEO A LOS DISPOSITIVOS ACTIVOS
-    function start() {
-        console.log('Requesting local stream');
-        //alert(navigator.userAgent);
-
-        if (navigator.getUserMedia) {
-
-            if(navigator.userAgent.search("IOS")!== -1){
-                //alert("Solo disponible para Desktop(Chrome o Firefox) y Android");
-            }else if( navigator.userAgent.search("Android")!== -1){
-                //alert("Usas Android");
-                $("#buttonsAndroid").show();
-
-                $("#frontCam").click(function() {
-
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
-                .then(function(stream){
-                    console.log('Received local stream');
-                    if(stream.getVideoTracks.length>0)
-                        stream.getVideoTracks[0].stop();
-                        camStream = stream;
-                        doGetUserMedia();
-                })
-                .catch(function(e) {
-                    console.log('getUserMedia() error: ', e);
-                    alert('getUserMedia() error: '+ e)
-                });
-
-                });
-
-                $("#backCam").click(function() {
-
-                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                    .then(function(stream){
-                        console.log('Received local stream');
-                        if(stream.getVideoTracks.length>0)
-                            stream.getVideoTracks[0].stop();
-                            camStream = stream;
-                            doGetUserMedia();
-                    })
-                    .catch(function(e) {
-                        console.log('getUserMedia() error: ', e);
-                        alert('getUserMedia() error: '+ e)
-                    });
-
-                    });
-
-            }else{
-                //alert("Usas Chrome o Firefox");
-                $("#buttonsAndroid").hide();
-
-                navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-                .then(function(stream){
-                    console.log('Received local stream');
-                    camStream = stream;
-                    doGetUserMedia();
-                })
-                .catch(function(e) {
-                    console.log('getUserMedia() error: ', e);
-                    alert('getUserMedia() error: '+ e)
-                });
-
+            ]
+        };
+        let socket: any;
+        this.realTimeService.register('video-offer', [], _oferta => {
+            let oferta = _oferta.model;
+            if (oferta && oferta.peerId == this.realTimeService.getUserUUID()) {
                 
+                camName = _oferta.data['user'];
+                //camName = "Not Logged";
+
+                this.hostPC.setRemoteDescription(new RTCSessionDescription({ sdp: oferta.sdp, type: oferta.type }));
+                this.hostPC.createAnswer({ offerToReceiveAudio: 1, offerToReceiveVideo: 1 })
+                    .then(answer => {
+                        //console.log("SENDING ANSWER: ", answer);
+                        this.hostPC.setLocalDescription(new RTCSessionDescription(answer));
+                        console.log("Video-offer received");
+                        console.log("Sending video-answer...");
+                        this.realTimeService.send('/meeting/send-answer/', WSResponseType.SET, 'video-answer', { sdp: answer.sdp, type: answer.type, peerId: oferta.localId, localId: this.realTimeService.getUserUUID() });
+                    }).catch(err => { console.log("answer failed: ", err); });
+
+
+            }
+        });
+        this.realTimeService.register('video-answer', [], _respuesta => {
+            let respuesta = _respuesta.model;
+            if (respuesta && respuesta.peerId == this.realTimeService.getUserUUID()) {
+
+                camName = _respuesta.data['user'];
+
+                console.log("Video-answer received");
+                this.hostPC.setRemoteDescription(new RTCSessionDescription({ sdp: respuesta.sdp, type: respuesta.type })); 
+                //console.log("Streams Remote: ", hostPC.getRemoteStreams());
+                //console.log("Streams Local: ", hostPC.getLocalStreams());
 
             }
 
-            $("#hangUp").click(function() {
-              hangup();
-            });
+        });
 
-        }else{
-            alert('Sorry, your browser does not support getUserMedia');
+        this.realTimeService.register('candidate', [], _respuesta => {
+            //console.log("ENTRO A CANDIDATEEEEEEEEEEEEEEEEEEEEEEEEEE");
+            let respuesta = _respuesta.model;
+            if (respuesta) {
+
+                try {
+
+                    var candidate: any = JSON.parse(respuesta.candidate);
+                    if(candidate!=null){
+                        this.hostPC.addIceCandidate(new RTCIceCandidate(candidate));
+                        console.log("Candidate Received",candidate);
+                    }
+
+                } catch (e) {
+                    console.log("Error: Failure during addIceCandidate(). ", e);
+                }
+            }
+        });
+
+        this.realTimeService.register('video-available', [], _respuesta => {
+            let respuesta = _respuesta.model;
+            if (respuesta && respuesta.uuid != this.realTimeService.getUserUUID()) {
+
+                this.hostPC.createOffer({ offerToReceiveAudio: 1, offerToReceiveVideo: 1 })
+                    .then(offer => {
+                        //console.log("SENDING OFFER: ", offer);
+                        this.hostPC.setLocalDescription(new RTCSessionDescription(offer));
+                        console.log("Sending video-offer...");
+                        this.realTimeService.send('/meeting/send-offer/', WSResponseType.SET, 'video-offer', { sdp: offer.sdp, type: offer.type, peerId: respuesta.uuid, localId: this.realTimeService.getUserUUID() });
+
+                    })
+                    .catch(err => {
+                        console.log('ERROR: ', err);
+                    });
+
+            }
+
+        });
+
+        //VARIABLES VIDEOCONFERENCIA
+        console.log("Initializing; room = " + this.room);
+        var localVideo: any = document.getElementById("localVideo");
+        var remoteVideo: any = document.getElementById("remoteVideo");
+        // var loading = document.getElementById("loading");
+        remoteVideo.style.visibility = "hidden";
+
+        var constraintsPC:MediaStreamConstraints = {
+            audio: true,
+            video: {
+              width: 320,
+              height: 240
+           }
         }
+
+        var constraintsPhoneFace:MediaStreamConstraints = {
+            audio: true,
+            video: {
+                width: 320,
+                height: 180,
+                facingMode: "user"
+           }
+        }
+
+        var constraintsPhoneEnv:MediaStreamConstraints = {
+            audio: true,
+            video: {
+                width: 320,
+                height: 180,
+                facingMode: "environment"
+           }
+        }
+
+
+        //EJECUCION DEL CODIGO
+        start();
+
+        //PEDIMOS PERMISO DE CAPTURA DE AUDIO Y VIDEO A LOS DISPOSITIVOS ACTIVOS
+        function start() {
+            console.log('Requesting local stream');
+
+            if (navigator.getUserMedia) {
+
+                if (navigator.userAgent.search("IOS") !== -1) {
+                    
+                    //IOS
+
+                    localVideo.style.width = "20%";
+                    localVideo.style.position = "absolute";
+                    localVideo.style.top = "0";
+                    localVideo.style.left = "0";
+                    localVideo.style.zIndex = "300002";
+
+                    remoteVideo.style.width = "100%";
+                    remoteVideo.style.position = "absolute";
+                    remoteVideo.style.top = "0";
+                    remoteVideo.style.left = "0";
+                    remoteVideo.style.zIndex = "300000";
+
+                    var name = document.getElementById("localName");
+                    name.style.visibility = "hidden";
+
+                    $("#buttonsAndroid").hide();
+
+                    navigator.mediaDevices.getUserMedia(constraintsPhoneFace)
+                        .then(function (stream) {
+                            scope.camStream = stream;
+                            doGetUserMedia();
+                        })
+                        .catch(function (e) {
+                            console.log('getUserMedia() error: ', e);
+                            alert('getUserMedia() error: ' + e)
+                        });
+
+                    // $("#buttonsAndroid").show();
+
+                    // $("#frontCam").click(function () {
+
+                    //     navigator.mediaDevices.getUserMedia(constraintsPhoneFace)
+                    //         .then(function (stream) {
+                    //             //hangup();
+                    //             camStream = stream;
+                    //             doGetUserMedia();
+                    //         })
+                    //         .catch(function (e) {
+                    //             console.log('getUserMedia() error: ', e);
+                    //             alert('getUserMedia() error: ' + e)
+                    //         });
+
+                    // });
+
+                    // $("#backCam").click(function () {
+
+                    //     navigator.mediaDevices.getUserMedia(constraintsPhoneEnv)
+                    //         .then(function (stream) {
+                    //             //hangup();
+                    //             camStream = stream;
+                    //             doGetUserMedia();
+                    //         })
+                    //         .catch(function (e) {
+                    //             console.log('getUserMedia() error: ', e);
+                    //             alert('getUserMedia() error: ' + e)
+                    //         });
+
+                    // });
+
+                } else if (navigator.userAgent.search("Android") !== -1) {
+                    
+                    //ANDROID
+
+                    localVideo.style.width = "20%";
+                    localVideo.style.position = "absolute";
+                    localVideo.style.top = "0";
+                    localVideo.style.left = "0";
+                    localVideo.style.zIndex = "300002";
+
+                    remoteVideo.style.width = "100%";
+                    remoteVideo.style.position = "absolute";
+                    remoteVideo.style.top = "0";
+                    remoteVideo.style.left = "0";
+                    remoteVideo.style.zIndex = "300000";
+
+                    var name = document.getElementById("localName");
+                    name.style.visibility = "hidden";
+
+                    $("#buttonsAndroid").hide();
+
+                    navigator.mediaDevices.getUserMedia(constraintsPhoneFace)
+                        .then(function (stream) {
+                            scope.camStream = stream;
+                            doGetUserMedia();
+                        })
+                        .catch(function (e) {
+                            console.log('getUserMedia() error: ', e);
+                            alert('getUserMedia() error: ' + e)
+                        });
+                    
+                    //$("#buttonsAndroid").show();
+
+                    // $("#frontCam").click(function () {
+
+                    //     navigator.mediaDevices.getUserMedia(constraintsPhoneFace)
+                    //         .then(function (stream) {
+                    //             //hangup();
+                    //             alert("weeeee");
+                    //             camStream = stream;
+                    //             doGetUserMedia();
+                    //         })
+                    //         .catch(function (e) {
+                    //             console.log('getUserMedia() error: ', e);
+                    //             alert('getUserMedia() error: ' + e)
+                    //         });
+
+                    // });
+
+                    // $("#backCam").click(function () {
+
+                    //     navigator.mediaDevices.getUserMedia(constraintsPhoneEnv)
+                    //         .then(function (stream) {
+                    //             //hangup();
+                    //             camStream = stream;
+                    //             doGetUserMedia();
+                    //         })
+                    //         .catch(function (e) {
+                    //             console.log('getUserMedia() error: ', e);
+                    //             alert('getUserMedia() error: ' + e)
+                    //         });
+
+                    // });
+
+                } else {
+
+                    //DESKTOP (CHROME O FIREFOX)
+
+                    $("#buttonsAndroid").hide();
+
+                    navigator.mediaDevices.getUserMedia(constraintsPC)
+                        .then(function (stream) {
+                            scope.camStream = stream;
+                            doGetUserMedia();
+                        })
+                        .catch(function (e) {
+                            console.log('getUserMedia() error: ', e);
+                            alert('getUserMedia() error: ' + e)
+                        });
+
+                }
+
+                // $("#hangUp").click(function () {
+                //     hangup();
+                // });
+
+            } else {
+                alert('Sorry, your browser does not support getUserMedia');
+            }
+        }
+
+
+        function doGetUserMedia() {
+            //console.log("User has granted access to local media.");
+            localVideo.muted = true;
+            localVideo.srcObject = scope.camStream;
+
+
+            // Caller creates PeerConnection.
+            if (scope.camStream) {
+                //console.log("cam: ", camStream);
+                createPeerConnection();
+            }
+        }
+
+        //LLEVAMOS A CABO LA LLAMADA
+        function createPeerConnection() {
+            try {
+                // Create an RTCPeerConnection
+                scope.hostPC = new RTCPeerConnection(servers);
+                console.log('Creating RTCPeerConnnection', scope.hostPC);
+                scope.hostPC.addStream(scope.camStream);
+
+                scope.hostPC.onaddstream = function (event) {
+                    //console.log("ON TRACK: ", event);
+
+                    console.log("Streams Remote: ", scope.hostPC.getRemoteStreams());
+                    //console.log("Streams Local: ", hostPC.getLocalStreams());
+                    // remoteVideo.srcObject = event.streams[0];
+
+                    var remoteVideo: any = document.getElementById("remoteVideo");
+                    // console.log("Tracks: ",event.streams.getVideoTracks());
+                    //console.log("Receivers: ", hostPC.getReceivers());
+                    // loading.style.visibility = "hidden";                   
+                    remoteVideo.srcObject = event.stream
+                    remoteVideo.style.visibility = "visible";
+                    var camRemota = document.getElementsByClassName("camRemota")[0];
+                    var p = document.createElement("p");
+                    p.style.display ="block";
+                    p.style.color = "#222";
+                    p.style.fontWeight = "bold";
+                    p.style.position = "absolute";
+                    p.style.top = "0";
+                    p.style.left = "0";
+                    p.style.padding = "5px";
+                    p.style.width = "100%";
+                    p.style.backgroundColor = "rgba(250, 250, 250, 0.65)";
+                    p.style.zIndex = "300001";
+                    p.innerHTML = capitalizeFirstLetter(camName);
+                    camRemota.appendChild(p);
+
+                }
+
+                scope.hostPC.onicecandidate = function (event) {
+                    
+
+                    if (event.candidate != null) {
+                        console.log("Enviando candidato",event.candidate);
+                        console.log("Tipo", event.candidate.type);
+                        scope.realTimeService.send('/meeting/send-candidate/', WSResponseType.SET, 'candidate', { candidate: JSON.stringify(event.candidate) });
+                    }
+                }
+
+
+                console.log('Waiting for peer...');
+                scope.realTimeService.send('/meeting/send-available/', WSResponseType.SET, 'video-available', { uuid: scope.realTimeService.getUserUUID() });
+                
+            } catch (e) {
+                console.log("Failed to create PeerConnection, exception: " + e.message);
+                alert("Cannot create RTCPeerConnection object; WebRTC is not supported by this browser.");
+                return;
+            }
+
+        }
+
+        // function hangup() {
+        //     console.log('Ending calls');
+        //     document.getElementById("loading").style.visibility = "hidden";
+        //     scope.hostPC.close();
+        //     $("#hangUp").hide();
+        // }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
     }
 
-
-      function doGetUserMedia(){
-        console.log("User has granted access to local media.");
-        attachMediaStream(camStream, localVideo);
-        // Caller creates PeerConnection.
-        if (camStream)
-          createPeerConnection();
-      }
-
-      //LLEVAMOS A CABO LA LLAMADA
-      function createPeerConnection() {
-        try {
-            // Create an RTCPeerConnection
-            console.log('Creating RTCPeerConnnection');
-            hostPC = new RTCPeerConnection(servers);
-            console.log('Adding Stream object');
-            console.log("STREAM: ",camStream);
-            hostPC.addStream(camStream);
-            console.log('Waiting for peer...');
-        } catch (e) {
-            console.log("Failed to create PeerConnection, exception: " + e.message);
-            alert("Cannot create RTCPeerConnection object; WebRTC is not supported by this browser.");
-            return;
-        }
-
-      }
-
-      
-
-      this.realTimeService.registerOnJoinUser((name,uuid) => {
-        console.log("NUEVO USUARIO: "+name+", "+uuid);
-        newClient();
-        hostPC.onicecandidate = function(e){clientPC.addIceCandidate(e.candidate)}
-        clientPC.onicecandidate = function(e){hostPC.addIceCandidate(e.candidate)}
-
-        clientPC.onaddstream = function(event){
-            console.log("STREAM REMOTO: "+event.stream);
-            attachMediaStream(event.stream, remoteVideo);
-        }
-      });
-
-      // This function would be called when receiving a remote connection
-      function newClient() {
-        clientPC = new RTCPeerConnection(servers);
-        console.log('Creating local offer');
-        hostPC.createOffer()
-            .then(offer => hostPC.setLocalDescription(offer))
-            .then(() => clientPC.setRemoteDescription(hostPC.localDescription))
-            .then(() => clientPC.createAnswer())
-            .then(answer => clientPC.setLocalDescription(answer))
-            .then(() => hostPC.setRemoteDescription(clientPC.localDescription))
-            .catch(function(err){
-              console.log("CREATE OFFER: "+err);
-            });
-      }
-
-      function hangup() {
+    ngOnDestroy(){
         console.log('Ending calls');
-        hostPC.close();
-        clientPC.close();
-        hostPC = clientPC = null;
-        console.log('Hung calls');
-      }
+        this.hostPC.close();
+        this.hostPC = null;
+        let tracks = this.camStream.getTracks();
 
-      /*function iceCallback(event) {
-        if (event.candidate) {
-            var message = {type: 'candidate',
-              label: event.candidate.sdpMLineIndex,
-              id: event.candidate.sdpMid,
-              candidate: event.candidate.candidate};
-              var msgString = JSON.stringify(message);
-              console.log('C->S: ' + msgString);
-              var candidate = new RTCIceCandidate(event.candidate);
-              pc.addIceCandidate(candidate).catch(function(reason) {
-                // An error occurred, so handle the failure to connect
-                console.log("ERROR: "+reason);
-        });
-          } else {
-            console.log("End of candidates.");
-          }
-      }*/
+        tracks.forEach(function(track) {
+            track.stop();
+          });
 
-}
-
-  public getLoginService(): LoginService {
-    return this.loginService;
-  }
+    }
 
 }

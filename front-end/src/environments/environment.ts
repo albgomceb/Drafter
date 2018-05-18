@@ -8,5 +8,5 @@ import { summaryFileName } from "@angular/compiler/src/aot/util";
 export const environment = {
   production: false,
   baseApi: "http://localhost:9000/data",
-  baseWS: "http://localhost:8080/socket" 
+  baseWS: "http://localhost:8081/socket" 
 };

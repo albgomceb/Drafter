@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { Meeting } from '../models/meeting.model';
+import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 
 
 const httpOptions = {
@@ -24,8 +25,8 @@ export class UserService {
     return this.http.get<Array<User>>(this.staticUrl + '/users');
   }
 
-  filterUsers(keyword: string): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.staticUrl + '/users/filterUsers?search=' + keyword)
+  filterUsers(keyword: string): Observable<User[]> {
+    return this.http.get<User[]>(this.staticUrl + '/users/filterUsers?search=' + keyword);
   }
 
   filterUsers2(keyword: string): Observable<Array<User>> {
