@@ -88,6 +88,9 @@ export class MeetingPageComponent implements OnInit {
         this.errorListUsers = true;
       }
     );
+    
+    
+    this.searchField = new FormControl();
 
     //this.results = this.userService.filterUsers(''); //TODOS LOS USUARIOS
     this.results = this.searchTerms.pipe(
@@ -97,8 +100,21 @@ export class MeetingPageComponent implements OnInit {
     );
   } 
 
-  search(keyword:string){   
-    this.searchTerms.next(keyword);
+  search(){
+
+    var scope = this;
+
+    if(this.searchField.value.length>0){
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(scope.searchField.value); //FILTRAR USUARIOS
+      },400);
+
+    }else{
+      setTimeout(function(){
+        scope.results = scope.userService.filterUsers(''); //TODOS LOS USUARIOS
+      },400);
+    }
+
   }
 
   addAttendant(attendant:User){
