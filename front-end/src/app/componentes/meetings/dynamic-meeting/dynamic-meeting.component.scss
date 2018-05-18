@@ -1,25 +1,21 @@
 @import '../../../../scss/colors';
 
-.alert-join{
-    border-radius:5px;
+#alerts{
     position: fixed;
-    width:320px;
-    left:50%;
-    margin-left:-160px;
-    background-color: #4CAF50;
-    color: #fff;
-    border-color: #d0e9c6;
-}
+    top: 8rem;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
 
-.alert-left{
-    border-radius:5px;
-    position: fixed;
-    width:320px;
-    left:50%;
-    margin-left:-160px;
-    background-color: #ff9800;
-    color: #fff;
-    border-color: #d0e9c6;
+    div {
+        width: 50%;      
+    }
+
+    @media only screen and (max-width: 600px) {
+        div {
+            width: 80%;
+        }
+    }
 }
 
 form.form {

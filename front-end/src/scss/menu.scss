@@ -23,14 +23,51 @@ nav.navbar {
         padding: 0.9375rem 1.5em !important;
         color: $mp_font_color !important;
         transition: all .2s ease-in;
-    }
 
-    a.nav-link:hover {
-        background-color: $mp_secondary_color;
+        i.notification {
+            color: $content_background_color;
+        }
+
+        &:hover {
+            background-color: $mp_secondary_color;
+    
+            i.notification {
+                color: $mp_font_color;
+            }
+        }
     }
 
     div.dropdown-menu {
         background-color: $content_background_color;
+
+        span.row-notification {
+            border-bottom: 0 !important;
+        }
+
+        .row-notification {
+            font-size: 0.7rem;
+            border-bottom: 1px solid $content_background_color_2;
+
+            @include media-breakpoint-down(lg) {
+                font-size: 1rem
+            }
+
+            a.info-notification {
+                &:hover,
+                &:focus,
+                &:active {
+                    color: inherit;
+                    background-color: $content_background_color_2;
+                }
+            }        
+            
+            button.btn-notification {
+                @include media-breakpoint-up(lg) {
+                    font-size: 0.7rem !important;
+                    padding: 0.2rem 0.25rem !important;
+                }
+            }
+        }
 
         a.dropdown-item:hover,
         a.dropdown-item:focus,

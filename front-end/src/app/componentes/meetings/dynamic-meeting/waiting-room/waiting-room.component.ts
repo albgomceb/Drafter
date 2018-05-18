@@ -24,12 +24,15 @@ export class WaitingRoomComponent implements OnInit {
 
   public attendants : any[];
   public principal: Participant;
+  public loaded: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private meetingService: DynamicMeetingService, private router: Router, private userService:UserService) { }
 
   ngOnInit() {
+    this.loaded = false;
     this.userService.getLoginUser().subscribe(principal =>{
       this.principal = this.meetingInfo.attendants.find(x => x.username === principal.username);
+      this.loaded = true;
     });
     this.attendants = this.meetingInfo.attendants
   }

@@ -2,6 +2,7 @@ package drafter.services;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -154,6 +155,14 @@ public class MeetingService {
 		
 //		}
 		return updated;
+	}
+	
+	public Collection<Meeting> findNotifications(int userId){
+		return meetingRepository.findNotifications(userId);
+	}
+	
+	public User getLeader(int meetingId) {
+		return meetingRepository.getLeader(meetingId);
 	}
 }    
 

@@ -14,40 +14,43 @@ import * as html2canvas from 'html2canvas'
   styleUrls: ['./standard-minutes-page.component.scss']
 })
 export class StandardMinutesPageComponent implements OnInit {
-  
+
   meeting: Meeting = new Meeting();
-  leader:Option;
-  attendants:Array<Option>;
-  model:any[];
+  leader: Option;
+  attendants: Array<Option>;
+  model: any[];
   agendas: Array<Agenda2>;
   conclusions: Array<Conclusion> = [];
   @ViewChild('content') content: ElementRef
   @Input() meetingId: number;
   @Input() meetingInfo: any;
-  
 
-  constructor(private meetingService: MeetingService, 
-              private activatedRoute: ActivatedRoute) { }
+
+  constructor(private meetingService: MeetingService,
+    private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     //OBTENER SESSION LEADER
     this.attendants = this.meetingInfo.attendants;
     this.attendants.forEach(at => {
-      if(at.role=="LEADER")
+      if (at.role == "LEADER")
         this.leader = at;
     });
 
     this.meetingService.getMeeting(this.meetingId).subscribe(data => {
-       this.meeting = data;
+      this.meeting = data;
+      if (!this.meeting.hasFinished) {
+        this.router.navigateByUrl('/meeting/' + this.meetingId);
+      }
     });
 
     this.meetingService.getAgendas(this.meetingId).subscribe(data => {
       this.agendas = data;
       this.model = [];
-      for(let ag of this.agendas){
+      for (let ag of this.agendas) {
         var val = {
           agenda: ag,
-          conclusion:ag
+          conclusion: ag
         }
 
         this.model.push(val);
@@ -60,69 +63,37 @@ export class StandardMinutesPageComponent implements OnInit {
 
     let content = this.content.nativeElement;
 
-    /*var canvasToImage = function (canvas) {
-      var img = new Image();
-      var dataURL = canvas.toDataURL('image/png');
-      img.src = dataURL;
-      return img;
-    };
-    var canvasShiftImage = function (oldCanvas, shiftAmt) {
-      shiftAmt = parseInt(shiftAmt) || 0;
-      if (!shiftAmt) { return oldCanvas; }
-
-      var newCanvas = document.createElement('canvas');
-      newCanvas.height = oldCanvas.height - shiftAmt;
-      newCanvas.width = oldCanvas.width;
-      var ctx = newCanvas.getContext('2d');
-
-      var img = canvasToImage(oldCanvas);
-      ctx.drawImage(img, 0, shiftAmt, img.width, img.height, 0, 0, img.width, img.height);
-
-      return newCanvas;
-    };
-
-    html2canvas(content).then(function (canvas) {
-      var pdf = new jsPDF('l', 'px'),
-        pdfInternals = pdf.internal,
-        pdfPageSize = pdfInternals.pageSize,
-        pdfScaleFactor = pdfInternals.scaleFactor,
-        pdfPageWidth = pdfPageSize.width,
-        pdfPageHeight = pdfPageSize.height,
-        totalPdfHeight = 0,
-        htmlPageHeight = canvas.height,
-        htmlScaleFactor = canvas.width / (pdfPageWidth * pdfScaleFactor),
-        safetyNet = 0;
-
-      while (totalPdfHeight < htmlPageHeight && safetyNet < 15) {
-        var newCanvas = canvasShiftImage(canvas, totalPdfHeight);
-        pdf.addImage(newCanvas, 'png', 0, 0, pdfPageWidth, 0, null, 'NONE');
-
-        totalPdfHeight += (pdfPageHeight * pdfScaleFactor * htmlScaleFactor);
-
-        if (totalPdfHeight < htmlPageHeight) {
-          pdf.addPage();
-        }
-        safetyNet++;
-      }
-
-      pdf.save('test.pdf');
-*/
-    html2canvas(content,{useCORS:true}).then(function (canvas) {
+    html2canvas(content, { useCORS: true }).then(function (canvas) {
+      var imgWidth = 190;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
 
       var img = canvas.toDataURL();
-      var doc = new jsPDF();
-      doc.addImage(img, 'PNG',10,10,190,250);
+
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
+
+      doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(img, 'PNG', 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
       doc.save('Minutes.pdf');
     });
   }
 
   public format(): string {
     var s: number = this.meeting.timer;
-    var m: number = Math.floor(this.meeting.timer/60);
-    var h: number = Math.floor(m/60);
+    var m: number = Math.floor(this.meeting.timer / 60);
+    var h: number = Math.floor(m / 60);
 
-    m -= 60*h;
-    s -= 3600*h + 60*m;
+    m -= 60 * h;
+    s -= 3600 * h + 60 * m;
 
     var sm: string = ("00" + m).slice(-2);
     var ss: string = ("00" + s).slice(-2);

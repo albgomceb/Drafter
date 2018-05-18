@@ -31,8 +31,8 @@
 	</bean>
 
 	<bean id="userAccount3" class="drafter.security.UserAccount">
-		<property name="username" value="macai" />
-		<property name="password" value="d35ddd3e50f212a97656712f85900737" />
+		<property name="username" value="marmui" />
+		<property name="password" value="368c2a7620b0781a45d8b8d1e981bfaf" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -55,8 +55,8 @@
 	</bean>
 
 	<bean id="userAccount5" class="drafter.security.UserAccount">
-		<property name="username" value="cocome" />
-		<property name="password" value="c73500f72b7ef13113e05cfdd62185ed" />
+		<property name="username" value="paloro" />
+		<property name="password" value="72e9298917f1da752142dc7613288c0f" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -67,8 +67,8 @@
 	</bean>
 
 	<bean id="userAccount6" class="drafter.security.UserAccount">
-		<property name="username" value="querico" />
-		<property name="password" value="105ba0b9e839084931f377cb55d24408" />
+		<property name="username" value="paluga" />
+		<property name="password" value="b71f6bfb06c4738c6eb5f6c36ee61572" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -80,8 +80,8 @@
 
 
 	<bean id="userAccount7" class="drafter.security.UserAccount">
-		<property name="username" value="mapos" />
-		<property name="password" value="0591fe2b4a41d67dd0a9822c3c711e23" />
+		<property name="username" value="mabeje" />
+		<property name="password" value="70e8549189765106ca01afe434e8353e" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -92,8 +92,8 @@
 	</bean>
 
 	<bean id="userAccount8" class="drafter.security.UserAccount">
-		<property name="username" value="wiscre" />
-		<property name="password" value="a18b09672944d4b449f7bb4b183a3a43" />
+		<property name="username" value="wisjon" />
+		<property name="password" value="9877355d1caef0c08d2e4364c3233f80" />
 		<property name="authorities">
 			<list>
 				<bean class="drafter.security.Authority">
@@ -114,7 +114,7 @@
 		<property name="email" value="larofe@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg" />
+			  value="https://image.ibb.co/jfZs9S/avatar_1.jpg" />
 	</bean>
 
 	<!-- Users -->
@@ -126,7 +126,7 @@
 		<property name="email" value="macaba@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/428341/pexels-photo-428341.jpeg" />
+			  value="https://image.ibb.co/frTVw7/avatar_3.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -143,11 +143,11 @@
 	<bean id="user2" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount3" />
 		<property name="name" value="Maria" />
-		<property name="surname" value="Candelaria Ibarra" />
-		<property name="email" value="macai@gmail.com" />
+		<property name="surname" value="Murillo Ibarra" />
+		<property name="email" value="marmui@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/265036/pexels-photo-265036.jpeg" />
+			  value="https://image.ibb.co/kNiKpS/avatar_7.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -167,7 +167,7 @@
 		<property name="email" value="adrocru@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/440588/pexels-photo-440588.jpeg" />
+			  value="https://image.ibb.co/hfGHb7/avatar_4.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department1" />
@@ -181,12 +181,12 @@
 
 	<bean id="user4" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount5" />
-		<property name="name" value="Constantino" />
-		<property name="surname" value="Corballo Mendez" />
-		<property name="email" value="cocome@gmail.com" />
+		<property name="name" value="Pablo" />
+		<property name="surname" value="López Romero" />
+		<property name="email" value="paloro@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/450271/pexels-photo-450271.jpeg" />
+			  value="https://image.ibb.co/jtzEOn/avatar_5.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -200,12 +200,12 @@
 
 	<bean id="user5" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount6" />
-		<property name="name" value="Quevedo" />
-		<property name="surname" value="Ricardo Constancio" />
-		<property name="email" value="querico@gmail.com" />
+		<property name="name" value="Paco" />
+		<property name="surname" value="Luis García" />
+		<property name="email" value="paluga@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/461497/pexels-photo-461497.jpeg" />
+			  value="https://image.ibb.co/enfcb7/avatar_6.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department2" />
@@ -220,11 +220,11 @@
 	<bean id="user6" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount7" />
 		<property name="name" value="Max" />
-		<property name="surname" value="Powell" />
-		<property name="email" value="mapos@gmail.com" />
+		<property name="surname" value="Ben Jefferson" />
+		<property name="email" value="mabeje@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg" />
+			  value="https://image.ibb.co/ksdkUS/avatar_8.jpg" />
 		<property name="departments">
 			<list>
 				<ref bean="department3" />
@@ -241,11 +241,11 @@
 	<bean id="user7" class="drafter.domain.User">
 		<property name="userAccount" ref="userAccount8" />
 		<property name="name" value="Wilhelm" />
-		<property name="surname" value="Scream" />
-		<property name="email" value="wiscre@gmail.com" />
+		<property name="surname" value="Jonson" />
+		<property name="email" value="wisjon@gmail.com" />
 		<property name="phone" value="900900900" />
 		<property name="photo"
-			value="https://images.pexels.com/photos/428339/pexels-photo-428339.jpeg" />
+			  value="https://image.ibb.co/bUEEOn/avatar_2.jpg" />
 		<property name="departments">
 			<list>
 
@@ -261,12 +261,12 @@
 	<!-- Organization -->
 
 	<bean id="organization1" class="drafter.domain.Organization">
-		<property name="enterprise" value="Boring Company" />
-		<property name="description" value="This a boring company and we dont know what to do with our time." />
+		<property name="enterprise" value="Technology Company" />
+		<property name="description" value="This a technology company. We are dedicated to the development of new devices." />
 		<property name="address" value="C/ Reyes Católicos n7" />
 		<property name="phone" value="900900923" />
 		<property name="logo"
-			value="http://www.theacademygtc.co.uk/wp-content/uploads/2015/09/Boring.jpg" />
+			  value="https://i.pinimg.com/originals/b0/d7/e1/b0d7e1b5aa7fabb42bc1d622a1bedbc5.jpg" />
 		<property name="email" value="organization@gmail.com" />
 		<property name="user" ref="user1" />
 		<property name="departments">
@@ -283,7 +283,7 @@
 		<property name="address" value="C/ Reina Merces n1" />
 		<property name="phone" value="900900912" />
 		<property name="logo"
-			value="https://images.pexels.com/photos/221159/pexels-photo-221159.jpeg" />
+			  value="https://images.pexels.com/photos/221159/pexels-photo-221159.jpeg" />
 		<property name="email" value="crabbits@gmail.com" />
 		<property name="user" ref="user6" />
 		<property name="departments">
@@ -298,7 +298,7 @@
 	<bean id="department1" class="drafter.domain.Department">
 		<property name="name" value="Financial Departament" />
 		<property name="organization" ref="organization1" />
-		<property name="users">
+		<property name="workers">
 			<list>
 				<ref bean="user1" />
 				<ref bean="user2" />
@@ -310,7 +310,7 @@
 	<bean id="department2" class="drafter.domain.Department">
 		<property name="name" value="Human Resources" />
 		<property name="organization" ref="organization1" />
-		<property name="users">
+		<property name="workers">
 			<list>
 				<ref bean="user4" />
 				<ref bean="user5" />
@@ -321,7 +321,7 @@
 	<bean id="department3" class="drafter.domain.Department">
 		<property name="name" value="Departamento de Ideas" />
 		<property name="organization" ref="organization2" />
-		<property name="users">
+		<property name="workers">
 			<list>
 				<ref bean="user1" />
 				<ref bean="user6" />
@@ -332,18 +332,19 @@
 	<!-- Meetings -->
 
 	<bean id="standard1" class="drafter.domain.Standard">
-		<property name="title" value="We have to do tunnels" />
-		<property name="description" value="We are meeting because our project is to create a air tunnel." />
+		<property name="title" value="We need to do an urgent meeting." />
+		<property name="description" value="It's found a fail in the product." />
 		<property name="date" value="2019/01/01 00:22" />
 		<property name="numberOfMeeting" value="10" />
 		<property name="image"
-			value="https://images.pexels.com/photos/117178/pexels-photo-117178.jpeg" />
+			value="http://www.analystconsult.com/wp-content/uploads/2015/10/Smart-Ways-to-Successfully-Launch-a-New-Product-analyst-consult.jpg" />
 		<property name="timer" value="10" />
 		<property name="hasfinished" value="false" />
 		<property name="status" value="1" />
 		<!-- <property name="project" ref="project1"/> -->
 		<property name="agendas">
 			<list>
+				<ref bean="agenda4" />
 			</list>
 		</property>
 		<property name="participants">
@@ -361,7 +362,7 @@
 
 	<bean id="standard2" class="drafter.domain.Standard">
 		<property name="title" value="Several Departaments" />
-		<property name="description" value="Someone is stealing money." />
+		<property name="description" value="This is a annual meeting to do a balance of losses." />
 		<property name="date" value="2018/01/01 00:22" />
 		<property name="numberOfMeeting" value="8" />
 		<property name="image"
@@ -394,7 +395,7 @@
 
 	<bean id="standard3" class="drafter.domain.Standard">
 		<property name="title" value="Móvil Pata-4x" />
-		<property name="description" value="Esta reunión es para hablar del nuevo diseño del móvil Pata-4x" />
+		<property name="description" value="Esta reunión es para hablar del nuevo diseño del móvil P-4x" />
 		<property name="date" value="2018/02/01 00:22" />
 		<property name="numberOfMeeting" value="4" />
 		<property name="image"
@@ -689,9 +690,11 @@
 	<bean id="participant1" class="drafter.domain.Participant">
 		<property name="role" value="participant1" />
 		<property name="hasAttended" value="true" />
+		<property name="showNotification" value="false"/>
 		<property name="department" ref="department1" />
 		<property name="user" ref="user1" />
 		<property name="meeting" ref="standard1" />
+
 	</bean>
 
 	<bean id="participant2" class="drafter.domain.Participant">
@@ -935,7 +938,7 @@
 
 	<bean id="agenda1" class="drafter.domain.Agenda">
 		<property name="number" value="1" />
-		<property name="description" value="I guess that Maria is a thief." />
+		<property name="description" value="We have to do dismissals." />
 		<property name="meeting" ref="standard2" />
 		<property name="conclusion">
 			<list>
@@ -947,7 +950,7 @@
 
 	<bean id="agenda2" class="drafter.domain.Agenda">
 		<property name="number" value="2" />
-		<property name="description" value="If it is true, we will call the police." />
+		<property name="description" value="We have to change the project." />
 		<property name="meeting" ref="standard2" />
 		<property name="conclusion">
 			<list>
@@ -966,26 +969,38 @@
 			</list>
 		</property>
 	</bean>
-
+	
+	
+	<bean id="agenda4" class="drafter.domain.Agenda">
+		<property name="number" value="1" />
+		<property name="description" value="We need an alternative to show the product in the conference." />
+		<property name="meeting" ref="standard1" />
+		<property name="conclusion">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	
 	<!-- Conclusions -->
 
 	<bean id="conclusion1" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="I saw Maria stealing 500e" />
+		<property name="conclusion" value="We will fire five people." />
 		<property name="agenda" ref="agenda1" />
 	</bean>
 
 	<bean id="conclusion2" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="She is a Thief" />
+		<property name="conclusion" value="A salary decrease for all staff." />
 		<property name="agenda" ref="agenda1" />
 	</bean>
 
 	<bean id="conclusion3" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="Call the police!!" />
+		<property name="conclusion" value="We are going to choose the project B." />
 		<property name="agenda" ref="agenda2" />
 	</bean>
 
 	<bean id="conclusion4" class="drafter.domain.Conclusion">
-		<property name="conclusion" value="No creo que sea una buena idea. Piensa en los móviles cuando en Sevilla hace 40 grados en verano. No van a funcionar." />
+		<property name="conclusion" value="No creo que sea una buena idea. En lugares con alta temperatura podría generar problemas." />
 		<property name="agenda" ref="agenda3" />
 	</bean>
 

@@ -29,6 +29,7 @@ export class RegisterPageComponent implements OnInit {
   missingFields:Boolean = false;
   correctEmailError:Boolean = false;
   usernameError: Boolean = false;
+  usernameRepeatedError: Boolean = false;
   registerForm:FormGroup;
   name:FormControl;
   surname:FormControl;
@@ -68,6 +69,7 @@ export class RegisterPageComponent implements OnInit {
    
     this.registerService.saveUser(this.user).subscribe((res:any) =>{
       this.loginService.login(new Login(this.user.email, this.user.password)).subscribe(res => {
+        this.loginService.init(()=>{});
         this.router.navigate(['/home/']);
       });
     }, error => {
@@ -79,6 +81,7 @@ export class RegisterPageComponent implements OnInit {
           this.emailError=true;
           this.passwordError=true;
           this.usernameError=false;
+          this.usernameRepeatedError=false;
           break;
         case 424:
           this.emailError=true;
@@ -86,6 +89,7 @@ export class RegisterPageComponent implements OnInit {
           this.missingFields=false;
           this.correctEmailError = false;
           this.usernameError=false;
+          this.usernameRepeatedError=false;
           break;
         case 403:
           this.correctEmailError = false;
@@ -93,6 +97,7 @@ export class RegisterPageComponent implements OnInit {
           this.missingFields=false;
           this.passwordError=true;
           this.usernameError=false;
+          this.usernameRepeatedError=false;
           break;
         case 505:
           this.missingFields=true;
@@ -100,6 +105,7 @@ export class RegisterPageComponent implements OnInit {
           this.passwordError=false;
           this.correctEmailError = false;
           this.usernameError=false;
+          this.usernameRepeatedError=false;
           break;
         case 508:
           this.emailError=false;
@@ -107,6 +113,7 @@ export class RegisterPageComponent implements OnInit {
           this.passwordError=false;
           this.missingFields=false;
           this.usernameError=false;
+          this.usernameRepeatedError=false;
           break;
         case 420:
           this.emailError=false;
@@ -114,6 +121,15 @@ export class RegisterPageComponent implements OnInit {
           this.passwordError=false;
           this.missingFields=false;
           this.usernameError=true;
+          this.usernameRepeatedError=false;
+          break;
+        case 426:
+          this.emailError=false;
+          this.correctEmailError = false;
+          this.passwordError=false;
+          this.missingFields=false;
+          this.usernameError=false;
+          this.usernameRepeatedError=true;
           break;
         default:
           break;

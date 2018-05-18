@@ -1,6 +1,8 @@
+import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './../services/login.service';
 
 declare let paypal: any;
 
@@ -20,9 +22,13 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
   amount: number = 0;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private loginService: LoginService, private userService: UserService) { }
 
   ngOnInit() {
+  }
+
+  public getLoginService(): LoginService {
+    return this.loginService;
   }
 
   paypalConfig = {
@@ -61,6 +67,7 @@ export class PricingComponent implements OnInit,AfterViewChecked {
 
     onAuthorize: (data, actions) => {
       return actions.payment.execute().then((payment) => {
+        this.userService.pay().subscribe(()=>{});
         this.router.navigate(['success']);
       })
     }

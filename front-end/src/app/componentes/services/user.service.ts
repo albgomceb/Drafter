@@ -29,6 +29,10 @@ export class UserService {
     return this.http.get<User[]>(this.staticUrl + '/users/filterUsers?search=' + keyword);
   }
 
+  filterUsers2(keyword: string): Observable<Array<User>> {
+    return this.http.get<Array<User>>(this.staticUrl + '/users/filterUsers2?search=' + keyword)
+  }
+
   saveMeeting(meeting: Meeting): Observable<Meeting> {
     return this.http.post<Meeting>(this.staticUrl + '/meeting/standard/', meeting, {});
   }
@@ -45,6 +49,14 @@ export class UserService {
   
   getLoginUser(): Observable<User> {
     return this.http.get<User>(this.staticUrl + '/users/me/');
+  }
+
+  hasPay(): Observable<any> {
+    return this.http.get<User>(this.staticUrl + '/users/hasPay');
+  }
+
+  pay(): Observable<any> {
+    return this.http.get<User>(this.staticUrl + '/users/pay');
   }
 
 }

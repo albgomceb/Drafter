@@ -1,7 +1,7 @@
+import { User } from './../models/user.model';
 import { NgModule, Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { OrganizationService } from '../services/organization.service';
-import { User } from '../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Meeting } from '../models/meeting.model';
@@ -30,7 +30,6 @@ export class MeetingPageComponent implements OnInit {
   hideme=[]
   searchField: FormControl;
   loading: boolean = false;
-  exist:boolean = false;
 
   users: Array<User>;
 
@@ -51,6 +50,16 @@ export class MeetingPageComponent implements OnInit {
   constructor(private loginService: LoginService, private userService: UserService,  private meetingService:DynamicMeetingService,private organizationService: OrganizationService, private router:Router) {}
   
   ngOnInit() {
+
+    //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
+    let principal:User = this.getLoginService().getPrincipal();
+    let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER",principal.username);
+
+    var index = this.attendants.findIndex( x => x.id === principalOption.id);
+    if(index == -1){
+      this.attendants.push(principalOption);
+    }
+
 
     this.meeting = new Meeting();
     this.thumbnail = new Array<Option>();
@@ -94,14 +103,7 @@ export class MeetingPageComponent implements OnInit {
 
   addAttendant(attendant:User){
 
-      //AÑADIR EL LIDER COMO PARTICIPANTE NADA MAS SE EMPIECE A CREAR LA REUNION
       let principal:User = this.getLoginService().getPrincipal();
-      let principalOption = new Option(principal.id.toString(),principal.name,principal.photo,null,"LEADER",principal.username);
-
-      var index = this.attendants.findIndex( x => x.id === principalOption.id);
-      if(index == -1){
-        this.attendants.push(principalOption);
-      }
 
       //OBTENER EL USUARIO PARA AÑADIRLO COMO PARTICIPANTE
       let att = new Option(attendant.id.toString(),attendant.name,attendant.photo,null,"USER",attendant.username);
@@ -116,6 +118,14 @@ export class MeetingPageComponent implements OnInit {
         }
 
       }
+  }
+
+  exists(user:User){
+    if(!this.thumbnail.find(x => x.id === user.id.toString())){
+      return false
+    }else{
+      return true;
+    }
   }
 
   removeAttendant(attendant:User){

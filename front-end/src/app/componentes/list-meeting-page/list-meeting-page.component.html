@@ -2,10 +2,12 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">M</span>eetings
 </h1>
 
+<h2 *ngIf="meetingPagination.beans.length == 0" style="text-align: center">You have not had any meetings yet</h2>
+
 <div class="text-center">
   <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
       class="m-1"><button type="button" class="btn">Previous</button></a>
-  <span class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
+  <span *ngIf="meetingPagination.beans.length > 0" class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
   <a *ngIf="meetingPagination.hasNextPage" href="/meeting/list/{{userId}}/page/{{nextNumberOfPage}}"
      class="m-1"><button type="button" class="btn">Next</button></a>
 </div>
@@ -26,7 +28,10 @@
         <span class="item-title"><i class="fas fa-users"></i> Participants</span>
         <div class="d-flex flex-wrap mt-3">
           <div *ngFor="let us of meeting.attendants" class="text-center mx-2">
-              <img attr.src="{{us.photo}}" class="img-fluid avatar">                         
+              <img *ngIf="us.hasAttended && us.photo" attr.src="{{us.photo}}" class="img-fluid avatar">
+              <img *ngIf="us.hasAttended && !us.photo" src="/assets/img/none.png" class="img-fluid avatar">
+              <img *ngIf="!us.hasAttended && us.photo" attr.src="{{us.photo}}" class="img-fluid not-present avatar">
+              <img *ngIf="!us.hasAttended && !us.photo" src="/assets/img/none.png" class="img-fluid not-present avatar">                      
               <span class="d-block">{{us.name}}</span>
           </div>
         </div> 
@@ -59,7 +64,7 @@
 <div class="text-center">
   <a *ngIf="meetingPagination.hasPreviousPage" href="/meeting/list/{{userId}}/page/{{previousNumberOfPage}}" 
       class="m-1"><button type="button" class="btn">Previous</button></a>
-  <span class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
+  <span *ngIf="meetingPagination.beans.length > 0" class="m-1">Page {{nextNumberOfPage}} of {{meetingPagination.totalPages}}</span>
   <a *ngIf="meetingPagination.hasNextPage" href="/meeting/list/{{userId}}/page/{{nextNumberOfPage}}"
       class="m-1"><button type="button" class="btn">Next</button></a>
 </div>

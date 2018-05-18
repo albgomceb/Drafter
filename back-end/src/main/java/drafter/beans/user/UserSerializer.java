@@ -38,4 +38,5 @@ public class UserSerializer {
 	public static User fromBean(UserBean user) {
 		return null;
 	}
+	
 }

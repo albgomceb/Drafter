@@ -36,7 +36,7 @@ public class UserSerializer2 {
 		User res = new User();
 		
 		res.setEmail(user.getEmail());
-		res.setName(user.getEmail());
+		res.setName(user.getName());
 		res.setOrganizations(new ArrayList<Organization>());
 		res.setDepartments(new ArrayList<Department>());
 		res.setPhone("666666666"); //TODO: Cambiar numero por defecto. Creo que no es ni necesario.

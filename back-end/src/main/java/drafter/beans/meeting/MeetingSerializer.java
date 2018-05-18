@@ -47,7 +47,7 @@ public class MeetingSerializer {
 		
 		List<Option> attendants = meeting.getParticipants().stream()
 				.map(us -> {
-					Option o = new Option(new Integer(us.getId()).toString(), us.getUser().getName(),null, us.getUser().getPhoto()!=null ? us.getUser().getPhoto() : "/assets/imag/none.png",us.getRole(), us.getUser().getUserAccount().getUsername());
+					Option o = new Option(new Integer(us.getId()).toString(), us.getUser().getName(),null, us.getUser().getPhoto()!=null ? us.getUser().getPhoto() : "/assets/img/none.png",us.getRole(), us.getUser().getUserAccount().getUsername());
 					o.setHasAttended(us.isHasAttended());
 					return o;
 				})

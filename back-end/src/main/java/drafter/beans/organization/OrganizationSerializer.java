@@ -9,6 +9,7 @@ import drafter.beans.Option;
 import drafter.domain.Department;
 import drafter.domain.Organization;
 import drafter.domain.User;
+import drafter.services.DepartmentService;
 import drafter.services.OrganizationService;
 import drafter.services.UserService;
 
@@ -18,7 +19,7 @@ public class OrganizationSerializer {
 		OrganizationBean res = new OrganizationBean();
 		List<Option> depar = organization.getDepartments()
 			.stream()
-			.map(or -> new Option(new Integer(or.getId()).toString(),or.getName(),or.getUsers()))
+			.map(or -> new Option(new Integer(or.getId()).toString(),or.getName(),or.getWorkers()))
 			.collect(Collectors.toList());
 		res.setDepartments(depar);
 		res.setEnterprise(organization.getEnterprise());
@@ -32,7 +33,7 @@ public class OrganizationSerializer {
 	}
 	
 	public Organization fromBean(OrganizationBean organizationBean, User user, UserService userService,
-			OrganizationService organizationService) {
+			OrganizationService organizationService, DepartmentService departmentService) {
 		Organization organization = new Organization();
 		if(organizationBean.id != null && new Integer(organizationBean.id) > 0) {
 			organization = organizationService.findById(new Integer(organizationBean.id));
@@ -46,36 +47,42 @@ public class OrganizationSerializer {
 		organization.setLogo(organizationBean.getLogo());
 		
 		Collection<Department> departments = new ArrayList<Department>();
-		if(organizationBean.id != null && new Integer(organizationBean.id) > 0) {
+		if(organizationBean.id != null && new Integer(organizationBean.id) > 0) { // Si estoy editando
 			// For clásico para manterner el orden de los departamentos
 			for(int i=organizationBean.departments.size()-1; i >= 0 ; i--) {
+				int departmentId = new Integer(organizationBean.departments.get(i).getId());
 				Department department = new Department();
+				if(departmentId > 0) { // En el caso de que se esté añadiendo otro departamento más, NO entro aquí
+					department = departmentService.findById(departmentId);
+				}
 				department.setName(organizationBean.departments.get(i).getName());
-				departments.add(department);
 				
 				List<User> users = new ArrayList<User>();
 				for(Option u: organizationBean.departments.get(i).users) {
 					User newUser = userService.findById(new Integer(u.id));
+					
 					users.add(newUser);
 				}
-				department.setUsers(users);
+				department.setWorkers(users);
 				
 				department.setOrganization(organization);
+				departments.add(department);
 			}
-		}else { // Para que meta en el orden correcto los departamentos
-			for(Option d: organizationBean.departments) {
+		}else { // Si estoy creando una organización nueva
+			for(Option d: organizationBean.departments) { // Para que meta en el orden correcto los departamentos
 				Department department = new Department();
 				department.setName(d.getName());
-				departments.add(department);
 				
 				List<User> users = new ArrayList<User>();
 				for(Option u: d.users) {
 					User newUser = userService.findById(new Integer(u.id));
+					
 					users.add(newUser);
 				}
-				department.setUsers(users);
+				department.setWorkers(users);
 				
 				department.setOrganization(organization);
+				departments.add(department);
 			}
 		}
 		

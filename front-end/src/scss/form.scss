@@ -16,29 +16,15 @@ form.general-form {
         max-width: 10rem;
         margin: 0 1.5rem 1.5rem 0.5rem;
 
+        img.card-img-top {
+            max-height: 6.6rem;
+        }
+
         div.card-body {
             padding: 0.75rem;
 
             p.card-text {
                 font-size: 0.9rem;
-            }
-        }
-
-        div.push {
-            height: 7rem;
-
-            @media only screen and (max-width: 350px) {
-                height: 8rem;
-            }
-        }
-
-        div.btn-card {
-            position: absolute;
-            bottom: 0;
-
-            button {
-                width: 95%;
-                margin-bottom: 1rem;
             }
         }
     }
@@ -84,6 +70,16 @@ form.form-2 {
         background-color: $content_border;
     }
 
+    a {
+        color: $mp_secondary_color;
+    }
+
+    a:active, 
+    a:focus, 
+    a:hover {
+        color: $mp_secondary_color;
+    }
+
     button.btn-2 {
         border: none;
         border-radius: 0;
@@ -114,5 +110,30 @@ table.table-agenda {
 
     span.required {
         color: red;
+    }
+}
+
+/* Departments */
+div.departments {
+    border: 1px solid $content_border;
+    border-radius: 5px;
+    padding: 1.25rem 2.5rem;
+
+    div.department {
+        border-bottom: 1px solid $content_border;
+
+        div.list-employee {
+            max-height: 30rem;
+            overflow: auto;
+    
+            div.title-list-employee {
+                color: $mp_font_color;
+                background-color: $mp_primary_color;
+            }
+
+            span.employed {
+                word-wrap: break-word;
+            }
+        }
     }
 }

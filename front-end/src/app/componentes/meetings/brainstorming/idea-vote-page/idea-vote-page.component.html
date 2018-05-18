@@ -1,8 +1,6 @@
-<h2>Ideas Polling</h2>
-
 <div class="ideas-container" *ngIf="loaded">
     <div class="ideas-title">
-        Ideas
+        Step 3: Voting on ideas
     </div>
     <div class="ideas-body">
         <ul class="list-ideas">
@@ -11,27 +9,31 @@
                     {{idea.number}}. {{idea.text}}                    
                 </div>
                 <div class="d-flex justify-content-between flex-wrap">
-                    <div>
-                        <ul class="list-pros">
+                    <div class="pros-cons">
+                        <ul class="list-pros-cons">
                             <li *ngFor="let p of idea.pros" 
                                 attr.data-ipro="{{i}}" 
                                 class="alert alert-success">
-                                <i class="fas fa-check" aria-hidden="true"></i> {{p.pros}}
+                                <div class="idea">
+                                    {{p.pros}}
+                                </div>
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <ul class="list-cons">
+                    <div class="pros-cons">
+                        <ul class="list-pros-cons">
                             <li *ngFor="let c of idea.cons" 
                                 attr.data-icon="{{i}}" 
                                 class="alert alert-danger">
-                                <i class="fas fa-times" aria-hidden="true"></i> {{c.cons}}
+                                <div class="idea">
+                                    {{c.cons}}
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="text-center">
-                    <input class="title" type="number" min="1" max="10" [(ngModel)]="votes[index].value">
+                <div class="rating-box mx-auto">
+                    <input type="number" min="1" max="10" step="1" [(ngModel)]="votes[index].value" class="form-control" required>
                 </div>
             </li>
         </ul>
@@ -39,7 +41,15 @@
             <button class="btn" (click)="save()">Vote</button>
         </div>
         <div *ngIf="hasVoted==true && participant.role=='LEADER'" class="text-center">
-            <button (click)="finish()" class="btn bt-lg">Finish</button>
+            <button ngConfirm
+            [title]="'Finish Meeting Confirmation'"
+            [message]="'You are about to end the meeting, check that everyone has voted'"
+            [options]="options"
+            (onConfirm)="finish()"
+            (onCancel)="cancel()" class="btn bt-lg">Finish</button>
+        </div>
+        <div *ngIf="hasVoted==true && participant.role!='LEADER'" class="text-center">
+            <p>Wait until the meeting leader finishes the meeting</p>
         </div>
     </div>
 </div>

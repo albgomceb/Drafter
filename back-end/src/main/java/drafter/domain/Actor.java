@@ -10,9 +10,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.URL;
 
 import drafter.security.UserAccount;
 
@@ -69,7 +69,7 @@ public abstract class Actor extends DomainEntity{
 		this.email = email;
 	}
 
-	//@Pattern(regexp = "(^((\\+)[1-9]\\d{0,2}[ ])?([(](\\d\\d[1-9]|[1-9]\\d\\d|\\d[1-9]\\d)[)][ ])?\\w([ -]?\\w){3}([ -]?\\w)*$)?")
+	@Pattern(regexp = "(^((\\+)[1-9]\\d{0,2}[ ])?([(](\\d\\d[1-9]|[1-9]\\d\\d|\\d[1-9]\\d)[)][ ])?\\w([ -]?\\w){3}([ -]?\\w)*$)?")
 	public String getPhone() {
 		return phone;
 	}
@@ -81,7 +81,6 @@ public abstract class Actor extends DomainEntity{
 
 	@Lob
 	@SafeHtml
-	@URL
 	public String getPhoto() {
 		return photo;
 	}

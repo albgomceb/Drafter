@@ -2,6 +2,8 @@
   <span class="capital-letter">M</span>y <span class="capital-letter">O</span>rganizations
 </h1>
 
+<h2 *ngIf="organizations.length == 0" style="text-align: center">You do not belong to any organization</h2>
+
 <div *ngFor="let organization of organizations; let i=index">
   <div class="item-wrapper mx-auto">
     <div class="content-wrapper">
@@ -61,7 +63,10 @@
               <tbody *ngFor="let us of department.users; let z=index">
                 <tr>
                   <th scope="row">{{z+1}}</th>
-                  <td><img src="{{us.photo}}" class="img-fluid avatar"></td>
+                  <td>
+                    <img *ngIf="us.photo" src="{{us.photo}}" class="img-fluid avatar">
+                    <img *ngIf="!us.photo" src="/assets/img/none.png" class="img-fluid avatar">
+                  </td>
                   <td>{{us.name}}</td>
                 </tr>
               </tbody>

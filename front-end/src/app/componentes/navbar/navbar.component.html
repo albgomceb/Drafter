@@ -1,57 +1,118 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark shadow">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" routerLink="home">
+    <a class="navbar-brand" routerLink="/home" (click)="navigate()">
       <img src="../../../assets/img/white-logo.png" alt="Logo">
     </a>
     <!-- Button only for small screens -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" 
-    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" 
+            data-toggle="collapse" data-target="#navbarToggler" 
+            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Menu items -->
     <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="home">Home</a>
+          <a class="nav-link" routerLink="/home" (click)="navigate()">
+            Home
+          </a>
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-          <a data-toggle="dropdown" id="navbarDropdownMeetingLink" class="nav-link dropdown-toggle position-relative">
-            <span>Meeting</span>
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownMeetingLink" 
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Meeting
           </a>
-          <div class="dropdown-menu shadow">
-              <a class="dropdown-item" routerLink="meeting">New meeting</a>
-              <a class="dropdown-item" routerLink="meeting/list/{{getLoginService().getPrincipal().id}}/page/0">My meetings</a>
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownMeetingLink">
+              <a class="dropdown-item" routerLink="/meeting" (click)="navigate()">
+                New meeting
+              </a>
+              <a class="dropdown-item" routerLink="/meeting/list/{{getLoginService().getPrincipal().id}}/page/0" (click)="navigate()">
+                My meetings
+              </a>
           </div>          
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-          <a data-toggle="dropdown" id="navbarDropdownOrganizationLink" class="nav-link dropdown-toggle position-relative">
-            <span>Organization</span>
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownOrganizationLink" 
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Organization
           </a>
-          <div class="dropdown-menu shadow">
-            <a class="dropdown-item" routerLink="organization-department/0">New organization</a>
-            <a class="dropdown-item" routerLink="organization/list/{{getLoginService().getPrincipal().id}}">My organizations</a>	
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownOrganizationLink">
+            <a class="dropdown-item" routerLink="/organization-department/0" (click)="navigate()">
+              New organization
+            </a>
+            <a class="dropdown-item" routerLink="/organization/list/{{getLoginService().getPrincipal().id}}" (click)="navigate()">
+              My organizations
+            </a>	
           </div>          
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="pricing">Pricing</a>
+          <a class="nav-link" routerLink="/pricing" (click)="navigate()">
+             Pricing
+          </a>
         </li>
       </ul>
       <ul class="nav navbar-nav">
         <li class="nav-item" *ngIf="!getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="register">Sign up</a>
+          <a class="nav-link" routerLink="/register" (click)="navigate()">
+            Sign up
+          </a>
         </li>
         <li class="nav-item"  *ngIf="!getLoginService().isAuthenticated()">
-          <a class="nav-link" routerLink="login">Sign in</a>
+          <a class="nav-link" routerLink="/login" (click)="navigate()">
+            Sign in
+          </a>
+        </li>
+        <li class="nav-item dropdown" 
+            *ngIf="getLoginService().isAuthenticated()">
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownNotificationLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              (click)="convert(); showNotifications();">
+            <span *ngIf="hasNewNotifications">
+              <i class="fas fa-bell fa-spin notification"></i>
+            </span>
+            <span *ngIf="notifications != undefined && notifications.length > 0 && !hasNewNotifications">
+              <i class="fas fa-bell notification"></i>
+            </span>
+            <span *ngIf="notifications != undefined && notifications.length === 0">
+              <i class="far fa-bell notification"></i>
+            </span>
+          </a>
+          <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownNotificationLink">
+            <span *ngIf="notifications != undefined && notifications.length === 0" class="row-notification d-inline-block px-2 py-1">
+              You don't have any notification.
+            </span>
+            <div *ngIf="notifications != undefined && notifications.length > 0">
+              <div *ngFor="let meeting of notifications" class="row-notification">
+                <a (click)="goMeeting(meeting.id)" class="info-notification d-block p-2">
+                  {{meeting.title}}
+                </a>
+                <div class="text-center mb-2">
+                  <button (click)="hideNotification(meeting)" class="btn btn-notification">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>             
+              </div>
+            </div>
+          </div>
         </li>
         <li class="nav-item dropdown" *ngIf="getLoginService().isAuthenticated()">
-            <a data-toggle="dropdown" id="navbarDropdownUserLink" class="nav-link dropdown-toggle position-relative">
-              <div class="img-profile"><img  attr.src="{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().photo : ''}}"></div>
-              <span class="username">{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}</span>
+            <a class="nav-link dropdown-toggle position-relative" href="#" id="navbarDropdownUserLink" 
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="img-profile">
+                <img attr.src="{{getLoginService().getPrincipal() ? getLoginService().getPrincipal().photo : ''}}">
+              </div>
+              <span class="username">
+                {{getLoginService().getPrincipal() ? getLoginService().getPrincipal().username : ''}}
+              </span>
             </a>
-            <div class="dropdown-menu shadow">
-              <a routerLink="me" class="dropdown-item">Profile</a>
-              <a (click)="getLoginService().logout()" class="dropdown-item">Logout</a>
+            <div class="dropdown-menu shadow" aria-labelledby="navbarDropdownUserLink">
+              <a class="dropdown-item" routerLink="/me" (click)="navigate()">
+                Profile
+              </a>
+              <a class="dropdown-item" (click)="logout()">
+                Logout
+              </a>
             </div>
         </li>
       </ul>
