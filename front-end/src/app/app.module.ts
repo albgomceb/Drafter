@@ -51,6 +51,7 @@ import { NotificationsPageComponent } from './componentes/notifications-page/not
 import { WaitingRoomComponent } from './componentes/meetings/dynamic-meeting/waiting-room/waiting-room.component';
 import { LegalPageComponent } from './componentes/legal-page/legal-page.component';
 import { ConfirmationModalModule } from 'ng-confirmation-modal';
+import { LoaderComponent } from './componentes/loader/loader.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { ConfirmationModalModule } from 'ng-confirmation-modal';
     ProfilePageComponent,
     NotificationsPageComponent,
     WaitingRoomComponent,
-    LegalPageComponent
+    LegalPageComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

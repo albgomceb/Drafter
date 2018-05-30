@@ -96,7 +96,9 @@ export class MeetingPageComponent implements OnInit {
     this.results = this.searchTerms.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap((keyword: string) => this.userService.filterUsers(keyword))
+      switchMap((keyword: string) => {
+        return this.userService.filterUsers(keyword);
+      })
     );
   } 
 

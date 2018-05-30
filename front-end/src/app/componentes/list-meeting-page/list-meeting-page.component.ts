@@ -20,6 +20,7 @@ export class ListMeetingPageComponent implements OnInit {
   public numberOfPage : number;
   public nextNumberOfPage : number;
   public today: number;
+  public loading: boolean;
 
   errorListUsers:boolean = false;
 
@@ -29,6 +30,7 @@ export class ListMeetingPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.loading = true;
     this.activatedRoute.params.subscribe((params: Params) => {
       this.userId = params['userId'];
     });
@@ -49,9 +51,11 @@ export class ListMeetingPageComponent implements OnInit {
         this.numberOfPage = this.meetingPagination.numberOfPage;
         this.previousNumberOfPage = Number(this.numberOfPage) - 1;
         this.nextNumberOfPage = Number(this.numberOfPage) + 1;
+        this.loading = false;
       },
       error => {
         this.errorListUsers = true;
+        this.loading = false;
       }
     );
   }
