@@ -102,13 +102,15 @@ public class UserService {
 	}
 	
 	public boolean hasPay(Organization organization) {
-		User owner = organization.getUser();
-		return owner.getLastPay() != null && owner.getLastPay().getTime() > System.currentTimeMillis() - 2628000000L;
+//		User owner = organization.getUser();
+//		return owner.getLastPay() != null && owner.getLastPay().getTime() > System.currentTimeMillis() - 2628000000L;
+		return true;
 	}
 	
 	public boolean principalHasPay() {
-		User me = findByPrincipal();
-		return me.getLastPay() != null && me.getLastPay().getTime() > System.currentTimeMillis() - 2628000000L;
+//		User me = findByPrincipal();
+//		return me.getLastPay() != null && me.getLastPay().getTime() > System.currentTimeMillis() - 2628000000L;
+		return true;
 	}
 	
 	public void pay() {
