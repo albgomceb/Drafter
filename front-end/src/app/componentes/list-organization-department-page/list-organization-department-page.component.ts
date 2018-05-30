@@ -14,6 +14,7 @@ export class ListOrganizationDepartmentPageComponent implements OnInit {
 
   public organizations: Array<Organization>;
   public userId: number;
+  public loading: boolean;
 
   errorListUsers:boolean = false;
 
@@ -22,6 +23,7 @@ export class ListOrganizationDepartmentPageComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.loading = true;
     this.activatedRoute.params.subscribe((params: Params) => {
       this.userId = params['userId'];
     });
@@ -32,9 +34,11 @@ export class ListOrganizationDepartmentPageComponent implements OnInit {
       data => 
       {
         this.organizations = data;
+        this.loading = false;
       },
       error => {
         this.errorListUsers = true;
+        this.loading = false;
       }
     );
   }

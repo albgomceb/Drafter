@@ -56,7 +56,7 @@ public class UserController extends AbstractController {
 	}
 	
 	@GetMapping("/filterUsers")
-	public List<UserBean> filterUsers(@RequestParam("search") String keyword) {	
+	public List<UserBean> filterUsers(@RequestParam("search") String keyword) {
 		List<User> res = new ArrayList<User>();
 		User principal = userService.findByPrincipal();
 			
@@ -74,8 +74,8 @@ public class UserController extends AbstractController {
 	}
 	
 	@GetMapping("/filterUsers2")
-	public List<UserBean> filterUsers2(@RequestParam("search") String keyword) {	
-	 List<User> res;
+	public List<UserBean> filterUsers2(@RequestParam("search") String keyword) {
+		List<User> res;
 	    if(keyword==null || keyword=="" || keyword.length()==0) {
 	      res = this.userService.findAll();
 	    }else {
