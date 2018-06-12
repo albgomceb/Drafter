@@ -3,7 +3,7 @@
 </h1>
 
 <div *ngIf="!loading else loader">
-  <h2 *ngIf="organizations.length == 0" style="text-align: center">You do not belong to any organization</h2>
+  <h2 *ngIf="organizations.length == 0" style="text-align: center">You haven't created an organization yet.</h2>
 
   <div *ngFor="let organization of organizations; let i=index">
     <div class="item-wrapper mx-auto">

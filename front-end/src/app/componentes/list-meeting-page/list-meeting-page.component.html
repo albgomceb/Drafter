@@ -41,7 +41,8 @@
           <span class="item-title"><i class="fas fa-star"></i> Session leader</span> 
           <div class="d-flex flex-wrap mt-3">
             <div class="text-center mx-2">
-              <img attr.src="{{meeting.attendants[0].photo}}" class="img-fluid avatar">                         
+              <img *ngIf="meeting.attendants[0].photo" attr.src="{{meeting.attendants[0].photo}}" class="img-fluid avatar">
+              <img *ngIf="!meeting.attendants[0].photo" src="/assets/img/none.png" class="img-fluid avatar">
               <span class="d-block">{{meeting.attendants[0].name}}</span>
             </div>
           </div>
