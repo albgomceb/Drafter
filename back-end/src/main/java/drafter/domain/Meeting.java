@@ -56,6 +56,7 @@ public abstract class Meeting extends DomainEntity{
 
 	@NotBlank
 	@SafeHtml
+	@Lob
 	public String getDescription() {
 		return description;
 	}
